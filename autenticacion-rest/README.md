@@ -1,12 +1,5 @@
-autenticacion-rest: Assortment of technologies including Arquillian
+autenticacion-rest: componente de logica de autenticacion
 ========================
-
-System requirements
--------------------
-
-All you need to build this project is Java 8.0 (Java SDK 1.8) or better, Maven 3.1 or better.
-
-The application this project produces is designed to be run on JBoss WildFly.
 
 Start JBoss WildFly with the Web Profile
 -------------------------
@@ -46,25 +39,3 @@ Undeploy the Archive
 3. When you are finished testing, type this command to undeploy the archive:
 
         mvn wildfly:undeploy
-
-
-Run the Arquillian Tests 
--------------------------
-
-This quickstart provides Arquillian tests. By default, these tests are configured to be skipped as Arquillian tests require the use of a container. 
-
-_NOTE: The following commands assume you have configured your Maven user settings. If you have not, you must include Maven setting arguments on the command line. See [Run the Arquillian Tests](https://github.com/jboss-developer/jboss-developer-shared-resources/blob/master/guides/RUN_ARQUILLIAN_TESTS.md) for complete instructions and additional options._
-
-1. Make sure you have started the JBoss Server as described above.
-2. Open a command line and navigate to the root directory of this quickstart.
-3. Type the following command to run the test goal with the following profile activated:
-
-        mvn clean test -Parq-wildfly-remote
-
-Debug the Application
-------------------------------------
-
-If you want to debug the source code or look at the Javadocs of any library in the project, run either of the following commands to pull them into your local repository. The IDE should then detect them.
-
-    mvn dependency:sources
-    mvn dependency:resolve -Dclassifier=javadoc
