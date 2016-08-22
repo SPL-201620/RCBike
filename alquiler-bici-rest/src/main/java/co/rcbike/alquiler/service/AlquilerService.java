@@ -1,0 +1,18 @@
+package co.rcbike.alquiler.service;
+
+import java.util.logging.Logger;
+
+import javax.ejb.Stateless;
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+
+@Stateless
+public class AlquilerService {
+
+    @Inject
+    private Logger log;
+
+    @Inject
+    private EntityManager em;
+
+}
