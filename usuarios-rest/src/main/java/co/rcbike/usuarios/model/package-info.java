@@ -1,5 +1,5 @@
 /**
- * Entidades (objetos de dominio) usadas para los desplazamientos
+ * Entidades (objetos de dominio) usadas para los usuarios del sistema
  *
  * @since 1.0
  * @version 1.1
