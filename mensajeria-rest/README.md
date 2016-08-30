@@ -1,4 +1,4 @@
-usuarios-rest: componente de logica de perfil de usuarios
+mensajeria-rest: componente para intercambio de mensajes entre usuarios
 ========================
 
 Comandos
@@ -11,3 +11,4 @@ Endpoints
 -------------------------
 
 1.
+

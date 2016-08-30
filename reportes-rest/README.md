@@ -1,4 +1,4 @@
-usuarios-rest: componente de logica de perfil de usuarios
+reportes-rest: componente de logica de generacion de contenido de reportes
 ========================
 
 Comandos
@@ -11,3 +11,4 @@ Endpoints
 -------------------------
 
 1.
+

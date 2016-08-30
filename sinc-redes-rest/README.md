@@ -1,4 +1,4 @@
-usuarios-rest: componente de logica de perfil de usuarios
+sinc-redes-rest: componente de logica para compartir contenido en redes sociales
 ========================
 
 Comandos
@@ -11,3 +11,4 @@ Endpoints
 -------------------------
 
 1.
+
