@@ -9,7 +9,7 @@ import javax.ws.rs.core.MediaType;
 
 import co.rcbike.reportes.data.ReportesRepository;
 
-@Path("/vender")
+@Path("/generar")
 @RequestScoped
 public class ReportesEndpoint {
 

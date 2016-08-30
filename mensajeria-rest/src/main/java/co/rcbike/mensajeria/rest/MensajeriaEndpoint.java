@@ -9,7 +9,7 @@ import javax.ws.rs.core.MediaType;
 
 import co.rcbike.mensajeria.data.MensajeriaRepository;
 
-@Path("/vender")
+@Path("/mensajes")
 @RequestScoped
 public class MensajeriaEndpoint {
 

@@ -9,7 +9,7 @@ import javax.ws.rs.core.MediaType;
 
 import co.rcbike.sinc_redes.data.SincRedesRepository;
 
-@Path("/vender")
+@Path("/sincronizar")
 @RequestScoped
 public class SincRedesEndpoint {
 
