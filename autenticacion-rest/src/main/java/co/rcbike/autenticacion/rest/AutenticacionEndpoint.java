@@ -12,7 +12,7 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 
 import co.rcbike.autenticacion.service.AutenticacionService;
 
-@Path("/autenticar")
+@Path("autenticar")
 @RequestScoped
 public class AutenticacionEndpoint {
 
