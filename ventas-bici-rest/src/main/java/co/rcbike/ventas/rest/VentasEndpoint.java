@@ -9,7 +9,7 @@ import javax.ws.rs.core.MediaType;
 
 import co.rcbike.ventas.data.VentasRepository;
 
-@Path("/vender")
+@Path("/venta")
 @RequestScoped
 public class VentasEndpoint {
 
@@ -18,8 +18,8 @@ public class VentasEndpoint {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public String listAllMembers() {
-        return "Root Rest get";
+	public String alive() {
+		return "endpoint alive";
     }
 
 }

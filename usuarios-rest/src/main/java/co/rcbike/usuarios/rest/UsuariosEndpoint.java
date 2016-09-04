@@ -15,7 +15,7 @@ import javax.ws.rs.core.Response;
 import co.rcbike.usuarios.data.UsuariosRepository;
 import co.rcbike.usuarios.model.Usuario;
 
-@Path("/perfil")
+@Path("/usuarios")
 @RequestScoped
 public class UsuariosEndpoint {
 

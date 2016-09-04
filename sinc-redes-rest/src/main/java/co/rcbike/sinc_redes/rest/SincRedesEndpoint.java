@@ -9,7 +9,7 @@ import javax.ws.rs.core.MediaType;
 
 import co.rcbike.sinc_redes.data.SincRedesRepository;
 
-@Path("/sincronizar")
+@Path("/sincronizacion")
 @RequestScoped
 public class SincRedesEndpoint {
 
@@ -18,8 +18,8 @@ public class SincRedesEndpoint {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public String listAllMembers() {
-        return "Root Rest get";
+	public String alive() {
+		return "endpoint alive";
     }
 
 }

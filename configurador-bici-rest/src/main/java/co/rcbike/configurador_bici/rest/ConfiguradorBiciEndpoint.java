@@ -18,8 +18,8 @@ public class ConfiguradorBiciEndpoint {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public String listAllMembers() {
-        return "Root Rest get";
+	public String alive() {
+		return "endpoint alive";
     }
 
 }
