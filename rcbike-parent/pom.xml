@@ -46,6 +46,7 @@
 				<module>../sinc-redes-rest</module>
 				<module>../usuarios-rest</module>
 				<module>../ventas-bici-rest</module>
+				<module>../rcbike-web</module>
 			</modules>
 		</profile>
 		<profile>
@@ -129,6 +130,5 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-
 
 </project>

@@ -1,0 +1,5 @@
+snoop:
+  host: http://localhost
+  port: 8080
+  serviceRoot: configurador-bici-rest/rest
+  snoopService: localhost:8080/snoop-service/
