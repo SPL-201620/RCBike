@@ -10,7 +10,7 @@
     <datasource jndi-name="java:jboss/datasources/reportes-restDS"
         pool-name="reportes-rest" enabled="true"
         use-java-context="true">
-        <connection-url>jdbc:h2:mem:reportes-rest;DB_CLOSE_ON_EXIT=FALSE;DB_CLOSE_DELAY=-1</connection-url>
+        <connection-url>jdbc:h2:file:~/rcbike/db/reportes-rest;DB_CLOSE_ON_EXIT=FALSE;DB_CLOSE_DELAY=-1;MODE=Oracle;AUTO_SERVER=TRUE</connection-url>
         <driver>h2</driver>
         <security>
             <user-name>sa</user-name>

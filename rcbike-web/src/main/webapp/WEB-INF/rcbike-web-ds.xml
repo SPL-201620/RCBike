@@ -26,7 +26,7 @@
     <datasource jndi-name="java:jboss/datasources/rcbike-webDS"
         pool-name="rcbike-web" enabled="true"
         use-java-context="true">
-        <connection-url>jdbc:h2:mem:rcbike-web;DB_CLOSE_ON_EXIT=FALSE;DB_CLOSE_DELAY=-1</connection-url>
+        <connection-url>jdbc:h2:file:~/rcbike/db/rcbike-web;DB_CLOSE_ON_EXIT=FALSE;DB_CLOSE_DELAY=-1;MODE=Oracle;AUTO_SERVER=TRUE</connection-url>
         <driver>h2</driver>
         <security>
             <user-name>sa</user-name>
