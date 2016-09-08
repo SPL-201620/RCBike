@@ -31,7 +31,7 @@ public class UsuariosService {
     }
 
     public List<Usuario> listUsuario() {
-        TypedQuery<Usuario> q = em.createNamedQuery(Usuario.SQ_findByEmail, Usuario.class);
+        TypedQuery<Usuario> q = em.createNamedQuery(Usuario.SQ_listByNombre, Usuario.class);
         return q.getResultList();
     }
 }

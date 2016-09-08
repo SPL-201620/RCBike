@@ -26,7 +26,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class Usuario implements Serializable {
 
     public static final String SQ_findByEmail = "findByEmail";
-    public static final String SQ_listByNombre = "findByEmail";
+    public static final String SQ_listByNombre = "listByNombre";
     public static final String SQ_PARAM_EMAIL = "email";
 
     @Id
