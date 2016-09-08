@@ -7,3 +7,7 @@
 * Juan Carlos Cifuentes Murcia - _Líder de la Arquitectura_
 * Raúl Gómez - _Líder del desarrollo de productos_
 * Felipe Martínez - _Líder del desarrollo de activos y administración de la configuración_
+
+## Desarrollo
+### Recursos
+* Base de datos h2: http://www.h2database.com/html/features.html
