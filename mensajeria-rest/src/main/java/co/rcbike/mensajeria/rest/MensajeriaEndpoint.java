@@ -7,19 +7,19 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import co.rcbike.mensajeria.data.MensajeriaRepository;
+import co.rcbike.mensajeria.service.MensajeriaService;
 
 @Path("/mensajes")
 @RequestScoped
 public class MensajeriaEndpoint {
 
     @Inject
-    private MensajeriaRepository repository;
+    private MensajeriaService service;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-	public String alive() {
-		return "endpoint alive";
+    public String alive() {
+        return "endpoint alive";
     }
 
 }

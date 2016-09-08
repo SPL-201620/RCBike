@@ -7,19 +7,19 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import co.rcbike.reportes.data.ReportesRepository;
+import co.rcbike.reportes.service.ReportesService;
 
 @Path("/reportes")
 @RequestScoped
 public class ReportesEndpoint {
 
     @Inject
-    private ReportesRepository repository;
+    private ReportesService service;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-	public String alive() {
-		return "endpoint alive";
+    public String alive() {
+        return "endpoint alive";
     }
 
 }

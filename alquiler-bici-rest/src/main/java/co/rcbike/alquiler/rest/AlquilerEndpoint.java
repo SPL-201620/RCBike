@@ -7,19 +7,19 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import co.rcbike.alquiler.data.AlquilerRepository;
+import co.rcbike.alquiler.service.AlquilerService;
 
 @Path("/alquiler")
 @RequestScoped
 public class AlquilerEndpoint {
 
     @Inject
-    private AlquilerRepository repository;
+    private AlquilerService service;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-	public String alive() {
-		return "endpoint alive";
+    public String alive() {
+        return "endpoint alive";
     }
 
 }

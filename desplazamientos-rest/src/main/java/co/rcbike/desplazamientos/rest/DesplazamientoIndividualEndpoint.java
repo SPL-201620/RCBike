@@ -7,19 +7,19 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import co.rcbike.desplazamientos.data.DesplazamientosRepository;
+import co.rcbike.desplazamientos.service.DesplazamientosService;
 
 @Path("/individual")
 @RequestScoped
 public class DesplazamientoIndividualEndpoint {
 
     @Inject
-    private DesplazamientosRepository repository;
+    private DesplazamientosService service;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-	public String alive() {
-		return "endpoint alive";
+    public String alive() {
+        return "endpoint alive";
     }
 
 }

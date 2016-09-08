@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -19,71 +21,77 @@ import org.hibernate.validator.constraints.NotEmpty;
 @SuppressWarnings("serial")
 @Entity
 @XmlRootElement
+@NamedQueries({@NamedQuery(name = "findByEmail", query = "SELECT e FROM Usuario e WHERE e.email = :email"),
+        @NamedQuery(name = "listByNombre", query = "SELECT e FROM Usuario e ORDER BY e.nombres ASC")})
 public class Usuario implements Serializable {
 
-	@Id
-	@GeneratedValue
-	private Long id;
-	/**
-	 * Identificador de negocio de un usuario
-	 */
-	@NotNull
-	@NotEmpty
-	@Email
-	private String email;
-	@NotNull
-	private String nombres;
-	@NotNull
-	private String apellidos;
-	/**
-	 * Representacion Base 64 de la imagen
-	 */
-	private String foto;
+    public static final String SQ_findByEmail = "findByEmail";
+    public static final String SQ_listByNombre = "findByEmail";
+    public static final String SQ_PARAM_EMAIL = "email";
 
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "AMIGOS",//
-	joinColumns = @JoinColumn(name = "PRINCIPAL", referencedColumnName = "ID"), //
-	inverseJoinColumns = @JoinColumn(name = "AMIGO", referencedColumnName = "ID"))
-	private List<Usuario> amigos;
+    @Id
+    @GeneratedValue
+    private Long id;
+    /**
+     * Identificador de negocio de un usuario
+     */
+    @NotNull
+    @NotEmpty
+    @Email
+    private String email;
+    @NotNull
+    private String nombres;
+    @NotNull
+    private String apellidos;
+    /**
+     * Representacion Base 64 de la imagen
+     */
+    private String foto;
 
-	public Long getId() {
-		return id;
-	}
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "AMIGOS", //
+    joinColumns = @JoinColumn(name = "PRINCIPAL", referencedColumnName = "ID") , //
+    inverseJoinColumns = @JoinColumn(name = "AMIGO", referencedColumnName = "ID") )
+    private List<Usuario> amigos;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public String getNombres() {
-		return nombres;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setNombres(String nombres) {
-		this.nombres = nombres;
-	}
+    public String getNombres() {
+        return nombres;
+    }
 
-	public String getFoto() {
-		return foto;
-	}
+    public void setNombres(String nombres) {
+        this.nombres = nombres;
+    }
 
-	public void setFoto(String foto) {
-		this.foto = foto;
-	}
+    public String getFoto() {
+        return foto;
+    }
 
-	public String getApellidos() {
-		return apellidos;
-	}
+    public void setFoto(String foto) {
+        this.foto = foto;
+    }
 
-	public void setApellidos(String apellidos) {
-		this.apellidos = apellidos;
-	}
+    public String getApellidos() {
+        return apellidos;
+    }
 
-	public List<Usuario> getAmigos() {
-		return amigos;
-	}
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
+    }
 
-	public void setAmigos(List<Usuario> amigos) {
-		this.amigos = amigos;
-	}
+    public List<Usuario> getAmigos() {
+        return amigos;
+    }
+
+    public void setAmigos(List<Usuario> amigos) {
+        this.amigos = amigos;
+    }
 
 }

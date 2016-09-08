@@ -7,19 +7,19 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import co.rcbike.ventas.data.VentasRepository;
+import co.rcbike.ventas.service.VentasService;
 
 @Path("/venta")
 @RequestScoped
 public class VentasEndpoint {
 
     @Inject
-    private VentasRepository repository;
+    private VentasService service;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-	public String alive() {
-		return "endpoint alive";
+    public String alive() {
+        return "endpoint alive";
     }
 
 }

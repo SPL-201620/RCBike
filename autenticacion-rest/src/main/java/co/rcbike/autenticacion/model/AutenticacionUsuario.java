@@ -5,6 +5,8 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
@@ -17,8 +19,13 @@ import org.hibernate.validator.constraints.NotEmpty;
 @SuppressWarnings("serial")
 @Entity
 @XmlRootElement
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = "email"))
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = "email") )
+@NamedQueries({
+        @NamedQuery(name = "findByEmail", query = "SELECT au FROM AutenticacionUsuario au WHERE au.email = :email")})
 public class AutenticacionUsuario implements Serializable {
+
+    public static final String SQ_findByEmail = "findByEmail";
+    public static final String SQ_PARAM_EMAIL = "email";
 
     @Id
     @GeneratedValue
