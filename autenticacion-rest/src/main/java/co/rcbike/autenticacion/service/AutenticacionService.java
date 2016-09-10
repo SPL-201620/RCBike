@@ -37,6 +37,7 @@ public class AutenticacionService {
     private AutenticacionUsuario findByEmail(String email) {
         TypedQuery<AutenticacionUsuario> q = em.createNamedQuery(AutenticacionUsuario.SQ_findByEmail,
                 AutenticacionUsuario.class);
+		q.setParameter(AutenticacionUsuario.SQ_PARAM_EMAIL, email);
         try {
             return q.getSingleResult();
         } catch (NoResultException e) {

@@ -26,7 +26,7 @@ public class Conversacion implements Serializable {
 	@NotNull
 	@NotEmpty
 	@Email
-	private String emailCreador;
+	private String emailEmisor;
 
 	@NotNull
 	@NotEmpty
@@ -35,4 +35,37 @@ public class Conversacion implements Serializable {
 
 	@OneToMany(mappedBy = "conversacion", fetch = FetchType.EAGER)
 	private List<Mensaje> mensajes;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getEmailEmisor() {
+		return emailEmisor;
+	}
+
+	public void setEmailEmisor(String emailEmisor) {
+		this.emailEmisor = emailEmisor;
+	}
+
+	public String getEmailReceptor() {
+		return emailReceptor;
+	}
+
+	public void setEmailReceptor(String emailReceptor) {
+		this.emailReceptor = emailReceptor;
+	}
+
+	public List<Mensaje> getMensajes() {
+		return mensajes;
+	}
+
+	public void setMensajes(List<Mensaje> mensajes) {
+		this.mensajes = mensajes;
+	}
+
 }
