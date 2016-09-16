@@ -39,10 +39,15 @@
 			<modules>
 				<module>../alquiler-bici-rest</module>
 				<module>../autenticacion-rest</module>
-
+				<module>../configurador-bici-rest</module>
+				<module>../desplazamientos-rest</module>
+				<module>../mensajeria-rest</module>
+				<module>../reportes-rest</module>
+				<module>../sinc-redes-rest</module>
+				<module>../usuarios-rest</module>
+				<module>../ventas-bici-rest</module>
 			</modules>
 			<build>
-				<finalName>${project.artifactId}</finalName>
 				<plugins>
 					<plugin>
 						<groupId>org.wildfly.plugins</groupId>
@@ -56,7 +61,7 @@
 			</build>
 		</profile>
 		<profile>
-			<id>deploy-directory</id>
+			<id>deploy-dir</id>
 			<dependencies>
 				<dependency>
 					<groupId>eu.agilejava</groupId>
