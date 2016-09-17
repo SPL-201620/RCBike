@@ -11,7 +11,9 @@
 ## Desarrollo
 ### Recursos
 * Base de datos h2: http://www.h2database.com/html/features.html
-
+* Eclipse + Git : 
+https://www.youtube.com/watch?v=rblGZRWqFVI
+https://www.youtube.com/watch?v=KfeqnernMmE
 ### Compilacion y ejecucion
 Requisitos:
 1. instalacion de maven (ultima version disponible)
