@@ -19,53 +19,53 @@ import org.hibernate.validator.constraints.NotEmpty;
 @XmlRootElement
 public class Conversacion implements Serializable {
 
-	@Id
-	@GeneratedValue
-	private Long id;
+  @Id
+  @GeneratedValue
+  private Long id;
 
-	@NotNull
-	@NotEmpty
-	@Email
-	private String emailEmisor;
+  @NotNull
+  @NotEmpty
+  @Email
+  private String emailEmisor;
 
-	@NotNull
-	@NotEmpty
-	@Email
-	private String emailReceptor;
+  @NotNull
+  @NotEmpty
+  @Email
+  private String emailReceptor;
 
-	@OneToMany(mappedBy = "conversacion", fetch = FetchType.EAGER)
-	private List<Mensaje> mensajes;
+  @OneToMany(mappedBy = "conversacion", fetch = FetchType.EAGER)
+  private List<Mensaje> mensajes;
 
-	public Long getId() {
-		return id;
-	}
+  public Long getId() {
+    return id;
+  }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+  public void setId(Long id) {
+    this.id = id;
+  }
 
-	public String getEmailEmisor() {
-		return emailEmisor;
-	}
+  public String getEmailEmisor() {
+    return emailEmisor;
+  }
 
-	public void setEmailEmisor(String emailEmisor) {
-		this.emailEmisor = emailEmisor;
-	}
+  public void setEmailEmisor(String emailEmisor) {
+    this.emailEmisor = emailEmisor;
+  }
 
-	public String getEmailReceptor() {
-		return emailReceptor;
-	}
+  public String getEmailReceptor() {
+    return emailReceptor;
+  }
 
-	public void setEmailReceptor(String emailReceptor) {
-		this.emailReceptor = emailReceptor;
-	}
+  public void setEmailReceptor(String emailReceptor) {
+    this.emailReceptor = emailReceptor;
+  }
 
-	public List<Mensaje> getMensajes() {
-		return mensajes;
-	}
+  public List<Mensaje> getMensajes() {
+    return mensajes;
+  }
 
-	public void setMensajes(List<Mensaje> mensajes) {
-		this.mensajes = mensajes;
-	}
+  public void setMensajes(List<Mensaje> mensajes) {
+    this.mensajes = mensajes;
+  }
 
 }
