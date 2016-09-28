@@ -22,6 +22,7 @@ public class UsuariosService {
 
 	public Usuario findUsuario(String email) {
 		TypedQuery<Usuario> q = em.createNamedQuery(Usuario.SQ_findByEmail, Usuario.class);
+		q.setParameter(Usuario.SQ_PARAM_EMAIL, email);
 		try {
 			return q.getSingleResult();
 		} catch (NoResultException e) {
