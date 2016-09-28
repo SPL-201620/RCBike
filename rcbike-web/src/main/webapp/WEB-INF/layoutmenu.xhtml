@@ -1,0 +1,27 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pm="http://primefaces.org/modena">
+
+    <div class="Animated05" id="layout-menu-cover">
+        <h:form id="menuform">
+            <pm:menu>
+      			<p:submenu id="m_viajes" label="Viajes" icon="icon-directions_bike">
+                    <p:menuitem id="mi_viajes_buscar" value="Buscar Viajes" icon="icon-nature_people" url="#" />
+                    <p:menuitem id="mi_viajes_crear" value="Crear Viajes" icon="icon-map2" url="#" />
+                </p:submenu>
+                <p:submenu id="m_venta" label="Clasificados" icon="icon-shopping_cart">
+                	<p:menuitem id="mi_venta_buscar" value="Buscar Bicicletas" icon="icon-add_shopping_cart" url="#" />
+                	<p:menuitem id="mi_venta_crear" value="Publicar Bicicleta" icon="icon-marquee-plus" url="#" />
+                </p:submenu>
+                <p:menuitem id="mi_alquiler" value="Alquiler" icon="icon-local_offer" url="#" />
+                <p:separator />
+            </pm:menu>
+        </h:form>
+
+    </div>
+
+</ui:composition>
