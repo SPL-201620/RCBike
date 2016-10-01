@@ -21,7 +21,7 @@
         <a id="show-top-menu" class="ShowOnMobile ripplelink"><i class="icon-more_vert" id="active"></i><i class="icon-close DispNone" id="passive"></i> </a>
         
         <ul id="top-menu">
-           	<p:outputPanel layout="inline" rendered="#{autenticacionManager.autenticado}">
+           	<p:outputPanel layout="inline" rendered="#{autenticacionManager.autenticado()}">
             <li>
 	                <a class="ripplelink"><i class="icon-notifications_none"></i> <span class="ShowOnMobile">Notifications</span></a>
 	                <ul>
@@ -44,8 +44,8 @@
 <!--             </li> -->
             <li>
         	    <h:link value="" outcome="/pb/login" >
-    	    		<i class="icon-power #{autenticacionManager.autenticado ? 'Red' : 'Green'}"/>
-    	    		<h:outputText value="#{autenticacionManager.autenticado ? 'Salir' : 'Ingresar'}" styleClass="ShowOnMobile"/>
+    	    		<i class="icon-power #{autenticacionManager.autenticado() ? 'Red' : 'Green'}"/>
+    	    		<h:outputText value="#{autenticacionManager.autenticado() ? 'Salir' : 'Ingresar'}" styleClass="ShowOnMobile"/>
 	            </h:link>
             </li>
         </ul>
