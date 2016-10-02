@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -17,8 +19,11 @@ import org.hibernate.validator.constraints.NotEmpty;
 @SuppressWarnings("serial")
 @Entity
 @XmlRootElement
+@NamedQueries({@NamedQuery(name = "listByEmail", query = "SELECT e FROM Conversacion e WHERE e.emailEmisor = :emailEmisor and e.emailReceptor = :emailReseptor")})
 public class Conversacion implements Serializable {
 
+    public static final String SQ_LISTBYEMAILS = "listByEmail";
+       
   @Id
   @GeneratedValue
   private Long id;

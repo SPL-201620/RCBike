@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -15,14 +17,17 @@ import javax.xml.bind.annotation.XmlRootElement;
 @SuppressWarnings("serial")
 @Entity
 @XmlRootElement
+@NamedQueries({@NamedQuery(name = "listByConversacion", query = "SELECT e FROM Mensaje e WHERE e.conversacion = :conversacion")})
 public class Mensaje implements Serializable {
+    
+   public static final String SQ_LISTBYCONVERSACION = "listByConversacion";
 
   @Id
   @GeneratedValue
   private Long id;
 
   private String contenido;
-
+  
   @Temporal(TemporalType.TIMESTAMP)
   private Date fechaHora;
 
