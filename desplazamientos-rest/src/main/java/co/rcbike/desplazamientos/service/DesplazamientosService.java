@@ -8,7 +8,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
-import co.rcbike.desplazamientos.model.RutaOrganizada;
+import co.rcbike.desplazamientos.model.Ruta;
 import co.rcbike.desplazamientos.model.RutaRealizada;
 import co.rcbike.desplazamientos.model.WaypointRuta;
 
@@ -37,8 +37,8 @@ public class DesplazamientosService {
 	 * @param recorrido
 	 *            informacion del recorrido a crear
 	 */
-	public void crearRecorrido(RutaOrganizada rutaOrganizada) {
-		em.persist(rutaOrganizada);
+	public void crearRuta(Ruta ruta) {
+		em.persist(ruta);
 	}
 
 	/**
@@ -62,5 +62,9 @@ public class DesplazamientosService {
 		q.setParameter(WaypointRuta.SQ_PARAM_ID_RUTA, idRuta);
 		return q.getResultList();
 	}
+	
+	//Creacion Ruta
+	
+	//Listar rutas grupales, no vencidas, donde 
 
 }

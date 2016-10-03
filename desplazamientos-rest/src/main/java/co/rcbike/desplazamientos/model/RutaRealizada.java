@@ -4,12 +4,15 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -19,7 +22,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 @SuppressWarnings("serial")
 @Entity
 @XmlRootElement
-@NamedQueries({ @NamedQuery(name = "findByCreador2", query = "SELECT e FROM RutaRealizada e WHERE e.emailCreador = :emailCreador") })
+@NamedQueries({
+		@NamedQuery(name = "findByCreador2", query = "SELECT e FROM RutaRealizada e WHERE e.emailCreador = :emailCreador") })
 public class RutaRealizada implements Serializable {
 
 	public static final String SQ_findByCreador = "findByCreador2";
@@ -33,19 +37,11 @@ public class RutaRealizada implements Serializable {
 	@NotEmpty
 	@Email
 	private String emailCreador;
-	
-	@NotNull
-	@NotEmpty
-	private Date fecha;
-	
-	@NotNull
-	@NotEmpty
-	@Enumerated(EnumType.STRING)
-	private TipoRecorrido tipo;
 
 	@NotNull
 	@NotEmpty
-	private Integer calorias;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date fecha;
 
 	@NotNull
 	@NotEmpty
@@ -54,6 +50,10 @@ public class RutaRealizada implements Serializable {
 	@NotNull
 	@NotEmpty
 	private Integer numeroCompaneros;
+
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "ID_RUTA")
+	private Ruta ruta;
 
 	public Long getId() {
 		return id;
@@ -79,22 +79,6 @@ public class RutaRealizada implements Serializable {
 		this.fecha = fecha;
 	}
 
-	public TipoRecorrido getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(TipoRecorrido tipo) {
-		this.tipo = tipo;
-	}
-
-	public Integer getCalorias() {
-		return calorias;
-	}
-
-	public void setCalorias(Integer calorias) {
-		this.calorias = calorias;
-	}
-
 	public String getClima() {
 		return clima;
 	}
@@ -109,6 +93,14 @@ public class RutaRealizada implements Serializable {
 
 	public void setNumeroCompaneros(Integer numeroCompaneros) {
 		this.numeroCompaneros = numeroCompaneros;
+	}
+
+	public Ruta getRuta() {
+		return ruta;
+	}
+
+	public void setRuta(Ruta ruta) {
+		this.ruta = ruta;
 	}
 
 }
