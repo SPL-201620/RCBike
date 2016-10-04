@@ -34,18 +34,20 @@
                     <div class="Container96 Fnone MarAuto">
                         
                         <!-- SUB TOPBAR START -->
+                        <p:outputPanel layout="block" rendered="#{autenticacionManager.autenticado()}">
                         <div class="Container100 UserLinks">
                             <div class="ContainerIndent TexAlRight">
                                 <a href="#" class="DispInlBlock Fright BoldGray HoverEffect">
                                 	<i class="icon-account_circle Fs30"></i>
                                 </a>
                                 <a href="#" class="DispInlBlock Fright BoldGray MarRight10 HoverEffect">
-                                	<span class="Fs22 FontRobotoLight">Hola! Nombre Apellido</span> 
+                                	<span class="Fs22 FontRobotoLight">Hola! <h:outputText value="#{autenticacionManager.usuario.nombres} #{autenticacionManager.usuario.apellidos}" /> </span> 
                                 </a>
                             </div>   
 
                             <div class="EmptyBox10"></div>
                         </div>
+                        </p:outputPanel>
 
                         <!-- SUB TOPBAR END -->
                         

@@ -92,7 +92,7 @@ public class ModulosManager implements Serializable {
     @PostConstruct
     public void init() {
         log.debug("Inicializado " + this.getClass().getName());
-        clientesRest.put(Modulo.autenticacion, autenticacionService);
+        clientesRest.put(Modulo.autenticacion, usuariosService);
         clientesRest.put(Modulo.usuarios, usuariosService);
         clientesRest.put(Modulo.venta, ventaService);
         clientesRest.put(Modulo.alquiler, alquilerService);

@@ -21,10 +21,10 @@ import org.hibernate.validator.constraints.NotEmpty;
 @XmlRootElement
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = "email") )
 @NamedQueries({
-        @NamedQuery(name = "findByEmail", query = "SELECT au FROM AutenticacionUsuario au WHERE au.email = :email")})
+        @NamedQuery(name = "autByEmail", query = "SELECT au FROM AutenticacionUsuario au WHERE au.email = :email")})
 public class AutenticacionUsuario implements Serializable {
 
-    public static final String SQ_findByEmail = "findByEmail";
+    public static final String SQ_autByEmail = "autByEmail";
     public static final String SQ_PARAM_EMAIL = "email";
 
     @Id

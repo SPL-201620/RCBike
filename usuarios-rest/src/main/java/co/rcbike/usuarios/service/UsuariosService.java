@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
+import co.rcbike.autenticacion.service.AutenticacionService;
 import co.rcbike.usuarios.model.Usuario;
 
 @Stateless
@@ -20,6 +21,9 @@ public class UsuariosService {
 	@Inject
 	private EntityManager em;
 
+	@Inject
+	private AutenticacionService autenticacion;
+	
 	public Usuario findUsuario(String email) {
 		TypedQuery<Usuario> q = em.createNamedQuery(Usuario.SQ_findByEmail, Usuario.class);
 		q.setParameter(Usuario.SQ_PARAM_EMAIL, email);
@@ -41,7 +45,13 @@ public class UsuariosService {
 	}
 
 	public void crearUsuario(Usuario usuario) {
-
+	    usuario.setId(null);
+	    try {
+            em.persist(usuario);
+            autenticacion.registrar(usuario.getEmail(), usuario.getNombres());
+        } catch (Exception e) {
+            //TODO usuario ya existe
+        }
 	}
 
 	public void editarUsuario(Usuario usuario) {
