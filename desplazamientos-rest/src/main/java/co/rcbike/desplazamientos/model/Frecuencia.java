@@ -1,6 +1,6 @@
 package co.rcbike.desplazamientos.model;
 
-public enum FrecuenciaViaje {
+public enum Frecuencia {
     DIARIA,
     SEMANAL;
 }

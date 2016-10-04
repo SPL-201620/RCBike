@@ -19,8 +19,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 @SuppressWarnings("serial")
 @Entity
 @XmlRootElement
-@NamedQueries({ @NamedQuery(name = "findByIdRuta", query = "SELECT e FROM WaypointRuta e WHERE e.ruta.id = :idRuta") })
-public class WaypointRuta implements Serializable {
+@NamedQueries({ @NamedQuery(name = "findByIdRuta", query = "SELECT e FROM Waypoint e WHERE e.ruta.id = :idRuta") })
+public class Waypoint implements Serializable {
 
 	public static final String SQ_findByIdRuta = "findByIdRuta";
 	public static final String SQ_PARAM_ID_RUTA = "idRuta";

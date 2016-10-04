@@ -9,8 +9,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
 import co.rcbike.desplazamientos.model.Ruta;
-import co.rcbike.desplazamientos.model.RutaRealizada;
-import co.rcbike.desplazamientos.model.WaypointRuta;
+import co.rcbike.desplazamientos.model.Tipo;
+import co.rcbike.desplazamientos.model.Waypoint;
 
 @Stateless
 public class DesplazamientosService {
@@ -22,33 +22,38 @@ public class DesplazamientosService {
 	private EntityManager em;
 
 	/**
-	 * Lista todos los recorridos realizados por un usuario
-	 * 
-	 * @param email
-	 *            identificador del usuario
-	 */
-	public List<RutaRealizada> listRecorridoRealizado(String email) {
-		throw new IllegalStateException("Not Implemented");
-	}
-
-	/**
-	 * Permite crear cualquier tipo de recorrido
+	 * Lista todos los recorridos individuales realizados por un usuario
 	 * 
 	 * @param recorrido
 	 *            informacion del recorrido a crear
 	 */
-	public void crearRuta(Ruta ruta) {
+	public List<Ruta> listViajesGrupales() {
+		TypedQuery<Ruta> q = em.createNamedQuery(Ruta.SQ_findByTipo, Ruta.class);
+		q.setParameter(Ruta.SQ_PARAM_TIPO, Tipo.GRUPAL);
+		return q.getResultList();
+	}
+
+	/**
+	 * Lista todos los recorridos individuales realizados por un usuario
+	 * 
+	 * @param recorrido
+	 *            informacion del recorrido a crear
+	 */
+	public List<Ruta> listViajesIndividuales(String emailCreador) {
+		TypedQuery<Ruta> q = em.createNamedQuery(Ruta.SQ_findByTipoAndCreador, Ruta.class);
+		q.setParameter(Ruta.SQ_PARAM_TIPO, Tipo.INDIVIDUAL);
+		q.setParameter(Ruta.SQ_PARAM_EMAIL_CREADOR, emailCreador);
+		return q.getResultList();
+	}
+
+	/**
+	 * Permite guardar un recorrido individual o crear un recorrido organizado
+	 * 
+	 * @param ruta
+	 *            informacion de la ruta a crear
+	 */
+	public void guardarViaje(Ruta ruta) {
 		em.persist(ruta);
-	}
-
-	/**
-	 * Permite crear cualquier tipo de recorrido
-	 * 
-	 * @param recorrido
-	 *            informacion del recorrido a crear
-	 */
-	public void registrarViaje(RutaRealizada rutaRealizada) {
-		em.persist(rutaRealizada);
 	}
 
 	/**
@@ -57,14 +62,10 @@ public class DesplazamientosService {
 	 * @param idRuta 
 	 *            identificador de la ruta
 	 */
-	public List<WaypointRuta> listWaypointsRuta(Long idRuta) {
-		TypedQuery<WaypointRuta> q = em.createNamedQuery(WaypointRuta.SQ_findByIdRuta, WaypointRuta.class);
-		q.setParameter(WaypointRuta.SQ_PARAM_ID_RUTA, idRuta);
+	public List<Waypoint> listWaypointsRuta(Long idRuta) {
+		TypedQuery<Waypoint> q = em.createNamedQuery(Waypoint.SQ_findByIdRuta, Waypoint.class);
+		q.setParameter(Waypoint.SQ_PARAM_ID_RUTA, idRuta);
 		return q.getResultList();
 	}
 	
-	//Creacion Ruta
-	
-	//Listar rutas grupales, no vencidas, donde 
-
 }

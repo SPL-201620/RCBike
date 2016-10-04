@@ -1,6 +1,6 @@
 package co.rcbike.desplazamientos.model;
 
-public enum TipoRecorrido {
+public enum Tipo {
     GRUPAL,
     INDIVIDUAL;
 }

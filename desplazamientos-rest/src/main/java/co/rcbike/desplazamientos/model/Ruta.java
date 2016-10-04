@@ -2,7 +2,6 @@ package co.rcbike.desplazamientos.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.DayOfWeek;
 import java.util.Date;
 import java.util.Set;
 
@@ -14,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -23,11 +24,15 @@ import org.hibernate.validator.constraints.NotEmpty;
 @SuppressWarnings("serial")
 @Entity
 @XmlRootElement
-@NamedQueries({ @NamedQuery(name = "findByCreador", query = "SELECT e FROM Ruta e WHERE e.emailCreador = :emailCreador") })
+@NamedQueries({ @NamedQuery(name = "findByTipoAndCreador", query = "SELECT e FROM Ruta e WHERE e.emailCreador = :emailCreador and e.tipo = :tipo"), 
+	@NamedQuery(name = "findByTipo", query = "SELECT e FROM Ruta e WHERE e.tipo = :tipo") })
+
 public class Ruta implements Serializable {
 
-	public static final String SQ_findByCreador = "findByCreador";
+	public static final String SQ_findByTipoAndCreador = "findByTipoAndCreador";
+	public static final String SQ_findByTipo = "findByTipo";
 	public static final String SQ_PARAM_EMAIL_CREADOR = "emailCreador";
+	public static final String SQ_PARAM_TIPO = "tipo";
 
 	@Id
 	@GeneratedValue
@@ -41,7 +46,7 @@ public class Ruta implements Serializable {
 	@NotNull
 	@NotEmpty
 	@Enumerated(EnumType.STRING)
-	private TipoRecorrido tipo;
+	private Tipo tipo;
 
 	@NotNull
 	@NotEmpty
@@ -65,34 +70,66 @@ public class Ruta implements Serializable {
 
 	@NotNull
 	@NotEmpty
-	private Date tiempoEstimado;
-
-	@NotNull
-	@NotEmpty
-	@Enumerated(EnumType.STRING)
-	private FrecuenciaViaje frecuencia;
-
-	@NotNull
-	@NotEmpty
-	@Enumerated(EnumType.STRING)
-	private DayOfWeek cada;
-
-	@NotNull
-	@NotEmpty
-	private Date diafinal;
-
-	@NotNull
-	@NotEmpty
-	private Date hora;
-	
-	private String emailParticipantes;
+	private int tiempoEstimado;
 
 	@NotNull
 	@NotEmpty
 	private Integer calorias;
 
+	@NotNull
+	@NotEmpty
+	private String clima;
+
+	/*Solo para individuales*/
+	@NotNull
+	@NotEmpty
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date fecha;
+
+	/*Solo para grupales*/
+	@NotNull
+	@NotEmpty
+	@Enumerated(EnumType.STRING)
+	private Frecuencia frecuencia;
+
+	@NotNull
+	@NotEmpty
+	private String lunes = "N";
+
+	@NotNull
+	@NotEmpty
+	private String martes = "N";
+
+	@NotNull
+	@NotEmpty
+	private String miercoles = "N";
+
+	@NotNull
+	@NotEmpty
+	private String jueves = "N";
+
+	@NotNull
+	@NotEmpty
+	private String viernes = "N";
+
+	@NotNull
+	@NotEmpty
+	private String sabado = "N";
+
+	@NotNull
+	@NotEmpty
+	private String domingo = "N";
+
+	@NotNull
+	@NotEmpty
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date hora;
+	
     @OneToMany(mappedBy="ruta")
-	private Set<WaypointRuta> waypoints;
+	private Set<Waypoint> waypoints;
+
+    @OneToMany(mappedBy="ruta")
+	private Set<Participante> participantes;
 
 	public Long getId() {
 		return id;
@@ -110,11 +147,11 @@ public class Ruta implements Serializable {
 		this.emailCreador = emailCreador;
 	}
 
-	public TipoRecorrido getTipo() {
+	public Tipo getTipo() {
 		return tipo;
 	}
 
-	public void setTipo(TipoRecorrido tipo) {
+	public void setTipo(Tipo tipo) {
 		this.tipo = tipo;
 	}
 
@@ -158,36 +195,100 @@ public class Ruta implements Serializable {
 		this.distancia = distancia;
 	}
 
-	public Date getTiempoEstimado() {
+	public int getTiempoEstimado() {
 		return tiempoEstimado;
 	}
 
-	public void setTiempoEstimado(Date tiempoEstimado) {
+	public void setTiempoEstimado(int tiempoEstimado) {
 		this.tiempoEstimado = tiempoEstimado;
 	}
-	
-	public FrecuenciaViaje getFrecuencia() {
+
+	public Integer getCalorias() {
+		return calorias;
+	}
+
+	public void setCalorias(Integer calorias) {
+		this.calorias = calorias;
+	}
+
+	public String getClima() {
+		return clima;
+	}
+
+	public void setClima(String clima) {
+		this.clima = clima;
+	}
+
+	public Date getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
+
+	public Frecuencia getFrecuencia() {
 		return frecuencia;
 	}
 
-	public void setFrecuencia(FrecuenciaViaje frecuencia) {
+	public void setFrecuencia(Frecuencia frecuencia) {
 		this.frecuencia = frecuencia;
 	}
 
-	public DayOfWeek getCada() {
-		return cada;
+	public String getLunes() {
+		return lunes;
 	}
 
-	public void setCada(DayOfWeek cada) {
-		this.cada = cada;
+	public void setLunes(String lunes) {
+		this.lunes = lunes;
 	}
 
-	public Date getDiafinal() {
-		return diafinal;
+	public String getMartes() {
+		return martes;
 	}
 
-	public void setDiafinal(Date diafinal) {
-		this.diafinal = diafinal;
+	public void setMartes(String martes) {
+		this.martes = martes;
+	}
+
+	public String getMiercoles() {
+		return miercoles;
+	}
+
+	public void setMiercoles(String miercoles) {
+		this.miercoles = miercoles;
+	}
+
+	public String getJueves() {
+		return jueves;
+	}
+
+	public void setJueves(String jueves) {
+		this.jueves = jueves;
+	}
+
+	public String getViernes() {
+		return viernes;
+	}
+
+	public void setViernes(String viernes) {
+		this.viernes = viernes;
+	}
+
+	public String getSabado() {
+		return sabado;
+	}
+
+	public void setSabado(String sabado) {
+		this.sabado = sabado;
+	}
+
+	public String getDomingo() {
+		return domingo;
+	}
+
+	public void setDomingo(String domingo) {
+		this.domingo = domingo;
 	}
 
 	public Date getHora() {
@@ -198,28 +299,19 @@ public class Ruta implements Serializable {
 		this.hora = hora;
 	}
 
-	public Set<WaypointRuta> getWaypoints() {
+	public Set<Waypoint> getWaypoints() {
 		return waypoints;
 	}
 
-	public void setWaypoints(Set<WaypointRuta> waypoints) {
+	public void setWaypoints(Set<Waypoint> waypoints) {
 		this.waypoints = waypoints;
 	}
 
-	public String getEmailParticipantes() {
-		return emailParticipantes;
+	public Set<Participante> getParticipantes() {
+		return participantes;
 	}
 
-	public void setEmailParticipantes(String emailParticipantes) {
-		this.emailParticipantes = emailParticipantes;
+	public void setParticipantes(Set<Participante> participantes) {
+		this.participantes = participantes;
 	}
-	
-	public Integer getCalorias() {
-		return calorias;
-	}
-
-	public void setCalorias(Integer calorias) {
-		this.calorias = calorias;
-	}
-	
 }

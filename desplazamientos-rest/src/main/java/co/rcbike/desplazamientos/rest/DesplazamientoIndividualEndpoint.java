@@ -9,7 +9,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import co.rcbike.desplazamientos.model.WaypointRuta;
+import co.rcbike.desplazamientos.model.Waypoint;
 import co.rcbike.desplazamientos.service.DesplazamientosService;
 
 @Path("/individual")
@@ -29,7 +29,7 @@ public class DesplazamientoIndividualEndpoint {
     @GET
     @Path("/listAllWaypointRuta")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<WaypointRuta> listAllWaypointRuta() {
+    public List<Waypoint> listAllWaypointRuta() {
         return service.listWaypointsRuta(new Long(1));
     }
 
