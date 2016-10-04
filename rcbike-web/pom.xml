@@ -109,7 +109,70 @@
 		<dependency>
 			<groupId>co.rcbike</groupId>
 			<artifactId>theme</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
+			<version>1.0.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.16.10</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>eu.agilejava</groupId>
+			<artifactId>snoop-client</artifactId>
+			<version>${snoop.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>co.rcbike</groupId>
+			<artifactId>alquiler-bici-rest</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<type>jar</type>
+			<classifier>model</classifier>
+		</dependency>
+		<dependency>
+			<groupId>co.rcbike</groupId>
+			<artifactId>configurador-bici-rest</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<type>jar</type>
+			<classifier>model</classifier>
+		</dependency>
+		<dependency>
+			<groupId>co.rcbike</groupId>
+			<artifactId>desplazamientos-rest</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<type>jar</type>
+			<classifier>model</classifier>
+		</dependency>
+		<dependency>
+			<groupId>co.rcbike</groupId>
+			<artifactId>mensajeria-rest</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<type>jar</type>
+			<classifier>model</classifier>
+		</dependency>
+		<dependency>
+			<groupId>co.rcbike</groupId>
+			<artifactId>reportes-rest</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<type>jar</type>
+			<classifier>model</classifier>
+		</dependency>
+		<dependency>
+			<groupId>co.rcbike</groupId>
+			<artifactId>usuarios-rest</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<type>jar</type>
+			<classifier>model</classifier>
+		</dependency>
+		<dependency>
+			<groupId>co.rcbike</groupId>
+			<artifactId>ventas-bici-rest</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<type>jar</type>
+			<classifier>model</classifier>
 		</dependency>
 	</dependencies>
 
@@ -118,7 +181,6 @@
 		<plugins>
 			<plugin>
 				<artifactId>maven-war-plugin</artifactId>
-				<version>${version.war.plugin}</version>
 				<configuration>
 					<failOnMissingWebXml>false</failOnMissingWebXml>
 				</configuration>

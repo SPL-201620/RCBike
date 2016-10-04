@@ -6,66 +6,66 @@ import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 
-import co.rcbike.desplazamientos.model.Recorrido;
+import co.rcbike.desplazamientos.model.Ruta;
+import co.rcbike.desplazamientos.model.Tipo;
+import co.rcbike.desplazamientos.model.Waypoint;
 
 @Stateless
 public class DesplazamientosService {
 
-    @Inject
-    private Logger log;
+	@Inject
+	private Logger log;
 
-    @Inject
-    private EntityManager em;
+	@Inject
+	private EntityManager em;
 
-    /**
-     * Lista todos los recorridos grupales vigentes del sistema
-     * 
-     * @param tipo
-     *            indica si se quieren consultar los recorridos de tipo grupal,
-     *            individual todos los recorridos
-     * @return
-     */
-    public List<Recorrido> listRecorridoGrupal() {
-        throw new IllegalStateException("Not Implemented");
-    }
+	/**
+	 * Lista todos los recorridos individuales realizados por un usuario
+	 * 
+	 * @param recorrido
+	 *            informacion del recorrido a crear
+	 */
+	public List<Ruta> listViajesGrupales() {
+		TypedQuery<Ruta> q = em.createNamedQuery(Ruta.SQ_findByTipo, Ruta.class);
+		q.setParameter(Ruta.SQ_PARAM_TIPO, Tipo.GRUPAL);
+		return q.getResultList();
+	}
 
-    /**
-     * Lista todos los recorridos individuales vigentes del usuario
-     * 
-     * @param email
-     * @return
-     */
-    public List<Recorrido> listRecorridoIndividual(String email) {
-        throw new IllegalStateException("Not Implemented");
-    }
+	/**
+	 * Lista todos los recorridos individuales realizados por un usuario
+	 * 
+	 * @param recorrido
+	 *            informacion del recorrido a crear
+	 */
+	public List<Ruta> listViajesIndividuales(String emailCreador) {
+		TypedQuery<Ruta> q = em.createNamedQuery(Ruta.SQ_findByTipoAndCreador, Ruta.class);
+		q.setParameter(Ruta.SQ_PARAM_TIPO, Tipo.INDIVIDUAL);
+		q.setParameter(Ruta.SQ_PARAM_EMAIL_CREADOR, emailCreador);
+		return q.getResultList();
+	}
 
-    /**
-     * Lista todos los recorridos realizados por un usuario
-     * 
-     * @param email
-     *            identificador del usuario
-     */
-    public List<Recorrido> listRecorridoRealizado(String email) {
-        throw new IllegalStateException("Not Implemented");
-    }
+	/**
+	 * Permite guardar un recorrido individual o crear un recorrido organizado
+	 * 
+	 * @param ruta
+	 *            informacion de la ruta a crear
+	 */
+	public void guardarViaje(Ruta ruta) {
+		em.persist(ruta);
+	}
 
-    /**
-     * Permite crear cualquier tipo de recorrido
-     * 
-     * @param recorrido
-     *            informacion del recorrido a crear
-     */
-    public void crearRecorrido(Recorrido recorrido) {
-        throw new IllegalStateException("Not Implemented");
-    }
-
-    /**
-     * Marca un recorrido como realizado
-     * 
-     * @param idRecorrido
-     */
-    public void realizarRecorrido(Long idRecorrido) {
-        throw new IllegalStateException("Not Implemented");
-    }
+	/**
+	 * Lista todos los Waypoints de una Ruta
+	 * 
+	 * @param idRuta 
+	 *            identificador de la ruta
+	 */
+	public List<Waypoint> listWaypointsRuta(Long idRuta) {
+		TypedQuery<Waypoint> q = em.createNamedQuery(Waypoint.SQ_findByIdRuta, Waypoint.class);
+		q.setParameter(Waypoint.SQ_PARAM_ID_RUTA, idRuta);
+		return q.getResultList();
+	}
+	
 }

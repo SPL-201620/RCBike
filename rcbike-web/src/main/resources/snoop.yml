@@ -1,0 +1,2 @@
+snoop:
+  snoopService: localhost:8080/snoop-service/

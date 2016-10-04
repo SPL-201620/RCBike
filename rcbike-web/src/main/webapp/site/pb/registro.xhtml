@@ -12,43 +12,47 @@
             <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
             <meta name="apple-mobile-web-app-capable" content="yes" />
         </f:facet>
-        <title>RC Bike - Ingreso</title>
+        <title>RC Bike - Registro</title>
         <ui:insert name="head" />
     </h:head>
 
     <h:body styleClass="GrayModena Geometry" style="height:auto;">
-        
+        <h:form>
         <div class="Wid90 DispBlock MarAuto MarTopPerc5 TexAlCenter">
             <div class="Wid40 MarAuto WidAutoOnMobile">
                 <h:graphicImage name="images/logo-dark.svg" library="modena-layout" style="width:40%; max-width:200px;"/>
                 <div class="EmptyBox30"></div>
                 <div class="Card ShadowEffect">
-                    <div class="Wid100 OvHidden BigTopic Fs30"><i class="icon-security Fs60 DispBlock"></i> Ingreso / Registro</div>
-	                <div class="EmptyBox10"></div>
+                    <div class="Wid100 OvHidden BigTopic Fs30">Registro</div>
+                    <div class="Wid100 OvHidden BigTopic Fs30"><i class="icon-face Fs60 DispBlock"/></div>
                     <div class="Wid100">
-	                    <div class="Container50">
-	                    	<p:button value="Facebook" icon="fa fa-facebook" styleClass="Wid90 Fs18 White RaisedButton FloatNoneOnMobile" href="dashboard.xhtml"/>
-	                    </div>
-	                    <div class="Container50">
-	                    	<p:button value="Twitter" icon="fa fa-twitter" styleClass="Wid90 Fs18 White RaisedButton FloatNoneOnMobile" href="dashboard.xhtml"/>
-	                    </div>
+                    	<p:inputText placeholder="Correo" value="#{registroManager.email}" 
+                    		disabled="#{empty registroManager.email ? false : true}" required="true"
+                    	 	styleClass="Wid80 TexAlCenter Fs18" />
                     </div>
-                    <div class="EmptyBox10"></div>
-                    <div class="Separator"></div>
-                    <div class="Wid100"><p:inputText placeholder="Correo" styleClass="Wid80 TexAlCenter Fs18"/></div>
-                    <div class="EmptyBox10"></div>
-                    <div class="Wid100"><p:inputText type="password" placeholder="Contraseña" styleClass="Wid80 TexAlCenter Fs18"/></div>
-                    <div class="EmptyBox30"></div>
-                    <div class="Wid100"><p:button value="Ingresar / Registrarme" icon="fa fa-sign-in" styleClass="Wid80 Fs18 White RaisedButton FloatNoneOnMobile" href="dashboard.xhtml"/></div>
-                    <div class="Separator"></div>
-                    <div class="Wid100"><p:button value="Olvide mi contraseña" icon="fa fa-lock" styleClass="Wid80 RedButton Fs18 White RaisedButton FloatNoneOnMobile"/></div>
+                    <div class="EmptyBox10"/>
+                    <div class="Wid100">
+                    	<p:inputText placeholder="Nombres" value="#{registroManager.nombres}" required="true"
+                    	 	styleClass="Wid80 TexAlCenter Fs18" />
+                    </div>
+                    <div class="EmptyBox10"/>
+                    <div class="Wid100">
+                    	<p:inputText placeholder="Apellidos" value="#{registroManager.apellidos}" required="true"
+                    	 	styleClass="Wid80 TexAlCenter Fs18" />
+                    </div>
+                    <div class="EmptyBox30"/>
+                    <div class="Wid100">
+                    	<p:commandButton value="Registrarme" action="#{registroManager.registrar()}" icon="fa fa-user-plus" 
+                    		styleClass="Wid80 Fs18 White RaisedButton FloatNoneOnMobile"/>
+                    </div>
                     <div class="EmptyBox20"></div>
                 </div>
                 <div class="Wid100 TexAlCenter MarTop20 Fs14 FontRobotoRegular Gray">
-                        <i class="fa fa-copyright"></i>  PrimeFaces Modena Theme And Layout <br/> All rights reserved.
-                    </div>
+        	        <i class="fa fa-copyright"></i>  Los 4 Fantasticos <br/> All rights reserved.
+                </div>
             </div>
         </div>
+        </h:form>
         
         <h:outputStylesheet name="css/core-layout.css" library="modena-layout" />
         <h:outputStylesheet name="css/animate.css" library="modena-layout" />

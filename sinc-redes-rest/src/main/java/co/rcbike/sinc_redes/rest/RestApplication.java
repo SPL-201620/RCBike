@@ -5,7 +5,7 @@ import javax.ws.rs.core.Application;
 
 import eu.agilejava.snoop.annotation.EnableSnoopClient;
 
-@EnableSnoopClient(serviceName = "sinc-redes")
+@EnableSnoopClient(serviceName = "sinc_redes")
 @ApplicationPath("rest")
 public class RestApplication extends Application {
     /* class body intentionally left blank */

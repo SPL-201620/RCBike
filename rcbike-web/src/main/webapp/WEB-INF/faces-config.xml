@@ -1,24 +1,60 @@
 <?xml version="1.0"?>
 
 <!-- Marker file indicating JSF 2.2 should be enabled in the application -->
-<faces-config version="2.2"
-    xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="
+<faces-config version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
         http://xmlns.jcp.org/xml/ns/javaee
         http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
-        
-    <component>
-        <component-type>org.primefaces.component.ModenaMenu</component-type>
-        <component-class>org.primefaces.modena.component.menu.ModenaMenu</component-class>
-    </component>
-    
-    <render-kit>
-        <renderer>
-            <component-family>org.primefaces.component</component-family>
-            <renderer-type>org.primefaces.component.ModenaMenuRenderer</renderer-type>
-            <renderer-class>org.primefaces.modena.component.menu.ModenaMenuRenderer</renderer-class>
-        </renderer>
-    </render-kit>
-            
+
+	<component>
+		<component-type>org.primefaces.component.ModenaMenu</component-type>
+		<component-class>org.primefaces.modena.component.menu.ModenaMenu</component-class>
+	</component>
+
+	<render-kit>
+		<renderer>
+			<component-family>org.primefaces.component</component-family>
+			<renderer-type>org.primefaces.component.ModenaMenuRenderer</renderer-type>
+			<renderer-class>org.primefaces.modena.component.menu.ModenaMenuRenderer</renderer-class>
+		</renderer>
+	</render-kit>
+
+
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>login</from-outcome>
+			<to-view-id>/site/pb/login.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>error</from-outcome>
+			<to-view-id>/site/pb/error.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>dashboard</from-outcome>
+			<to-view-id>/site/pb/dashboard.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>registro</from-outcome>
+			<to-view-id>/site/pb/registro.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>denegado</from-outcome>
+			<to-view-id>/site/pb/access-denied.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
 </faces-config>
