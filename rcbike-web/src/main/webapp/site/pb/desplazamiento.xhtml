@@ -1,78 +1,178 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-xmlns:ui="http://java.sun.com/jsf/facelets"
-xmlns:h="http://java.sun.com/jsf/html"
-xmlns:f="http://java.sun.com/jsf/core"
-xmlns:rich="http://richfaces.org/rich"
-xmlns:m="http://code.google.com/p/gmaps4jsf/">
-<h:head><title>JSF 2.0: Ajax Support</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link href="../css/style.css" rel="stylesheet" type="text/css" />
-<!-- <script type="text/javascript" src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=AIzaSyBfB1qF1ZdhXSYI_zBqrhRh03xy05pQfKs"></script> -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfB1qF1ZdhXSYI_zBqrhRh03xy05pQfKs&amp;signed_in=true&amp;callback=initMap"
-        ></script>
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.js"></script>
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:pm="http://primefaces.org/modena"
+	xmlns:m="http://code.google.com/p/gmaps4jsf/">
 
-<style>.optionList {height: 30px;}</style>
+<h:head>
+	<title>Desplazamiento</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+	<h:outputScript name="js/ripple-effect.js" library="modena-layout" />
+	<h:outputScript name="js/perfect-scrollbar.js" library="modena-layout" />
+	<h:outputScript name="js/layout.js" library="modena-layout" />
+	<script
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfB1qF1ZdhXSYI_zBqrhRh03xy05pQfKs&amp;signed_in=true"></script>
+	<script type="text/javascript"
+		src="http://code.jquery.com/jquery-1.7.1.js"></script>
+
+	<h:outputStylesheet name="css/core-layout.css" library="modena-layout" />
+	<h:outputStylesheet name="css/animate.css" library="modena-layout" />
+	<h:outputStylesheet name="css/modena-font.css" library="modena-layout" />
+	<h:outputStylesheet name="css/ripple-effect.css"
+		library="modena-layout" />
+	<h:outputStylesheet name="css/perfect-scrollbar.css"
+		library="modena-layout" />
+	<h:outputStylesheet name="css/font-awesome.css" library="modena-layout" />
+	<h:outputStylesheet name="css/modena-layout.css"
+		library="modena-layout" />
+
 </h:head>
-<h:body>
-<div id="container">
-    
-    <h1>Gmap4Jsf</h1>
-    <div align="center">
+<h:body class="GrayModena Geometry">
 
-        <f:view contentType="text/html">
-            <h:panelGrid columns="2">
-                <h:form id="mapform" prependId="false">
-                    <m:map jsVariable="map" var="map" mapVar="map" gmapKey="#{gmapBean.gmapkey}" id="map" />
-                     
-                </h:form>
-                <h:panelGroup>
-                    <h:form>
+	<!-- TOPBAR START -->
+	<div id="layout-topbar">
+		<a id="mobile-menu-button"> <span class="ButtonLine"
+			id="ButtonLine1"></span> <span class="ButtonLine" id="ButtonLine2"></span>
+			<span class="ButtonLine" id="ButtonLine3"></span>
+		</a> <a href="/modena/dashboard.xhtml" id="logo"> <h:graphicImage
+				name="images/logo.svg" styleClass="Fleft" library="modena-layout" />
+		</a> <a id="show-top-menu" class="ShowOnMobile ripplelink"><i
+			class="icon-more_vert" id="active"></i><i class="icon-close DispNone"
+			id="passive"></i> </a>
 
-                        <rich:tabPanel switchType="ajax" width="350" height="400">
-                            <rich:tab label="Using Google Map API">
-                                <h:panelGrid columns="2" columnClasses="optionList">
-                                    <h:outputText value="Controls:" />
-                                    <h:panelGroup>
-                                        <a href="javascript: void 0" onclick="map.hideControls()">Hide</a>
-                                        <a href="javascript: void 0" onclick="map.showControls()">Show</a>
-                                        <br />
-                                    </h:panelGroup>
+		<ul id="top-menu">
+			<ui:fragment rendered="#{autenticacionManager.autenticado()}">
+				<li><a class="ripplelink"><i
+						class="icon-notifications_none"></i> <span class="ShowOnMobile">Notifications</span></a>
+					<ul>
+						<li><a href="#"><span class="Orange">Meeting With
+									John</span><br />
+							<span class="Gray Fs14 FontRobotoLight">Today - 13:40 <br />At
+									Creme Cafe - NYC
+							</span></a></li>
+						<li><a href="#"><span class="Blue">Send Reports</span><br />
+							<span class="Gray Fs14 FontRobotoLight">Today - 17:10 <br />To
+									Brian Carpenter
+							</span></a></li>
+						<li><a href="#"><span class="Blue">Test Week</span><br />
+							<span class="Gray Fs14 FontRobotoLight">Today - 18:30 <br />Testing
+									New Modules
+							</span></a></li>
+						<li class="TexAlCenter"><i
+							class="icon-keyboard_control Gray Fs30"></i></li>
+						<li><a href="#"><span class="Red"><i
+									class="icon-alarm_add Fs20 Fleft"></i> Set New Reminder</span></a></li>
+					</ul></li>
+				<li><a href="#{request.contextPath}/logout"><i
+						class="icon-power Red"></i> <span class="ShowOnMobile">Salir</span></a>
+				</li>
+			</ui:fragment>
 
-                                    <h:outputText value="Zoom:" />
-                                    <rich:inputNumberSlider id="zoom" showInput="false"
-                                        minValue="1" maxValue="18" value="#{gmapBean.zoom}"
-                                        onchange="map.setZoom(this.value)" />
+			<ui:fragment rendered="#{!autenticacionManager.autenticado()}">
+				<li><h:link value="" outcome="/site/pb/login">
+						<i class="icon-power Green" />
+						<h:outputText value="Ingresar" styleClass="ShowOnMobile" />
+					</h:link></li>
+			</ui:fragment>
+
+		</ul>
+	</div>
+	<!-- TOPBAR END -->
+
+	<div id="wrapper">
+		<div id="wrapperIndent">
+
+			<!-- -->
+			<div class="Animated05" id="layout-menu-cover">
+				<h:form id="menuform">
+					<pm:menu>
+						<p:submenu id="m_viajes" label="Desplazamiento"
+							icon="icon-directions_bike">
+							<p:menuitem id="mi_viajes_unirse" value="Unirse a Recorrido"
+								icon="icon-nature_people" url="desplazamiento.xhtml" />
+							<p:menuitem id="mi_viajes_consultar"
+								value="Consultar Ruta Realizada" icon="icon-map2" url="#" />
+
+							<p:menuitem id="mi_viajes_crear" value="Crear recorrido"
+								icon="icon-map2" url="#" />
+							<p:menuitem id="mi_viajes_resgistrar" value="Registrar viaje"
+								icon="icon-nature_people" url="#" />
+						</p:submenu>
+						<p:submenu id="m_venta" label="Clasificados"
+							icon="icon-shopping_cart">
+							<p:menuitem id="mi_venta_buscar" value="Buscar Bicicletas"
+								icon="icon-add_shopping_cart" url="#" />
+							<p:menuitem id="mi_venta_crear" value="Publicar Bicicleta"
+								icon="icon-marquee-plus" url="#" />
+						</p:submenu>
+						<p:menuitem id="mi_mensajeria" value="Mensajería"
+							icon="icon-forum" url="mensajeria.xhtml" />
+						<p:menuitem id="mi_alquiler" value="Alquiler"
+							icon="icon-local_offer" url="#" />
+						<p:menuitem id="mi_config_bici" value="Configurador de Bicicleta"
+							icon="icon-build" url="#" />
+						<p:separator />
+					</pm:menu>
+				</h:form>
+
+			</div>
+			<!-- Fin -->
+
+			<div id="layout-portlets-cover">
+				<div class="Container96 Fnone MarAuto">
+
+					<!-- SUB TOPBAR START -->
+					<p:outputPanel layout="block"
+						rendered="#{autenticacionManager.autenticado()}">
+						<div class="Container100 UserLinks">
+							<div class="ContainerIndent TexAlRight">
+								<a href="#" class="DispInlBlock Fright BoldGray HoverEffect">
+									<i class="icon-account_circle Fs30"></i>
+								</a> <a href="#"
+									class="DispInlBlock Fright BoldGray MarRight10 HoverEffect">
+									<span class="Fs22 FontRobotoLight">Hola! <h:outputText
+											value="Ra" />
+								</span>
+								</a>
+							</div>
+
+							<div class="EmptyBox10"></div>
+						</div>
+					</p:outputPanel>
+
+					<!-- SUB TOPBAR END -->
+
+					<f:view contentType="text/html">
+						<h:form id="mapform" prependId="false">
+							<m:map jsVariable="map" var="map" mapVar="map"
+								gmapKey="#{gmapBean.gmapkey}" id="map" />
+						</h:form>
+					</f:view>
+
+					<!-- footer -->
 
 
-                                    <h:outputText value="Map Type:" />
-                                    <h:panelGroup>
-                                        <a href="javascript: void 0"
-                                            onclick="map.setMapType(G_NORMAL_MAP)">Normal</a>
-                                        <a href="javascript: void 0"
-                                            onclick="map.setMapType(G_SATELLITE_MAP)">Satellite</a>
-                                        <a href="javascript: void 0"
-                                            onclick="map.setMapType(G_HYBRID_MAP)">Hybrid</a>
-                                        <br />
-                                    </h:panelGroup>
+				</div>
+			</div>
 
-                                </h:panelGrid>
-                            </rich:tab>
+			<p:ajaxStatus
+				style="width:32px;height:32px;position:fixed;right:7px;bottom:7px">
+				<f:facet name="start">
+					<p:graphicImage name="images/preloader.gif" library="modena-layout" />
+				</f:facet>
 
-                            <rich:tab label="Using Ajax with JSON">
-                                <rich:dataGrid var="place" value="#{gmapBean.point}"
-                                    columns="2">
-                                    <h:graphicImage onclick="showPlace('#{place.id}')"
-                                        style="cursor:pointer" value="resource://#{place.pic}" />
-                                </rich:dataGrid>
-                            </rich:tab>
-                        </rich:tabPanel>
-                    </h:form>
-                </h:panelGroup>
-            </h:panelGrid>
-        </f:view>
-    </div>
-</div>
+				<f:facet name="complete">
+					<h:outputText value="" />
+				</f:facet>
+			</p:ajaxStatus>
+		</div>
+	</div>
 </h:body>
+
 </html>
