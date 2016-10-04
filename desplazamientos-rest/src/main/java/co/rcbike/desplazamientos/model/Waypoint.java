@@ -36,11 +36,9 @@ public class Waypoint implements Serializable {
 	private Ruta ruta;
 
 	@NotNull
-	@NotEmpty
 	private BigDecimal latitudInicio;
 
 	@NotNull
-	@NotEmpty
 	private BigDecimal longitudInicio;
 
 	public Long getId() {
