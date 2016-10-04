@@ -44,36 +44,28 @@ public class Ruta implements Serializable {
 	private String emailCreador;
 	
 	@NotNull
-	@NotEmpty
 	@Enumerated(EnumType.STRING)
 	private Tipo tipo;
 
 	@NotNull
-	@NotEmpty
 	private BigDecimal latitudInicio;
 
 	@NotNull
-	@NotEmpty
 	private BigDecimal longitudInicio;
 
 	@NotNull
-	@NotEmpty
 	private BigDecimal latitudFinal;
 
 	@NotNull
-	@NotEmpty
 	private BigDecimal longitudFinal;
 
 	@NotNull
-	@NotEmpty
 	private BigDecimal distancia;
 
 	@NotNull
-	@NotEmpty
 	private int tiempoEstimado;
 
 	@NotNull
-	@NotEmpty
 	private Integer calorias;
 
 	@NotNull
@@ -82,13 +74,11 @@ public class Ruta implements Serializable {
 
 	/*Solo para individuales*/
 	@NotNull
-	@NotEmpty
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date fecha;
 
 	/*Solo para grupales*/
 	@NotNull
-	@NotEmpty
 	@Enumerated(EnumType.STRING)
 	private Frecuencia frecuencia;
 
@@ -121,7 +111,6 @@ public class Ruta implements Serializable {
 	private String domingo = "N";
 
 	@NotNull
-	@NotEmpty
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date hora;
 	
