@@ -1,4 +1,4 @@
-# Bienvenidos a RCBike wiki!
+# RCBike repo!
 
 ![logo](http://i67.tinypic.com/20f6lps.jpg)
 
@@ -14,13 +14,16 @@
 * Eclipse + Git : 
    * https://www.youtube.com/watch?v=rblGZRWqFVI
    * https://www.youtube.com/watch?v=KfeqnernMmE
+   * Solucionar error `org.codehaus.plexus.archiver.jar.Manifest.write(java.io.PrintWriter)` instalando la actualizacion del m2e disponible en https://otto.takari.io/content/sites/m2e.extras/m2eclipse-mavenarchiver/0.17.2/N/LATEST/
 
 ### Compilacion y ejecucion
 Requisitos:
+
 1. instalacion de maven (ultima version disponible)
 2. instalacion de Wildlfy
 
 RCBike consta de un proyecto parent y multiples proyectos web, descritos de la siguiente manera:
+
 1. *-rest*: modulos que exponen los servicios rest de la logica de negocio
 2. *-web*: modulo de capa web que integra las funcionalidades de backend
 3. *-parent*: modulo que controla el manejo de versiones, y el ciclo de compilacion y despliegue
