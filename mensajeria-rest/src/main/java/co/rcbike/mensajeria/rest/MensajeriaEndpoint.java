@@ -9,9 +9,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import co.rcbike.mensajeria.service.MensajeriaService;
-import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
+import javax.ws.rs.PathParam;
 import org.slf4j.Logger;
 
 @Path("/mensajes")
@@ -25,9 +25,9 @@ public class MensajeriaEndpoint {
   private MensajeriaService service;
 
   @GET
-  @Produces({MediaType.APPLICATION_JSON})
-  public List<Conversacion> findAll(){
-    return service.findConvesacionByEmRes();
+  @Produces({MediaType.APPLICATION_JSON})  
+  public Conversacion findConvesacionByEmRes(@PathParam("emisor") String emisor, @PathParam("emisor") String receptor){
+  return service.findConvesacionByEmRes(emisor, receptor);
   }
 
   @POST
@@ -36,13 +36,7 @@ public class MensajeriaEndpoint {
     return service.create(record);
   }
   
-  @GET
-  @Produces({MediaType.APPLICATION_JSON})
-  public List<Mensaje> findMensajeAll(){
-      Conversacion conver = new Conversacion();
-    return service.findMensajeByConversacion(conver);
-  }
-
+  
   @POST
   @Consumes({MediaType.APPLICATION_JSON})
   public Mensaje create(Mensaje record){

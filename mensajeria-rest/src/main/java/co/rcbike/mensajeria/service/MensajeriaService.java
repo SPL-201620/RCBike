@@ -18,32 +18,27 @@ public class MensajeriaService {
     @Inject
     private EntityManager em;
 
-    public List<Conversacion> findConvesacionByEmRes() {
-        TypedQuery<Conversacion> list;
-        {
-            list = em.createNamedQuery(Conversacion.SQ_LISTBYEMAILS, Conversacion.class);
-            return list.getResultList();
-        }
+    public Conversacion findConvesacionByEmRes(String emisor, String receptor) {
+        javax.persistence.Query q = em.createNamedQuery(Conversacion.SQ_LISTBYEMAILS);
+        q.setParameter("emailEmisor", emisor);
+        q.setParameter("emailReceptor", receptor);
+        Conversacion c = (Conversacion) q.getSingleResult();
+        c.getMensajes();
+        return c;
+      
     }
 
     public Conversacion create(Conversacion record) {
-            em.persist(record);
-            em.flush();
-            return record;
-        } 
-    
-    public List<Mensaje> findMensajeByConversacion(Conversacion conver) {
-        List<Mensaje> list;
-        {
-           list = em.createNamedQuery(Mensaje.SQ_LISTBYCONVERSACION, conver);            
-            return list;
-        }
+        em.persist(record);
+        em.flush();
+        return record;
     }
 
+      
     public Mensaje create(Mensaje record) {
-            em.persist(record);
-            em.flush();
-            return record;
-        } 
-    
+        em.persist(record);
+        em.flush();
+        return record;
     }
+
+}

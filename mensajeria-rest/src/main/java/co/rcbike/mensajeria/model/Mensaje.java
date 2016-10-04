@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @SuppressWarnings("serial")
 @Entity
 @XmlRootElement
-@NamedQueries({@NamedQuery(name = "listByConversacion", query = "SELECT e FROM Mensaje e WHERE e.conversacion = :conversacion")})
+@NamedQueries({@NamedQuery(name = "listByConversacion", query = "SELECT e FROM Mensaje e WHERE e.conversacion = :idConversacion")})
 public class Mensaje implements Serializable {
     
    public static final String SQ_LISTBYCONVERSACION = "listByConversacion";
