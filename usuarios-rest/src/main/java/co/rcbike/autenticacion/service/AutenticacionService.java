@@ -35,7 +35,7 @@ public class AutenticacionService {
     }
 
     private AutenticacionUsuario findByEmail(String email) {
-        TypedQuery<AutenticacionUsuario> q = em.createNamedQuery(AutenticacionUsuario.SQ_findByEmail,
+        TypedQuery<AutenticacionUsuario> q = em.createNamedQuery(AutenticacionUsuario.SQ_autByEmail,
                 AutenticacionUsuario.class);
 		q.setParameter(AutenticacionUsuario.SQ_PARAM_EMAIL, email);
         try {
@@ -43,5 +43,12 @@ public class AutenticacionService {
         } catch (NoResultException e) {
             return null;
         }
+    }
+    
+    public void registrar(String email, String clave){
+        AutenticacionUsuario entity = new AutenticacionUsuario();
+        entity.setEmail(email);
+        entity.setClave(clave);
+        em.persist(entity);
     }
 }

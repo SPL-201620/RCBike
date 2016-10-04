@@ -21,7 +21,7 @@
         <a id="show-top-menu" class="ShowOnMobile ripplelink"><i class="icon-more_vert" id="active"></i><i class="icon-close DispNone" id="passive"></i> </a>
         
         <ul id="top-menu">
-           	<p:outputPanel layout="inline" rendered="#{autenticacionManager.autenticado()}">
+        	<ui:fragment rendered="#{autenticacionManager.autenticado()}">
             <li>
 	                <a class="ripplelink"><i class="icon-notifications_none"></i> <span class="ShowOnMobile">Notifications</span></a>
 	                <ul>
@@ -32,22 +32,20 @@
 	                    <li><a href="#"><span class="Red"><i class="icon-alarm_add Fs20 Fleft"></i> Set New Reminder</span></a></li>
 	                </ul>
             </li>
-            </p:outputPanel>
-<!--             <li> -->
-<!--                 <a class="ripplelink"><i class="icon-cog"></i> <span class="ShowOnMobile">Settings</span></a> -->
-<!--                 <ul> -->
-<!--                     <li><a href="#"><i class="icon-flag2"></i> Language Settings</a></li> -->
-<!--                     <li><a href="#"><i class="icon-settings"></i> System Settings</a></li> -->
-<!--                     <li><a href="#"><i class="icon-verified_user"></i> Security Settings</a></li> -->
-<!--                     <li><a href="#"><i class="icon-assignment_ind"></i> Users Settings</a></li> -->
-<!--                 </ul> -->
-<!--             </li> -->
             <li>
-        	    <h:link value="" outcome="/pb/login" >
-    	    		<i class="icon-power #{autenticacionManager.autenticado() ? 'Red' : 'Green'}"/>
-    	    		<h:outputText value="#{autenticacionManager.autenticado() ? 'Salir' : 'Ingresar'}" styleClass="ShowOnMobile"/>
+                <a href="#{request.contextPath}/logout"><i class="icon-power Red"></i> <span class="ShowOnMobile">Salir</span></a>
+            </li>
+            </ui:fragment>
+
+        	<ui:fragment rendered="#{!autenticacionManager.autenticado()}">
+            <li>
+        	    <h:link value="" outcome="/site/pb/login"  >
+    	    		<i class="icon-power Green"/>
+    	    		<h:outputText value="Ingresar" styleClass="ShowOnMobile"/>
 	            </h:link>
             </li>
+            </ui:fragment>
+            
         </ul>
     </div>
     <!-- TOPBAR END -->

@@ -4,13 +4,17 @@ import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
+import javax.ws.rs.core.Response.StatusType;
 
 import co.rcbike.usuarios.model.Usuario;
 import co.rcbike.usuarios.service.UsuariosService;
@@ -29,7 +33,7 @@ public class UsuariosEndpoint {
     }
 
     @GET
-    @Path("/{email:^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$}")
+    @Path("/{email: .+@.+}")
     @Produces(MediaType.APPLICATION_JSON)
     public Usuario lookupUsuarioByEmail(@PathParam("email") String email) {
         Usuario member = service.findUsuario(email);
@@ -38,4 +42,16 @@ public class UsuariosEndpoint {
         }
         return member;
     }
+    
+    @POST
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response crearUsuario(Usuario usuario){
+       try {
+        service.crearUsuario(usuario);
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+       return Response.ok().build();
+    }
+    
 }
