@@ -9,14 +9,18 @@
     <div class="Animated05" id="layout-menu-cover">
         <h:form id="menuform">
             <pm:menu>
-      			<p:submenu id="m_viajes" label="Viajes" icon="icon-directions_bike">
-                    <p:menuitem id="mi_viajes_buscar" value="Buscar Viajes" icon="icon-nature_people" url="#" />
-                    <p:menuitem id="mi_viajes_crear" value="Crear Viajes" icon="icon-map2" url="#" />
+      			<p:submenu id="m_viajes" label="Desplazamiento" icon="icon-directions_bike">
+                    <p:menuitem id="mi_viajes_unirse" value="Unirse a Recorrido" icon="icon-nature_people" url="desplazamiento.xhtml" />
+                    <p:menuitem id="mi_viajes_consultar" value="Consultar Ruta Realizada" icon="icon-map2" url="#" />
+                    
+                    <p:menuitem id="mi_viajes_crear" value="Crear recorrido" icon="icon-map2" url="#" />
+                    <p:menuitem id="mi_viajes_resgistrar" value="Registrar viaje" icon="icon-nature_people" url="#" />
                 </p:submenu>
-                <p:submenu id="m_venta" label="Clasificados" icon="icon-shopping_cart">
+                	<p:submenu id="m_venta" label="Clasificados" icon="icon-shopping_cart">
                 	<p:menuitem id="mi_venta_buscar" value="Buscar Bicicletas" icon="icon-add_shopping_cart" url="#" />
                 	<p:menuitem id="mi_venta_crear" value="Publicar Bicicleta" icon="icon-marquee-plus" url="#" />
                 </p:submenu>
+                <p:menuitem id="mi_mensajeria" value="Mensajería" icon="icon-forum" url="mensajeria.xhtml" />
                 <p:menuitem id="mi_alquiler" value="Alquiler" icon="icon-local_offer" url="#" />
                 <p:menuitem id="mi_config_bici" value="Configurador de Bicicleta" icon="icon-build" url="#" />
                 <p:separator />

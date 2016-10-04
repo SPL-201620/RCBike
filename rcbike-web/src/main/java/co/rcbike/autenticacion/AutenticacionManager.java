@@ -18,7 +18,7 @@ import javax.ws.rs.core.Response.Status;
 
 import co.rcbike.gui.ModulosManager;
 import co.rcbike.gui.ModulosManager.Modulo;
-import co.rcbike.usuarios.model.Usuario;
+//import co.rcbike.usuarios.model.Usuario;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.jbosslog.JBossLog;
@@ -39,9 +39,9 @@ public class AutenticacionManager implements Serializable {
     @Setter
     private String clave;
 
-    @Getter
-    @Setter
-    private Usuario usuario;
+    //@Getter
+    //@Setter
+    //private Usuario usuario;
 
     @Getter
     @Setter

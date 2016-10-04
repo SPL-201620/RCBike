@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:ui="http://java.sun.com/jsf/facelets"
+xmlns:h="http://java.sun.com/jsf/html"
+xmlns:f="http://java.sun.com/jsf/core"
+xmlns:rich="http://richfaces.org/rich"
+xmlns:m="http://code.google.com/p/gmaps4jsf/">
+<h:head><title>JSF 2.0: Ajax Support</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<!-- <script type="text/javascript" src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=AIzaSyBfB1qF1ZdhXSYI_zBqrhRh03xy05pQfKs"></script> -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfB1qF1ZdhXSYI_zBqrhRh03xy05pQfKs&amp;signed_in=true&amp;callback=initMap"
+        ></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.js"></script>
+
+<style>.optionList {height: 30px;}</style>
+</h:head>
+<h:body>
+<div id="container">
+    
+    <h1>Gmap4Jsf</h1>
+    <div align="center">
+
+        <f:view contentType="text/html">
+            <h:panelGrid columns="2">
+                <h:form id="mapform" prependId="false">
+                    <m:map jsVariable="map" var="map" mapVar="map" gmapKey="#{gmapBean.gmapkey}" id="map" />
+                     
+                </h:form>
+                <h:panelGroup>
+                    <h:form>
+
+                        <rich:tabPanel switchType="ajax" width="350" height="400">
+                            <rich:tab label="Using Google Map API">
+                                <h:panelGrid columns="2" columnClasses="optionList">
+                                    <h:outputText value="Controls:" />
+                                    <h:panelGroup>
+                                        <a href="javascript: void 0" onclick="map.hideControls()">Hide</a>
+                                        <a href="javascript: void 0" onclick="map.showControls()">Show</a>
+                                        <br />
+                                    </h:panelGroup>
+
+                                    <h:outputText value="Zoom:" />
+                                    <rich:inputNumberSlider id="zoom" showInput="false"
+                                        minValue="1" maxValue="18" value="#{gmapBean.zoom}"
+                                        onchange="map.setZoom(this.value)" />
+
+
+                                    <h:outputText value="Map Type:" />
+                                    <h:panelGroup>
+                                        <a href="javascript: void 0"
+                                            onclick="map.setMapType(G_NORMAL_MAP)">Normal</a>
+                                        <a href="javascript: void 0"
+                                            onclick="map.setMapType(G_SATELLITE_MAP)">Satellite</a>
+                                        <a href="javascript: void 0"
+                                            onclick="map.setMapType(G_HYBRID_MAP)">Hybrid</a>
+                                        <br />
+                                    </h:panelGroup>
+
+                                </h:panelGrid>
+                            </rich:tab>
+
+                            <rich:tab label="Using Ajax with JSON">
+                                <rich:dataGrid var="place" value="#{gmapBean.point}"
+                                    columns="2">
+                                    <h:graphicImage onclick="showPlace('#{place.id}')"
+                                        style="cursor:pointer" value="resource://#{place.pic}" />
+                                </rich:dataGrid>
+                            </rich:tab>
+                        </rich:tabPanel>
+                    </h:form>
+                </h:panelGroup>
+            </h:panelGrid>
+        </f:view>
+    </div>
+</div>
+</h:body>
+</html>
