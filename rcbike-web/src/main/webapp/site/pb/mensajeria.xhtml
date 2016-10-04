@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <f:facet name="first">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+            <meta name="apple-mobile-web-app-capable" content="yes" />
+        </f:facet>
+        <title>RC Bike - Registro</title>
+        <ui:insert name="head" />
+    </h:head>
+
+    <h:body>  
+        <p:idleMonitor timeout="240000">  
+            <p:ajax event="idle" listener="#{mensajeriaController.cerrarPorInactividad}" />  
+        </p:idleMonitor> 
+        <p:growl id="messages" showDetail="true" /> 
+        <div class="row">
+            <h:form id="fom"  prependId="false">
+                
+                <div class="col-md-10"> 
+
+                    <h:panelGroup id="paneltablaRecibidos" rendered="#{mensajeriaController.estadoSeleccionado ne 'Redactar Mensaje' and mensajeriaController.estadoSeleccionado ne 'Crear Bandeja'}">
+                        
+                        <h:panelGroup id="modibandeja" rendered="#{mensajeriaController.estadoSeleccionado ne 'Recibidos' and mensajeriaController.estadoSeleccionado ne 'Enviados' and mensajeriaController.estadoSeleccionado ne 'Papelera'}">
+                            <p:commandButton value="Modificar Bandeja"  oncomplete="modificando.show()"></p:commandButton>
+                        </h:panelGroup>
+                        
+                        <h:panelGroup id="elimbandeja" rendered="#{mensajeriaController.estadoSeleccionado ne 'Recibidos' and mensajeriaController.estadoSeleccionado ne 'Enviados' and mensajeriaController.estadoSeleccionado ne 'Papelera'}">
+                            <p:commandButton value="Eliminar Bandeja" oncomplete="eliminando.show()"></p:commandButton>
+                        </h:panelGroup>
+
+                        <p:dataTable var="mail" value="#{mensajeriaController.mails}"  paginator="true" rows="5" >
+
+                            <p:column  headerText="Para:"  style="width:  20px; text-align: center; #{mensajeriaController.sombreado(mail)}">
+                                #{mail.para}
+                            </p:column>
+
+                            <p:column headerText="Asunto:" style="width:  20px; text-align: center; #{mensajeriaController.sombreado(mail)}">
+                                #{mail.asunto}
+                            </p:column>
+
+                            <p:column headerText="Fecha" style="width:  20px; text-align: center; #{mensajeriaController.sombreado(mail)}">
+                                #{mensajeriaController.formatoFecha(mail.fecha)}
+                            </p:column>
+
+                            <p:column headerText="Ver Información" style="width:  20px; text-align: center; #{mensajeriaController.sombreado(mail)}">
+                                <p:commandButton id="verinfo" update=":fom:mailVista" icon="ui-icon-search"   title="Ver">
+                                    <f:setPropertyActionListener value="#{mail}" target="#{mensajeriaController.mail}" />
+                                </p:commandButton>
+                            </p:column>
+                            <p:column headerText="Eliminar" style="width:  20px; text-align: center;">
+                                <p:commandButton id="eliminar" update=":fom" icon="ui-icon-close" action="#{mensajeriaController.mensajeelimimar}" title="Eliminar">
+                                    <f:setPropertyActionListener value="#{mail}" target="#{mensajeriaController.mail}" />
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>
+                       </h:panelGroup>
+                    
+                          <!-- Dialogo de Primefaces en el cual se modifica el nombre de la bandeja -->
+                            <p:dialog id="modiban"  header="Modificar Bandeja" widgetVar="modificando" modal="true">  
+                                <h:panelGroup id="modi">
+                                    <h:inputText id="nomban" value="#{mensajeriaController.nombre}"></h:inputText>
+                                    
+                                    <p:commandButton value="Modificar" action="#{mensajeriaController.modificarBand}">
+                                    </p:commandButton>
+                                    
+                                    <p:commandButton value="Cancelar" action="#{mensajeriaController.Redireccionando}">
+                                    </p:commandButton>
+                                </h:panelGroup>
+                            </p:dialog>
+                          
+                          <!-- Dialogo de Primefaces en el cual se elimina la bandeja -->
+                            <p:dialog id="eliban"  header="Eliminar Bandeja" widgetVar="eliminando" modal="true">  
+                                <h:panelGroup id="elim">
+                                    <p:commandButton value="Eliminar" action="#{mensajeriaController.eliminarBand}">
+                                    </p:commandButton>
+                                    
+                                    <p:commandButton value="Cancelar" action="#{mensajeriaController.Redireccionando}">
+                                    </p:commandButton>
+                                </h:panelGroup>
+                            </p:dialog>
+                    
+                    <h:panelGroup id="redac" rendered="#{mensajeriaController.estadoSeleccionado eq 'Redactar Mensaje'}">
+                        <div class="row">
+                            <div class="col-md-11 well"> 
+                                <div class="col-md-1"> 
+                                    <p:commandLink  value="Para" id="verinfo" update=":fom:redac"  oncomplete="para.show()"  title="Ver contactos" />
+                                </div> 
+                                <div class="col-md-11">
+                                    <p:inputText size="124"  id="paratext" value="#{mensajeriaController.para}"></p:inputText>
+                                </div>
+                                <div class="col-md-1"> 
+                                    <p:outputLabel>Asunto:</p:outputLabel>
+                                </div> 
+                                <div class="col-md-11"> 
+                                    <p:inputText size="124" value="#{mensajeriaController.asunto}"></p:inputText>
+                                </div>
+                                <div class="col-md-11"> 
+                                    <p:editor id="editor" value="#{mensajeriaController.cuerpo}" width="999"/>  
+                                </div>
+                                <div class="col-md-11" align="center"> 
+                                    <p:commandButton value="Enviar" update="@form :messages" action="#{mensajeriaController.Envio}"/>  <p:commandButton value="Cancelar" />  
+                                </div>
+                            </div> 
+                            
+                            <!-- Dialogo de Primefaces en el cual se muestra los contactos -->
+                            <p:dialog id="Contactos"  header="Contactos" widgetVar="para" modal="true">  
+                                <h:panelGroup id="parat">
+                                    <p:tree value="#{mensajeriaController.root}" var="node" dynamic="true" cache="false"  
+                                            selectionMode="single"  selection="#{mensajeriaController.selectedNode}" id="tree">  
+                                        <p:ajax event="select" update="@form" listener="#{mensajeriaController.NodoSeleccionado}" />  
+                                        <p:treeNode>  
+                                            <h:outputText value="#{node}" />  
+                                        </p:treeNode>  
+                                    </p:tree>  
+                                </h:panelGroup>
+                            </p:dialog>
+                        </div>
+                    </h:panelGroup>
+                    
+                    <h:panelGroup id="crear" rendered="#{mensajeriaController.estadoSeleccionado eq 'Crear Bandeja'}">
+                        <div class="row">
+			<div class="col-md-12">
+                            <div class="col-md-11 well">
+                                <h:panelGroup id="crearban">
+                                    <div class="col-md-4" align="right">
+                                        <h:inputText id="nom" value="#{mensajeriaController.nombre}"></h:inputText>
+                                    </div>
+                                    <div class="col-md-7" align="left">
+                                        <p:commandButton value="Crear Bandeja" action="#{mensajeriaController.crearBand}">
+                                        </p:commandButton>
+                                    </div>
+                                </h:panelGroup>
+                            </div>
+			</div>
+                        </div>
+                    </h:panelGroup>
+
+                </div>
+                
+                <div class="col-md-12">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-10">
+                        <p:outputPanel id="mailVista">
+
+                            <h:panelGroup id="actabierta">
+                                <dl class="dl-horizontal">
+                                    <dt>Id:</dt> 
+                                    <dd> <h:outputText value="#{mensajeriaController.mail.de}" rendered="#{not empty mensajeriaController.mail}" />
+                                    </dd>
+                                    <dt>Estado:</dt>
+                                    <dd> <h:outputLabel> #{mensajeriaController.mail.de} </h:outputLabel>
+                                    </dd>
+                                    <dt>Fecha de asignacion: </dt>
+                                    <dd>  <h:outputLabel> #{mensajeriaController.formatoFecha(mensajeriaController.mail.fecha)} </h:outputLabel>
+                                    </dd>
+                                    <dt>Duracion:</dt>
+                                    <dd><h:outputLabel> #{mensajeriaController.mail.texto} </h:outputLabel>
+                                    </dd>
+                                </dl>
+                            </h:panelGroup>
+                        </p:outputPanel>
+                    </div>
+                </div>
+            </h:form> 
+
+        </div> 
+    </h:body>
+</html>
