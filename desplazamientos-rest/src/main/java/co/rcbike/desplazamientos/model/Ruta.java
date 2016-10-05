@@ -5,9 +5,11 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
@@ -72,52 +74,38 @@ public class Ruta implements Serializable {
 	@NotEmpty
 	private String clima;
 
+	/**
+	 * Grupal: si no es frecuente representa la fecha y hora del recorrido,
+	 * si es frecuente representa la hora del dia del recorrido
+	 * <br>
+	 * Individial: Fecha en la que se hizo el recorrido
+	 */
 	/*Solo para individuales*/
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date fecha;
 
 	/*Solo para grupales*/
-	@NotNull
-	@Enumerated(EnumType.STRING)
-	private Frecuencia frecuencia;
+	private boolean frecuente;
 
-	@NotNull
-	@NotEmpty
-	private String lunes = "N";
+	private boolean lunes;
 
-	@NotNull
-	@NotEmpty
-	private String martes = "N";
+	private boolean martes;
 
-	@NotNull
-	@NotEmpty
-	private String miercoles = "N";
+	private boolean miercoles;
 
-	@NotNull
-	@NotEmpty
-	private String jueves = "N";
+	private boolean jueves;
 
-	@NotNull
-	@NotEmpty
-	private String viernes = "N";
+	private boolean viernes;
 
-	@NotNull
-	@NotEmpty
-	private String sabado = "N";
+	private boolean sabado;
 
-	@NotNull
-	@NotEmpty
-	private String domingo = "N";
+	private boolean domingo;
 
-	@NotNull
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date hora;
-	
-    @OneToMany(mappedBy="ruta")
+    @OneToMany(mappedBy="ruta",fetch=FetchType.EAGER)
 	private Set<Waypoint> waypoints;
 
-    @OneToMany(mappedBy="ruta")
+    @OneToMany(mappedBy="ruta",fetch=FetchType.EAGER)
 	private Set<Participante> participantes;
 
 	public Long getId() {
@@ -216,78 +204,6 @@ public class Ruta implements Serializable {
 		this.fecha = fecha;
 	}
 
-	public Frecuencia getFrecuencia() {
-		return frecuencia;
-	}
-
-	public void setFrecuencia(Frecuencia frecuencia) {
-		this.frecuencia = frecuencia;
-	}
-
-	public String getLunes() {
-		return lunes;
-	}
-
-	public void setLunes(String lunes) {
-		this.lunes = lunes;
-	}
-
-	public String getMartes() {
-		return martes;
-	}
-
-	public void setMartes(String martes) {
-		this.martes = martes;
-	}
-
-	public String getMiercoles() {
-		return miercoles;
-	}
-
-	public void setMiercoles(String miercoles) {
-		this.miercoles = miercoles;
-	}
-
-	public String getJueves() {
-		return jueves;
-	}
-
-	public void setJueves(String jueves) {
-		this.jueves = jueves;
-	}
-
-	public String getViernes() {
-		return viernes;
-	}
-
-	public void setViernes(String viernes) {
-		this.viernes = viernes;
-	}
-
-	public String getSabado() {
-		return sabado;
-	}
-
-	public void setSabado(String sabado) {
-		this.sabado = sabado;
-	}
-
-	public String getDomingo() {
-		return domingo;
-	}
-
-	public void setDomingo(String domingo) {
-		this.domingo = domingo;
-	}
-
-	public Date getHora() {
-		return hora;
-	}
-
-	public void setHora(Date hora) {
-		this.hora = hora;
-	}
-
 	public Set<Waypoint> getWaypoints() {
 		return waypoints;
 	}
@@ -303,4 +219,70 @@ public class Ruta implements Serializable {
 	public void setParticipantes(Set<Participante> participantes) {
 		this.participantes = participantes;
 	}
+
+    public boolean isFrecuente() {
+        return frecuente;
+    }
+
+    public void setFrecuente(boolean frecuente) {
+        this.frecuente = frecuente;
+    }
+
+    public boolean isLunes() {
+        return lunes;
+    }
+
+    public void setLunes(boolean lunes) {
+        this.lunes = lunes;
+    }
+
+    public boolean isMartes() {
+        return martes;
+    }
+
+    public void setMartes(boolean martes) {
+        this.martes = martes;
+    }
+
+    public boolean isMiercoles() {
+        return miercoles;
+    }
+
+    public void setMiercoles(boolean miercoles) {
+        this.miercoles = miercoles;
+    }
+
+    public boolean isJueves() {
+        return jueves;
+    }
+
+    public void setJueves(boolean jueves) {
+        this.jueves = jueves;
+    }
+
+    public boolean isViernes() {
+        return viernes;
+    }
+
+    public void setViernes(boolean viernes) {
+        this.viernes = viernes;
+    }
+
+    public boolean isSabado() {
+        return sabado;
+    }
+
+    public void setSabado(boolean sabado) {
+        this.sabado = sabado;
+    }
+
+    public boolean isDomingo() {
+        return domingo;
+    }
+
+    public void setDomingo(boolean domingo) {
+        this.domingo = domingo;
+    }
+	
+	
 }

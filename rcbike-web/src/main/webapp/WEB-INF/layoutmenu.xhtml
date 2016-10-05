@@ -10,11 +10,8 @@
         <h:form id="menuform">
             <pm:menu>
       			<p:submenu id="m_viajes" label="Desplazamiento" icon="icon-directions_bike">
-                    <p:menuitem id="mi_viajes_unirse" value="Unirse a Recorrido" icon="icon-nature_people" url="desplazamiento.xhtml" />
-                    <p:menuitem id="mi_viajes_consultar" value="Consultar Ruta Realizada" icon="icon-map2" url="#" />
-                    
-                    <p:menuitem id="mi_viajes_crear" value="Crear recorrido" icon="icon-map2" url="#" />
-                    <p:menuitem id="mi_viajes_resgistrar" value="Registrar viaje" icon="icon-nature_people" url="#" />
+                    <p:menuitem id="mi_viajes_crear" value="Nuevo viaje" icon="icon-map2" url="#" />
+                    <p:menuitem id="mi_viajes_unirse" value="Recorridos" icon="icon-nature_people" outcome="ruta" />
                 </p:submenu>
                 	<p:submenu id="m_venta" label="Clasificados" icon="icon-shopping_cart">
                 	<p:menuitem id="mi_venta_buscar" value="Buscar Bicicletas" icon="icon-add_shopping_cart" url="#" />

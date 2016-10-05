@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
+import co.rcbike.desplazamientos.model.Participante;
 import co.rcbike.desplazamientos.model.Ruta;
 import co.rcbike.desplazamientos.model.Tipo;
 import co.rcbike.desplazamientos.model.Waypoint;
@@ -28,6 +29,7 @@ public class DesplazamientosService {
 	 *            informacion del recorrido a crear
 	 */
 	public List<Ruta> listViajesGrupales() {
+	    //TODO Armando - retornar los que no esten vencidos, union
 		TypedQuery<Ruta> q = em.createNamedQuery(Ruta.SQ_findByTipo, Ruta.class);
 		q.setParameter(Ruta.SQ_PARAM_TIPO, Tipo.GRUPAL);
 		return q.getResultList();
@@ -53,6 +55,9 @@ public class DesplazamientosService {
 	 *            informacion de la ruta a crear
 	 */
 	public void guardarViaje(Ruta ruta) {
+//	    Participante entity = new Participante();
+//	    entity.setRuta(em.getReference(Ruta.class, 1));
+//      em.persist(entity);
 		em.persist(ruta);
 	}
 
