@@ -14,8 +14,6 @@ import javax.persistence.NamedQuery;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
 @SuppressWarnings("serial")
 @Entity
 @XmlRootElement

@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Set;
 
-import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -27,14 +27,20 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Entity
 @XmlRootElement
 @NamedQueries({ @NamedQuery(name = "findByTipoAndCreador", query = "SELECT e FROM Ruta e WHERE e.emailCreador = :emailCreador and e.tipo = :tipo"), 
-	@NamedQuery(name = "findByTipo", query = "SELECT e FROM Ruta e WHERE e.tipo = :tipo") })
+	@NamedQuery(name = "findByTipo", query = "SELECT e FROM Ruta e WHERE e.tipo = :tipo"),
+	@NamedQuery(name = "findByTipoAndFrecuente", query = "SELECT e FROM Ruta e WHERE e.tipo = :tipo and e.frecuente = :frecuente"),
+	@NamedQuery(name = "findByTipoAndFechaAndFrecuente", query = "SELECT e FROM Ruta e WHERE e.tipo = :tipo and e.fecha >= :fecha and e.frecuente = :frecuente")})
 
 public class Ruta implements Serializable {
 
 	public static final String SQ_findByTipoAndCreador = "findByTipoAndCreador";
 	public static final String SQ_findByTipo = "findByTipo";
+	public static final String SQ_findByTipoAndFrecuente = "findByTipoAndFrecuente";
+	public static final String SQ_findByTipoAndFechaAndFrecuente = "findByTipoAndFechaAndFrecuente";
 	public static final String SQ_PARAM_EMAIL_CREADOR = "emailCreador";
 	public static final String SQ_PARAM_TIPO = "tipo";
+	public static final String SQ_PARAM_FECHA = "fecha";
+	public static final String SQ_PARAM_FRECUENTE = "frecuente";
 
 	@Id
 	@GeneratedValue
@@ -86,20 +92,28 @@ public class Ruta implements Serializable {
 	private Date fecha;
 
 	/*Solo para grupales*/
+	@Convert(converter=BooleanSNConverter.class)
 	private boolean frecuente;
 
+	@Convert(converter=BooleanSNConverter.class)
 	private boolean lunes;
 
+	@Convert(converter=BooleanSNConverter.class)
 	private boolean martes;
 
+	@Convert(converter=BooleanSNConverter.class)
 	private boolean miercoles;
 
+	@Convert(converter=BooleanSNConverter.class)
 	private boolean jueves;
 
+	@Convert(converter=BooleanSNConverter.class)
 	private boolean viernes;
 
+	@Convert(converter=BooleanSNConverter.class)
 	private boolean sabado;
 
+	@Convert(converter=BooleanSNConverter.class)
 	private boolean domingo;
 
     @OneToMany(mappedBy="ruta",fetch=FetchType.EAGER)
