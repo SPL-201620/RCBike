@@ -3,13 +3,16 @@ package co.rcbike.usuarios;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.inject.Inject;
+import javax.faces.context.FacesContext;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Response;
+
+import org.primefaces.event.FileUploadEvent;
 
 import co.rcbike.autenticacion.AutenticacionManager;
 import co.rcbike.gui.ModulosManager;
@@ -77,5 +80,11 @@ public class RegistroManager implements Serializable {
         log.debug(response);
         autenticacionManager.setUsuario(usuario);
         return Navegacion.redirectView(Views.dashboard);
+    }
+    
+
+    public void cargarImagen(FileUploadEvent event) {
+        FacesMessage message = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
+        FacesContext.getCurrentInstance().addMessage(null, message);
     }
 }

@@ -14,45 +14,71 @@
         </f:facet>
         <title>RC Bike - Registro</title>
         <ui:insert name="head" />
+        <style>
+			.ui-fileupload-content { display: none;}
+			.InputFullWid input { width: 100% !important; }
+        </style>
     </h:head>
 
     <h:body styleClass="GrayModena Geometry" style="height:auto;">
-        <h:form>
         <div class="Wid90 DispBlock MarAuto MarTopPerc5 TexAlCenter">
-            <div class="Wid40 MarAuto WidAutoOnMobile">
-<!--                 <h:graphicImage name="images/logo-dark.svg" library="modena-layout" style="width:40%; max-width:200px;"/> -->
+            <div class="Wid60 MarAuto WidAutoOnMobile">
                 <div class="EmptyBox30"></div>
                 <div class="Card ShadowEffect">
                     <div class="Wid100 OvHidden BigTopic Fs30">Registro</div>
-                    <div class="Wid100 OvHidden BigTopic Fs30"><i class="icon-face Fs60 DispBlock"/></div>
-                    <div class="Wid100">
-                    	<p:inputText placeholder="Correo" value="#{registroManager.email}" 
-                    		disabled="#{empty registroManager.email ? false : true}" required="true"
-                    	 	styleClass="Wid80 TexAlCenter Fs18" />
-                    </div>
-                    <div class="EmptyBox10"/>
-                    <div class="Wid100">
+                
+                    <div class="Container40 Fs30 ">
+                    	<h:panelGroup layout="block" styleClass="Wid30 EmptyBox30 Fright"/>
+                    	<h:panelGroup layout="block" styleClass="icon-face Fs100 Wid80 Fright"/> 
+                    	<h:panelGroup layout="block" styleClass="Wid30 EmptyBox40 Fright"/>
+	                    <div class="Wid80 Fright">
+	                    <h:form>
+						    <p:fileUpload fileUploadListener="#{registroManager.cargarImagen}" mode="advanced"
+						                     update="messages" auto="true" sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+						                     label="Cargar Imagen" />
+						 
+						    <p:growl id="messages" showDetail="true" />
+						</h:form>
+						</div>
+					</div>
+        		
+        		<h:form>
+        			
+                    <div class="Container60">
+                    	<div class="EmptyBox10 Wid80"/>
+	                   	<p:inputText placeholder="Correo" value="#{registroManager.email}" 
+	                   		disabled="#{empty registroManager.email ? false : true}" required="true"
+	                   	 	styleClass="Fleft Wid80 TexAlCenter Fs18" />
+                    	<div class="EmptyBox10 Wid80"/>
+						<p:inputText type="password" placeholder="Contraseña" value="#{registroManager.clave}" 
+	                   		required="true" styleClass="Fleft Wid80 TexAlCenter Fs18" />
+                    	<div class="EmptyBox10 Wid80"/>
                     	<p:inputText placeholder="Nombres" value="#{registroManager.nombres}" required="true"
-                    	 	styleClass="Wid80 TexAlCenter Fs18" />
-                    </div>
-                    <div class="EmptyBox10"/>
-                    <div class="Wid100">
+                    	 	styleClass="Fleft Wid80 TexAlCenter Fs18" />
+                    	<div class="EmptyBox10 Wid80"/>
                     	<p:inputText placeholder="Apellidos" value="#{registroManager.apellidos}" required="true"
-                    	 	styleClass="Wid80 TexAlCenter Fs18" />
+                    	 	styleClass="Fleft Wid80 TexAlCenter Fs18" />
                     </div>
+
+                    
                     <div class="EmptyBox30"/>
                     <div class="Wid100">
                     	<p:commandButton value="Registrarme" action="#{registroManager.registrar()}" icon="fa fa-user-plus" 
                     		styleClass="Wid80 Fs18 White RaisedButton FloatNoneOnMobile"/>
                     </div>
+                    <div class="EmptyBox10"/>
+                    <div class="Wid100">
+                    	<p:button outcome="dashboard" value="Cancelar" icon="fa fa-close" 
+                    		styleClass="Wid80 Fs18 White RedButton RaisedButton FloatNoneOnMobile" />
+                    </div>
                     <div class="EmptyBox20"></div>
+        		</h:form>
                 </div>
                 <div class="Wid100 TexAlCenter MarTop20 Fs14 FontRobotoRegular Gray">
         	        <i class="fa fa-copyright"></i>  Los 4 Fantasticos <br/> All rights reserved.
                 </div>
             </div>
         </div>
-        </h:form>
         
         <h:outputStylesheet name="css/core-layout.css" library="modena-layout" />
         <h:outputStylesheet name="css/animate.css" library="modena-layout" />
