@@ -1,5 +1,6 @@
 package co.rcbike.desplazamientos.rest;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
@@ -17,36 +18,51 @@ import co.rcbike.desplazamientos.service.DesplazamientosService;
 @RequestScoped
 public class DesplazamientoGrupalEndpoint {
 
-    @Inject
-    private DesplazamientosService service;
+	@Inject
+	private DesplazamientosService service;
 
-    @GET
-    @Path("/alive")
-    @Produces(MediaType.APPLICATION_JSON)
-    public String alive() {
-        return "endpoint alive";
-    }
-    
+	@GET
+	@Path("/alive")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String alive() {
+		return "endpoint alive";
+	}
+
 	/**
 	 * Lista todos los recorridos grupales no vencidos
 	 * 
 	 */
-    @GET
-    @Path("/listViajesGrupalesNoVencidos")
-    @Produces(MediaType.APPLICATION_JSON)
+	@GET
+	@Path("/listViajesGrupalesNoVencidos")
+	@Produces(MediaType.APPLICATION_JSON)
 	public List<Ruta> listViajesGrupalesNoVencidos() {
-    	return service.listViajesGrupalesNoVencidos();
+		return service.listViajesGrupalesNoVencidos();
+	}
+
+	/**
+	 * Lista todos los recorridos grupales no vencidos
+	 * 
+	 * @param latitud
+	 * @param longitud
+	 * 
+	 */
+	@GET
+	@Path("/listViajesGrupalesCercanos")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Ruta> listViajesGrupalesCercanos(@QueryParam("latitud") BigDecimal latitud,
+			@QueryParam("longitud") BigDecimal longitud) {
+		return service.listViajesGrupalesCercanos(latitud, longitud);
 	}
 
 	/**
 	 * Lista todos los recorridos grupales
 	 * 
 	 */
-    @GET
-    @Path("/listViajesGrupales")
-    @Produces(MediaType.APPLICATION_JSON)
+	@GET
+	@Path("/listViajesGrupales")
+	@Produces(MediaType.APPLICATION_JSON)
 	public List<Ruta> listViajesGrupales() {
-    	return service.listViajesGrupales();
+		return service.listViajesGrupales();
 	}
 
 	/**
@@ -57,11 +73,11 @@ public class DesplazamientoGrupalEndpoint {
 	 * @param emailParticipante
 	 *            email del usuario participante
 	 */
-    @GET
-    @Path("/guardarParticipante")
-    @Produces(MediaType.APPLICATION_JSON)
+	@GET
+	@Path("/guardarParticipante")
+	@Produces(MediaType.APPLICATION_JSON)
 	public void guardarParticipante(@QueryParam("idRuta") Long idRuta, @QueryParam("email") String emailParticipante) {
-    	service.guardarParticipante(idRuta, emailParticipante);
+		service.guardarParticipante(idRuta, emailParticipante);
 	}
 
 	/**
@@ -70,13 +86,11 @@ public class DesplazamientoGrupalEndpoint {
 	 * @param ruta
 	 *            informacion de la ruta a crear
 	 */
-    @GET
-    @Path("/guardarViaje")
-    @Produces(MediaType.APPLICATION_JSON)
+	@GET
+	@Path("/guardarViaje")
+	@Produces(MediaType.APPLICATION_JSON)
 	public void guardarViaje(Ruta ruta) {
 		service.guardarViaje(ruta);
 	}
-
-    
 
 }
