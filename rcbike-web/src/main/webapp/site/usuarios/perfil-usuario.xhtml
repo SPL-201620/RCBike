@@ -1,0 +1,43 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="subheader">
+        Mi Perfil
+    </ui:define>
+    
+    <ui:define name="content">
+        
+        <div class="Container100 ui-fluid">
+            <div class="ContainerIndent">
+                <div class="Card ShadowEffect">
+                    <h2 class="BigTopic">Información Personal</h2>
+                    <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;">
+                    	<h:panelGroup layout="block" style="height:150px">
+                    		
+                    	</h:panelGroup>
+                    	<p:panelGrid columns="1" columnClasses="ui-grid-col-5" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;">
+                    		<ui:fragment>
+                   				<h2 class="FontBold"><h:outputText value="#{perfilUsuarioManager.usuario.nombres} #{perfilUsuarioManager.usuario.apellidos}" /></h2>
+                    		</ui:fragment>
+	                        <p:inputText id="correo" disabled="true" value="#{perfilUsuarioManager.usuario.email}"/>
+                   		</p:panelGrid>
+                    </p:panelGrid>
+                </div>
+            </div>
+        </div>
+
+        <div class="Container100 ui-fluid">
+            <div class="ContainerIndent">
+                <div class="Card ShadowEffect">
+                    <h2 class="BigTopic">Amigos</h2>
+                </div>
+            </div>
+        </div>
+        
+    </ui:define>
+
+</ui:composition>

@@ -30,7 +30,8 @@ import lombok.extern.jbosslog.JBossLog;
 @JBossLog
 public class AutenticacionManager implements Serializable {
 
-    public static final String AUTENTICADO_ATTR = "autenticado";
+    public static final String AUTENTICADO_ATTR = "sat_autenticado";
+    public static final String EMAIL_ATTR = "sat_email";
 
     @Getter
     @Setter
@@ -71,6 +72,7 @@ public class AutenticacionManager implements Serializable {
             case OK :
                 clave = null;
                 cambiarEstadoAutenticacion(true);
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put(EMAIL_ATTR, email);
                 return redirectView(dashboard);
             default :
                 return redirectView(error);
@@ -78,7 +80,7 @@ public class AutenticacionManager implements Serializable {
     }
 
     public boolean autenticado() {
-        return (boolean) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get(AUTENTICADO_ATTR);
+        return (boolean) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().getOrDefault(AUTENTICADO_ATTR, false);
     }
 
     private void cambiarEstadoAutenticacion(boolean autenticado) {

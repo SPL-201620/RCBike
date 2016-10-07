@@ -42,6 +42,13 @@ public class UsuariosEndpoint {
         }
         return member;
     }
+    @GET
+    @Path("/amigos/{email: .+@.+}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Usuario> listAmigos(@PathParam("email") String email) {
+        lookupUsuarioByEmail(email);
+        return service.listAmigos(email);
+    }
     
     @POST
     @Consumes({MediaType.APPLICATION_JSON})

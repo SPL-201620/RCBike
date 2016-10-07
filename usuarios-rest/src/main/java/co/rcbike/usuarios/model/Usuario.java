@@ -18,6 +18,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @SuppressWarnings("serial")
 @Entity
 @XmlRootElement
@@ -50,8 +52,9 @@ public class Usuario implements Serializable {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "AMIGOS", //
-    joinColumns = @JoinColumn(name = "PRINCIPAL", referencedColumnName = "ID") , //
-    inverseJoinColumns = @JoinColumn(name = "AMIGO", referencedColumnName = "ID") )
+            joinColumns = @JoinColumn(name = "PRINCIPAL", referencedColumnName = "ID"), //
+            inverseJoinColumns = @JoinColumn(name = "AMIGO", referencedColumnName = "ID"))
+    @JsonIgnore
     private List<Usuario> amigos;
 
     public Long getId() {
