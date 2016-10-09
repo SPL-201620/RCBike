@@ -1,0 +1,33 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" 
+	template="/WEB-INF/template.xhtml">
+	
+
+	<ui:define name="content">
+
+		<div class="Container100">
+			<div class="ContainerIndent">
+				<div class="Card ShadowEffect">
+					<h2 class="CardTopic TexAlCenter Fs30">Mis Recorridos</h2>
+					
+					
+					<p:tabView orientation="left" activeIndex="#{tabViewManagedBean.index}">
+						<p:tab title="Individual">
+							<ui:include src="individual.xhtml" />
+						</p:tab>
+						<p:tab title="Grupal">
+							<p:outputLabel value="Content goes here ! Message # 1"></p:outputLabel>
+						</p:tab>
+
+					</p:tabView>
+					
+					
+				</div>
+			</div>
+		</div>
+
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,54 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:form id="form">
+		<p:dataList value="#{rutaManager.rutas}"
+			var="ruta" type="unordered" itemType="none" paginator="true"
+			rows="10" styleClass="paginated">
+			<f:facet name="header">
+            	Individual
+        	</f:facet>
+			<p:commandLink update=":form:carDetail"
+				oncomplete="PF('carDialog').show()" title="View Detail"
+				styleClass="ui-icon ui-icon-search"
+				style="float:left;margin-right:10px">
+				<f:setPropertyActionListener value="#{ruta}"
+					target="#{rutaManager.ruta}" />
+				<h:outputText value="#{ruta.emailCreador}, #{ruta.calorias}" />
+			</p:commandLink>
+			<h:outputText value="#{ruta.emailCreador}, #{ruta.calorias}"
+				style="display:inline-block" />
+		</p:dataList>
+
+		<p:dialog header="Car Info" widgetVar="carDialog" modal="true"
+			showEffect="blind" hideEffect="explode" resizable="false">
+			<p:outputPanel id="carDetail" style="text-align:center;">
+				<p:panelGrid columns="2"
+					rendered="#{not empty dataListView.selectedCar}"
+					columnClasses="label,value">
+					<f:facet name="header">
+						<p:graphicImage
+							name="demo/images/car/#{dataListView.selectedCar.brand}-big.gif" />
+					</f:facet>
+
+					<h:outputText value="Id:" />
+					<h:outputText value="#{dataListView.selectedCar.id}" />
+
+					<h:outputText value="Year" />
+					<h:outputText value="#{dataListView.selectedCar.year}" />
+
+					<h:outputText value="Color:" />
+					<h:outputText value="#{dataListView.selectedCar.color}"
+						style="color:#{dataListView.selectedCar.color}" />
+
+					<h:outputText value="Price" />
+					<h:outputText value="$#{dataListView.selectedCar.price}" />
+				</p:panelGrid>
+			</p:outputPanel>
+		</p:dialog>
+	</h:form>
+
+</ui:composition>

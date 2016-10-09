@@ -111,7 +111,7 @@ public class Ruta implements Serializable {
 	/*Solo para grupales*/
 	@Convert(converter=BooleanSNConverter.class)
 	private boolean frecuente;
-
+/*
 	@Convert(converter=BooleanSNConverter.class)
 	private boolean lunes;
 
@@ -132,7 +132,7 @@ public class Ruta implements Serializable {
 
 	@Convert(converter=BooleanSNConverter.class)
 	private boolean domingo;
-
+*/
     @OneToMany(mappedBy="ruta",fetch=FetchType.EAGER)
 	private Set<Waypoint> waypoints;
 
@@ -259,7 +259,7 @@ public class Ruta implements Serializable {
         this.frecuente = frecuente;
     }
 
-    public boolean isLunes() {
+    /*public boolean isLunes() {
         return lunes;
     }
 
@@ -313,7 +313,7 @@ public class Ruta implements Serializable {
 
     public void setDomingo(boolean domingo) {
         this.domingo = domingo;
-    }
+    }*/
 	
 	
 }
