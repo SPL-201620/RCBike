@@ -1,11 +1,13 @@
 package co.rcbike.usuarios;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
+import javax.ws.rs.core.GenericType;
 
 import co.rcbike.autenticacion.AutenticacionManager;
 import co.rcbike.gui.ModulosManager;
@@ -14,20 +16,21 @@ import co.rcbike.usuarios.model.Usuario;
 import eu.agilejava.snoop.client.SnoopServiceClient;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.jbosslog.JBossLog;
 
 @SuppressWarnings("serial")
 @ManagedBean
-@SessionScoped
-public class PerfilUsuarioManager implements Serializable {
+@ViewScoped
+@JBossLog
+public class AmigosManager implements Serializable {
 
     @Getter
     @Setter
-    private Usuario usuario;
+    private List<Usuario> amigos;
 
     @Getter
     @Setter
-    @ManagedProperty(value = "#{autenticacionManager}")
-    private AutenticacionManager autenticacionManager;
+    private String filtroCandidato;
 
     @Getter
     @Setter
@@ -38,7 +41,23 @@ public class PerfilUsuarioManager implements Serializable {
     public void init() {
         String email = AutenticacionManager.emailAutenticado();
         SnoopServiceClient usuariosRest = modulosManager.clienteSnoop(Modulo.usuarios);
-        usuario = usuariosRest.getServiceRoot().path("usuarios").path(email).request().get(Usuario.class);
+        amigos = usuariosRest.getServiceRoot().path("usuarios").path("amigos").path(email).request()
+                .get(new GenericType<List<Usuario>>() {
+                });
     }
 
+    public void removerAmigo(String emailAmigo) {
+        log.info("remover amigo " + emailAmigo);
+        amigos.stream().filter(amigo -> amigo.getEmail().equals(emailAmigo)).findAny()
+                .ifPresent(amigo -> amigos.remove(amigo));
+        // TODO remover amigo de backend
+    }
+
+    public void agregarAmigo() {
+
+    }
+
+    public void listCandidatosAmigos() {
+
+    }
 }

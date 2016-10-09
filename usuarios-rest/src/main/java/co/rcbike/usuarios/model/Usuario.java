@@ -18,11 +18,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @SuppressWarnings("serial")
 @Entity
 @XmlRootElement
+@JsonIgnoreProperties({"amigos"})
 @NamedQueries({@NamedQuery(name = "findByEmail", query = "SELECT e FROM Usuario e WHERE e.email = :email"),
         @NamedQuery(name = "listByNombre", query = "SELECT e FROM Usuario e ORDER BY e.nombres ASC")})
 public class Usuario implements Serializable {
@@ -54,7 +55,6 @@ public class Usuario implements Serializable {
     @JoinTable(name = "AMIGOS", //
             joinColumns = @JoinColumn(name = "PRINCIPAL", referencedColumnName = "ID"), //
             inverseJoinColumns = @JoinColumn(name = "AMIGO", referencedColumnName = "ID"))
-    @JsonIgnore
     private List<Usuario> amigos;
 
     public Long getId() {
