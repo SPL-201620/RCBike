@@ -1,7 +1,9 @@
 package co.rcbike.usuarios;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -34,6 +36,14 @@ public class AmigosManager implements Serializable {
 
     @Getter
     @Setter
+    private List<Usuario> candidatos;
+
+    @Getter
+    @Setter
+    private boolean mostrarCandidatos = true;
+
+    @Getter
+    @Setter
     @ManagedProperty(value = "#{modulosManager}")
     private ModulosManager modulosManager;
 
@@ -44,20 +54,28 @@ public class AmigosManager implements Serializable {
         amigos = usuariosRest.getServiceRoot().path("usuarios").path("amigos").path(email).request()
                 .get(new GenericType<List<Usuario>>() {
                 });
+        candidatos = new ArrayList<>(amigos.size());
     }
 
     public void removerAmigo(String emailAmigo) {
         log.info("remover amigo " + emailAmigo);
-        amigos.stream().filter(amigo -> amigo.getEmail().equals(emailAmigo)).findAny()
-                .ifPresent(amigo -> amigos.remove(amigo));
+        Optional<Usuario> remover = amigos.stream().filter(amigo -> amigo.getEmail().equals(emailAmigo)).findFirst();
+        remover.ifPresent(amigo -> amigos.remove(amigo));
+        remover.ifPresent(ex -> candidatos.add(ex));
         // TODO remover amigo de backend
     }
 
-    public void agregarAmigo() {
-
+    public void agregarAmigo(Usuario nuevoAmigo) {
+        amigos.add(nuevoAmigo);
+        candidatos.remove(nuevoAmigo);
     }
 
     public void listCandidatosAmigos() {
 
     }
+
+    public void cambiarEstadoCandidatos() {
+        mostrarCandidatos = !mostrarCandidatos;
+    }
+
 }
