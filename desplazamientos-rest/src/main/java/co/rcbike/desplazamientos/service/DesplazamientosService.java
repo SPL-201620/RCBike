@@ -9,14 +9,22 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.core.MediaType;
 
 import co.rcbike.desplazamientos.model.Participante;
 import co.rcbike.desplazamientos.model.Ruta;
 import co.rcbike.desplazamientos.model.Tipo;
 import co.rcbike.desplazamientos.model.Waypoint;
+import co.rcbike.desplazamientos.model.openweather.WeatherData;
 
 @Stateless
 public class DesplazamientosService {
+
+	private static final String OPEN_WEATHER_LANG_ESPANOL = "es";
+
+	private static final String OPEN_WEATHER_APP_ID = "8eee44951b419558297ae716a624c9c6";
 
 	// @Inject
 	// private Logger log;
@@ -78,6 +86,14 @@ public class DesplazamientosService {
 	 * Lista todos los recorridos grupales frecuentes cercanos a una latitud y
 	 * longitud
 	 * 
+	 * @param latitud
+	 *            latitud Inicial de la ruta
+	 * @param longitud
+	 *            longitud Inicial de la ruta
+	 * @param latitud
+	 *            latitud Final de la ruta
+	 * @param longitud
+	 *            longitud Final de la ruta
 	 */
 	private List<Ruta> listViajesGrupalesFrecuentesPunto(BigDecimal latitudInicio, BigDecimal latitudFinal,
 			BigDecimal longitudInicio, BigDecimal longitudFinal) {
@@ -95,6 +111,15 @@ public class DesplazamientosService {
 	 * Lista todos los recorridos grupales no frecuentes no vencidos cercanos a
 	 * una latitud y longitud
 	 * 
+	 * @param latitud
+	 *            latitud Inicial de la ruta
+	 * @param longitud
+	 *            longitud Inicial de la ruta
+	 * @param latitud
+	 *            latitud Final de la ruta
+	 * @param longitud
+	 *            longitud Final de la ruta
+	 *            
 	 */
 	private List<Ruta> listViajesGrupalesNoFrecuentesNoVencidosPunto(BigDecimal latitudInicio, BigDecimal latitudFinal,
 			BigDecimal longitudInicio, BigDecimal longitudFinal) {
@@ -117,6 +142,11 @@ public class DesplazamientosService {
 	/**
 	 * Lista todos los recorridos grupales no vencidos cercanos a una latitud y
 	 * longitud
+	 * 
+	 * @param latitud
+	 *            latitud geografica de la ruta
+	 * @param longitud
+	 *            longitud geografica de la ruta
 	 * 
 	 */
 	public List<Ruta> listViajesGrupalesCercanos(BigDecimal latitud, BigDecimal longitud) {
@@ -191,4 +221,29 @@ public class DesplazamientosService {
 		return q.getResultList();
 	}
 
+	/**
+	 * Optiene un objeto con la informacion del tiempo
+	 * 
+	 * @param latitud
+	 *            latitud geografica de la ruta
+	 * @param longitud
+	 *            longitud geografica de la ruta
+	 * 
+	 */
+	public WeatherData obtenerClima(BigDecimal latitud, BigDecimal longitud) {
+		WeatherData weatherData = null;
+		Client client = ClientBuilder.newClient();
+		try {
+			weatherData = client.target("http://api.openweathermap.org/data/2.5/weather")
+					.queryParam("lat", latitud)
+					.queryParam("lon", longitud)
+					.queryParam("lang", OPEN_WEATHER_LANG_ESPANOL)
+					.queryParam("appid", OPEN_WEATHER_APP_ID)
+					.request(MediaType.APPLICATION_JSON)
+					.get(WeatherData.class);
+		} finally {
+			client.close();
+		}
+		return weatherData;
+	}
 }
