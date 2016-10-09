@@ -10,6 +10,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
 import co.rcbike.autenticacion.service.AutenticacionService;
+import co.rcbike.usuarios.model.RegistroUsuario;
 import co.rcbike.usuarios.model.Usuario;
 
 @Stateless
@@ -44,13 +45,18 @@ public class UsuariosService {
         return q.getResultList();
     }
 
-    public void crearUsuario(Usuario usuario) {
-        usuario.setId(null);
+    public void crearUsuario(RegistroUsuario registroUsuario) {
+        Usuario usuario = new Usuario();
+        usuario.setEmail(registroUsuario.getEmail());
+        usuario.setNombres(registroUsuario.getNombres());
+        usuario.setApellidos(registroUsuario.getApellidos());
+        usuario.setFoto(registroUsuario.getFoto());
         try {
             em.persist(usuario);
-            autenticacion.registrar(usuario.getEmail(), usuario.getNombres());
+            autenticacion.registrar(registroUsuario.getEmail(), registroUsuario.getClave());
         } catch (Exception e) {
             // TODO usuario ya existe
+            e.printStackTrace();
         }
     }
 

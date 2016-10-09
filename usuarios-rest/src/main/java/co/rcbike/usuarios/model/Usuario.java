@@ -105,4 +105,8 @@ public class Usuario implements Serializable {
         this.email = email;
     }
 
+    public String nombreCompleto() {
+        return this.nombres + " " + this.apellidos;
+    }
+
 }

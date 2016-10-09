@@ -17,8 +17,8 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import co.rcbike.gui.ModulosManager;
+import co.rcbike.gui.ModulosManager.ModAutenticacion;
 import co.rcbike.gui.ModulosManager.Modulo;
-import co.rcbike.usuarios.model.Usuario;
 //import co.rcbike.usuarios.model.Usuario;
 import lombok.Getter;
 import lombok.Setter;
@@ -43,10 +43,6 @@ public class AutenticacionManager implements Serializable {
 
     @Getter
     @Setter
-    private Usuario usuario;
-
-    @Getter
-    @Setter
     @ManagedProperty(value = "#{modulosManager}")
     private ModulosManager modulos;
 
@@ -63,8 +59,8 @@ public class AutenticacionManager implements Serializable {
 
     public String autenticar() {
         WebTarget serviceRoot = modulos.clienteSnoop(Modulo.autenticacion).getServiceRoot();
-        Response response = serviceRoot.path("autenticar").queryParam("email", email).queryParam("clave", clave)
-                .request().get();
+        Response response = serviceRoot.path(ModAutenticacion.ENDPNT_AUTENTICACION).queryParam("email", email)
+                .queryParam("clave", clave).request().get();
         Status status = Response.Status.fromStatusCode(response.getStatus());
 
         cambiarEstadoAutenticacion(false);

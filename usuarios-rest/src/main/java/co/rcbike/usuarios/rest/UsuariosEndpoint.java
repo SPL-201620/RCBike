@@ -13,9 +13,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
-import javax.ws.rs.core.Response.StatusType;
 
+import co.rcbike.usuarios.model.RegistroUsuario;
 import co.rcbike.usuarios.model.Usuario;
 import co.rcbike.usuarios.service.UsuariosService;
 
@@ -49,16 +48,17 @@ public class UsuariosEndpoint {
         lookupUsuarioByEmail(email);
         return service.listAmigos(email);
     }
-    
+
     @POST
     @Consumes({MediaType.APPLICATION_JSON})
-    public Response crearUsuario(Usuario usuario){
-       try {
-        service.crearUsuario(usuario);
-    } catch (Exception e) {
-        e.printStackTrace();
+    public Response crearUsuario(RegistroUsuario registroUsuario) {
+        try {
+            service.crearUsuario(registroUsuario);
+        } catch (Exception e) {
+            // TODO manejo correcto de excepcion
+            e.printStackTrace();
+        }
+        return Response.ok().build();
     }
-       return Response.ok().build();
-    }
-    
+
 }

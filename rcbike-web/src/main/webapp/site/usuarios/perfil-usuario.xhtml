@@ -35,12 +35,16 @@
                     <h2 class="BigTopic" style="padding-bottom: 20px; padding-right: 20px;">Amigos
                     	<div class="Fright">
 	                    	<div class="DispInlBlock">
-		                    	<p:commandButton id="agrAmigos" styleClass="SoftBlueBack RaisedButton" value="Buscar Nuevos Amigos"
-		                    		icon="fa fa-users" update=":formAmigos:candidatosCard" action="#{amigosManager.cambiarEstadoCandidatos()}" />
+		                    	<p:commandButton id="agrAmigos" icon="fa fa-users"  
+		                    		styleClass="RaisedButton #{amigosManager.mostrarCandidatos ? 'RedButton':''}" 
+		                    		value="#{amigosManager.mostrarCandidatos ? 'Ocultar Nuevos Amigos':'Buscar Nuevos Amigos'}"
+		                    		update="@this :formAmigos:candidatosCard" action="#{amigosManager.cambiarEstadoCandidatos()}" />
 	                    	</div>
                     	</div>
                     </h2>
-                    <p:outputPanel id="candidatosCard" layout="block" styleClass="Card ShadowEffect">
+                    
+                    <p:outputPanel id="candidatosCard" layout="block">
+                    <p:outputPanel layout="block" styleClass="Card ShadowEffect WhiteBlueBack" rendered="#{amigosManager.mostrarCandidatos}">
 	                    <p:carousel value="#{amigosManager.candidatos}" headerText="Carousel" var="candidato" widgetVar="candidatos" 
 	                    			responsive="true" >
 					     	<f:facet name="header">
@@ -54,10 +58,10 @@
 								<div class="Container100">
 		                            <div class="Container20 Responsive"><i class="icon-account_box Fs100 White"/></div>
 		                            <div class="Container80 Responsive" >
-			                            <span class="Fs30 FontRobotoBold White">#{candidato.nombres} #{candidato.apellidos}</span>
+			                            <span class="Fs30 FontRobotoBold White">#{candidato.nombreCompleto()}</span>
 			                            <div class="Wid50" style="margin: auto; padding-top: 12px;">
 		                            		<p:commandButton value="Agregar a Mis Amigos" icon="fa fa-user-plus Fs18 Green"
-		                            		styleClass="BlueTextButton RaisedButton Green"
+		                            		 styleClass="BlueTextButton RaisedButton Green"
 		                            		 update=":formAmigos:amigosCard :formAmigos:candidatosCard"/>
 		                            	</div>
 		                            </div>
@@ -66,10 +70,11 @@
 												        
 	                    </p:carousel>
                     </p:outputPanel>
+                    </p:outputPanel>
                     
                     <div class="EmptyBox10"/>
                     
-                    <p:outputPanel id="amigosCard" layout="block" styleClass="Card ShadowEffect">
+                    <p:outputPanel id="amigosCard" layout="block" styleClass="Card ShadowEffect WhiteBlueBack">
 	                    <p:dataGrid  var="amigo" value="#{amigosManager.amigos}" columns="3" layout="grid" rows="9" paginator="true" 
 	                                            paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
 							
@@ -82,7 +87,7 @@
 								<div class="Container100">
 		                            <div class="Container20 Responsive"><i class="icon-account_box Fs100"/></div>
 		                            <div class="Container80 Responsive" >
-			                            <span class="Fs30 FontRobotoBold White">#{amigo.nombres} #{amigo.apellidos}</span>
+			                            <span class="Fs30 FontRobotoBold White">#{amigo.nombreCompleto()}</span>
 			                            <div class="Wid50" style="margin: auto; padding-top: 12px;">
 		                            		<p:button value="Enviar mensaje" icon="fa fa-comment Fs18 SoftBlue" styleClass="BlueTextButton RaisedButton"/>
 		                            	</div>

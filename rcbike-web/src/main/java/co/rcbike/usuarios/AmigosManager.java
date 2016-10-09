@@ -13,6 +13,7 @@ import javax.ws.rs.core.GenericType;
 
 import co.rcbike.autenticacion.AutenticacionManager;
 import co.rcbike.gui.ModulosManager;
+import co.rcbike.gui.ModulosManager.ModUsuarios;
 import co.rcbike.gui.ModulosManager.Modulo;
 import co.rcbike.usuarios.model.Usuario;
 import eu.agilejava.snoop.client.SnoopServiceClient;
@@ -40,7 +41,7 @@ public class AmigosManager implements Serializable {
 
     @Getter
     @Setter
-    private boolean mostrarCandidatos = true;
+    private boolean mostrarCandidatos;
 
     @Getter
     @Setter
@@ -51,7 +52,7 @@ public class AmigosManager implements Serializable {
     public void init() {
         String email = AutenticacionManager.emailAutenticado();
         SnoopServiceClient usuariosRest = modulosManager.clienteSnoop(Modulo.usuarios);
-        amigos = usuariosRest.getServiceRoot().path("usuarios").path("amigos").path(email).request()
+        amigos = usuariosRest.getServiceRoot().path(ModUsuarios.ENDPNT_USUARIOS).path("amigos").path(email).request()
                 .get(new GenericType<List<Usuario>>() {
                 });
         candidatos = new ArrayList<>(amigos.size());
