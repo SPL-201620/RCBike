@@ -59,15 +59,22 @@
 	<navigation-rule>
 		<from-view-id>*</from-view-id>
 		<navigation-case>
-			<from-outcome>ruta</from-outcome>
-			<to-view-id>/site/pb/desplazamiento.xhtml</to-view-id>
+			<from-outcome>perfil-usuario</from-outcome>
+			<to-view-id>/site/usuarios/perfil-usuario.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 	<navigation-rule>
 		<from-view-id>*</from-view-id>
 		<navigation-case>
-			<from-outcome>perfil-usuario</from-outcome>
-			<to-view-id>/site/usuarios/perfil-usuario.xhtml</to-view-id>
+			<from-outcome>desplazamiento-mapa</from-outcome>
+			<to-view-id>/site/desplazamientos/desplazamiento.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>recorrido</from-outcome>
+			<to-view-id>/site/desplazamientos/recorridos.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 	

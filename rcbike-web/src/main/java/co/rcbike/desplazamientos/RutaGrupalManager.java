@@ -8,7 +8,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
-
 import co.rcbike.autenticacion.AutenticacionManager;
 import co.rcbike.desplazamientos.model.Ruta;
 import co.rcbike.gui.ModulosManager;
@@ -22,7 +21,7 @@ import lombok.extern.jbosslog.JBossLog;
 @ManagedBean
 @ViewScoped
 @JBossLog
-public class RutaManager implements Serializable {
+public class RutaGrupalManager implements Serializable {
 	@Getter
     @Setter
     private List<Ruta> rutas;
@@ -48,7 +47,7 @@ public class RutaManager implements Serializable {
 	@SuppressWarnings("unchecked")
 	@PostConstruct
     public void init() {
-		java.lang.System.out.print(".-----inicio\n");
+		java.lang.System.out.print(".-----inicioGrupales\n");
 
 		this.email = autenticacionManager.getEmail();
 		
@@ -56,7 +55,7 @@ public class RutaManager implements Serializable {
 		
 		SnoopServiceClient desplazamientoRest = modulosManager.clienteSnoop(Modulo.desplazamientos);
         
-        rutas = desplazamientoRest.getServiceRoot().path("individual").path("listViajesIndividuales").queryParam("emailCreador", email).request().get(List.class);
+        rutas = desplazamientoRest.getServiceRoot().path("grupal").path("listViajesGrupales").request().get(List.class);
         
         java.lang.System.out.print("\n");
         
