@@ -20,24 +20,91 @@
                     		
                     	</h:panelGroup>
                     	<p:panelGrid columns="1" columnClasses="ui-grid-col-5" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;">
-                    		<ui:fragment>
-                   				<h2 class="FontBold"><h:outputText value="#{perfilUsuarioManager.usuario.nombres} #{perfilUsuarioManager.usuario.apellidos}" /></h2>
-                    		</ui:fragment>
-	                        <p:inputText id="correo" disabled="true" value="#{perfilUsuarioManager.usuario.email}"/>
+                			<h2 class="FontBold">#{perfilUsuarioManager.usuario.nombres} #{perfilUsuarioManager.usuario.apellidos}</h2>
+                			<h2 class="BigTopic">#{perfilUsuarioManager.usuario.email}</h2>
                    		</p:panelGrid>
                     </p:panelGrid>
                 </div>
             </div>
         </div>
 
+		<h:form id="formAmigos">
         <div class="Container100 ui-fluid">
             <div class="ContainerIndent">
                 <div class="Card ShadowEffect">
-                    <h2 class="BigTopic">Amigos</h2>
+                    <h2 class="BigTopic" style="padding-bottom: 20px; padding-right: 20px;">Amigos
+                    	<div class="Fright">
+	                    	<div class="DispInlBlock">
+		                    	<p:commandButton id="agrAmigos" styleClass="SoftBlueBack RaisedButton" value="Buscar Nuevos Amigos"
+		                    		icon="fa fa-users" update=":formAmigos:candidatosCard" action="#{amigosManager.cambiarEstadoCandidatos()}" />
+	                    	</div>
+                    	</div>
+                    </h2>
+                    <p:outputPanel id="candidatosCard" layout="block" styleClass="Card ShadowEffect">
+	                    <p:carousel value="#{amigosManager.candidatos}" headerText="Carousel" var="candidato" widgetVar="candidatos" 
+	                    			responsive="true" >
+					     	<f:facet name="header">
+					            <p:outputPanel>
+					                <h:outputText value="Otros usuarios: " />
+					                <p:inputText id="filtroCandidatos" style="width:200px" placeholder=" filtrar"/>
+					            </p:outputPanel>
+					        </f:facet>
+					        
+							<p:outputPanel layout="block" styleClass="Card ShadowEffect TexAlCenter GreenBack White">
+								<div class="Container100">
+		                            <div class="Container20 Responsive"><i class="icon-account_box Fs100 White"/></div>
+		                            <div class="Container80 Responsive" >
+			                            <span class="Fs30 FontRobotoBold White">#{candidato.nombres} #{candidato.apellidos}</span>
+			                            <div class="Wid50" style="margin: auto; padding-top: 12px;">
+		                            		<p:commandButton value="Agregar a Mis Amigos" icon="fa fa-user-plus Fs18 Green"
+		                            		styleClass="BlueTextButton RaisedButton Green"
+		                            		 update=":formAmigos:amigosCard :formAmigos:candidatosCard"/>
+		                            	</div>
+		                            </div>
+		                        </div>
+							</p:outputPanel>
+												        
+	                    </p:carousel>
+                    </p:outputPanel>
+                    
+                    <div class="EmptyBox10"/>
+                    
+                    <p:outputPanel id="amigosCard" layout="block" styleClass="Card ShadowEffect">
+	                    <p:dataGrid  var="amigo" value="#{amigosManager.amigos}" columns="3" layout="grid" rows="9" paginator="true" 
+	                                            paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+							
+							<p:outputPanel layout="block" styleClass="Card ShadowEffect TexAlCenter SoftBlueBack White">
+								<div class="CardTopic Fright" style="margin-top:-15px; margin-right:-13px; padding:0px;">
+									<p:commandLink id="remAmigo" action="#{amigosManager.removerAmigo(amigo.email)}" update=":formAmigos:amigosCard :formAmigos:candidatosCard"> 
+		        						<i class="icon-square-cross Fs20 White"/>
+		    						</p:commandLink>
+								</div>
+								<div class="Container100">
+		                            <div class="Container20 Responsive"><i class="icon-account_box Fs100"/></div>
+		                            <div class="Container80 Responsive" >
+			                            <span class="Fs30 FontRobotoBold White">#{amigo.nombres} #{amigo.apellidos}</span>
+			                            <div class="Wid50" style="margin: auto; padding-top: 12px;">
+		                            		<p:button value="Enviar mensaje" icon="fa fa-comment Fs18 SoftBlue" styleClass="BlueTextButton RaisedButton"/>
+		                            	</div>
+		                            </div>
+		                        </div>
+							</p:outputPanel>
+							
+	                   </p:dataGrid>
+                   </p:outputPanel>
                 </div>
             </div>
         </div>
+        </h:form>
         
+        
+		<div class="Container100 ui-fluid">
+            <div class="ContainerIndent">
+                <div class="Card ShadowEffect">
+                    <h2 class="BigTopic" style="padding-bottom: 20px; padding-right: 20px;">Mis recorridos</h2>
+                </div>
+            </div>
+        </div>
     </ui:define>
 
 </ui:composition>

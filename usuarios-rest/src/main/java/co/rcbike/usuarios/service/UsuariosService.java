@@ -67,6 +67,8 @@ public class UsuariosService {
     }
 
     public List<Usuario> listAmigos(String email) {
-        return findUsuario(email).getAmigos();
+        List<Usuario> amigos = findUsuario(email).getAmigos();
+        amigos.size();
+        return amigos;
     }
 }

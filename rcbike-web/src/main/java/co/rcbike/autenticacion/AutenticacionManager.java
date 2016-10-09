@@ -50,6 +50,11 @@ public class AutenticacionManager implements Serializable {
     @ManagedProperty(value = "#{modulosManager}")
     private ModulosManager modulos;
 
+    public static final String emailAutenticado() {
+        return (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
+                .get(AutenticacionManager.EMAIL_ATTR);
+    }
+
     @PostConstruct
     public void init() {
         log.debug("Inicializado " + this.getClass().getName());
@@ -80,7 +85,8 @@ public class AutenticacionManager implements Serializable {
     }
 
     public boolean autenticado() {
-        return (boolean) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().getOrDefault(AUTENTICADO_ATTR, false);
+        return (boolean) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
+                .getOrDefault(AUTENTICADO_ATTR, false);
     }
 
     private void cambiarEstadoAutenticacion(boolean autenticado) {
