@@ -173,6 +173,10 @@
 			<type>jar</type>
 			<classifier>model</classifier>
 		</dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
