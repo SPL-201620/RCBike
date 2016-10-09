@@ -26,7 +26,7 @@ public class MensajeriaEndpoint {
 
   @GET
   @Produces({MediaType.APPLICATION_JSON})  
-  public Conversacion findConvesacionByEmRes(@PathParam("emisor") String emisor, @PathParam("emisor") String receptor){
+  public Conversacion findConvesacionByEmRes(@PathParam("emisor") String emisor, @PathParam("receptor") String receptor){
   return service.findConvesacionByEmRes(emisor, receptor);
   }
 

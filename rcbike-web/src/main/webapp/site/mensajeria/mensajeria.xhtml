@@ -1,0 +1,45 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="subheader">
+        Mensajeria
+    </ui:define>
+
+	<ui:define name="content">
+
+		<p:panel id="main" styleClass="ui-fluid">
+			<h:form id="frmdetail" prependId="false">
+				<p:layout style="min-width:400px;min-height:200px;">
+					<p:layoutUnit styleClass="ui-fluid" position="west"
+						resizable="true" size="100" minSize="40" maxSize="200">
+                    Amigos
+                    <h:panelGrid columns="2" style="margin-bottom:10px"
+							cellpadding="5" columnClasses="label, value">
+
+							<p:selectOneListbox id="amigo" value="#{mensajeManager.amigoSelected}"
+								var="amigoSelected" filter="true" filterMatchMode="contains">
+								<f:selectItems value="#{mensajeriaManager.getAmigos}" var="amigo"
+									itemLabel="#{amigos.email}" itemValue="#{amigo}" />
+								<p:column>
+									<h:outputText value="#{amigo.nombre}" />
+								</p:column>
+
+								<p:column>
+									<h:outputText value="#{amigo.email}" />
+								</p:column>
+							</p:selectOneListbox>
+						</h:panelGrid>
+					</p:layoutUnit>
+					<p:layoutUnit styleClass="ui-fluid" position="center">
+                    Mensajes
+                    </p:layoutUnit>
+				</p:layout>
+			</h:form>
+		</p:panel>
+
+	</ui:define>
+
+</ui:composition>

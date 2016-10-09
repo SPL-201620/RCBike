@@ -23,9 +23,10 @@ public class MensajeriaService {
         q.setParameter("emailEmisor", emisor);
         q.setParameter("emailReceptor", receptor);
         Conversacion c = (Conversacion) q.getSingleResult();
-        c.getMensajes();
+        if (c != null){
+            c.getMensajes();
+        }
         return c;
-      
     }
 
     public Conversacion create(Conversacion record) {
@@ -33,12 +34,10 @@ public class MensajeriaService {
         em.flush();
         return record;
     }
-
-      
+    
     public Mensaje create(Mensaje record) {
         em.persist(record);
         em.flush();
         return record;
     }
-
 }
