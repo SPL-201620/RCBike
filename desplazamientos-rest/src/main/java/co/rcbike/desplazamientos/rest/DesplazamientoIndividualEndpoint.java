@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import co.rcbike.desplazamientos.model.Ruta;
@@ -43,7 +44,7 @@ public class DesplazamientoIndividualEndpoint {
     @GET
     @Path("/listViajesIndividuales")
     @Produces(MediaType.APPLICATION_JSON)
-	public List<Ruta> listViajesIndividuales(String emailCreador) {
+	public List<Ruta> listViajesIndividuales(@QueryParam("emailCreador") String emailCreador) {
     	return service.listViajesIndividuales(emailCreador);
 	}
 
@@ -60,6 +61,20 @@ public class DesplazamientoIndividualEndpoint {
     	service.guardarViaje(ruta);
 	}
 
-    
+	/**
+	 * Permite obtener el clima en una latitud y longitud
+	 * 
+	 * @param latitud
+	 *            latitud geografica de la ruta
+	 * @param longitud
+	 *            longitud geografica de la ruta
+	 */
+	@GET
+	@Path("/obtenerClima")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String obtenerClima(@QueryParam("latitud") String latitud,
+			@QueryParam("longitud") String longitud) {
+		return service.obtenerClima(latitud, longitud);
+	}
 
 }

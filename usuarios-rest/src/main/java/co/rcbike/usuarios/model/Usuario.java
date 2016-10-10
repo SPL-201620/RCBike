@@ -4,12 +4,14 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -58,6 +60,8 @@ public class Usuario implements Serializable {
     /**
      * Representacion Base 64 de la imagen
      */
+    @Column(columnDefinition = "CLOB")
+    @Lob
     private String foto;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
