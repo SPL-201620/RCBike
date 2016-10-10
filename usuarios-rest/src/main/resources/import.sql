@@ -24,4 +24,3 @@ insert into Amigos (principal, amigo) values (-1, -4);
 insert into Amigos (principal, amigo) values (-1, -5);
 insert into Amigos (principal, amigo) values (-1, -6);
 insert into Amigos (principal, amigo) values (-1, -7);
-insert into Amigos (principal, amigo) values (-1, -8);

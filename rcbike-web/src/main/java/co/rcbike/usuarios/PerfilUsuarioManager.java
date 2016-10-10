@@ -9,9 +9,9 @@ import javax.faces.bean.SessionScoped;
 
 import co.rcbike.autenticacion.AutenticacionManager;
 import co.rcbike.gui.ModulosManager;
+import co.rcbike.gui.ModulosManager.ModUsuarios;
 import co.rcbike.gui.ModulosManager.Modulo;
 import co.rcbike.usuarios.model.Usuario;
-import eu.agilejava.snoop.client.SnoopServiceClient;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,7 +20,6 @@ import lombok.Setter;
 @SessionScoped
 public class PerfilUsuarioManager implements Serializable {
 
-    @Getter
     @Setter
     private Usuario usuario;
 
@@ -36,9 +35,20 @@ public class PerfilUsuarioManager implements Serializable {
 
     @PostConstruct
     public void init() {
-        String email = AutenticacionManager.emailAutenticado();
-        SnoopServiceClient usuariosRest = modulosManager.clienteSnoop(Modulo.usuarios);
-        usuario = usuariosRest.getServiceRoot().path("usuarios").path(email).request().get(Usuario.class);
+
     }
 
+    public String nombreUsuario() {
+        Usuario usuario = getUsuario();
+        return usuario != null ? usuario.nombreCompleto() : "";
+    }
+
+    public Usuario getUsuario() {
+        if (usuario == null && autenticacionManager.autenticado()) {
+            String email = AutenticacionManager.emailAutenticado();
+            usuario = modulosManager.clienteSnoop(Modulo.usuarios).getServiceRoot().path(ModUsuarios.ENDPNT_USUARIOS)
+                    .path(email).request().get(Usuario.class);
+        }
+        return usuario;
+    }
 }

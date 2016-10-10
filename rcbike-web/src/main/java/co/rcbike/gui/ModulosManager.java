@@ -8,6 +8,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
+import javax.ws.rs.client.WebTarget;
 
 import org.primefaces.model.menu.MenuModel;
 
@@ -36,6 +37,14 @@ public class ModulosManager implements Serializable {
         //
         sinc_redes;
 
+    }
+
+    public static class ModAutenticacion {
+        public static final String ENDPNT_AUTENTICACION = "autenticar";
+    }
+
+    public static class ModUsuarios {
+        public static final String ENDPNT_USUARIOS = "usuarios";
     }
 
     private Map<Modulo, SnoopServiceClient> clientesRest = new HashMap<>(10);
@@ -105,5 +114,9 @@ public class ModulosManager implements Serializable {
 
     public SnoopServiceClient clienteSnoop(Modulo modulo) {
         return clientesRest.get(modulo);
+    }
+
+    public WebTarget root(Modulo modulo) {
+        return clienteSnoop(modulo).getServiceRoot();
     }
 }

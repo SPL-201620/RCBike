@@ -3,6 +3,7 @@ package co.rcbike.usuarios.model;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -25,12 +26,20 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @XmlRootElement
 @JsonIgnoreProperties({"amigos"})
 @NamedQueries({@NamedQuery(name = "findByEmail", query = "SELECT e FROM Usuario e WHERE e.email = :email"),
-        @NamedQuery(name = "listByNombre", query = "SELECT e FROM Usuario e ORDER BY e.nombres ASC")})
+        @NamedQuery(name = "listByNombre", query = "SELECT e FROM Usuario e ORDER BY e.nombres ASC"),
+        @NamedQuery(name = "listNoAmigos", query = "SELECT e FROM Usuario e WHERE e.email NOT IN :excluidos ORDER BY e.nombres ASC"),
+        @NamedQuery(name = "listNoAmigosFiltro", query = "SELECT e FROM Usuario e WHERE "
+                + " lower(e.email) LIKE :filtro OR lower(e.nombres) LIKE :filtro OR lower(e.apellidos) LIKE :filtro"
+                + " AND e.email NOT IN :excluidos ORDER BY e.nombres ASC")})
 public class Usuario implements Serializable {
 
     public static final String SQ_findByEmail = "findByEmail";
     public static final String SQ_listByNombre = "listByNombre";
     public static final String SQ_PARAM_EMAIL = "email";
+    public static final String SQ_listNoAmigos = "listNoAmigos";
+    public static final String SQ_PARAM_EXCLUIDOS = "excluidos";
+    public static final String SQ_listNoAmigosFiltro = "listNoAmigosFiltro";
+    public static final String SQ_PARAM_FILTRO = "filtro";
 
     @Id
     @GeneratedValue
@@ -51,7 +60,7 @@ public class Usuario implements Serializable {
      */
     private String foto;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     @JoinTable(name = "AMIGOS", //
             joinColumns = @JoinColumn(name = "PRINCIPAL", referencedColumnName = "ID"), //
             inverseJoinColumns = @JoinColumn(name = "AMIGO", referencedColumnName = "ID"))
@@ -103,6 +112,10 @@ public class Usuario implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String nombreCompleto() {
+        return this.nombres + " " + this.apellidos;
     }
 
 }

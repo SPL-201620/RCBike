@@ -10,12 +10,12 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
-import javax.ws.rs.core.Response.StatusType;
 
+import co.rcbike.usuarios.model.RegistroUsuario;
 import co.rcbike.usuarios.model.Usuario;
 import co.rcbike.usuarios.service.UsuariosService;
 
@@ -42,6 +42,7 @@ public class UsuariosEndpoint {
         }
         return member;
     }
+
     @GET
     @Path("/amigos/{email: .+@.+}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -49,16 +50,39 @@ public class UsuariosEndpoint {
         lookupUsuarioByEmail(email);
         return service.listAmigos(email);
     }
-    
+
+    @GET
+    @Path("/noamigos/{email: .+@.+}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Usuario> listNoAmigos(@PathParam("email") String email, @QueryParam("filtro") String filtro) {
+        return service.listNoAmigosDe(email, filtro);
+    }
+
     @POST
     @Consumes({MediaType.APPLICATION_JSON})
-    public Response crearUsuario(Usuario usuario){
-       try {
-        service.crearUsuario(usuario);
-    } catch (Exception e) {
-        e.printStackTrace();
+    public Response crearUsuario(RegistroUsuario registroUsuario) {
+        try {
+            service.crearUsuario(registroUsuario);
+        } catch (Exception e) {
+            // TODO manejo correcto de excepcion
+            e.printStackTrace();
+        }
+        return Response.ok().build();
     }
-       return Response.ok().build();
+
+    @POST
+    @Path("agregar-amigo")
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response agregarAmigo(List<String> emails) {
+        service.agregarAmigo(emails.get(0), emails.get(1));
+        return Response.ok().build();
     }
-    
+
+    @POST
+    @Path("remover-amigo")
+    public Response removerAmigo(List<String> emails) {
+        service.removerAmigo(emails.get(0), emails.get(1));
+        return Response.ok().build();
+    }
+
 }

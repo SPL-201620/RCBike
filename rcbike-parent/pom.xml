@@ -106,7 +106,11 @@
 				<type>war</type>
 				<version>${snoop.version}</version>
 			</dependency>
-
+			<dependency>
+			    <groupId>com.google.guava</groupId>
+			    <artifactId>guava</artifactId>
+			    <version>20.0-rc1</version>
+			</dependency>
 			<dependency>
 				<groupId>org.wildfly.bom</groupId>
 				<artifactId>jboss-javaee-7.0-with-tools</artifactId>
