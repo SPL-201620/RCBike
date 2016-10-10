@@ -16,21 +16,20 @@
 			<div class="ContainerIndent">
 				<div class="Card ShadowEffect">
 					<h2 class="CardTopic TexAlCenter Fs30">Recorrido</h2>
-					
-					
+					<h3>Paso 1</h3>
+					<p>Haga clic en el mapa para colocar un marcador, ese será su punto de partida, luego seleccione su punto de Destino en el mapa.</p>
+					<h3>Paso 2</h3>
+					<p>Una vez seleccionado los 2 puntos de su ruta seleccione el botón Calcular.</p>
 					<p:growl id="messages" showDetail="true" />
-					
-					
+								
 						<p:gmap id="gmap" styleClass="PosRelative SoftGrayBack" center="4.656360,-74.103770" zoom="13" type="ROADMAP"
 							style="width:100%; height:355px; z-index:1;" model="#{addMarkersView.emptyModel}" onPointClick="handlePointClick(event);" widgetVar="map" />
-
-					
 					
 					<p:dialog widgetVar="dlg" showEffect="fade">
 					    <h:form prependId="false" >
 					        <h:panelGrid columns="2">
-					            <h:outputLabel for="title" value="Titulo:" />
-					            <p:inputText id="title" value="#{addMarkersView.title}" />
+					            <h:outputLabel for="titleMarked" value="Titulo:" />
+					            <p:inputText id="titleMarked" value="#{addMarkersView.title}" />
 					 
 					            <f:facet name="footer">
 					                <p:commandButton value="Agregar" actionListener="#{addMarkersView.addMarker}" update=":messages" oncomplete="markerAddComplete()" />
@@ -42,10 +41,78 @@
 					        <h:inputHidden id="lng" value="#{addMarkersView.lng}" />
 					    </h:form>
 					</p:dialog>
- 
-<script type="text/javascript">
+
+					<script type="text/javascript">
+	function routing() {
+		var mapOptions = {
+		    center: new google.maps.LatLng(markers[0].lat, markers[0].lng),
+		    zoom: 13,
+		    mapTypeId: google.maps.MapTypeId.ROADMAP
+		};
+		var map = new google.maps.Map(document.getElementById("gmap"), mapOptions);
+		var infoWindow = new google.maps.InfoWindow();
+		var lat_lng = new Array();
+		var latlngbounds = new google.maps.LatLngBounds();
+		
+		//<![CDATA[
+		for (i = 0; i < markers.length; i++) {
+		    var data = markers[i]
+		    var myLatlng = new google.maps.LatLng(data.lat, data.lng);
+		    lat_lng.push(myLatlng);
+		    var marker = new google.maps.Marker({
+		        position: myLatlng,
+		        map: map,
+		        title: data.title
+		    });
+		    latlngbounds.extend(marker.position);
+		    (function (marker, data) {
+		        google.maps.event.addListener(marker, "click", function (e) {
+		            infoWindow.setContent(data.title);
+		            infoWindow.open(map, marker);
+		        });
+		    })(marker, data);
+		}
+		//]]>
+		map.setCenter(latlngbounds.getCenter());
+		map.fitBounds(latlngbounds);
+		
+		//Initialize the Path Array
+		var path = new google.maps.MVCArray();
+		
+		//Initialize the Direction Service
+		var service = new google.maps.DirectionsService();
+		
+		//Set the Path Stroke Color
+		var poly = new google.maps.Polyline({ map: map, strokeColor: '#4986E7' });
+		
+		//Loop and Draw Path Route between the Points on MAP
+
+		//<![CDATA[
+        for (var i = 0; i < lat_lng.length; i++) {
+            if ((i + 1) < lat_lng.length) {
+                var src = lat_lng[i];
+                var des = lat_lng[i + 1];
+                path.push(src);
+                poly.setPath(path);
+                service.route({
+                    origin: src,
+                    destination: des,
+                    travelMode: google.maps.DirectionsTravelMode.DRIVING
+                }, function (result, status) {
+                    if (status == google.maps.DirectionsStatus.OK) {
+                        for (var i = 0, len = result.routes[0].overview_path.length; i < len; i++) {
+                            path.push(result.routes[0].overview_path[i]);
+                        }
+                    }
+                });
+            }
+        }
+       //]]>
+	}
+
     var currentMarker = null;
- 
+    var markers = [];
+
     function handlePointClick(event) {
         if(currentMarker === null) {
             document.getElementById('lat').value = event.latLng.lat();
@@ -62,10 +129,16 @@
     }
  
     function markerAddComplete() {
-        var title = document.getElementById('title');
+        var title = document.getElementById('titleMarked');
         currentMarker.setTitle(title.value);
+
+        markers.push({
+                "title": title.value,
+                "lat": currentMarker.position.lat(),
+                "lng": currentMarker.position.lng()
+        });
+        
         title.value = "";
- 
         currentMarker = null;
         PF('dlg').hide();
     }
@@ -78,20 +151,7 @@
         return false;
     }
 </script>
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					<br />
+
 					<br />
 				</div>
 			</div>
