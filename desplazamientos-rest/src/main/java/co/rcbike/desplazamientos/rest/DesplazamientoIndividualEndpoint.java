@@ -1,6 +1,5 @@
 package co.rcbike.desplazamientos.rest;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
@@ -13,7 +12,6 @@ import javax.ws.rs.core.MediaType;
 
 import co.rcbike.desplazamientos.model.Ruta;
 import co.rcbike.desplazamientos.model.Waypoint;
-import co.rcbike.desplazamientos.model.openweather.WeatherData;
 import co.rcbike.desplazamientos.service.DesplazamientosService;
 
 @Path("/individual")
@@ -74,8 +72,8 @@ public class DesplazamientoIndividualEndpoint {
 	@GET
 	@Path("/obtenerClima")
 	@Produces(MediaType.APPLICATION_JSON)
-	public WeatherData obtenerClima(@QueryParam("latitud") BigDecimal latitud,
-			@QueryParam("longitud") BigDecimal longitud) {
+	public String obtenerClima(@QueryParam("latitud") String latitud,
+			@QueryParam("longitud") String longitud) {
 		return service.obtenerClima(latitud, longitud);
 	}
 

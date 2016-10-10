@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -12,12 +11,12 @@ import javax.persistence.TypedQuery;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import co.rcbike.desplazamientos.model.Participante;
 import co.rcbike.desplazamientos.model.Ruta;
 import co.rcbike.desplazamientos.model.Tipo;
 import co.rcbike.desplazamientos.model.Waypoint;
-import co.rcbike.desplazamientos.model.openweather.WeatherData;
 
 @Stateless
 public class DesplazamientosService {
@@ -230,20 +229,19 @@ public class DesplazamientosService {
 	 *            longitud geografica de la ruta
 	 * 
 	 */
-	public WeatherData obtenerClima(BigDecimal latitud, BigDecimal longitud) {
-		WeatherData weatherData = null;
+	public String obtenerClima(String latitud, String longitud) {
+		Response weatherData;
 		Client client = ClientBuilder.newClient();
-		try {
 			weatherData = client.target("http://api.openweathermap.org/data/2.5/weather")
 					.queryParam("lat", latitud)
 					.queryParam("lon", longitud)
 					.queryParam("lang", OPEN_WEATHER_LANG_ESPANOL)
 					.queryParam("appid", OPEN_WEATHER_APP_ID)
 					.request(MediaType.APPLICATION_JSON)
-					.get(WeatherData.class);
-		} finally {
-			client.close();
-		}
-		return weatherData;
+					.get();
+			
+			String jsonString = weatherData.readEntity(String.class);
+			
+		return jsonString;
 	}
 }
