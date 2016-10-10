@@ -10,35 +10,31 @@
 
 	<ui:define name="content">
 
-		<p:panel id="main" styleClass="ui-fluid">
-			<h:form id="frmdetail" prependId="false">
-				<p:layout style="min-width:400px;min-height:200px;">
-					<p:layoutUnit styleClass="ui-fluid" position="west"
-						resizable="true" size="100" minSize="40" maxSize="200">
-                    Amigos
-                    <h:panelGrid columns="2" style="margin-bottom:10px"
-							cellpadding="5" columnClasses="label, value">
-
-							<p:selectOneListbox id="amigo" value="#{mensajeManager.amigoSelected}"
-								var="amigoSelected" filter="true" filterMatchMode="contains">
-								<f:selectItems value="#{mensajeriaManager.getAmigos}" var="amigo"
-									itemLabel="#{amigos.email}" itemValue="#{amigo}" />
-								<p:column>
-									<h:outputText value="#{amigo.nombre}" />
-								</p:column>
-
-								<p:column>
-									<h:outputText value="#{amigo.email}" />
-								</p:column>
-							</p:selectOneListbox>
-						</h:panelGrid>
-					</p:layoutUnit>
-					<p:layoutUnit styleClass="ui-fluid" position="center">
-                    Mensajes
-                    </p:layoutUnit>
-				</p:layout>
-			</h:form>
-		</p:panel>
+		<div class="Container100">
+			<div class="ContainerIndent">
+				<div class="Card ShadowEffect TexAlCenter">
+					<div class="ContainerIndent">
+						<h2 class="BigTopic" align="center">Mensajería RC-BIKE</h2>
+						<h:form id="frmMensajeria" prependId="false">
+							<p:tabView value="#{amigosManager.amigos}" var="amigo"
+								orientation="left">
+								<p:ajax event="tabChange"
+									listener="#{mensajeriaManager.onTabChange}" update=":frmMensajeria" />
+								<p:tab value="#{amigosManager.amigos}"
+									title="#{amigo.email}">
+									<h:panelGrid columns="1" cellpadding="10">
+										<p>
+											<h:outputText value="#{mensajeriaManager.mensajes}"
+												escape="false" />
+										</p>
+									</h:panelGrid>
+								</p:tab>
+							</p:tabView>
+						</h:form>
+					</div>
+				</div>
+			</div>
+		</div>
 
 	</ui:define>
 

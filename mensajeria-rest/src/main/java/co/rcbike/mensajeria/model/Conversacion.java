@@ -19,7 +19,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 @SuppressWarnings("serial")
 @Entity
 @XmlRootElement
-@NamedQueries({@NamedQuery(name = "listByEmail", query = "SELECT e FROM Conversacion e WHERE (e.emailEmisor = :emailEmisor and e.emailReceptor = :emailReseptor) or (e.emailEmisor =  :emailReseptor and e.emailReceptor = :emailEmisor)" )})
+@NamedQueries({@NamedQuery(name = "listByEmail", query = "SELECT e FROM Conversacion e WHERE (e.emailEmisor = :emailEmisor and e.emailReceptor = :emailReceptor) or (e.emailEmisor =  :emailReseptor and e.emailReceptor = :emailEmisor)" )})
 public class Conversacion implements Serializable {
 
     public static final String SQ_LISTBYEMAILS = "listByEmail";
