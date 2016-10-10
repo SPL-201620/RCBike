@@ -118,7 +118,7 @@ public class DesplazamientosService {
 	 *            latitud Final de la ruta
 	 * @param longitud
 	 *            longitud Final de la ruta
-	 *            
+	 * 
 	 */
 	private List<Ruta> listViajesGrupalesNoFrecuentesNoVencidosPunto(BigDecimal latitudInicio, BigDecimal latitudFinal,
 			BigDecimal longitudInicio, BigDecimal longitudFinal) {
@@ -232,16 +232,27 @@ public class DesplazamientosService {
 	public String obtenerClima(String latitud, String longitud) {
 		Response weatherData;
 		Client client = ClientBuilder.newClient();
-			weatherData = client.target("http://api.openweathermap.org/data/2.5/weather")
-					.queryParam("lat", latitud)
-					.queryParam("lon", longitud)
-					.queryParam("lang", OPEN_WEATHER_LANG_ESPANOL)
-					.queryParam("appid", OPEN_WEATHER_APP_ID)
-					.request(MediaType.APPLICATION_JSON)
-					.get();
-			
-			String jsonString = weatherData.readEntity(String.class);
-			
-		return jsonString;
+		weatherData = client.target("http://api.openweathermap.org/data/2.5/weather").queryParam("lat", latitud)
+				.queryParam("lon", longitud).queryParam("lang", OPEN_WEATHER_LANG_ESPANOL)
+				.queryParam("appid", OPEN_WEATHER_APP_ID).request(MediaType.APPLICATION_JSON).get();
+
+		String jsonString = weatherData.readEntity(String.class);
+
+		int inicio = jsonString.indexOf("\"temp\":") + 7;
+		int fin = jsonString.indexOf(",\"pressure\"");
+		
+		float kelvin = Float.parseFloat(jsonString.substring(inicio, fin));
+		// Kelvin to Degree Celsius Conversion
+		float celsius = kelvin - 273.15F;
+		System.out.println("Celsius: "+ celsius);
+		
+		int inicioDescripcion = jsonString.indexOf("\"description\":\"") + 15;
+		int finDescripcion = jsonString.indexOf("\",\"icon\"");
+
+		int inicioPais = jsonString.indexOf("\"country\":\"") + 11;
+		int finPais = jsonString.indexOf("\",\"sunrise\"");
+		
+		return  celsius + " ºC, " + jsonString.substring(inicioDescripcion, finDescripcion)
+				+ ", "+ jsonString.substring(inicioPais, finPais) +".";
 	}
 }

@@ -44,7 +44,7 @@ public class DesplazamientoIndividualEndpoint {
     @GET
     @Path("/listViajesIndividuales")
     @Produces(MediaType.APPLICATION_JSON)
-	public List<Ruta> listViajesIndividuales(String emailCreador) {
+	public List<Ruta> listViajesIndividuales(@QueryParam("emailCreador") String emailCreador) {
     	return service.listViajesIndividuales(emailCreador);
 	}
 

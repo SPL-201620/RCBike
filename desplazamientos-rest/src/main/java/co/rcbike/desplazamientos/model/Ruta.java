@@ -27,7 +27,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 @SuppressWarnings("serial")
 @Entity
 @XmlRootElement
-@NamedQueries({ @NamedQuery(name = "findByTipoAndCreador", query = "SELECT e FROM Ruta e WHERE e.emailCreador = :emailCreador and e.tipo = :tipo"), 
+@NamedQueries({ @NamedQuery(name = "findByTipoAndCreador", query = "SELECT e FROM Ruta e WHERE e.emailCreador = :emailCreador AND e.tipo = :tipo"), 
 	@NamedQuery(name = "findByTipo", query = "SELECT e FROM Ruta e WHERE e.tipo = :tipo"),
 	@NamedQuery(name = "findByTipoAndFrecuente", query = "SELECT e FROM Ruta e WHERE e.tipo = :tipo and e.frecuente = :frecuente"),
 	@NamedQuery(name = "findByTipoAndFechaAndFrecuente", query = "SELECT e FROM Ruta e WHERE e.tipo = :tipo and e.fecha >= :fecha and e.frecuente = :frecuente"),
@@ -69,20 +69,20 @@ public class Ruta implements Serializable {
 	private Tipo tipo;
 
 	@NotNull
-	@Column(precision = 20, scale = 15)
-	private BigDecimal latitudInicio;
+	//@Column(precision = 20, scale = 15)
+	private String latitudInicio;
 
 	@NotNull
-	@Column(precision = 20, scale = 15)
-	private BigDecimal longitudInicio;
+	//@Column(precision = 20, scale = 15)
+	private String longitudInicio;
 
 	@NotNull
-	@Column(precision = 20, scale = 15)
-	private BigDecimal latitudFinal;
+	//@Column(precision = 20, scale = 15)
+	private String latitudFinal;
 
 	@NotNull
-	@Column(precision = 20, scale = 15)
-	private BigDecimal longitudFinal;
+	//@Column(precision = 20, scale = 15)
+	private String longitudFinal;
 
 	@NotNull
 	private BigDecimal distancia;
@@ -163,35 +163,35 @@ public class Ruta implements Serializable {
 		this.tipo = tipo;
 	}
 
-	public BigDecimal getLatitudInicio() {
+	public String getLatitudInicio() {
 		return latitudInicio;
 	}
 
-	public void setLatitudInicio(BigDecimal latitudInicio) {
+	public void setLatitudInicio(String latitudInicio) {
 		this.latitudInicio = latitudInicio;
 	}
 
-	public BigDecimal getLongitudInicio() {
+	public String getLongitudInicio() {
 		return longitudInicio;
 	}
 
-	public void setLongitudInicio(BigDecimal longitudInicio) {
+	public void setLongitudInicio(String longitudInicio) {
 		this.longitudInicio = longitudInicio;
 	}
 
-	public BigDecimal getLatitudFinal() {
+	public String getLatitudFinal() {
 		return latitudFinal;
 	}
 
-	public void setLatitudFinal(BigDecimal latitudFinal) {
+	public void setLatitudFinal(String latitudFinal) {
 		this.latitudFinal = latitudFinal;
 	}
 
-	public BigDecimal getLongitudFinal() {
+	public String getLongitudFinal() {
 		return longitudFinal;
 	}
 
-	public void setLongitudFinal(BigDecimal longitudFinal) {
+	public void setLongitudFinal(String longitudFinal) {
 		this.longitudFinal = longitudFinal;
 	}
 

@@ -38,14 +38,8 @@ public class ClimaManager implements Serializable {
         
 		String response = desplazamientoRest.getServiceRoot().path("individual").path("obtenerClima").queryParam("latitud", "4.656360")
 				.queryParam("longitud", "-74.103770").request().get(String.class);
-        
-		int inicio = response.indexOf("\"temp\":") + 7;
-		int fin = response.indexOf(",\"pressure\"");
 		
-		int inicioDescripcion = response.indexOf("\"description\":\"") + 15;
-		int finDescripcion = response.indexOf("\",\"icon\"");
-		
-		this.clima = response.substring(inicio, fin) +  " ºF, " + response.substring(inicioDescripcion, finDescripcion) + ", CO.";
+		this.clima = response;
         java.lang.System.out.print("\n");
         
         java.lang.System.out.print(clima.toString());
