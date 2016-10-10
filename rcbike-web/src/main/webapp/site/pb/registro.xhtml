@@ -25,53 +25,59 @@
                 <div class="EmptyBox30"></div>
                 <div class="Card ShadowEffect">
                     <div class="Wid100 OvHidden BigTopic Fs30">Registro</div>
-                
-                    <div class="Container40 Fs30 ">
-                    	<h:panelGroup layout="block" styleClass="Wid30 EmptyBox30 Fright"/>
-                    	<h:panelGroup layout="block" styleClass="icon-face Fs100 Wid80 Fright"/> 
-                    	<h:panelGroup layout="block" styleClass="Wid30 EmptyBox40 Fright"/>
-	                    <div class="Wid80 Fright">
-	                    <h:form>
-						    <p:fileUpload fileUploadListener="#{registroManager.cargarImagen}" mode="advanced"
-						                     update="messages" auto="true" sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
-						                     label="Cargar Imagen" />
-						 
-						    <p:growl id="messages" showDetail="true" />
-						</h:form>
+                	
+                	<div class="Container100 Responsive">
+	                <h:form id="formCargaImagen">
+                	<div class="Container40 Responsive">
+                    	<h:panelGroup layout="block" rendered="#{empty registroManager.foto}">
+                    		<div class="EmptyBox40 Wid100"/>
+	                    	<h:panelGroup layout="block" style="display: block; margin:0 auto" styleClass="icon-face Fs100"/>
+                    		<div class="EmptyBox40 Wid100"/>
+                    	</h:panelGroup>
+                    	<h:panelGroup layout="block" rendered="#{not empty registroManager.foto}">
+                    		<div class="EmptyBox20 Wid100"/>
+							<img src="data:image/jpeg;base64,#{registroManager.foto}" style="display: block; margin:0 auto"/>
+							<div class="EmptyBox10 Wid100"/>
+                    	</h:panelGroup>
+	                    <div style="display: block; margin:0 auto">
+						    <p:fileUpload id="cargarImagen" fileUploadListener="#{registroManager.cargarImagen}"
+						    	 mode="advanced" update="formCargaImagen" auto="true" label="Cargar Imagen"  
+						                     sizeLimit="100000" allowTypes="/(\.|\/)(jpe?g|png)$/"/>
 						</div>
-					</div>
-        		
-        		<h:form>
+                	</div>
+					</h:form>
         			
-                    <div class="Container60">
+        			<h:form>
+                    <div class="Container60 Responsive">
                     	<div class="EmptyBox10 Wid80"/>
 	                   	<p:inputText placeholder="Correo" value="#{registroManager.email}" 
-	                   		disabled="#{empty registroManager.email ? false : true}" required="true"
-	                   	 	styleClass="Fleft Wid80 TexAlCenter Fs18" />
+	                   		disabled="#{not empty registroManager.email}" required="true"
+	                   	 	styleClass="Wid80 TexAlCenter Fs18" />
                     	<div class="EmptyBox10 Wid80"/>
 						<p:inputText type="password" placeholder="Contraseña" value="#{registroManager.clave}" 
-	                   		required="true" styleClass="Fleft Wid80 TexAlCenter Fs18" />
+	                   		required="true" styleClass="Wid80 TexAlCenter Fs18" />
                     	<div class="EmptyBox10 Wid80"/>
                     	<p:inputText placeholder="Nombres" value="#{registroManager.nombres}" required="true"
-                    	 	styleClass="Fleft Wid80 TexAlCenter Fs18" />
+                    	 	styleClass="Wid80 TexAlCenter Fs18" />
                     	<div class="EmptyBox10 Wid80"/>
                     	<p:inputText placeholder="Apellidos" value="#{registroManager.apellidos}" required="true"
-                    	 	styleClass="Fleft Wid80 TexAlCenter Fs18" />
+                    	 	styleClass="Wid80 TexAlCenter Fs18" />
                     </div>
 
                     
                     <div class="EmptyBox30"/>
-                    <div class="Wid100">
+                    <div class="Container100">
                     	<p:commandButton value="Registrarme" action="#{registroManager.registrar()}" icon="fa fa-user-plus" 
                     		styleClass="Wid80 Fs18 White RaisedButton FloatNoneOnMobile"/>
                     </div>
                     <div class="EmptyBox10"/>
-                    <div class="Wid100">
+                    <div class="Container100">
                     	<p:button outcome="dashboard" value="Cancelar" icon="fa fa-close" 
                     		styleClass="Wid80 Fs18 White RedButton RaisedButton FloatNoneOnMobile" />
                     </div>
                     <div class="EmptyBox20"></div>
-        		</h:form>
+	        		</h:form>
+	        		</div>
                 </div>
                 <div class="Wid100 TexAlCenter MarTop20 Fs14 FontRobotoRegular Gray">
         	        <i class="fa fa-copyright"></i>  Los 4 Fantasticos <br/> All rights reserved.

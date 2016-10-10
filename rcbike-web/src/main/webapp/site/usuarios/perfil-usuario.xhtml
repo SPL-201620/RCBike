@@ -15,15 +15,14 @@
             <div class="ContainerIndent">
                 <div class="Card ShadowEffect">
                     <h2 class="BigTopic">Información Personal</h2>
-                    <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;">
-                    	<h:panelGroup layout="block" style="height:150px">
-                    		
-                    	</h:panelGroup>
-                    	<p:panelGrid columns="1" columnClasses="ui-grid-col-5" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;">
-                			<h2 class="FontBold">#{perfilUsuarioManager.usuario.nombres} #{perfilUsuarioManager.usuario.apellidos}</h2>
-                			<h2 class="BigTopic">#{perfilUsuarioManager.usuario.email}</h2>
-                   		</p:panelGrid>
-                    </p:panelGrid>
+                    <div class="Container20 Responsive" style="height:150px">
+						<img style="display:#{empty perfilUsuarioManager.usuario.foto ? 'none': 'block'}; margin:0 auto" src="data:image/jpeg;base64,#{perfilUsuarioManager.usuario.foto}"/>
+						<i class="icon-account_circle Fs100" style="display:#{empty perfilUsuarioManager.usuario.foto ? 'block': 'none'}; margin:0 auto"></i>							
+                    </div>
+                    <div class="Container20 Responsive">
+                    	<h2 class="FontBold">#{perfilUsuarioManager.usuario.nombres} #{perfilUsuarioManager.usuario.apellidos}</h2>
+                		<h2 class="BigTopic">#{perfilUsuarioManager.usuario.email}</h2>
+                    </div>
                 </div>
             </div>
         </div>
@@ -44,38 +43,41 @@
                     </h2>
                     
                     <p:outputPanel id="noAmigosCard" layout="block">
-                    <p:outputPanel layout="block" styleClass="Card ShadowEffect WhiteBlueBack" rendered="#{amigosManager.mostrarNoAmigos}">
-	                    <p:carousel value="#{amigosManager.noAmigos}" headerText="Carousel" var="noAmigo" widgetVar="candidatos" 
-	                    			responsive="true" >
-					     	<f:facet name="header">
-					            <p:outputPanel>
-					                <p:remoteCommand name="listNoAmigos" update=":formNoAmigos:noAmigosCard"
-					                	 action="#{amigosManager.listNoAmigos()}" process="@this filtroNoAmigo" />
-					                <h:outputText value="Otros usuarios: " />
-					                <p:inputText id="filtroNoAmigo" style="width:200px" placeholder=" filtrar"
-					                	value="#{amigosManager.filtroNoAmigo}" 
-					                	onkeypress="if (event.keyCode == 13) {listNoAmigos(); return false; }" />
-					            </p:outputPanel>
-					        </f:facet>
-					        
-							<p:outputPanel layout="block" styleClass="Card ShadowEffect TexAlCenter GreenBack White">
-								<div class="Container100">
-		                            <div class="Container20 Responsive"><i class="icon-account_box Fs100 White"/></div>
-		                            <div class="Container80 Responsive" >
-			                            <span class="Fs30 FontRobotoBold White">#{noAmigo.nombreCompleto()}</span>
-			                            <div class="Wid50" style="margin: auto; padding-top: 12px;">
-		                            		<p:commandButton value="Agregar a Mis Amigos" icon="fa fa-user-plus Fs18 Green"
-		                            		 styleClass="BlueTextButton RaisedButton Green"
-		                            		 update=":formAmigos:amigosCard :formNoAmigos:noAmigosCard"
-		                            		 process="@this"
-		                            		 action="#{amigosManager.agregarAmigo(noAmigo)}"/>
-		                            	</div>
-		                            </div>
-		                        </div>
-							</p:outputPanel>
-												        
-	                    </p:carousel>
-                    </p:outputPanel>
+	                    <p:outputPanel layout="block" styleClass="Card ShadowEffect WhiteBlueBack" rendered="#{amigosManager.mostrarNoAmigos}">
+		                    <p:carousel value="#{amigosManager.noAmigos}" headerText="Carousel" var="noAmigo" widgetVar="candidatos" 
+		                    			responsive="true" >
+						     	<f:facet name="header">
+						            <p:outputPanel>
+						                <p:remoteCommand name="listNoAmigos" update=":formNoAmigos:noAmigosCard"
+						                	 action="#{amigosManager.listNoAmigos()}" process="@this filtroNoAmigo" />
+						                <h:outputText value="Otros usuarios: " />
+						                <p:inputText id="filtroNoAmigo" style="width:200px" placeholder=" filtrar"
+						                	value="#{amigosManager.filtroNoAmigo}" 
+						                	onkeypress="if (event.keyCode == 13) {listNoAmigos(); return false; }" />
+						            </p:outputPanel>
+						        </f:facet>
+						        
+								<p:outputPanel layout="block" styleClass="Card ShadowEffect TexAlCenter GreenBack White">
+									<div class="Container100">
+			                            <div class="Container30 Responsive" style="height:100px">
+			                            	<img style="display:#{empty noAmigo.foto ? 'none': 'block'}; margin:0 auto" src="data:image/jpeg;base64,#{noAmigo.foto}" height="100"/>
+			                            	<i class="icon-account_box Fs100 White" style="display:#{empty noAmigo.foto ? 'block': 'none'}; margin:0 auto" />
+			                            </div>
+			                            <div class="Container70 Responsive" >
+				                            <span class="Fs30 FontRobotoBold White">#{noAmigo.nombreCompleto()}</span>
+				                            <div class="Wid50" style="margin: auto; padding-top: 12px;">
+			                            		<p:commandButton value="Agregar a Mis Amigos" icon="fa fa-user-plus Fs18 Green"
+			                            		 styleClass="BlueTextButton RaisedButton Green"
+			                            		 update=":formAmigos:amigosCard :formNoAmigos:noAmigosCard"
+			                            		 process="@this"
+			                            		 action="#{amigosManager.agregarAmigo(noAmigo)}"/>
+			                            	</div>
+			                            </div>
+			                        </div>
+								</p:outputPanel>
+													        
+		                    </p:carousel>
+	                    </p:outputPanel>
                     </p:outputPanel>
                     </h:form>
                     
@@ -94,8 +96,11 @@
 		    						</p:commandLink>
 								</div>
 								<div class="Container100">
-		                            <div class="Container20 Responsive"><i class="icon-account_box Fs100"/></div>
-		                            <div class="Container80 Responsive" >
+	                             	<div class="Container30 Responsive" style="height:100px">
+		                            	<img style="display:#{empty amigo.foto ? 'none': 'block'}; margin:0 auto" src="data:image/jpeg;base64,#{amigo.foto}" height="100"/>
+		                            	<i class="icon-account_box Fs100 White" style="display:#{empty amigo.foto ? 'block': 'none'}; margin:0 auto"/>
+		                            </div>
+		                            <div class="Container70 Responsive" >
 			                            <span class="Fs30 FontRobotoBold White">#{amigo.nombreCompleto()}</span>
 			                            <div class="Wid50" style="margin: auto; padding-top: 12px;">
 		                            		<p:button value="Enviar mensaje" icon="fa fa-comment Fs18 SoftBlue" styleClass="BlueTextButton RaisedButton"/>
@@ -112,7 +117,7 @@
         </div>
         
         
-		<div class="Container100 ui-fluid">
+		<div class="Container100 ui-fluid" style="display:none">
             <div class="ContainerIndent">
                 <div class="Card ShadowEffect">
                     <h2 class="BigTopic" style="padding-bottom: 20px; padding-right: 20px;">Mis recorridos</h2>
