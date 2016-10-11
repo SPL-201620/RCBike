@@ -33,7 +33,7 @@ public class LogoutInterceptor implements Filter {
             HttpServletRequest httpRq = (HttpServletRequest) request;
             HttpSession session = httpRq.getSession(true);
             session.invalidate();
-            httpResponse.sendRedirect(httpRq.getContextPath() + "/site/pb/dashboard.xhtml");
+            httpResponse.sendRedirect(httpRq.getContextPath());
             return;
         }
 

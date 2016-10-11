@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <f:facet name="first">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+            <meta name="apple-mobile-web-app-capable" content="yes" />
+        </f:facet>
+        <title>RCBike</title>
+
+    </h:head>
+
+    <h:body style="margin: 0px; background-color:#fff;" styleClass="BlueBody PopupMenu">
+
+        <div class="Container100 PosFixed BoldGrayBack" style="z-index:999;">
+            <div class="EmptyBox20"></div>
+            <div class="Wid90 OvHidden MarAuto">
+            	<p:link outcome="inicio">
+                	<h:graphicImage name="images/logo_w.png" library="rcbike" style="height:50px; float:left;"/>
+                </p:link>
+            </div>
+            <div class="EmptyBox20"></div>
+        </div>
+
+        <!-- -->
+
+        <div class="Container100 BoldGrayBack" id="modena-highlight" style="padding:10rem 0px;">
+
+            <div class="Wid90 OvHidden MarAuto">
+                <div class="Container100">
+                    <div class="EmptyBox90"></div>
+                    <h1 class="FontRobotoRegular Fs50 WhiteBlue TexAlCenter">TU COMUNIDAD DE CICLISTAS</h1>
+                    <div class="EmptyBox20"></div>
+                    <span class="DispBlock Fs20 FontRobotoLight White TexAlCenter">“ RCBike es una plataforma que te permite compartir con una comunidad interesada en bicicletas y en ciclismo, conocela... ”</span>
+                    <div class="EmptyBox40"></div>
+                    <div class="Wid50 MarAuto ui-fluid Responsive100">
+                        <div class="Container100 Responsive100">
+                        <div class="ContainerIndent">
+                       		<p:button outcome="login" value="Ingresa" styleClass="BlueButton Fs18"/>
+                        </div></div>
+                        
+                    </div>
+
+                    <div class="EmptyBox20 ShowOnMobile"></div>
+                    <div class="EmptyBox120 ShowOnDesktop"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- -->
+
+        <div class="Container100 " id="modena-cardsArea" style="background-color:#F0F2F5; padding:0px 3rem; box-sizing:border-box;">
+
+            <div class="EmptyBox80"></div>
+
+            <h1 class="FontRobotoRegular Fs30 BoldGray TexAlCenter">¿ Como funciona ?</h1>
+            <div class="EmptyBox30"></div>
+
+            <div class="Wid90 OvHidden MarAuto">
+                <div class="Container100">
+
+                    <div class="Container50 Responsive50">
+                        <div class="ContainerIndent">
+                            <i class="icon-map SoftRed Fs100 DispBlock Fleft"></i>
+                            <div class="Container10 Responsive50"><div class="ContainerIndent"></div></div>
+                            <div class="Container70 Responsive50">
+                                <h2 class="BoldGray FontRobotoRegular Fs30">1. Planea tus Viajes</h2>
+                                <div class="EmptyBox10"></div>
+                                <h3 class="BoldGray FontRobotoLight Fs20" style="text-align: justify;">
+                                	No sabes como llegar en bicicleta? RCBike te permite consultar las 
+                                	posibles rutas para llegar a tu destino, también te decimos las calorías que quemaste y el pronostico del clima.
+                                </h3>
+                            </div>
+                            <div class="EmptyBox30"></div>
+                        </div>
+                    </div>
+
+                    <div class="Container50 Responsive50">
+                        <div class="ContainerIndent">
+                            <i class="fa fa-comments-o SoftOrange Fs100 DispBlock Fleft"></i>
+                            <div class="Container10 Responsive50"><div class="ContainerIndent"></div></div>
+                            <div class="Container70 Responsive50">
+                                <h2 class="BoldGray FontRobotoRegular Fs30">2. Habla con tus Amigos</h2>
+                                <div class="EmptyBox10"></div>
+                                <h3 class="BoldGray FontRobotoLight Fs20" style="text-align: justify;">
+                                Mantente en contacto con otros usuario de la comunidad a través de nuestro sistema de mensajería.
+                                </h3>
+                                <div class="EmptyBox30"></div>
+                            </div>
+                            <div class="EmptyBox30"></div>
+                        </div>
+                    </div>
+
+                    <div class="Container50 Responsive50">
+                        <div class="ContainerIndent">
+                            <i class="fa fa-money SoftGreen Fs100 DispBlock Fleft"></i>
+                            <div class="Container10 Responsive50"><div class="ContainerIndent"></div></div>
+                            <div class="Container70 Responsive50">
+                                <h2 class="BoldGray FontRobotoRegular Fs30">3. Compra y Vende</h2>
+                                <div class="EmptyBox10"></div>
+                                <h3 class="BoldGray FontRobotoLight Fs20" style="text-align: justify;">
+                                Tienes la posibilidad de publicar y buscar bicicletas que los integrantes de la comunidad esta vendiendo.
+                                </h3>
+                            </div>
+                            <div class="EmptyBox30"></div>
+                        </div>
+                    </div>
+
+                    <div class="Container50 Responsive50">
+                        <div class="ContainerIndent">
+                            <i class="fa fa-users SoftPurple Fs100 DispBlock Fleft"></i>
+                            <div class="Container10 Responsive50"><div class="ContainerIndent"></div></div>
+                            <div class="Container70 Responsive50">
+                                <h2 class="BoldGray FontRobotoRegular Fs30">4. Conoce otros Ciclistas</h2>
+                                <div class="EmptyBox10"></div>
+                                <h3 class="BoldGray FontRobotoLight Fs20" style="text-align: justify;">
+                                Podrás participar de los recorridos grupales, donde puedes unirte a otros ciclistas para realizar viajes planeados.
+                                </h3>
+                            </div>
+                            <div class="EmptyBox30"></div>
+                        </div>
+                    </div>
+
+					<div class="Container100 Responsive100">
+						<div class="ContainerIndent">
+							<div class="Wid50 MarAuto ui-fluid Responsive100">
+								<div class="Container100 Responsive100">
+									<div class="ContainerIndent">
+										<p:button outcome="login" value="Ingresa" styleClass="PinkButton Fs18" />
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+            </div>
+
+            <div class="EmptyBox50"></div>
+
+        </div>
+
+        <!-- -->
+
+        <h:outputStylesheet name="css/core-layout.css" library="modena-layout" />
+        <h:outputStylesheet name="css/font-awesome.css" library="modena-layout" />
+        <h:outputStylesheet name="css/animate.css" library="modena-layout" />
+        <h:outputStylesheet name="css/modena-layout.css" library="modena-layout" />
+        <h:outputStylesheet name="css/modena-font.css" library="modena-layout" />
+        
+    </h:body>
+
+</html>

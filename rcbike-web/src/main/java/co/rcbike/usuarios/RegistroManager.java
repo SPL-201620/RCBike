@@ -77,7 +77,7 @@ public class RegistroManager implements Serializable {
         this.clave = autenticacionManager.getClave();
     }
 
-    public String registrar() {
+    public String registrar() throws IOException {
         RegistroUsuario regUsuario = new RegistroUsuario();
         regUsuario.setEmail(email);
         regUsuario.setNombres(nombres);
