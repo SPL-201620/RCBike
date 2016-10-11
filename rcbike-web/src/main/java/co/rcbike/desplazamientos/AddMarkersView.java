@@ -64,11 +64,11 @@ public class AddMarkersView implements Serializable {
     public void addMarker() {
         if (puntosRuta.size() < 2) {
             Marker marker = new Marker(new LatLng(lat, lng), title);
-            if (puntosRuta.size() == 0) {
+            if (mapaManager.getOrigen() == null)
                 mapaManager.setOrigen(marker);
-            } else {
+            else
                 mapaManager.setDestino(marker);
-            }
+
             puntosRuta.add(marker);
             emptyModel.addOverlay(marker);
 

@@ -107,7 +107,7 @@ public class CrearRutaManager implements Serializable {
         ruta.setLatitudFinal("" + mapaManager.getDestino().getLatlng().getLat());
         ruta.setLongitudFinal("" + mapaManager.getDestino().getLatlng().getLng());
 
-        ruta.setDistancia(BigDecimal.ZERO);
+        ruta.setDistancia(new BigDecimal(distancia));
 
         ruta.setTiempoEstimado(tiempo);
         ruta.setCalorias(1);

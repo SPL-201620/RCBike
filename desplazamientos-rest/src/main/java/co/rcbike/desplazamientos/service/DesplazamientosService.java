@@ -210,7 +210,7 @@ public class DesplazamientosService {
      *            informacion de la ruta a crear
      */
     public void guardarViaje(Ruta ruta) {
-        ruta.setCalorias(null);
+        ruta.setCalorias(200);
         em.persist(ruta);
     }
 

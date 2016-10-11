@@ -12,26 +12,26 @@ import lombok.Getter;
 import lombok.Setter;
 
 @SuppressWarnings("serial")
-@ManagedBean
+@ManagedBean(eager = true)
 @SessionScoped
-public class MapaManager implements Serializable{
+public class MapaManager implements Serializable {
 
     @Getter
     @Setter
-    public Marker origen;
-    
+    public static Marker origen;
+
     @Getter
     @Setter
-    public Marker destino;
-    
+    public static Marker destino;
+
     @Getter
     @Setter
-    public String distancia;
-    
+    public static String distancia;
+
     @PostConstruct
-    public void reset(){
-        origen=null;
-        destino=null;
-        distancia=null;
+    public void reset() {
+        origen = null;
+        destino = null;
+        distancia = null;
     }
 }
