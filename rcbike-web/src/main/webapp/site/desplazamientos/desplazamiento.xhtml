@@ -121,6 +121,7 @@
 
     var currentMarker = null;
     var markers = [];
+    var distancia = null;
 
     function handlePointClick(event) {
         if(currentMarker === null) {
@@ -165,6 +166,32 @@
         currentMarker = null;
  
         return false;
+    }
+
+    function calcularDistancia(markers) {
+        if(markers.length >= 2)
+        {
+        	var origin = new google.maps.LatLng(markers[0].lat, markers[0].lng);
+	    	var destination = new google.maps.LatLng(markers[1].lat, markers[1].lng);
+	
+	    	var service = new google.maps.DistanceMatrixService();
+	    	service.getDistanceMatrix(
+	    	  {
+	    	    origins: [origin],
+	    	    destinations: [destination],
+	    	    travelMode: google.maps.TravelMode.DRIVING,
+	    	    unitSystem: google.maps.UnitSystem.METRIC,
+	    	    avoidHighways: false,
+	    	    avoidTolls: false
+	    	  }, function(response, status) {
+	    		    if (status !== google.maps.DistanceMatrixStatus.OK) {
+	    		        alert('Error was: ' + status);
+	    		      } else {
+	    		    	  distancia = response.rows[0].elements[0].distance.value
+	    		      }
+	    		      
+	    		    });
+        }
     }
 
 </script>
