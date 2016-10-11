@@ -9,32 +9,43 @@
     </ui:define>
 
 	<ui:define name="content">
+		<h:form id="frmMensajeria" prependId="false">
+			<div class="Container100">
+				<div class="ContainerIndent">
+					<div class="Card ShadowEffect TexAlCenter">
+						<div class="ContainerIndent">
+							<h2 class="BigTopic" align="center">Mensajería RC-BIKE</h2>
 
-		<div class="Container100">
-			<div class="ContainerIndent">
-				<div class="Card ShadowEffect TexAlCenter">
-					<div class="ContainerIndent">
-						<h2 class="BigTopic" align="center">Mensajería RC-BIKE</h2>
-						<h:form id="frmMensajeria" prependId="false">
 							<p:tabView value="#{amigosManager.amigos}" var="amigo"
 								orientation="left">
 								<p:ajax event="tabChange"
-									listener="#{mensajeriaManager.onTabChange}" update=":frmMensajeria" />
-								<p:tab value="#{amigosManager.amigos}"
-									title="#{amigo.email}">
-									<h:panelGrid columns="1" cellpadding="10">
-										<p>
-											<h:outputText value="#{mensajeriaManager.mensajes}"
-												escape="false" />
-										</p>
-									</h:panelGrid>
+									listener="#{mensajeriaManager.onTabChange}"
+									update=":frmMensajeria" />
+								<p:tab value="#{amigosManager.amigos}" title="#{amigo.email}">
+									<p:dataList type="definition" value="#{mensajeriaManager.mensajes}" var="mensaje">
+										<div align="left">#{mensaje.emailEmisor}: #{mensaje.contenido}</div>
+										
+									</p:dataList>									
 								</p:tab>
 							</p:tabView>
-						</h:form>
+						</div>
+						<div class="Wid100" align="right">
+							<p:inputText placeholder="Mensaje"
+								value="#{mensajeriaManager.mensaje}"
+								styleClass="Wid70 TexAlCenter Fs18" />
+						</div>
+						<div class="Wid100" align="right">
+							<p:commandButton value="Enviar"
+								action="#{mensajeriaManager.crearConversacionMensaje()}"
+								icon="fa fa-sign-in"
+								styleClass="Wid20 Fs18 White RaisedButton FloatNoneOnMobile"
+								update=":frmMensajeria" />
+						</div>
+
 					</div>
 				</div>
 			</div>
-		</div>
+		</h:form>
 
 	</ui:define>
 

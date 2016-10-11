@@ -6,6 +6,8 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -17,6 +19,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 @SuppressWarnings("serial")
 @Entity
 @XmlRootElement
+@NamedQueries({@NamedQuery(name = "listByParticipantes", query = "SELECT e FROM Mensaje e WHERE (e.emailEmisor = :emailEmisor and e.emailReceptor = :emailReceptor) or (e.emailEmisor =  :emailReceptor and e.emailReceptor = :emailEmisor)" )})
+
 public class Mensaje implements Serializable {
 
     public static final String SQ_LISTBYPARTICIPANTES = "listByParticipantes";
