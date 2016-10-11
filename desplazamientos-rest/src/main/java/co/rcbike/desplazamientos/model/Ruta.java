@@ -26,229 +26,193 @@ import org.hibernate.validator.constraints.NotEmpty;
 @SuppressWarnings("serial")
 @Entity
 @XmlRootElement
-@NamedQueries({ @NamedQuery(name = "findByTipoAndCreador", query = "SELECT e FROM Ruta e WHERE e.emailCreador = :emailCreador AND e.tipo = :tipo"), 
-	@NamedQuery(name = "findByTipo", query = "SELECT e FROM Ruta e WHERE e.tipo = :tipo"),
-	@NamedQuery(name = "findByTipoAndFrecuente", query = "SELECT e FROM Ruta e WHERE e.tipo = :tipo and e.frecuente = :frecuente"),
-	@NamedQuery(name = "findByTipoAndFechaAndFrecuente", query = "SELECT e FROM Ruta e WHERE e.tipo = :tipo and e.fecha >= :fecha and e.frecuente = :frecuente"),
-	@NamedQuery(name = "findByTipoAndFrecuenteAndPunto", query = "SELECT e FROM Ruta e WHERE e.tipo = :tipo and e.frecuente = :frecuente "
-			+ "and e.latitudInicio >= :latitudInicio and e.latitudInicio <= :latitudFinal "
-			+ "and e.longitudInicio >= :longitudInicio and e.longitudInicio <= :longitudFinal"),
-	@NamedQuery(name = "findByTipoAndFechaAndFrecuenteAndPunto", query = "SELECT e FROM Ruta e WHERE e.tipo = :tipo and e.fecha >= :fecha and e.frecuente = :frecuente "
-			+ "and e.latitudInicio >= :latitudInicio and e.latitudInicio <= :latitudFinal "
-			+ "and e.longitudInicio >= :longitudInicio and e.longitudInicio <= :longitudFinal")})
+@NamedQueries({
+        @NamedQuery(name = "findByTipoAndCreador", query = "SELECT e FROM Ruta e WHERE e.emailCreador = :emailCreador AND e.tipo = :tipo"),
+        @NamedQuery(name = "findByTipo", query = "SELECT e FROM Ruta e WHERE e.tipo = :tipo"),
+        @NamedQuery(name = "findByTipoAndFrecuente", query = "SELECT e FROM Ruta e WHERE e.tipo = :tipo and e.frecuente = :frecuente"),
+        @NamedQuery(name = "findByTipoAndFechaAndFrecuente", query = "SELECT e FROM Ruta e WHERE e.tipo = :tipo and e.fecha >= :fecha and e.frecuente = :frecuente"),
+        @NamedQuery(name = "findByTipoAndFrecuenteAndPunto", query = "SELECT e FROM Ruta e WHERE e.tipo = :tipo and e.frecuente = :frecuente "
+                + "and e.latitudInicio >= :latitudInicio and e.latitudInicio <= :latitudFinal "
+                + "and e.longitudInicio >= :longitudInicio and e.longitudInicio <= :longitudFinal"),
+        @NamedQuery(name = "findByTipoAndFechaAndFrecuenteAndPunto", query = "SELECT e FROM Ruta e WHERE e.tipo = :tipo and e.fecha >= :fecha and e.frecuente = :frecuente "
+                + "and e.latitudInicio >= :latitudInicio and e.latitudInicio <= :latitudFinal "
+                + "and e.longitudInicio >= :longitudInicio and e.longitudInicio <= :longitudFinal")})
 
 public class Ruta implements Serializable {
 
-	public static final String SQ_findByTipoAndCreador = "findByTipoAndCreador";
-	public static final String SQ_findByTipo = "findByTipo";
-	public static final String SQ_findByTipoAndFrecuente = "findByTipoAndFrecuente";
-	public static final String SQ_findByTipoAndFechaAndFrecuente = "findByTipoAndFechaAndFrecuente";
-	public static final String SQ_findByTipoAndFrecuenteAndPunto = "findByTipoAndFrecuenteAndPunto";
-	public static final String SQ_findByTipoAndFechaAndFrecuenteAndPunto = "findByTipoAndFechaAndFrecuenteAndPunto";
-	public static final String SQ_PARAM_EMAIL_CREADOR = "emailCreador";
-	public static final String SQ_PARAM_TIPO = "tipo";
-	public static final String SQ_PARAM_FECHA = "fecha";
-	public static final String SQ_PARAM_FRECUENTE = "frecuente";
-	public static final String SQ_PARAM_LATITUD_INICIO = "latitudInicio";
-	public static final String SQ_PARAM_LATITUD_FINAL = "latitudFinal";
-	public static final String SQ_PARAM_LONGITUD_INICIO = "longitudInicio";
-	public static final String SQ_PARAM_LONGITUD_FINAL = "longitudFinal";
+    public static final String SQ_findByTipoAndCreador = "findByTipoAndCreador";
+    public static final String SQ_findByTipo = "findByTipo";
+    public static final String SQ_findByTipoAndFrecuente = "findByTipoAndFrecuente";
+    public static final String SQ_findByTipoAndFechaAndFrecuente = "findByTipoAndFechaAndFrecuente";
+    public static final String SQ_findByTipoAndFrecuenteAndPunto = "findByTipoAndFrecuenteAndPunto";
+    public static final String SQ_findByTipoAndFechaAndFrecuenteAndPunto = "findByTipoAndFechaAndFrecuenteAndPunto";
+    public static final String SQ_PARAM_EMAIL_CREADOR = "emailCreador";
+    public static final String SQ_PARAM_TIPO = "tipo";
+    public static final String SQ_PARAM_FECHA = "fecha";
+    public static final String SQ_PARAM_FRECUENTE = "frecuente";
+    public static final String SQ_PARAM_LATITUD_INICIO = "latitudInicio";
+    public static final String SQ_PARAM_LATITUD_FINAL = "latitudFinal";
+    public static final String SQ_PARAM_LONGITUD_INICIO = "longitudInicio";
+    public static final String SQ_PARAM_LONGITUD_FINAL = "longitudFinal";
 
-	@Id
-	@GeneratedValue
-	private Long id;
+    @Id
+    @GeneratedValue
+    private Long id;
 
-	@NotNull
-	@NotEmpty
-	@Email
-	private String emailCreador;
-	
-	@NotNull
-	@Enumerated(EnumType.STRING)
-	private Tipo tipo;
+    @NotNull
+    @NotEmpty
+    @Email
+    private String emailCreador;
 
-	@NotNull
-	//@Column(precision = 20, scale = 15)
-	private String latitudInicio;
+    @NotNull
+    private String nombre;
 
-	@NotNull
-	//@Column(precision = 20, scale = 15)
-	private String longitudInicio;
+    private String descripcion;
 
-	@NotNull
-	//@Column(precision = 20, scale = 15)
-	private String latitudFinal;
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private Tipo tipo;
 
-	@NotNull
-	//@Column(precision = 20, scale = 15)
-	private String longitudFinal;
+    @NotNull
+    private String latitudInicio;
 
-	@NotNull
-	private BigDecimal distancia;
+    @NotNull
+    private String longitudInicio;
 
-	@NotNull
-	private int tiempoEstimado;
+    @NotNull
+    private String latitudFinal;
 
-	@NotNull
-	private Integer calorias;
+    @NotNull
+    private String longitudFinal;
 
-	@NotNull
-	@NotEmpty
-	private String clima;
+    @NotNull
+    private BigDecimal distancia;
 
-	/**
-	 * Grupal: si no es frecuente representa la fecha y hora del recorrido,
-	 * si es frecuente representa la hora del dia del recorrido.
-	 * <br>
-	 * Individial: Fecha en la que se hizo el recorrido.
-	 */
-	/*Solo para individuales*/
-	@NotNull
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date fecha;
+    @NotNull
+    private Integer tiempoEstimado;
 
-	/*Solo para grupales*/
-	@Convert(converter=BooleanSNConverter.class)
-	private boolean frecuente;
-/*
-	@Convert(converter=BooleanSNConverter.class)
-	private boolean lunes;
+    @NotNull
+    private Integer calorias;
 
-	@Convert(converter=BooleanSNConverter.class)
-	private boolean martes;
+    @NotNull
+    @NotEmpty
+    private String clima;
 
-	@Convert(converter=BooleanSNConverter.class)
-	private boolean miercoles;
+    /**
+     * Grupal: si no es frecuente representa la fecha y hora del recorrido, si
+     * es frecuente representa la hora del dia del recorrido. <br>
+     * Individial: Fecha en la que se hizo el recorrido.
+     */
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fecha;
 
-	@Convert(converter=BooleanSNConverter.class)
-	private boolean jueves;
+    /* Solo para grupales */
+    @Convert(converter = BooleanSNConverter.class)
+    private boolean frecuente;
 
-	@Convert(converter=BooleanSNConverter.class)
-	private boolean viernes;
+    private String dias;
 
-	@Convert(converter=BooleanSNConverter.class)
-	private boolean sabado;
+    @OneToMany(mappedBy = "ruta", fetch = FetchType.EAGER)
+    private Set<Waypoint> waypoints;
 
-	@Convert(converter=BooleanSNConverter.class)
-	private boolean domingo;
-*/
-    @OneToMany(mappedBy="ruta",fetch=FetchType.EAGER)
-	private Set<Waypoint> waypoints;
+    @OneToMany(mappedBy = "ruta", fetch = FetchType.EAGER)
+    private Set<Participante> participantes;
 
-    @OneToMany(mappedBy="ruta",fetch=FetchType.EAGER)
-	private Set<Participante> participantes;
+    public Long getId() {
+        return id;
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public String getEmailCreador() {
+        return emailCreador;
+    }
 
-	public String getEmailCreador() {
-		return emailCreador;
-	}
+    public void setEmailCreador(String emailCreador) {
+        this.emailCreador = emailCreador;
+    }
 
-	public void setEmailCreador(String emailCreador) {
-		this.emailCreador = emailCreador;
-	}
+    public Tipo getTipo() {
+        return tipo;
+    }
 
-	public Tipo getTipo() {
-		return tipo;
-	}
+    public void setTipo(Tipo tipo) {
+        this.tipo = tipo;
+    }
 
-	public void setTipo(Tipo tipo) {
-		this.tipo = tipo;
-	}
+    public String getLatitudInicio() {
+        return latitudInicio;
+    }
 
-	public String getLatitudInicio() {
-		return latitudInicio;
-	}
+    public void setLatitudInicio(String latitudInicio) {
+        this.latitudInicio = latitudInicio;
+    }
 
-	public void setLatitudInicio(String latitudInicio) {
-		this.latitudInicio = latitudInicio;
-	}
+    public String getLongitudInicio() {
+        return longitudInicio;
+    }
 
-	public String getLongitudInicio() {
-		return longitudInicio;
-	}
+    public void setLongitudInicio(String longitudInicio) {
+        this.longitudInicio = longitudInicio;
+    }
 
-	public void setLongitudInicio(String longitudInicio) {
-		this.longitudInicio = longitudInicio;
-	}
+    public String getLatitudFinal() {
+        return latitudFinal;
+    }
 
-	public String getLatitudFinal() {
-		return latitudFinal;
-	}
+    public void setLatitudFinal(String latitudFinal) {
+        this.latitudFinal = latitudFinal;
+    }
 
-	public void setLatitudFinal(String latitudFinal) {
-		this.latitudFinal = latitudFinal;
-	}
+    public String getLongitudFinal() {
+        return longitudFinal;
+    }
 
-	public String getLongitudFinal() {
-		return longitudFinal;
-	}
+    public void setLongitudFinal(String longitudFinal) {
+        this.longitudFinal = longitudFinal;
+    }
 
-	public void setLongitudFinal(String longitudFinal) {
-		this.longitudFinal = longitudFinal;
-	}
+    public BigDecimal getDistancia() {
+        return distancia;
+    }
 
-	public BigDecimal getDistancia() {
-		return distancia;
-	}
+    public void setDistancia(BigDecimal distancia) {
+        this.distancia = distancia;
+    }
 
-	public void setDistancia(BigDecimal distancia) {
-		this.distancia = distancia;
-	}
+    public Integer getTiempoEstimado() {
+        return tiempoEstimado;
+    }
 
-	public int getTiempoEstimado() {
-		return tiempoEstimado;
-	}
+    public void setTiempoEstimado(Integer tiempoEstimado) {
+        this.tiempoEstimado = tiempoEstimado;
+    }
 
-	public void setTiempoEstimado(int tiempoEstimado) {
-		this.tiempoEstimado = tiempoEstimado;
-	}
+    public Integer getCalorias() {
+        return calorias;
+    }
 
-	public Integer getCalorias() {
-		return calorias;
-	}
+    public void setCalorias(Integer calorias) {
+        this.calorias = calorias;
+    }
 
-	public void setCalorias(Integer calorias) {
-		this.calorias = calorias;
-	}
+    public String getClima() {
+        return clima;
+    }
 
-	public String getClima() {
-		return clima;
-	}
+    public void setClima(String clima) {
+        this.clima = clima;
+    }
 
-	public void setClima(String clima) {
-		this.clima = clima;
-	}
+    public Date getFecha() {
+        return fecha;
+    }
 
-	public Date getFecha() {
-		return fecha;
-	}
-
-	public void setFecha(Date fecha) {
-		this.fecha = fecha;
-	}
-
-	public Set<Waypoint> getWaypoints() {
-		return waypoints;
-	}
-
-	public void setWaypoints(Set<Waypoint> waypoints) {
-		this.waypoints = waypoints;
-	}
-
-	public Set<Participante> getParticipantes() {
-		return participantes;
-	}
-
-	public void setParticipantes(Set<Participante> participantes) {
-		this.participantes = participantes;
-	}
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
 
     public boolean isFrecuente() {
         return frecuente;
@@ -258,61 +222,44 @@ public class Ruta implements Serializable {
         this.frecuente = frecuente;
     }
 
-    /*public boolean isLunes() {
-        return lunes;
+    public String getDias() {
+        return dias;
     }
 
-    public void setLunes(boolean lunes) {
-        this.lunes = lunes;
+    public void setDias(String dias) {
+        this.dias = dias;
     }
 
-    public boolean isMartes() {
-        return martes;
+    public Set<Waypoint> getWaypoints() {
+        return waypoints;
     }
 
-    public void setMartes(boolean martes) {
-        this.martes = martes;
+    public void setWaypoints(Set<Waypoint> waypoints) {
+        this.waypoints = waypoints;
     }
 
-    public boolean isMiercoles() {
-        return miercoles;
+    public Set<Participante> getParticipantes() {
+        return participantes;
     }
 
-    public void setMiercoles(boolean miercoles) {
-        this.miercoles = miercoles;
+    public void setParticipantes(Set<Participante> participantes) {
+        this.participantes = participantes;
     }
 
-    public boolean isJueves() {
-        return jueves;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setJueves(boolean jueves) {
-        this.jueves = jueves;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public boolean isViernes() {
-        return viernes;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setViernes(boolean viernes) {
-        this.viernes = viernes;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
-    public boolean isSabado() {
-        return sabado;
-    }
-
-    public void setSabado(boolean sabado) {
-        this.sabado = sabado;
-    }
-
-    public boolean isDomingo() {
-        return domingo;
-    }
-
-    public void setDomingo(boolean domingo) {
-        this.domingo = domingo;
-    }*/
-	
-	
 }
