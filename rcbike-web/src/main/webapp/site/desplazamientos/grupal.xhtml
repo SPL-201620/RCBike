@@ -5,7 +5,10 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<p>Aquí verá los recorridos disponibles a los cuales se puede unir:</p>
+	
 	<h:form id="formGrupal">
+		<p:growl id="messagesGrupal" showDetail="true" />
+		
 		<p:dataTable var="ruta" value="#{rutaGrupalManager.rutas}" rows="10"
 			paginator="true"
 			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -43,8 +46,9 @@
 			<p:column headerText="Frecuente:">
 				<h:outputText value="#{ruta.frecuente}" />
 			</p:column>
+			
 			<p:column headerText="Acción:">
-				<p:commandButton value="Unirme"  />
+ 				<p:commandButton value="Unirme" actionListener="#{addMarkersView.unirse(ruta.id)}" oncomplete="alert('Te has unido!');" />
 			</p:column>
 		</p:dataTable>
 	</h:form>

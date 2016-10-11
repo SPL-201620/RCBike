@@ -192,6 +192,8 @@ public class DesplazamientosService {
 	 *            email del usuario participante
 	 */
 	public void guardarParticipante(Long idRuta, String emailParticipante) {
+		java.lang.System.out.print("\n El Email: " + emailParticipante);
+		java.lang.System.out.print("\n El idRuta: " + idRuta +  "\n");
 		Participante participante = new Participante();
 		participante.setRuta(em.getReference(Ruta.class, idRuta));
 		participante.setEmail(emailParticipante);
