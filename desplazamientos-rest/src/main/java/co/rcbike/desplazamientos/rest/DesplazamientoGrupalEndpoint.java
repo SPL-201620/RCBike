@@ -105,8 +105,8 @@ public class DesplazamientoGrupalEndpoint {
 	@GET
 	@Path("/obtenerClima")
 	@Produces(MediaType.APPLICATION_JSON)
-	public WeatherData obtenerClima(@QueryParam("latitud") BigDecimal latitud,
-			@QueryParam("longitud") BigDecimal longitud) {
+	public String obtenerClima(@QueryParam("latitud") String latitud,
+			@QueryParam("longitud") String longitud) {
 		return service.obtenerClima(latitud, longitud);
 	}
 
