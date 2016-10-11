@@ -4,6 +4,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
+	<p>Aquí verá sus recorridos individuales:</p>
 	<h:form id="formIndividual">
 		<p:dataTable var="ruta" value="#{rutaManager.rutas}" rows="10"
 			paginator="true"
@@ -35,7 +36,9 @@
 			</p:column>
 
 			<p:column headerText="Fecha:">
-				<h:outputText value="#{ruta.fecha}" />
+				<h:outputText value="#{ruta.fecha}" >
+					<f:convertDateTime pattern="dd-MM-yyyy" />
+				</h:outputText>
 			</p:column>
 
 			<p:column headerText="Frecuente:">

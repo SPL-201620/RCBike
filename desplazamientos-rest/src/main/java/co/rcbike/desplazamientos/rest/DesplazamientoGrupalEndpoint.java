@@ -12,7 +12,6 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import co.rcbike.desplazamientos.model.Ruta;
-import co.rcbike.desplazamientos.model.openweather.WeatherData;
 import co.rcbike.desplazamientos.service.DesplazamientosService;
 
 @Path("/grupal")

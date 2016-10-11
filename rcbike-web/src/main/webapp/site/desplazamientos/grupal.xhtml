@@ -4,6 +4,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
+	<p>Aquí verá los recorridos disponibles a los cuales se puede unir:</p>
 	<h:form id="formGrupal">
 		<p:dataTable var="ruta" value="#{rutaGrupalManager.rutas}" rows="10"
 			paginator="true"
@@ -34,11 +35,16 @@
 			</p:column>
 
 			<p:column headerText="Fecha:">
-				<h:outputText value="#{ruta.fecha}" />
+				<h:outputText value="#{ruta.fecha}" >
+					<f:convertDateTime pattern="dd-MM-yyyy" />
+				</h:outputText>
 			</p:column>
 
 			<p:column headerText="Frecuente:">
 				<h:outputText value="#{ruta.frecuente}" />
+			</p:column>
+			<p:column headerText="Acción:">
+				<p:commandButton value="Unirme"  />
 			</p:column>
 		</p:dataTable>
 	</h:form>
