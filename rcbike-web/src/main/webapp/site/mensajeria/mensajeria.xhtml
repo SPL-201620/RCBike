@@ -1,0 +1,41 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="subheader">
+        Mensajeria
+    </ui:define>
+
+	<ui:define name="content">
+
+		<div class="Container100">
+			<div class="ContainerIndent">
+				<div class="Card ShadowEffect TexAlCenter">
+					<div class="ContainerIndent">
+						<h2 class="BigTopic" align="center">Mensajería RC-BIKE</h2>
+						<h:form id="frmMensajeria" prependId="false">
+							<p:tabView value="#{amigosManager.amigos}" var="amigo"
+								orientation="left">
+								<p:ajax event="tabChange"
+									listener="#{mensajeriaManager.onTabChange}" update=":frmMensajeria" />
+								<p:tab value="#{amigosManager.amigos}"
+									title="#{amigo.email}">
+									<h:panelGrid columns="1" cellpadding="10">
+										<p>
+											<h:outputText value="#{mensajeriaManager.mensajes}"
+												escape="false" />
+										</p>
+									</h:panelGrid>
+								</p:tab>
+							</p:tabView>
+						</h:form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</ui:define>
+
+</ui:composition>

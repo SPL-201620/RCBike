@@ -17,15 +17,17 @@ public class MensajeriaService {
 
     @Inject
     private EntityManager em;
+    private List<Mensaje> mensajes;
 
-    public Conversacion findConvesacionByEmRes(String emisor, String receptor) {
+    public List<Mensaje> findConvesacionByEmRes(String emailEmisor, String emailReceptor) {
         javax.persistence.Query q = em.createNamedQuery(Conversacion.SQ_LISTBYEMAILS);
-        q.setParameter("emailEmisor", emisor);
-        q.setParameter("emailReceptor", receptor);
+        q.setParameter("emailEmisor", emailEmisor);
+        q.setParameter("emailReceptor", emailReceptor);
         Conversacion c = (Conversacion) q.getSingleResult();
-        c.getMensajes();
-        return c;
-      
+        if (c != null){
+           mensajes=c.getMensajes();
+        }
+        return mensajes;
     }
 
     public Conversacion create(Conversacion record) {
@@ -33,12 +35,10 @@ public class MensajeriaService {
         em.flush();
         return record;
     }
-
-      
+    
     public Mensaje create(Mensaje record) {
         em.persist(record);
         em.flush();
         return record;
     }
-
 }
