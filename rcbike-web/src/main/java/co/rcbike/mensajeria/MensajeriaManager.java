@@ -63,6 +63,7 @@ public class MensajeriaManager implements Serializable {
 				.path(ModMensajeria.ENDPNT_MENSAJERIA).path("mensaje")
 				.path(AutenticacionManager.emailAutenticado())
 				.path(amigoSelected).request().get(gTListMensaje);
+		mensaje = " ";
 	}
 
 	public void crearConversacionMensaje() {
