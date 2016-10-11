@@ -5,6 +5,7 @@ import static co.rcbike.web.util.Navegacion.Views.dashboard;
 import static co.rcbike.web.util.Navegacion.Views.error;
 import static co.rcbike.web.util.Navegacion.Views.registro;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
@@ -19,6 +20,7 @@ import javax.ws.rs.core.Response.Status;
 import co.rcbike.gui.ModulosManager;
 import co.rcbike.gui.ModulosManager.ModAutenticacion;
 import co.rcbike.gui.ModulosManager.Modulo;
+import co.rcbike.web.util.Navegacion;
 //import co.rcbike.usuarios.model.Usuario;
 import lombok.Getter;
 import lombok.Setter;
@@ -57,7 +59,7 @@ public class AutenticacionManager implements Serializable {
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put(AUTENTICADO_ATTR, false);
     }
 
-    public String autenticar() {
+    public String autenticar() throws IOException {
         WebTarget serviceRoot = modulos.clienteSnoop(Modulo.autenticacion).getServiceRoot();
         Response response = serviceRoot.path(ModAutenticacion.ENDPNT_AUTENTICACION).queryParam("email", email)
                 .queryParam("clave", clave).request().get();
@@ -74,7 +76,8 @@ public class AutenticacionManager implements Serializable {
                 clave = null;
                 cambiarEstadoAutenticacion(true);
                 FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put(EMAIL_ATTR, email);
-                return redirectView(dashboard);
+                Navegacion.sendRedirect("/site/usuarios/dashboard.xhtml");
+                return null;
             default :
                 return redirectView(error);
         }
