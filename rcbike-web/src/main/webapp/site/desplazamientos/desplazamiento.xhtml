@@ -30,6 +30,7 @@
 						<br/>
 						<h:form prependId="false">
 							<h:inputHidden id="distancia" value="#{crearRutaManager.distancia}" />
+							<h:inputHidden id="tiempo" value="" />
 					 		<p:commandButton value="Calcular" id="calcularButton" onclick="routing();" icon="fa fa-check-circle" />
 							<p:button value="Cancelar" icon="fa fa-remove"/>
 						</h:form>
@@ -153,6 +154,7 @@
     var currentMarker = null;
     var markers = [];
     var distancia = null;
+    var tiempo = null;
 
     function handlePointClick(event) {
         if(currentMarker === null) {
@@ -218,7 +220,10 @@
 	    		    if (status !== google.maps.DistanceMatrixStatus.OK) {
 	    		        alert('Error was: ' + status);
 	    		      } else {
-	    		    	  distancia = response.rows[0].elements[0].distance.value
+	    		    	  distancia = response.rows[0].elements[0].distance.value;
+	    		    	  tiempo = response.rows[0].elements[0].duration.value;
+	    		    	  document.getElementById("distancia").value = distancia;
+	    		    	  document.getElementById("tiempo").value = tiempo;
 	    		      }
 	    		      
 	    		    });
