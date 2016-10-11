@@ -4,52 +4,44 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-	<h:form id="form">
-		<p:dataList value="#{rutaManager.rutas}"
-			var="ruta" type="unordered" itemType="none" paginator="true"
-			rows="10" styleClass="paginated">
-			<f:facet name="header">
-            	Individual
-        	</f:facet>
-			<p:commandLink update=":form:carDetail"
-				oncomplete="PF('carDialog').show()" title="View Detail"
-				styleClass="ui-icon ui-icon-search"
-				style="float:left;margin-right:10px">
-				<f:setPropertyActionListener value="#{ruta}"
-					target="#{rutaManager.ruta}" />
-				<h:outputText value="#{ruta.emailCreador}, #{ruta.calorias}" />
-			</p:commandLink>
-			<h:outputText value="#{ruta.emailCreador}, #{ruta.calorias}"
-				style="display:inline-block" />
-		</p:dataList>
+	<h:form id="formIndividual">
+		<p:dataTable var="ruta" value="#{rutaManager.rutas}" rows="10"
+			paginator="true"
+			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			rowsPerPageTemplate="5,10,15">
+			
+			<p:column headerText="Id:">
+				<h:outputText value="#{ruta.id}" />
+			</p:column>
 
-		<p:dialog header="Car Info" widgetVar="carDialog" modal="true"
-			showEffect="blind" hideEffect="explode" resizable="false">
-			<p:outputPanel id="carDetail" style="text-align:center;">
-				<p:panelGrid columns="2"
-					rendered="#{not empty dataListView.selectedCar}"
-					columnClasses="label,value">
-					<f:facet name="header">
-						<p:graphicImage
-							name="demo/images/car/#{dataListView.selectedCar.brand}-big.gif" />
-					</f:facet>
+			<p:column headerText="Tipo:">
+				<h:outputText value="#{ruta.tipo}" />
+			</p:column>
 
-					<h:outputText value="Id:" />
-					<h:outputText value="#{dataListView.selectedCar.id}" />
+			<p:column headerText="Distancia:">
+				<h:outputText value="#{ruta.distancia}" />
+			</p:column>
 
-					<h:outputText value="Year" />
-					<h:outputText value="#{dataListView.selectedCar.year}" />
+			<p:column headerText="Tiempo Estimado:">
+				<h:outputText value="#{ruta.tiempoEstimado}" />
+			</p:column>
 
-					<h:outputText value="Color:" />
-					<h:outputText value="#{dataListView.selectedCar.color}"
-						style="color:#{dataListView.selectedCar.color}" />
+			<p:column headerText="Calorias:">
+				<h:outputText value="#{ruta.calorias}" />
+			</p:column>
 
-					<h:outputText value="Price" />
-					<h:outputText value="$#{dataListView.selectedCar.price}" />
-				</p:panelGrid>
-			</p:outputPanel>
-		</p:dialog>
-		
+			<p:column headerText="Clima:">
+				<h:outputText value="#{ruta.clima}" />
+			</p:column>
+
+			<p:column headerText="Fecha:">
+				<h:outputText value="#{ruta.fecha}" />
+			</p:column>
+
+			<p:column headerText="Frecuente:">
+				<h:outputText value="#{ruta.frecuente}" />
+			</p:column>
+		</p:dataTable>
 	</h:form>
 
 </ui:composition>

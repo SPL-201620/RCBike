@@ -99,9 +99,9 @@ public class Ruta implements Serializable {
 
 	/**
 	 * Grupal: si no es frecuente representa la fecha y hora del recorrido,
-	 * si es frecuente representa la hora del dia del recorrido
+	 * si es frecuente representa la hora del dia del recorrido.
 	 * <br>
-	 * Individial: Fecha en la que se hizo el recorrido
+	 * Individial: Fecha en la que se hizo el recorrido.
 	 */
 	/*Solo para individuales*/
 	@NotNull
