@@ -30,16 +30,17 @@
 						<br/>
 						<h:form prependId="false">
 							<h:inputHidden id="distancia" value="#{crearRutaManager.distancia}" />
-							<h:inputHidden id="tiempo" value="" />
-					 		<p:commandButton value="Calcular" id="calcularButton" onclick="routing();" icon="fa fa-check-circle" />
+							<h:inputHidden id="tiempo" value="#{crearRutaManager.tiempo}" />
+					 		<p:commandButton value="Calcular" id="calcularButton"
+					 			action="#{crearRutaManager.rutaCalculada()}" icon="fa fa-check-circle" process="@form" update="variables"/>
 							<p:button value="Cancelar" icon="fa fa-remove"/>
 						</h:form>
 					</div>
 					
-					<div class="ContainerIndent">
+					<h:panelGroup id="variables" styleClass="ContainerIndent">
 						<div class="Card ShadowEffect ui-fluid">
 							<div class="Container25 Responsive50">
-								<h2>Clima: </h2>#{climaManager.clima}
+								<h2>Clima: </h2>#{crearRutaManager.clima}
 							</div>
 							<div class="Container25 Responsive50">
 								<h2>Distancia: </h2>#{crearRutaManager.distancia}
@@ -51,7 +52,7 @@
 								<h2>Calorias: </h2>#{crearRutaManager.calorias}
 							</div>
 						</div>
-					</div>
+					</h:panelGroup>
 					
 					<ui:include src="crear-desplazamiento.xhtml" />
 					
@@ -62,7 +63,8 @@
 					            <p:inputText id="titleMarked" value="#{addMarkersView.title}" />
 					 
 					            <f:facet name="footer">
-					                <p:commandButton value="Agregar" actionListener="#{addMarkersView.addMarker}" update=":messages" oncomplete="markerAddComplete(markers.length)" />
+					                <p:commandButton value="Agregar" actionListener="#{addMarkersView.addMarker}" 
+					                	update=":messages" oncomplete="markerAddComplete(markers.length)" />
 					                <p:commandButton value="Cancelar" onclick="return cancel()" />
 					            </f:facet>
 					        </h:panelGrid>
@@ -146,7 +148,7 @@
         }
        //]]>
 
-        document.getElementById("calcularButton").disabled = true;
+        
 		//-----calcular
         calcularDistancia(markers);
 	}
@@ -191,6 +193,10 @@
 	        PF('dlg').hide();
 	        document.getElementById("calcularButton").disabled = false;
         }//]]>
+    	
+    	if(markers.length ==2){
+    		routing();
+    	}
     }
  
     function cancel() {
@@ -222,8 +228,10 @@
 	    		      } else {
 	    		    	  distancia = response.rows[0].elements[0].distance.value;
 	    		    	  tiempo = response.rows[0].elements[0].duration.value;
-	    		    	  document.getElementById("distancia").value = distancia;
-	    		    	  document.getElementById("tiempo").value = tiempo;
+	    		    	  console.log("distancia "+distancia)
+	    		    	  console.log("tiempo "+tiempo)
+	    		    	  document.getElementById("distancia").value = ""+distancia;
+	    		    	  document.getElementById("tiempo").value = ""+tiempo;
 	    		      }
 	    		      
 	    		    });

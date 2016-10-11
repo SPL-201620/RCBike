@@ -19,6 +19,7 @@ import co.rcbike.desplazamientos.model.Tipo;
 import co.rcbike.gui.ModulosManager;
 import co.rcbike.gui.ModulosManager.ModDesplazamientos;
 import co.rcbike.gui.ModulosManager.Modulo;
+import eu.agilejava.snoop.client.SnoopServiceClient;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.jbosslog.JBossLog;
@@ -40,7 +41,7 @@ public class CrearRutaManager implements Serializable {
     @Setter
     @Getter
     private String nombreRuta;
-    
+
     @Setter
     @Getter
     private String distancia;
@@ -48,7 +49,7 @@ public class CrearRutaManager implements Serializable {
     @Setter
     @Getter
     private Integer tiempo;
-    
+
     @Setter
     @Getter
     private String calorias;
@@ -75,11 +76,15 @@ public class CrearRutaManager implements Serializable {
     @ManagedProperty(value = "#{mapaManager}")
     private MapaManager mapaManager;
 
+    @Getter
+    @Setter
+    private String clima;
+
     @PostConstruct
-    public void init(){
+    public void init() {
         log.debug(this);
     }
-    
+
     public void crearRuta() {
         WebTarget root = modulosManager.root(Modulo.desplazamientos);
 
@@ -107,10 +112,21 @@ public class CrearRutaManager implements Serializable {
         ruta.setTiempoEstimado(tiempo);
         ruta.setCalorias(1);
 
-        ruta.setClima("clima");
+        ruta.setClima(clima);
 
         ruta.setFrecuente(repetir);
         ruta.setDias(dias.toString());
         root.request().post(Entity.json(ruta));
     }
+
+    public void rutaCalculada() {
+        SnoopServiceClient desplazamientoRest = modulosManager.clienteSnoop(Modulo.desplazamientos);
+
+        String response = desplazamientoRest.getServiceRoot().path("individual").path("obtenerClima")
+                .queryParam("latitud", mapaManager.getOrigen().getLatlng().getLat())
+                .queryParam("longitud", mapaManager.getOrigen().getLatlng().getLng()).request().get(String.class);
+
+        this.clima = response;
+    }
+
 }

@@ -19,29 +19,28 @@ import lombok.extern.jbosslog.JBossLog;
 @ViewScoped
 @JBossLog
 public class ClimaManager implements Serializable {
-	
-	@Getter
+
+    @Getter
     @Setter
     private String clima;
-	
-	@Getter
+
+    @Getter
     @Setter
     @ManagedProperty(value = "#{modulosManager}")
     private ModulosManager modulosManager;
-	
 
-	@PostConstruct
+    @PostConstruct
     public void init() {
-		java.lang.System.out.print(".-----ClimaManager\n");
-		
-		SnoopServiceClient desplazamientoRest = modulosManager.clienteSnoop(Modulo.desplazamientos);
-        
-		String response = desplazamientoRest.getServiceRoot().path("individual").path("obtenerClima").queryParam("latitud", "4.656360")
-				.queryParam("longitud", "-74.103770").request().get(String.class);
-		
-		this.clima = response;
+        java.lang.System.out.print(".-----ClimaManager\n");
+
+        SnoopServiceClient desplazamientoRest = modulosManager.clienteSnoop(Modulo.desplazamientos);
+
+        String response = desplazamientoRest.getServiceRoot().path("individual").path("obtenerClima")
+                .queryParam("latitud", "4.656360").queryParam("longitud", "-74.103770").request().get(String.class);
+
+        this.clima = response;
         java.lang.System.out.print("\n");
-        
+
         java.lang.System.out.print(clima.toString());
     }
 }
