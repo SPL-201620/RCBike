@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
@@ -39,6 +40,18 @@ public class CrearRutaManager implements Serializable {
     @Setter
     @Getter
     private String nombreRuta;
+    
+    @Setter
+    @Getter
+    private String distancia;
+
+    @Setter
+    @Getter
+    private Integer tiempo;
+    
+    @Setter
+    @Getter
+    private String calorias;
 
     @Setter
     @Getter
@@ -57,6 +70,16 @@ public class CrearRutaManager implements Serializable {
     @ManagedProperty(value = "#{modulosManager}")
     private ModulosManager modulosManager;
 
+    @Getter
+    @Setter
+    @ManagedProperty(value = "#{mapaManager}")
+    private MapaManager mapaManager;
+
+    @PostConstruct
+    public void init(){
+        log.debug(this);
+    }
+    
     public void crearRuta() {
         WebTarget root = modulosManager.root(Modulo.desplazamientos);
 
@@ -69,20 +92,19 @@ public class CrearRutaManager implements Serializable {
             ruta.setFecha(new Date());
         }
 
-
         ruta.setEmailCreador(AutenticacionManager.emailAutenticado());
         ruta.setNombre(nombreRuta);
         ruta.setDescripcion(descRuta);
         ruta.setTipo(grupal ? Tipo.GRUPAL : Tipo.INDIVIDUAL);
 
-        ruta.setLatitudInicio("0");
-        ruta.setLongitudInicio("0");
-        ruta.setLatitudFinal("0");
-        ruta.setLongitudFinal("0");
+        ruta.setLatitudInicio("" + mapaManager.getOrigen().getLatlng().getLat());
+        ruta.setLongitudInicio("" + mapaManager.getOrigen().getLatlng().getLng());
+        ruta.setLatitudFinal("" + mapaManager.getDestino().getLatlng().getLat());
+        ruta.setLongitudFinal("" + mapaManager.getDestino().getLatlng().getLng());
 
         ruta.setDistancia(BigDecimal.ZERO);
 
-        ruta.setTiempoEstimado(1);
+        ruta.setTiempoEstimado(tiempo);
         ruta.setCalorias(1);
 
         ruta.setClima("clima");

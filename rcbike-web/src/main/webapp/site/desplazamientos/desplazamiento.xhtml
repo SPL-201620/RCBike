@@ -15,23 +15,46 @@
 		<div class="Container100">
 			<div class="ContainerIndent">
 				<div class="Card ShadowEffect">
-					<h2 class="CardTopic TexAlCenter Fs30">Recorrido</h2>
-					<h3>Paso 1</h3>
-					<p>Haga clic en el mapa para colocar un marcador, ese será su punto de partida, luego seleccione su punto de Destino en el mapa.</p>
-					<h3>Paso 2</h3>
-					<p>Una vez seleccionado los 2 puntos de su ruta seleccione el botón Calcular.</p>
-					<p>Clima : #{climaManager.clima}</p>
-					<p:growl id="messages" showDetail="true" />
-								
-					<p:gmap id="gmap" styleClass="PosRelative SoftGrayBack" center="4.656360,-74.103770" zoom="13" type="ROADMAP"
-							style="width:100%; height:355px; z-index:1;" model="#{addMarkersView.emptyModel}" onPointClick="handlePointClick(event);" widgetVar="map" />
-					<BR />
-					<h:form prependId="false"> 
-				 		<p:commandButton value="Calcular" id="calcularButton" onclick="routing();" icon="fa fa-fw fa-check-circle" />
-						<p:button value="Cancelar" icon="fa fa-fw fa-remove"></p:button>
-					</h:form>
+					<h2 class="CardTopic TexAlCenter Fs30">Planear Viajes</h2>
 					
-					<p:dialog widgetVar="dlg" showEffect="fade">
+					<div class="ContainerIndent">
+						<h3>Paso 1</h3>
+						<p>Haga clic en el mapa para colocar un marcador, ese será su punto de partida, luego seleccione su punto de Destino en el mapa.</p>
+						<h3>Paso 2</h3>
+						<p>Una vez seleccionado los 2 puntos de su ruta seleccione el botón Calcular.</p>
+						<p:growl id="messages" showDetail="true" />
+									
+						<p:gmap id="gmap" styleClass="PosRelative SoftGrayBack" center="4.656360,-74.103770" zoom="13" type="ROADMAP"
+								style="width:100%; height:355px; z-index:1;" model="#{addMarkersView.emptyModel}"
+								onPointClick="handlePointClick(event);" widgetVar="map" />
+						<br/>
+						<h:form prependId="false">
+							<h:inputHidden id="distancia" value="#{crearRutaManager.distancia}" />
+					 		<p:commandButton value="Calcular" id="calcularButton" onclick="routing();" icon="fa fa-check-circle" />
+							<p:button value="Cancelar" icon="fa fa-remove"/>
+						</h:form>
+					</div>
+					
+					<div class="ContainerIndent">
+						<div class="Card ShadowEffect ui-fluid">
+							<div class="Container25 Responsive50">
+								<h2>Clima: </h2>#{climaManager.clima}
+							</div>
+							<div class="Container25 Responsive50">
+								<h2>Distancia: </h2>#{crearRutaManager.distancia}
+							</div>
+							<div class="Container25 Responsive50">
+								<h2>Tiempo: </h2>#{crearRutaManager.tiempo}
+							</div>
+							<div class="Container25 Responsive50">
+								<h2>Calorias: </h2>#{crearRutaManager.calorias}
+							</div>
+						</div>
+					</div>
+					
+					<ui:include src="crear-desplazamiento.xhtml" />
+					
+					<p:dialog widgetVar="dlg" showEffect="fade" showHeader="false">
 					    <h:form prependId="false" >
 					        <h:panelGrid columns="2">
 					            <h:outputLabel for="titleMarked" value="Titulo:" />
@@ -50,7 +73,7 @@
 
 
 
-					<ui:include src="crear-desplazamiento.xhtml" />
+					
 					
 					
 

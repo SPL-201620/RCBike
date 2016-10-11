@@ -13,6 +13,7 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+
 import co.rcbike.desplazamientos.model.Participante;
 import co.rcbike.desplazamientos.model.Ruta;
 import co.rcbike.desplazamientos.model.Tipo;
@@ -25,8 +26,10 @@ public class DesplazamientosService {
 
 	private static final String OPEN_WEATHER_APP_ID = "8eee44951b419558297ae716a624c9c6";
 
-	// @Inject
-	// private Logger log;
+    /**
+     * Velociadad promedio bicicleta m/h
+     */
+    private static final BigDecimal VEL_PROMEDIO_BICI=new BigDecimal("21430");
 
 	/*
 	 * # delta distance (in meters) 1 0.1000000 11,057.43 2 0.0100000 1,105.74 3
@@ -199,6 +202,8 @@ public class DesplazamientosService {
 		participante.setEmail(emailParticipante);
 		em.persist(participante);
 	}
+	
+
 
 	/**
 	 * Permite guardar un recorrido individual o crear un recorrido organizado
@@ -207,6 +212,8 @@ public class DesplazamientosService {
 	 *            informacion de la ruta a crear
 	 */
 	public void guardarViaje(Ruta ruta) {
+	    BigDecimal distancia = ruta.getDistancia();
+	    ruta.setCalorias(null);
 		em.persist(ruta);
 	}
 
