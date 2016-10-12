@@ -22,12 +22,12 @@
 							
 							<p:selectBooleanCheckbox id="grupal" itemLabel="¿Recorrido Grupal?" 
 								value="#{crearRutaManager.grupal}" >
-								<p:ajax update="@form"/>
+								<p:ajax update="@form" process="@form"/>
 							</p:selectBooleanCheckbox>
 							
 							<p:selectBooleanCheckbox id="repetir" itemLabel="¿Repetir?" 
 								value="#{crearRutaManager.repetir}" rendered="#{crearRutaManager.grupal}">
-	                        	<p:ajax update="@form"/>
+	                        	<p:ajax update="@form" process="@form"/>
 							</p:selectBooleanCheckbox>
 
 							<p:outputLabel for="fecha" value="Fecha:" rendered="#{not crearRutaManager.repetir and crearRutaManager.grupal}"/>

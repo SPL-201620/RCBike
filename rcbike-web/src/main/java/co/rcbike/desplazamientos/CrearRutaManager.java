@@ -85,7 +85,7 @@ public class CrearRutaManager implements Serializable {
         log.debug(this);
     }
 
-    public void crearRuta() {
+    public String crearRuta() {
         WebTarget root = modulosManager.root(Modulo.desplazamientos);
 
         Ruta ruta = new Ruta();
@@ -117,6 +117,7 @@ public class CrearRutaManager implements Serializable {
         ruta.setFrecuente(repetir);
         ruta.setDias(dias.toString());
         root.request().post(Entity.json(ruta));
+        return "recorrido";
     }
 
     public void rutaCalculada() {
