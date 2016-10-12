@@ -1,0 +1,67 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:form id="formDesplazamiento">
+		<div class="EmptyBox10"/>
+		
+		<div class="ContainerIndent">
+			<div class="Card ShadowEffect ui-fluid">
+				<div class="Container50 Responsive100">
+					<div class="ContainerIndent">
+						<h2 class="BigTopic">Detalle del recorrido</h2>
+						<p:panelGrid columns="1" layout="grid" style="" styleClass="ui-panelgrid-blank">
+							<p:inputText id="nombre" value="#{crearRutaManager.nombreRuta}" placeholder="Nombre"
+								required="true" />
+							<p:inputText id="descripcion" value="#{crearRutaManager.descRuta}" placeholder="Descripcion" 
+								required="true"/>
+							
+							<h:panelGroup layout="block" styleClass="EmptyBox10" />
+							
+							<p:selectBooleanCheckbox id="grupal" itemLabel="¿Recorrido Grupal?" 
+								value="#{crearRutaManager.grupal}" >
+								<p:ajax update="@form"/>
+							</p:selectBooleanCheckbox>
+							
+							<p:selectBooleanCheckbox id="repetir" itemLabel="¿Repetir?" 
+								value="#{crearRutaManager.repetir}" rendered="#{crearRutaManager.grupal}">
+	                        	<p:ajax update="@form"/>
+							</p:selectBooleanCheckbox>
+
+							<p:outputLabel for="fecha" value="Fecha:" rendered="#{not crearRutaManager.repetir and crearRutaManager.grupal}"/>
+							<p:calendar id="fecha" value="#{crearRutaManager.fechaHora}" pattern="dd/MM/yyyy HH:mm a" rendered="#{not crearRutaManager.repetir and crearRutaManager.grupal}"/>
+
+							<p:outputLabel for="hora" value="Hora:" rendered="#{crearRutaManager.repetir}"/>
+                            <p:calendar id="hora" value="#{crearRutaManager.fechaHora}" pattern="HH:mm a" timeOnly="true" rendered="#{crearRutaManager.repetir}" />
+						</p:panelGrid>
+					</div>
+				</div>
+				<div class="Container50 Responsive100">
+					<p:panelGrid id="panelDias" columns="1" layout="grid" style="border:0px !important; background:none;" styleClass="ui-panelgrid-blank">
+						<p:outputLabel for="dias" value="Dias:" rendered="#{crearRutaManager.repetir}"/>
+                        <p:selectManyMenu id="dias" showCheckbox="true" style="width:200px;" 
+                        	rendered="#{crearRutaManager.repetir}" value="#{crearRutaManager.dias}">
+                           <f:selectItem itemLabel="Lunes" itemValue="1" />
+                           <f:selectItem itemLabel="Martes" itemValue="2" />
+                           <f:selectItem itemLabel="Miercoles" itemValue="3" />
+                           <f:selectItem itemLabel="Jueves" itemValue="4" />
+                           <f:selectItem itemLabel="Viernes" itemValue="5" />
+                           <f:selectItem itemLabel="Sabado" itemValue="6" />
+                           <f:selectItem itemLabel="Domingo" itemValue="7" />
+                        </p:selectManyMenu>
+						
+					</p:panelGrid>				
+				</div>
+				<div class="Container100 Responsive">
+					<div class="Container50 Responsive">
+						<p:commandButton value="Crear Viaje" class="GreenButton" 
+						icon="icon-nature_people" action="#{crearRutaManager.crearRuta()}"/>
+					</div>
+				</div>
+			</div>
+		</div>
+	</h:form>
+
+</ui:composition>

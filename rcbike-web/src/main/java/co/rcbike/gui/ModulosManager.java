@@ -51,6 +51,15 @@ public class ModulosManager implements Serializable {
         public static final String ENDPNT_MENSAJERIA = "mensajeria";
     }
 
+    public static class ModDesplazamientos {
+        public static final String ENDPNT_GRUPAL = "grupal";
+        public static final String ENDPNT_INDIVIDUAL = "individual";
+
+        public static final String OP_CREAR_RUTA = "";
+        
+        
+    }
+
     private Map<Modulo, SnoopServiceClient> clientesRest = new HashMap<>(10);
 
     @Getter
