@@ -1,4 +1,4 @@
-package co.rcbike.configurador_bici.model;
+package co.rcbike.ventas.model;
 
 import java.io.Serializable;
 
@@ -17,13 +17,13 @@ import org.hibernate.validator.constraints.NotEmpty;
 @SuppressWarnings("serial")
 @Entity
 @XmlRootElement
-@NamedQueries({ @NamedQuery(name = "findAll", query = "SELECT p FROM PiezaBicicleta p"),
-		@NamedQuery(name = "findByIdConfiguracion", query = "SELECT p FROM PiezaBicicleta p WHERE p.idConfiguracion = :idConfiguracion") })
-public class PiezaBicicleta implements Serializable {
+@NamedQueries({ @NamedQuery(name = "findAllPiezas", query = "SELECT p FROM PiezaVentaBicicleta p"),
+		@NamedQuery(name = "findByIdVenta", query = "SELECT p FROM PiezaVentaBicicleta p WHERE p.idVenta = :idVenta") })
+public class PiezaVentaBicicleta implements Serializable {
 
-	public static final String SQ_findAll = "findAll";
-	public static final String SQ_findByIdConfiguracion = "findByIdConfiguracion";
-	public static final String SQ_PARAM_ID_CONFIGURACION = "idConfiguracion";
+	public static final String SQ_findAllPiezas = "findAllPiezas";
+	public static final String SQ_findByIdVenta = "findByIdVenta";
+	public static final String SQ_PARAM_ID_CONFIGURACION = "idVenta";
 	
 	/* No es necesario llenar */
 	@Id
@@ -38,11 +38,7 @@ public class PiezaBicicleta implements Serializable {
 	@NotEmpty
 	private String descripcion;
 
-	/* No es necesario llenar */
-	//@ManyToOne(fetch = FetchType.LAZY)
-	//@JoinColumn(name = "idConfiguracion")
-	//private ConfiguracionBicicleta configuracion;
-	private Long idConfiguracion;
+	private Long idVenta;
 	
 
 	public Long getId() {
@@ -69,12 +65,12 @@ public class PiezaBicicleta implements Serializable {
 		this.descripcion = descripcion;
 	}
 
-	public Long getIdConfiguracion() {
-		return idConfiguracion;
+	public Long getIdVenta() {
+		return idVenta;
 	}
 
-	public void setIdConfiguracion(Long idConfiguracion) {
-		this.idConfiguracion = idConfiguracion;
+	public void setIdVenta(Long idConfiguracion) {
+		this.idVenta = idConfiguracion;
 	}
 
 }
