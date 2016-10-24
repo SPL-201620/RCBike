@@ -16,6 +16,7 @@ import co.rcbike.gui.ModulosManager;
 import co.rcbike.gui.ModulosManager.ModMensajeria;
 import co.rcbike.gui.ModulosManager.Modulo;
 import co.rcbike.mensajeria.model.Mensaje;
+import co.rcbike.mensajeria.model.OperacionesMensajeria;
 import co.rcbike.usuarios.UsuariosManager;
 import co.rcbike.usuarios.model.Usuario;
 import co.rcbike.web.util.UtilRest;
@@ -42,7 +43,7 @@ public class MensajeriaManager implements Serializable {
     @Getter
     @Setter
     private Usuario conversacionSeleccionada;
-    
+
     @Getter
     @Setter
     private String amigoSelected;
@@ -70,17 +71,21 @@ public class MensajeriaManager implements Serializable {
     }
 
     public void listConversaciones() {
-        List<String> emailReceptores = modulosManager.root(Modulo.mensajeria).path(ModMensajeria.ENDPNT_MENSAJERIA)
-                .path("conversaciones").path(AutenticacionManager.emailAutenticado()).request()
+        List<String> emailReceptores = modulosManager.root(Modulo.mensajeria).path(OperacionesMensajeria.EP_MENSAJERIA)
+                .path(OperacionesMensajeria.OP_CONVERSACIONES).path(AutenticacionManager.emailAutenticado()).request()
                 .get(UtilRest.TYPE_LIST_STRING);
         conversaciones = usuariosManager.buscarUsuariosByEmail(emailReceptores);
     }
 
-    
-    public void seleccionarConversacion(Usuario conversacionSeleccionada){
-        this.conversacionSeleccionada=conversacionSeleccionada;
+    public void seleccionarConversacion(Usuario conversacionSeleccionada) {
+        this.conversacionSeleccionada = conversacionSeleccionada;
+
+        List<Mensaje> mensajes = modulosManager.root(Modulo.mensajeria).path(OperacionesMensajeria.EP_MENSAJERIA)
+                .path("mensaje").path(AutenticacionManager.emailAutenticado()).path(conversacionSeleccionada.getEmail())
+                .request().get(gTListMensaje);
+
     }
-    
+
     public void crearConversacionMensaje() {
         Mensaje nuevoMensaje = new Mensaje();
         Date fechaHora = new Date();
