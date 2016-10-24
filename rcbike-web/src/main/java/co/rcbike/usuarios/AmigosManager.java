@@ -10,13 +10,13 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.GenericType;
 
 import co.rcbike.autenticacion.AutenticacionManager;
 import co.rcbike.gui.ModulosManager;
-import co.rcbike.gui.ModulosManager.ModUsuarios;
 import co.rcbike.gui.ModulosManager.Modulo;
+import co.rcbike.usuarios.model.OperacionesUsuarios;
 import co.rcbike.usuarios.model.Usuario;
+import co.rcbike.web.util.UtilRest;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.jbosslog.JBossLog;
@@ -48,16 +48,13 @@ public class AmigosManager implements Serializable {
     @ManagedProperty(value = "#{modulosManager}")
     private ModulosManager modulosManager;
 
-    private GenericType<List<Usuario>> gTListUsuario = new GenericType<List<Usuario>>() {
-    };
-
     @PostConstruct
     public void init() {
         listAmigos();
     }
 
     public void removerAmigo(String emailAmigo) {
-        modulosManager.root(Modulo.usuarios).path(ModUsuarios.ENDPNT_USUARIOS).path("remover-amigo").request()
+        modulosManager.root(Modulo.usuarios).path(OperacionesUsuarios.EP_USUARIOS).path("remover-amigo").request()
                 .post(Entity.json(Arrays.asList(AutenticacionManager.emailAutenticado(), emailAmigo)));
 
         amigos.stream().filter(amigo -> amigo.getEmail().equals(emailAmigo)).findFirst()
@@ -67,21 +64,21 @@ public class AmigosManager implements Serializable {
     }
 
     public void agregarAmigo(Usuario nuevoAmigo) {
-        modulosManager.root(Modulo.usuarios).path(ModUsuarios.ENDPNT_USUARIOS).path("agregar-amigo").request()
+        modulosManager.root(Modulo.usuarios).path(OperacionesUsuarios.EP_USUARIOS).path("agregar-amigo").request()
                 .post(Entity.json(Arrays.asList(AutenticacionManager.emailAutenticado(), nuevoAmigo.getEmail())));
         noAmigos.remove(nuevoAmigo);
         amigos.add(nuevoAmigo);
     }
 
     public void listAmigos() {
-        amigos = modulosManager.root(Modulo.usuarios).path(ModUsuarios.ENDPNT_USUARIOS).path("amigos")
-                .path(AutenticacionManager.emailAutenticado()).request().get(gTListUsuario);
+        amigos = modulosManager.root(Modulo.usuarios).path(OperacionesUsuarios.EP_USUARIOS).path("amigos")
+                .path(AutenticacionManager.emailAutenticado()).request().get(UtilRest.TYPE_LIST_USUARIO);
     }
 
     public void listNoAmigos() {
-        noAmigos = modulosManager.root(Modulo.usuarios).path(ModUsuarios.ENDPNT_USUARIOS).path("noamigos")
+        noAmigos = modulosManager.root(Modulo.usuarios).path(OperacionesUsuarios.EP_USUARIOS).path("noamigos")
                 .path(AutenticacionManager.emailAutenticado()).queryParam("filtro", filtroNoAmigo).request()
-                .get(gTListUsuario);
+                .get(UtilRest.TYPE_LIST_USUARIO);
     }
 
     public void cambiarEstadoCandidatos() {

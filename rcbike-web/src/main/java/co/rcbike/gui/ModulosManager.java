@@ -12,6 +12,8 @@ import javax.ws.rs.client.WebTarget;
 
 import org.primefaces.model.menu.MenuModel;
 
+import co.rcbike.mensajeria.model.OperacionesMensajeria;
+import co.rcbike.usuarios.model.OperacionesUsuarios;
 import eu.agilejava.snoop.annotation.Snoop;
 import eu.agilejava.snoop.client.SnoopServiceClient;
 import lombok.Getter;
@@ -43,10 +45,6 @@ public class ModulosManager implements Serializable {
         public static final String ENDPNT_AUTENTICACION = "autenticar";
     }
 
-    public static class ModUsuarios {
-        public static final String ENDPNT_USUARIOS = "usuarios";
-    }
-    
     public static class ModMensajeria {
         public static final String ENDPNT_MENSAJERIA = "mensajeria";
     }
@@ -56,8 +54,7 @@ public class ModulosManager implements Serializable {
         public static final String ENDPNT_INDIVIDUAL = "individual";
 
         public static final String OP_CREAR_RUTA = "";
-        
-        
+
     }
 
     private Map<Modulo, SnoopServiceClient> clientesRest = new HashMap<>(10);
@@ -69,7 +66,7 @@ public class ModulosManager implements Serializable {
 
     @Getter
     @Inject
-    @Snoop(serviceName = "usuarios")
+    @Snoop(serviceName = OperacionesUsuarios.EP_USUARIOS)
     private SnoopServiceClient usuariosService;
 
     @Getter
@@ -94,7 +91,7 @@ public class ModulosManager implements Serializable {
 
     @Getter
     @Inject
-    @Snoop(serviceName = "mensajeria")
+    @Snoop(serviceName = OperacionesMensajeria.EP_MENSAJERIA)
     private SnoopServiceClient mensajeriaService;
 
     @Getter

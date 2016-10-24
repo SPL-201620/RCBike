@@ -1,6 +1,8 @@
 package co.rcbike.usuarios.rest;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -15,11 +17,12 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import co.rcbike.usuarios.model.OperacionesUsuarios;
 import co.rcbike.usuarios.model.RegistroUsuario;
 import co.rcbike.usuarios.model.Usuario;
 import co.rcbike.usuarios.service.UsuariosService;
 
-@Path("/usuarios")
+@Path(OperacionesUsuarios.EP_USUARIOS)
 @RequestScoped
 public class UsuariosEndpoint {
 
@@ -33,7 +36,14 @@ public class UsuariosEndpoint {
     }
 
     @GET
-    @Path("/{email: .+@.+}")
+    @Path(OperacionesUsuarios.OP_USUARIOS + "/{emails}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Usuario> listUsuarios(@PathParam("emails") String emails) {
+        return service.listUsuarios(Arrays.asList(emails.split(Pattern.quote("|"))));
+    }
+
+    @GET
+    @Path(OperacionesUsuarios.OP_USUARIO + "/" + OperacionesUsuarios.PATH_PRM_EMAIL)
     @Produces(MediaType.APPLICATION_JSON)
     public Usuario lookupUsuarioByEmail(@PathParam("email") String email) {
         Usuario member = service.findUsuario(email);
@@ -44,7 +54,7 @@ public class UsuariosEndpoint {
     }
 
     @GET
-    @Path("/amigos/{email: .+@.+}")
+    @Path(OperacionesUsuarios.OP_AMIGOS + "/" + OperacionesUsuarios.PATH_PRM_EMAIL)
     @Produces(MediaType.APPLICATION_JSON)
     public List<Usuario> listAmigos(@PathParam("email") String email) {
         lookupUsuarioByEmail(email);
@@ -52,7 +62,7 @@ public class UsuariosEndpoint {
     }
 
     @GET
-    @Path("/noamigos/{email: .+@.+}")
+    @Path(OperacionesUsuarios.OP_NOAMIGOS + "/" + OperacionesUsuarios.PATH_PRM_EMAIL)
     @Produces(MediaType.APPLICATION_JSON)
     public List<Usuario> listNoAmigos(@PathParam("email") String email, @QueryParam("filtro") String filtro) {
         return service.listNoAmigosDe(email, filtro);
@@ -71,7 +81,7 @@ public class UsuariosEndpoint {
     }
 
     @POST
-    @Path("agregar-amigo")
+    @Path(OperacionesUsuarios.OP_AGREGAR_AMIGO)
     @Consumes({MediaType.APPLICATION_JSON})
     public Response agregarAmigo(List<String> emails) {
         service.agregarAmigo(emails.get(0), emails.get(1));
@@ -79,7 +89,7 @@ public class UsuariosEndpoint {
     }
 
     @POST
-    @Path("remover-amigo")
+    @Path(OperacionesUsuarios.OP_REMOVER_AMIGO)
     public Response removerAmigo(List<String> emails) {
         service.removerAmigo(emails.get(0), emails.get(1));
         return Response.ok().build();

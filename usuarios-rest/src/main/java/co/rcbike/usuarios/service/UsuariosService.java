@@ -108,4 +108,10 @@ public class UsuariosService {
         q.setParameter(Usuario.SQ_PARAM_EXCLUIDOS, emailExcluidos);
         return q.getResultList();
     }
+
+    public List<Usuario> listUsuarios(List<String> emails) {
+        TypedQuery<Usuario> q = em.createNamedQuery(Usuario.SQ_listUsuarios, Usuario.class);
+        q.setParameter(Usuario.SQ_PARAM_EMAILS, emails);
+        return q.getResultList();
+    }
 }

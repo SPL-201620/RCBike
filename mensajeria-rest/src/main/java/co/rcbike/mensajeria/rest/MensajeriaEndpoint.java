@@ -13,29 +13,35 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import co.rcbike.mensajeria.model.Mensaje;
+import co.rcbike.mensajeria.model.OperacionesMensajeria;
 import co.rcbike.mensajeria.service.MensajeriaService;
 
-@Path("/mensajeria")
+@Path(OperacionesMensajeria.EP_MENSAJERIA)
 @RequestScoped
 public class MensajeriaEndpoint {
 
-	@Inject
-	private MensajeriaService service;
+    @Inject
+    private MensajeriaService service;
 
-	@GET
-	@Path("/mensaje/{emailEmisor: .+@.+}/{emailReceptor: .+@.+}")
-	@Produces({ MediaType.APPLICATION_JSON })
-	public List<Mensaje> findConvesacionByEmRes(
-			@PathParam("emailEmisor") String emailEmisor,
-			@PathParam("emailReceptor") String emailReceptor) {
-		return service.findMensajes(emailEmisor, emailReceptor);
-	}
+    @GET
+    @Path(OperacionesMensajeria.OP_CONVERSACIONES + "/" + OperacionesMensajeria.PATH_PRM_EMAIL)
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<String> listConversaciones(@PathParam("email") String emailParticipante) {
+        return service.listConversaciones(emailParticipante);
+    }
 
-	@POST
-	@Path("/nuevo-mensaje-conversacion")
-	@Consumes({ MediaType.APPLICATION_JSON })
-	public void mensaje(Mensaje mensaje) {
-		service.createMensaje(mensaje);
-	}
+    @GET
+    @Path("/mensaje/{emailEmisor: .+@.+}/{emailReceptor: .+@.+}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<Mensaje> findConvesacionByEmRes(@PathParam("emailEmisor") String emailEmisor,
+            @PathParam("emailReceptor") String emailReceptor) {
+        return service.findMensajes(emailEmisor, emailReceptor);
+    }
+
+    @POST
+    @Consumes({MediaType.APPLICATION_JSON})
+    public void crearMensaje(Mensaje mensaje) {
+        service.createMensaje(mensaje);
+    }
 
 }

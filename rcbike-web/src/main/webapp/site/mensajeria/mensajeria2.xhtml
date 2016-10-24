@@ -1,0 +1,57 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="head">
+		<script>
+			function sendMsgSocket(){
+				webSocket.send(document.getElementById("contenido-mensaje").value);
+			}
+		</script>
+	</ui:define>
+	<ui:define name="subheader">
+        Mensajeria
+    </ui:define>
+
+	<ui:define name="content">
+		<h:form id="frmMensajeria" prependId="false">
+			<div class="Container100">
+				<div class="ContainerIndent">
+					<div class="Card ShadowEffect TexAlCenter">
+						<div class="ContainerIndent">
+							<h2 class="BigTopic" align="center">Mensajería RC-BIKE</h2>
+							<p:tabView value="#{amigosManager.amigos}" var="amigo"
+								orientation="left">
+								<p:ajax event="tabChange"
+									listener="#{mensajeriaManager.onTabChange}"
+									update=":frmMensajeria" />
+								<p:tab value="#{amigosManager.amigos}" title="#{amigo.email}">
+								<p:poll interval="1" listener="#{mensajeriaManager.listMensaje()}" update="mens" />								
+									<p:dataList id="mens" type="definition" value="#{mensajeriaManager.mensajes}" var="mensaje">									
+										<div align="left">#{mensaje.emailEmisor}: #{mensaje.contenido}</div>										
+									</p:dataList>									
+								</p:tab>
+							</p:tabView>
+						</div>
+						<div class="Wid100" align="right">
+							<p:inputText id="contenido-mensaje" placeholder="Mensaje"
+								value="#{mensajeriaManager.mensaje}"
+								styleClass="Wid70 TexAlCenter Fs18" autocomplete="off" />
+						</div>
+						<div class="Wid100" align="right">
+							<p:commandButton value="Enviar"
+								icon="fa fa-send"
+								styleClass="Wid20 Fs18 White RaisedButton FloatNoneOnMobile"
+								update=":frmMensajeria" onclick="sendMsgSocket();"  />
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

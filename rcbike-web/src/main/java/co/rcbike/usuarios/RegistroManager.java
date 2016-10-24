@@ -22,8 +22,8 @@ import com.google.common.io.Files;
 
 import co.rcbike.autenticacion.AutenticacionManager;
 import co.rcbike.gui.ModulosManager;
-import co.rcbike.gui.ModulosManager.ModUsuarios;
 import co.rcbike.gui.ModulosManager.Modulo;
+import co.rcbike.usuarios.model.OperacionesUsuarios;
 import co.rcbike.usuarios.model.RegistroUsuario;
 import co.rcbike.web.util.Navegacion;
 import co.rcbike.web.util.Navegacion.Views;
@@ -85,7 +85,7 @@ public class RegistroManager implements Serializable {
         regUsuario.setClave(clave);
         regUsuario.setFoto(foto);
 
-        Response response = modulosManager.root(Modulo.usuarios).path(ModUsuarios.ENDPNT_USUARIOS).request()
+        Response response = modulosManager.root(Modulo.usuarios).path(OperacionesUsuarios.EP_USUARIOS).request()
                 .post(Entity.json(regUsuario));
         log.debug(response);
 

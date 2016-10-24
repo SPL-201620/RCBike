@@ -28,6 +28,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @XmlRootElement
 @JsonIgnoreProperties({"amigos"})
 @NamedQueries({@NamedQuery(name = "findByEmail", query = "SELECT e FROM Usuario e WHERE e.email = :email"),
+        @NamedQuery(name = Usuario.SQ_listUsuarios, query = "SELECT e FROM Usuario e WHERE e.email IN :emails ORDER BY e.nombres ASC"),
         @NamedQuery(name = "listByNombre", query = "SELECT e FROM Usuario e ORDER BY e.nombres ASC"),
         @NamedQuery(name = "listNoAmigos", query = "SELECT e FROM Usuario e WHERE e.email NOT IN :excluidos ORDER BY e.nombres ASC"),
         @NamedQuery(name = "listNoAmigosFiltro", query = "SELECT e FROM Usuario e WHERE "
@@ -42,6 +43,9 @@ public class Usuario implements Serializable {
     public static final String SQ_PARAM_EXCLUIDOS = "excluidos";
     public static final String SQ_listNoAmigosFiltro = "listNoAmigosFiltro";
     public static final String SQ_PARAM_FILTRO = "filtro";
+
+    public static final String SQ_listUsuarios = "listUsuarios";
+    public static final String SQ_PARAM_EMAILS = "emails";
 
     @Id
     @GeneratedValue

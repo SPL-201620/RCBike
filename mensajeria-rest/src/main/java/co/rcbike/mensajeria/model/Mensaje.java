@@ -19,11 +19,16 @@ import org.hibernate.validator.constraints.NotEmpty;
 @SuppressWarnings("serial")
 @Entity
 @XmlRootElement
-@NamedQueries({@NamedQuery(name = "listByParticipantes", query = "SELECT e FROM Mensaje e WHERE (e.emailEmisor = :emailEmisor and e.emailReceptor = :emailReceptor) or (e.emailEmisor =  :emailReceptor and e.emailReceptor = :emailEmisor)" )})
+@NamedQueries({
+        @NamedQuery(name = Mensaje.SQ_LISTBYPARTICIPANTES, query = "SELECT e FROM Mensaje e WHERE (e.emailEmisor = :emailEmisor and e.emailReceptor = :emailReceptor) or (e.emailEmisor =  :emailReceptor and e.emailReceptor = :emailEmisor)"),
+        @NamedQuery(name = Mensaje.SQ_LIST_CONVERSACIONES, query = "SELECT DISTINCT(e.participantes) FROM Mensaje e WHERE e.participantes LIKE :participante")})
 
 public class Mensaje implements Serializable {
 
     public static final String SQ_LISTBYPARTICIPANTES = "listByParticipantes";
+
+    public static final String SQ_LIST_CONVERSACIONES = "listConversaciones";
+    public static final String SQ_PARAM_PARTICIPANTE_LIKE = "participante";
 
     @Id
     @GeneratedValue
@@ -41,6 +46,10 @@ public class Mensaje implements Serializable {
     @NotEmpty
     @Email
     private String emailReceptor;
+
+    @NotNull
+    @NotEmpty
+    private String participantes;
 
     private String contenido;
 
@@ -94,6 +103,14 @@ public class Mensaje implements Serializable {
 
     public void setContenido(String contenido) {
         this.contenido = contenido;
+    }
+
+    public String getParticipantes() {
+        return participantes;
+    }
+
+    public void setParticipantes(String participantes) {
+        this.participantes = participantes;
     }
 
 }

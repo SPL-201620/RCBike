@@ -14,9 +14,14 @@
         </f:facet>
         <title>RCBIke</title>
         
-        <h:outputScript name="js/ripple-effect.js" library="modena-layout" />
-        <h:outputScript name="js/perfect-scrollbar.js" library="modena-layout" />
-        <h:outputScript name="js/layout.js" library="modena-layout" />
+        <h:outputScript name="js/rcbike.min.js" library="modena-layout" />
+		
+		<script>
+			var webSocket = new WebSocket("ws:#{request.contextPath}/websocket/#{autenticacionManager.emailAutenticado()}");
+			webSocket.onmessage = function(event){
+				alert(event.data);
+			}
+		</script>
 
         <ui:insert name="head" />
     </h:head>

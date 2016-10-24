@@ -4,48 +4,52 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
 
+	<ui:define name="head">
+		<script>
+			function sendMsgSocket() {
+				webSocket
+						.send(document.getElementById("contenido-mensaje").value);
+			}
+		</script>
+	</ui:define>
 	<ui:define name="subheader">
         Mensajeria
     </ui:define>
 
 	<ui:define name="content">
-		<h:form id="frmMensajeria" prependId="false">
-			<div class="Container100">
-				<div class="ContainerIndent">
-					<div class="Card ShadowEffect TexAlCenter">
-						<div class="ContainerIndent">
-							<h2 class="BigTopic" align="center">Mensajería RC-BIKE</h2>
-							<p:tabView value="#{amigosManager.amigos}" var="amigo"
-								orientation="left">
-								<p:ajax event="tabChange"
-									listener="#{mensajeriaManager.onTabChange}"
-									update=":frmMensajeria" />
-								<p:tab value="#{amigosManager.amigos}" title="#{amigo.email}">
-								<p:poll interval="1" listener="#{mensajeriaManager.listMensaje()}" update="mens" />								
-									<p:dataList id="mens" type="definition" value="#{mensajeriaManager.mensajes}" var="mensaje">									
-										<div align="left">#{mensaje.emailEmisor}: #{mensaje.contenido}</div>										
-									</p:dataList>									
-								</p:tab>
-							</p:tabView>
+		<div class="Container100 ui-fluid" style="    height: calc(100% - 38px);">
+			<h:form id="frmMensajeria" prependId="false">
+				<div class="Card ShadowEffect chat-container">
+					<div class="Container30 Responsive100">
+						<p:repeat value="#{mensajeriaManager.conversaciones}" var="receptor">
+							<p:outputPanel layout="block" styleClass="Card SoftGrayBack BorderAll" >
+	                            #{receptor.nombreCompleto()}
+							</p:outputPanel>							
+						</p:repeat>
+					</div>
+					<div class="col-mensajes Container70 Responsive100">
+						<div class="Container BorderAll">
+							<div class="Fleft Wid80">
+								<p:inputText id="contenido-mensaje" placeholder="Mensaje" value="#{mensajeriaManager.mensaje}"
+									styleClass="Fs18" autocomplete="off" />
+							</div>
+							<div class="Fleft Wid20">
+								<p:commandButton icon="fa fa-send" value="Enviar"
+									styleClass="Fs18 White RaisedButton FloatNoneOnMobile"
+									update=":frmMensajeria" onclick="sendMsgSocket();" />
+							</div>
 						</div>
-						<div class="Wid100" align="right">
-							<p:inputText placeholder="Mensaje"
-								value="#{mensajeriaManager.mensaje}"
-								styleClass="Wid70 TexAlCenter Fs18" autocomplete="off" />
-						</div>
-						<div class="Wid100" align="right">
-							<p:commandButton value="Enviar"
-								action="#{mensajeriaManager.crearConversacionMensaje()}"
-								icon="fa fa-sign-in"
-								styleClass="Wid20 Fs18 White RaisedButton FloatNoneOnMobile"
-								update=":frmMensajeria"  />
-						</div>
-
 					</div>
 				</div>
-			</div>
-		</h:form>
-
+			</h:form>
+		</div>
+		<style type="text/css">
+			.chat-container{
+				height:500px;
+				max-height:500px;
+			}
+			
+		</style>
 	</ui:define>
 
 </ui:composition>
