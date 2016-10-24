@@ -41,6 +41,10 @@ public class MensajeriaManager implements Serializable {
 
     @Getter
     @Setter
+    private Usuario conversacionSeleccionada;
+    
+    @Getter
+    @Setter
     private String amigoSelected;
 
     @Getter
@@ -72,6 +76,11 @@ public class MensajeriaManager implements Serializable {
         conversaciones = usuariosManager.buscarUsuariosByEmail(emailReceptores);
     }
 
+    
+    public void seleccionarConversacion(Usuario conversacionSeleccionada){
+        this.conversacionSeleccionada=conversacionSeleccionada;
+    }
+    
     public void crearConversacionMensaje() {
         Mensaje nuevoMensaje = new Mensaje();
         Date fechaHora = new Date();
