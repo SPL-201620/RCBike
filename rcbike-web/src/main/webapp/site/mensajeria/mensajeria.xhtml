@@ -17,18 +17,40 @@
     </ui:define>
 
 	<ui:define name="content">
-		<div class="Container100 ui-fluid" style="    height: calc(100% - 38px);">
+		<div class="Container100 ui-fluid" >
 			<h:form id="frmMensajeria" prependId="false">
-				<div class="Card ShadowEffect chat-container">
-					<div class="Container30 Responsive100">
-						<p:repeat value="#{mensajeriaManager.conversaciones}" var="receptor">
-							<p:outputPanel layout="block" styleClass="Card SoftGrayBack BorderAll" >
-	                            #{receptor.nombreCompleto()}
-							</p:outputPanel>							
-						</p:repeat>
+				<div class="Card ShadowEffect chat-container ">
+				
+					<div class="Container30 Responsive100 OvAuto OvXHidden fullH SoftGrayBack" >
+						<div class="Container100 fullH" >
+							<div class="Card TurquoiseBack">
+						     <p:autoComplete id="selectUsuario" minQueryLength="4" effect="fade"
+						     	forceSelection="true" dropdown="true" placeholder="Buscar Usuarios"
+								completeMethod="#{usuariosManager.filtrarUsuarios}"	
+								value="#{mensajeriaManager.conversacionNueva}"
+								var="usuario"
+								converter="usuarioConverter"
+								itemValue="#{usuario}"
+								itemLabel="#{usuario.nombreCompleto()}"
+								/>
+						    </div>
+						
+							<p:repeat value="#{mensajeriaManager.conversaciones}" var="receptor">
+								<p:outputPanel layout="block" styleClass="Card SoftGrayBack BorderBottom" >
+		                            #{receptor.nombreCompleto()}
+								</p:outputPanel>							
+							</p:repeat>
+						</div>	
 					</div>
-					<div class="col-mensajes Container70 Responsive100">
-						<div class="Container BorderAll">
+					
+					<div class="Container70 Responsive100  fullH msgsCol ">
+						
+						<div class="Container100 GrayBack HeaderChat ShadowEffect ">
+							<h2 class="CardTopic White TexAlCenter">Nombre Conversacion</h2>
+						</div>
+						
+						
+						<div class="Container100 FooterChat BorderLeft">
 							<div class="Fleft Wid80">
 								<p:inputText id="contenido-mensaje" placeholder="Mensaje" value="#{mensajeriaManager.mensaje}"
 									styleClass="Fs18" autocomplete="off" />
@@ -39,15 +61,120 @@
 									update=":frmMensajeria" onclick="sendMsgSocket();" />
 							</div>
 						</div>
+						
+						<div class="Container100 OvAuto OvXHidden MainChat">
+						<div class="EmptyBox50"></div>
+							<div class="Container100">
+								<div class="White TexAlRight MsgBox SoftBlueBack OwnMsg">
+	    	                        <div class="FontRobotoLight Fs16 White ClearBoth"> 1 Mensaje Propio Mensaje Propio Mensaje PropioMensaje PropioMensaje
+	    	                        PropioMensaje PropioMensaje Propio Mensaje PropioMensaje PropioMensaje PropioMensaje Propio </div>
+	                            </div>
+                            </div>
+							<div class="Container100">
+	                            <div class="White TexAlLeft MsgBox LeadenGreenBack OtherMsg">
+	    	                        <div class="FontRobotoLight Fs16 White ClearBoth">Mensaje Otro</div>
+	                            </div>
+                            </div>
+							<div class="Container100">
+								<div class="White TexAlRight MsgBox SoftBlueBack OwnMsg">
+	    	                        <div class="FontRobotoLight Fs16 White ClearBoth">Mensaje Propio Mensaje Propio Mensaje PropioMensaje PropioMensaje
+	    	                        PropioMensaje PropioMensaje Propio Mensaje PropioMensaje PropioMensaje PropioMensaje Propio </div>
+	                            </div>
+                            </div>
+							<div class="Container100">
+	                            <div class="White TexAlLeft MsgBox LeadenGreenBack OtherMsg">
+	    	                        <div class="FontRobotoLight Fs16 White ClearBoth">Mensaje Otro</div>
+	                            </div>
+                            </div>
+							<div class="Container100">
+								<div class="White TexAlRight MsgBox SoftBlueBack OwnMsg">
+	    	                        <div class="FontRobotoLight Fs16 White ClearBoth">Mensaje Propio Mensaje Propio Mensaje PropioMensaje PropioMensaje
+	    	                        PropioMensaje PropioMensaje Propio Mensaje PropioMensaje PropioMensaje PropioMensaje Propio </div>
+	                            </div>
+                            </div>
+							<div class="Container100">
+								<div class="White TexAlRight MsgBox SoftBlueBack OwnMsg">
+	    	                        <div class="FontRobotoLight Fs16 White ClearBoth">Mensaje Propio Mensaje Propio Mensaje PropioMensaje PropioMensaje
+	    	                        PropioMensaje PropioMensaje Propio Mensaje PropioMensaje PropioMensaje PropioMensaje Propio </div>
+	                            </div>
+                            </div>
+							<div class="Container100">
+								<div class="White TexAlRight MsgBox SoftBlueBack OwnMsg">
+	    	                        <div class="FontRobotoLight Fs16 White ClearBoth">Mensaje Propio Mensaje Propio Mensaje PropioMensaje PropioMensaje
+	    	                        PropioMensaje PropioMensaje Propio Mensaje PropioMensaje PropioMensaje PropioMensaje Propio </div>
+	                            </div>
+                            </div>
+							<div class="Container100">
+	                            <div class="White TexAlLeft MsgBox LeadenGreenBack OtherMsg">
+	    	                        <div class="FontRobotoLight Fs16 White ClearBoth">Mensaje Otro</div>
+	                            </div>
+                            </div>
+							<div class="Container100">
+	                            <div class="White TexAlLeft MsgBox LeadenGreenBack OtherMsg">
+	    	                        <div class="FontRobotoLight Fs16 White ClearBoth">Mensaje Otro</div>
+	                            </div>
+                            </div>
+							<div class="Container100">
+	                            <div class="White TexAlLeft MsgBox LeadenGreenBack OtherMsg">
+	    	                        <div class="FontRobotoLight Fs16 White ClearBoth">Mensaje Otro</div>
+	                            </div>
+                            </div>
+							<div class="Container100">
+								<div class="White TexAlRight MsgBox SoftBlueBack OwnMsg">
+	    	                        <div class="FontRobotoLight Fs16 White ClearBoth">Mensaje Propio Mensaje Propio Mensaje PropioMensaje PropioMensaje
+	    	                        PropioMensaje PropioMensaje Propio Mensaje PropioMensaje PropioMensaje PropioMensaje Propio </div>
+	                            </div>
+                            </div>
+							<div class="Container100">
+								<div class="White TexAlRight MsgBox SoftBlueBack OwnMsg">
+	    	                        <div class="FontRobotoLight Fs16 White ClearBoth">Ul Mensaje Propio Mensaje Propio Mensaje PropioMensaje PropioMensaje
+	    	                        PropioMensaje PropioMensaje Propio Mensaje PropioMensaje PropioMensaje PropioMensaje Propio </div>
+	                            </div>
+                            </div>
+                            <div class="EmptyBox50"></div>
+						</div>
+						
 					</div>
 				</div>
 			</h:form>
 		</div>
 		<style type="text/css">
-			.chat-container{
-				height:500px;
-				max-height:500px;
+			.chat-container {
+			    height: 70vh;
 			}
+			.fullH {
+				height: 100%;
+			}
+			.msgsCol {
+				position: relative;
+			}
+			.HeaderChat {
+				padding-top: 10px;
+				padding-left: 1px;
+				position: absolute; 
+                top: 0;
+			}
+			.MainChat {
+				height: 100%;
+			}
+			.FooterChat {
+				padding-left: 1px;
+				position: absolute; 
+                bottom: 0;
+			}
+			.MsgBox {
+			 	padding:5px 10px;
+			}
+			.OwnMsg {
+				float:right;
+				margin: 3px 10px 3px 70px;
+			}
+			.OtherMsg {
+				float:left;
+				margin: 3px 70px 3px 10px;
+			}
+			
+			
 			
 		</style>
 	</ui:define>

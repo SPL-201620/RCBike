@@ -35,4 +35,9 @@ public class UsuariosManager implements Serializable {
                 .path(OperacionesUsuarios.OP_USUARIOS).path(String.join("|", emails)).request().get(TYPE_LIST_USUARIO);
         return list;
     }
+    
+    public List<Usuario> filtrarUsuarios(String query){
+        return  modulosManager.root(Modulo.usuarios).path(OperacionesUsuarios.EP_USUARIOS).request().get(TYPE_LIST_USUARIO);
+    }
+    
 }

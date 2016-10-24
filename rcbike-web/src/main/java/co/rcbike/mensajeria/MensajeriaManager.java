@@ -37,6 +37,10 @@ public class MensajeriaManager implements Serializable {
 
     @Getter
     @Setter
+    private Usuario conversacionNueva;
+
+    @Getter
+    @Setter
     private String amigoSelected;
 
     @Getter
