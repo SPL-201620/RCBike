@@ -31,7 +31,7 @@ public class MensajeriaEndpoint {
     }
 
     @GET
-    @Path("/mensaje/{emailEmisor: .+@.+}/{emailReceptor: .+@.+}")
+    @Path(OperacionesMensajeria.OP_MENSAJE + "/{emailEmisor: .+@.+}/{emailReceptor: .+@.+}")
     @Produces({MediaType.APPLICATION_JSON})
     public List<Mensaje> findConvesacionByEmRes(@PathParam("emailEmisor") String emailEmisor,
             @PathParam("emailReceptor") String emailReceptor) {

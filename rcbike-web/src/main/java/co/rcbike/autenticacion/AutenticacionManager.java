@@ -1,7 +1,6 @@
 package co.rcbike.autenticacion;
 
 import static co.rcbike.web.util.Navegacion.redirectView;
-import static co.rcbike.web.util.Navegacion.Views.dashboard;
 import static co.rcbike.web.util.Navegacion.Views.error;
 import static co.rcbike.web.util.Navegacion.Views.registro;
 
@@ -21,7 +20,6 @@ import co.rcbike.gui.ModulosManager;
 import co.rcbike.gui.ModulosManager.ModAutenticacion;
 import co.rcbike.gui.ModulosManager.Modulo;
 import co.rcbike.web.util.Navegacion;
-//import co.rcbike.usuarios.model.Usuario;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.jbosslog.JBossLog;
@@ -34,6 +32,9 @@ public class AutenticacionManager implements Serializable {
 
     public static final String AUTENTICADO_ATTR = "sat_autenticado";
     public static final String EMAIL_ATTR = "sat_email";
+
+    @Getter
+    private final String serverIp = "localhost:8080";
 
     @Getter
     @Setter

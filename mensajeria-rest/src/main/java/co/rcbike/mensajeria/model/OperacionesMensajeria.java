@@ -11,6 +11,7 @@ public final class OperacionesMensajeria {
 
     // Operaciones
     public static final String OP_CONVERSACIONES = "conversaciones";
+    public static final String OP_MENSAJE = "mensaje";
 
     // Parametros
     public static final String PATH_PRM_EMAIL = "{email}";

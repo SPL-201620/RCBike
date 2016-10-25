@@ -6,12 +6,9 @@
 
 	<ui:define name="head">
 		<script>
-			function sendMsgSocket() {
-				webSocket
-						.send(document.getElementById("contenido-mensaje").value);
+			onMessageHandlers.mensajeria = function(event){
+				updateChatBox();
 			}
-		</script>
-		<script>
 			function marcarConvSeleccionada(conversacion){
 				$(".conversacion").removeClass("LeadenGreenBack")
 					.removeClass("SoftGrayBack").removeClass("White")

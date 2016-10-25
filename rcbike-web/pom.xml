@@ -86,6 +86,12 @@
 			<artifactId>jboss-websocket-api_1.1_spec</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>org.jboss.spec.javax.json</groupId>
+			<artifactId>jboss-json-api_1.0_spec</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
 		<!-- Now we declare any tools needed -->
 
 		<!-- Annotation processor to generate the JPA 2.0 metamodel classes for 
@@ -181,6 +187,11 @@
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.5.1</version>
 		</dependency>
 	</dependencies>
 

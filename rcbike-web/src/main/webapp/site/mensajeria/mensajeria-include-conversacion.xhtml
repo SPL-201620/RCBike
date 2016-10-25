@@ -23,6 +23,10 @@
 						update="chatBox" action="#{mensajeriaManager.crearMensaje()}" />
 				</div>
 			</h:form>
+			<h:form id="frmWebSocketUpdate">
+				<p:remoteCommand name="updateChatBox" update="chatBox"
+					actionListener="#{mensajeriaManager.actualizarConversacionActual}"/>
+			</h:form>
 		</div>
 
 		<div class="Container100 OvAuto OvXHidden MainChat">
