@@ -27,6 +27,7 @@
 			function focusContenidoMensaje(){
 				$("#frmMensajeria\\:contenido-mensaje").focus();
 				
+				
 			}
 		</script>
 		
@@ -52,7 +53,7 @@
 									converter="genericConverter"
 									itemValue="#{usuario}"
 									itemLabel="#{usuario.nombreCompleto()}" onblur="clearSelectUsuario()">
-										<p:ajax event="itemSelect" update="chatBox chatsList" onsuccess="clearSelectUsuario();focusContenidoMensaje();"
+										<p:ajax event="itemSelect" update="chatBox chatsList" oncomplete="clearSelectUsuario();focusContenidoMensaje();"
 											listener="#{mensajeriaManager.onNuevaConversacionSelect}" />
 									</p:autoComplete>
 								
