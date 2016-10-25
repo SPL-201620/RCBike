@@ -36,6 +36,13 @@ public class UsuariosEndpoint {
     }
 
     @GET
+    @Path(OperacionesUsuarios.OP_USUARIOS)
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Usuario> listUsuariosFiltro(@QueryParam("filtro") String filtro) {
+        return service.listUsuariosFiltro(filtro);
+    }
+
+    @GET
     @Path(OperacionesUsuarios.OP_USUARIOS + "/{emails}")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Usuario> listUsuarios(@PathParam("emails") String emails) {

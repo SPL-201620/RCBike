@@ -19,12 +19,10 @@ import co.rcbike.usuarios.model.Usuario;
 import co.rcbike.web.util.UtilRest;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.extern.jbosslog.JBossLog;
 
 @SuppressWarnings("serial")
 @ManagedBean
 @ViewScoped
-@JBossLog
 public class AmigosManager implements Serializable {
 
     @Getter

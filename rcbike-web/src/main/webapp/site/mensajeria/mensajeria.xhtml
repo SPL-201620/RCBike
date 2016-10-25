@@ -24,6 +24,10 @@
 				$("#selectUsuario_input").val("");
 				$("#selectUsuario_hinput").val("");
 			}
+			function focusContenidoMensaje(){
+				$("#frmMensajeria\\:contenido-mensaje").focus();
+				
+			}
 		</script>
 		
 	</ui:define>
@@ -47,8 +51,8 @@
 									var="usuario"
 									converter="genericConverter"
 									itemValue="#{usuario}"
-									itemLabel="#{usuario.nombreCompleto()}">
-										<p:ajax event="itemSelect" update="chatBox chatsList" onsuccess="clearSelectUsuario()"
+									itemLabel="#{usuario.nombreCompleto()}" onblur="clearSelectUsuario()">
+										<p:ajax event="itemSelect" update="chatBox chatsList" onsuccess="clearSelectUsuario();focusContenidoMensaje();"
 											listener="#{mensajeriaManager.onNuevaConversacionSelect}" />
 									</p:autoComplete>
 								

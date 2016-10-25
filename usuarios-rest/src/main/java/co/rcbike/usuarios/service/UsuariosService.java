@@ -1,6 +1,7 @@
 package co.rcbike.usuarios.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -49,41 +50,21 @@ public class UsuariosService {
         return q.getResultList();
     }
 
-    public void crearUsuario(RegistroUsuario registroUsuario) {
-        Usuario usuario = new Usuario();
-        usuario.setEmail(registroUsuario.getEmail());
-        usuario.setNombres(registroUsuario.getNombres());
-        usuario.setApellidos(registroUsuario.getApellidos());
-        usuario.setFoto(registroUsuario.getFoto());
-        try {
-            em.persist(usuario);
-            autenticacion.registrar(registroUsuario.getEmail(), registroUsuario.getClave());
-        } catch (Exception e) {
-            // TODO usuario ya existe
-            e.printStackTrace();
+    public List<Usuario> listUsuarios(List<String> emails) {
+        TypedQuery<Usuario> q = em.createNamedQuery(Usuario.SQ_listUsuarios, Usuario.class);
+        q.setParameter(Usuario.SQ_PARAM_EMAILS, emails);
+        return Collections.unmodifiableList(q.getResultList());
+    }
+
+    public List<Usuario> listUsuariosFiltro(String filtro) {
+        if (Strings.isNullOrEmpty(filtro)) {
+            return listUsuario();
+        } else {
+            TypedQuery<Usuario> q = em.createNamedQuery(Usuario.SQ_listMatchFiltro, Usuario.class);
+            q.setParameter(Usuario.SQ_PARAM_FILTRO, "%" + filtro.toLowerCase() + "%");
+            return Collections.unmodifiableList(q.getResultList());
         }
     }
-
-    public void editarUsuario(Usuario usuario) {
-
-    }
-
-    public void removerAmigo(String emailUsuario, String emailAmigo) {
-        Usuario usuario = findUsuario(emailUsuario);
-        Usuario amigo = findUsuario(emailAmigo);
-
-        usuario.getAmigos().remove(amigo);
-        em.merge(amigo);
-    }
-
-    public void agregarAmigo(String emailUsuario, String emailAmigo) {
-        Usuario usuario = findUsuario(emailUsuario);
-        Usuario amigo = findUsuario(emailAmigo);
-
-        usuario.getAmigos().add(amigo);
-        em.merge(amigo);
-    }
-
     public List<Usuario> listAmigos(String email) {
         List<Usuario> amigos = findUsuario(email).getAmigos();
         amigos.size();
@@ -109,9 +90,34 @@ public class UsuariosService {
         return q.getResultList();
     }
 
-    public List<Usuario> listUsuarios(List<String> emails) {
-        TypedQuery<Usuario> q = em.createNamedQuery(Usuario.SQ_listUsuarios, Usuario.class);
-        q.setParameter(Usuario.SQ_PARAM_EMAILS, emails);
-        return q.getResultList();
+    public void crearUsuario(RegistroUsuario registroUsuario) {
+        Usuario usuario = new Usuario();
+        usuario.setEmail(registroUsuario.getEmail());
+        usuario.setNombres(registroUsuario.getNombres());
+        usuario.setApellidos(registroUsuario.getApellidos());
+        usuario.setFoto(registroUsuario.getFoto());
+        try {
+            em.persist(usuario);
+            autenticacion.registrar(registroUsuario.getEmail(), registroUsuario.getClave());
+        } catch (Exception e) {
+            // TODO usuario ya existe
+            e.printStackTrace();
+        }
+    }
+
+    public void removerAmigo(String emailUsuario, String emailAmigo) {
+        Usuario usuario = findUsuario(emailUsuario);
+        Usuario amigo = findUsuario(emailAmigo);
+
+        usuario.getAmigos().remove(amigo);
+        em.merge(amigo);
+    }
+
+    public void agregarAmigo(String emailUsuario, String emailAmigo) {
+        Usuario usuario = findUsuario(emailUsuario);
+        Usuario amigo = findUsuario(emailAmigo);
+
+        usuario.getAmigos().add(amigo);
+        em.merge(amigo);
     }
 }

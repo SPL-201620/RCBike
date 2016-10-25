@@ -33,7 +33,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
         @NamedQuery(name = Usuario.SQ_listNoAmigos, query = "SELECT e FROM Usuario e WHERE e.email NOT IN :excluidos ORDER BY e.nombres ASC"),
         @NamedQuery(name = Usuario.SQ_listNoAmigosFiltro, query = "SELECT e FROM Usuario e WHERE "
                 + " lower(e.email) LIKE :filtro OR lower(e.nombres) LIKE :filtro OR lower(e.apellidos) LIKE :filtro"
-                + " AND e.email NOT IN :excluidos ORDER BY e.nombres ASC")})
+                + " AND e.email NOT IN :excluidos ORDER BY e.nombres ASC"),
+        @NamedQuery(name = Usuario.SQ_listMatchFiltro, query = "SELECT e FROM Usuario e WHERE "
+                + " lower(e.email) LIKE :filtro OR lower(e.nombres) LIKE :filtro OR lower(e.apellidos) LIKE :filtro"
+                + " ORDER BY e.nombres ASC")})
 public class Usuario implements Serializable {
 
     public static final String SQ_findByEmail = "findByEmail";
@@ -42,6 +45,7 @@ public class Usuario implements Serializable {
     public static final String SQ_listNoAmigos = "listNoAmigos";
     public static final String SQ_PARAM_EXCLUIDOS = "excluidos";
     public static final String SQ_listNoAmigosFiltro = "listNoAmigosFiltro";
+    public static final String SQ_listMatchFiltro = "listMatchFiltro";
     public static final String SQ_PARAM_FILTRO = "filtro";
 
     public static final String SQ_listUsuarios = "listUsuarios";
