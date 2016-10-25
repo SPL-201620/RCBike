@@ -11,16 +11,18 @@
 		</div>
 
 		<div class="Container100 FooterChat WhiteBack BorderLeft">
-			<div class="Fleft Wid80">
-				<p:inputText id="contenido-mensaje" placeholder="Mensaje"
-					value="#{mensajeriaManager.mensaje}" styleClass="Fs18"
-					autocomplete="off" />
-			</div>
-			<div class="Fleft Wid20">
-				<p:commandButton icon="fa fa-send" value="Enviar"
-					styleClass="Fs18 White RaisedButton FloatNoneOnMobile"
-					update=":frmMensajeria" onclick="sendMsgSocket();" />
-			</div>
+			<h:form id="frmMensajeria">
+				<div class="Fleft Wid80">
+					<p:inputText id="contenido-mensaje" placeholder="Mensaje"
+						value="#{mensajeriaManager.mensaje}" styleClass="Fs18"
+						autocomplete="off" required="true"/>
+				</div>
+				<div class="Fleft Wid20">
+					<p:commandButton icon="fa fa-send" value="Enviar"
+						styleClass="Fs18 White RaisedButton FloatNoneOnMobile"
+						update="chatBox" action="#{mensajeriaManager.crearMensaje()}" />
+				</div>
+			</h:form>
 		</div>
 
 		<div class="Container100 OvAuto OvXHidden MainChat">

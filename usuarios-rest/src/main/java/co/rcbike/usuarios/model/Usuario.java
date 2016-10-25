@@ -27,11 +27,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 @XmlRootElement
 @JsonIgnoreProperties({"amigos"})
-@NamedQueries({@NamedQuery(name = "findByEmail", query = "SELECT e FROM Usuario e WHERE e.email = :email"),
+@NamedQueries({@NamedQuery(name = Usuario.SQ_findByEmail, query = "SELECT e FROM Usuario e WHERE e.email = :email"),
         @NamedQuery(name = Usuario.SQ_listUsuarios, query = "SELECT e FROM Usuario e WHERE e.email IN :emails ORDER BY e.nombres ASC"),
-        @NamedQuery(name = "listByNombre", query = "SELECT e FROM Usuario e ORDER BY e.nombres ASC"),
-        @NamedQuery(name = "listNoAmigos", query = "SELECT e FROM Usuario e WHERE e.email NOT IN :excluidos ORDER BY e.nombres ASC"),
-        @NamedQuery(name = "listNoAmigosFiltro", query = "SELECT e FROM Usuario e WHERE "
+        @NamedQuery(name = Usuario.SQ_listByNombre, query = "SELECT e FROM Usuario e ORDER BY e.nombres ASC"),
+        @NamedQuery(name = Usuario.SQ_listNoAmigos, query = "SELECT e FROM Usuario e WHERE e.email NOT IN :excluidos ORDER BY e.nombres ASC"),
+        @NamedQuery(name = Usuario.SQ_listNoAmigosFiltro, query = "SELECT e FROM Usuario e WHERE "
                 + " lower(e.email) LIKE :filtro OR lower(e.nombres) LIKE :filtro OR lower(e.apellidos) LIKE :filtro"
                 + " AND e.email NOT IN :excluidos ORDER BY e.nombres ASC")})
 public class Usuario implements Serializable {
@@ -124,6 +124,31 @@ public class Usuario implements Serializable {
 
     public String nombreCompleto() {
         return this.nombres + " " + this.apellidos;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((email == null) ? 0 : email.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Usuario other = (Usuario) obj;
+        if (email == null) {
+            if (other.email != null)
+                return false;
+        } else if (!email.equals(other.email))
+            return false;
+        return true;
     }
 
 }

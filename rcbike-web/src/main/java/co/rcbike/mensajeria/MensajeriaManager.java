@@ -5,14 +5,13 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.GenericType;
 
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 
 import co.rcbike.autenticacion.AutenticacionManager;
@@ -86,16 +85,22 @@ public class MensajeriaManager implements Serializable {
         if (conversaciones.contains(usuario)) {
             seleccionarConversacion(usuario);
         } else {
-            conversaciones.add(usuario);
+            conversaciones.add(0, usuario);
             conversacionSeleccionada = usuario;
+            mensajesConversacion.clear();
         }
+        RequestContext.getCurrentInstance().execute("marcarConvByIdClass('" + usuario.getId() + "');");
     }
 
     public void crearMensaje() {
         Mensaje nuevoMensaje = new Mensaje();
-
+        nuevoMensaje.setEmailEmisor(AutenticacionManager.emailAutenticado());
+        nuevoMensaje.setEmailReceptor(conversacionSeleccionada.getEmail());
+        nuevoMensaje.setContenido(mensaje);
+        nuevoMensaje.setFechaHora(new Date());
         modulosManager.root(Modulo.mensajeria).path(ModMensajeria.ENDPNT_MENSAJERIA).request()
                 .post(Entity.json(nuevoMensaje));
+        mensajesConversacion.add(nuevoMensaje);
     }
 
 }
