@@ -1,6 +1,7 @@
 package co.rcbike.mensajeria;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -87,7 +88,7 @@ public class MensajeriaManager implements Serializable {
         } else {
             conversaciones.add(0, usuario);
             conversacionSeleccionada = usuario;
-            mensajesConversacion.clear();
+            mensajesConversacion = new ArrayList<>();
         }
         RequestContext.getCurrentInstance().execute("marcarConvByIdClass('" + usuario.getId() + "');");
     }
@@ -101,6 +102,7 @@ public class MensajeriaManager implements Serializable {
         modulosManager.root(Modulo.mensajeria).path(ModMensajeria.ENDPNT_MENSAJERIA).request()
                 .post(Entity.json(nuevoMensaje));
         mensajesConversacion.add(nuevoMensaje);
+        mensaje = "";
     }
 
 }

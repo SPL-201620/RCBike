@@ -37,36 +37,38 @@
 	<ui:define name="content">
 		<div class="Container100 ui-fluid" >
 			<div class="Card ShadowEffect OvAuto OvXHidden chat-container ">
-			
-				<p:outputPanel id="chatsList" layout="block" 
-					styleClass="Container30 Responsive100 OvAuto OvXHidden fullH SoftGrayBack" >
-					
-					<div class="Container100 fullH" >
-						<div class="Card GrayBack ShadowEffect">
-					     <p:autoComplete id="selectUsuario" minQueryLength="4"
-					     	forceSelection="true" dropdown="true" placeholder="Buscar Usuarios"
-							completeMethod="#{usuariosManager.filtrarUsuarios}"	
-							var="usuario"
-							converter="genericConverter"
-							itemValue="#{usuario}"
-							itemLabel="#{usuario.nombreCompleto()}">
-								<p:ajax event="itemSelect" update="chatBox chatsList" onsuccess="clearSelectUsuario()"
-									listener="#{mensajeriaManager.onNuevaConversacionSelect}" />
-							</p:autoComplete>
-					    </div>
-					
-						<p:repeat value="#{mensajeriaManager.conversaciones}" var="conversacion">
-							<p:commandLink styleClass="#{conversacion.id}" action="#{mensajeriaManager.seleccionarConversacion(conversacion)}" update="chatBox" 
-								onclick="marcarConvSeleccionada(this);">
-								<p:outputPanel layout="block" styleClass="Card SoftGrayBack BorderBottom conversacion" >
-		                            #{conversacion.nombreCompleto()}
-								</p:outputPanel>
-							</p:commandLink>							
-						</p:repeat>
-					</div>
+				<h:form id="frmSelectUsuario" prependId="false">
+					<p:outputPanel id="chatsList" layout="block" 
+						styleClass="Container30 Responsive100 OvAuto OvXHidden fullH SoftGrayBack" >
 						
-				</p:outputPanel>
-				
+						<div class="Container100 fullH" >
+							<div class="Card GrayBack ShadowEffect">
+								
+							     <p:autoComplete id="selectUsuario" minQueryLength="4"
+							     	forceSelection="true" dropdown="true" placeholder="Buscar Usuarios"
+									completeMethod="#{usuariosManager.filtrarUsuarios}"	
+									var="usuario"
+									converter="genericConverter"
+									itemValue="#{usuario}"
+									itemLabel="#{usuario.nombreCompleto()}">
+										<p:ajax event="itemSelect" update="chatBox chatsList" onsuccess="clearSelectUsuario()"
+											listener="#{mensajeriaManager.onNuevaConversacionSelect}" />
+									</p:autoComplete>
+								
+						    </div>
+						
+							<p:repeat value="#{mensajeriaManager.conversaciones}" var="conversacion">
+								<p:commandLink styleClass="#{conversacion.id}" action="#{mensajeriaManager.seleccionarConversacion(conversacion)}" update="chatBox" 
+									onclick="marcarConvSeleccionada(this);">
+									<p:outputPanel layout="block" styleClass="Card SoftGrayBack BorderBottom conversacion" >
+			                            #{conversacion.nombreCompleto()}
+									</p:outputPanel>
+								</p:commandLink>							
+							</p:repeat>
+						</div>
+							
+					</p:outputPanel>
+				</h:form>
 				 
 				<p:outputPanel id="chatBox" layout="block" styleClass="Container70 Responsive100 fullH msgsCol ">
 					<ui:include src="mensajeria-include-conversacion.xhtml" />
