@@ -7,7 +7,7 @@
 	<p:outputPanel layout="block" rendered="#{mensajeriaManager.conversacionSeleccionada!=null}">
 
 		<div class="Container100 GrayBack HeaderChat ShadowEffect">
-			<h2 class="CardTopic White TexAlCenter">Nombre Conversacion</h2>
+			<h2 class="CardTopic White TexAlCenter">#{mensajeriaManager.conversacionSeleccionada.nombreCompleto()} [ #{mensajeriaManager.conversacionSeleccionada.email} ]</h2>
 		</div>
 
 		<div class="Container100 FooterChat WhiteBack BorderLeft">
@@ -25,21 +25,16 @@
 
 		<div class="Container100 OvAuto OvXHidden MainChat">
 			<div class="EmptyBox50" />
+			<p:repeat value="#{mensajeriaManager.mensajesConversacion}" var="mensaje">
 
-			<div class="Container100">
-				<div class="White TexAlRight MsgBox SoftBlueBack OwnMsg">
-					<div class="FontRobotoLight Fs16 White ClearBoth">1 Mensaje
-						Propio Mensaje Propio Mensaje PropioMensaje PropioMensaje
-						PropioMensaje PropioMensaje Propio Mensaje PropioMensaje
-						PropioMensaje PropioMensaje Propio</div>
-				</div>
-			</div>
-			<div class="Container100">
-				<div class="White TexAlLeft MsgBox LeadenGreenBack OtherMsg">
-					<div class="FontRobotoLight Fs16 White ClearBoth">Mensaje
-						Otro</div>
-				</div>
-			</div>
+				<p:outputPanel styleClass="Container100">
+					<div class="White MsgBox #{mensaje.emailEmisor.equals(autenticacionManager.emailAutenticado())? 'TexAlRight SoftBlueBack OwnMsg': 'TexAlLeft LeadenGreenBack OtherMsg' } ">
+						<div class="FontRobotoLight Fs16 White ClearBoth">#{mensaje.contenido}</div>
+					</div>
+				</p:outputPanel>
+
+			</p:repeat>
+
 
 			<div class="EmptyBox50" />
 		</div>

@@ -19,7 +19,7 @@ public class MensajeriaService {
     private EntityManager em;
 
     public List<Mensaje> findMensajes(String emailEmisor, String emailReceptor) {
-        TypedQuery<Mensaje> q = em.createNamedQuery(Mensaje.SQ_LISTBYPARTICIPANTES, Mensaje.class);
+        TypedQuery<Mensaje> q = em.createNamedQuery(Mensaje.SQ_LIST_BY_PARTICIPANTES, Mensaje.class);
         q.setParameter("emailEmisor", emailEmisor);
         q.setParameter("emailReceptor", emailReceptor);
         List<Mensaje> c = q.getResultList();

@@ -31,18 +31,21 @@
 			<h:form id="frmMensajeria" prependId="false">
 				<div class="Card ShadowEffect OvAuto OvXHidden chat-container ">
 				
-					<div class="Container30 Responsive100 OvAuto OvXHidden fullH SoftGrayBack" >
+					<p:outputPanel id="chatsList" layout="block" 
+						styleClass="Container30 Responsive100 OvAuto OvXHidden fullH SoftGrayBack" >
+						
 						<div class="Container100 fullH" >
-							<div class="Card GrayBack">
+							<div class="Card GrayBack ShadowEffect">
 						     <p:autoComplete id="selectUsuario" minQueryLength="4"
 						     	forceSelection="true" dropdown="true" placeholder="Buscar Usuarios"
 								completeMethod="#{usuariosManager.filtrarUsuarios}"	
-								value="#{mensajeriaManager.conversacionNueva}"
 								var="usuario"
-								converter="usuarioConverter"
+								converter="genericConverter"
 								itemValue="#{usuario}"
-								itemLabel="#{usuario.nombreCompleto()}"
-								/>
+								itemLabel="#{usuario.nombreCompleto()}">
+									<p:ajax event="itemSelect" update="chatBox chatsList" 
+										listener="#{mensajeriaManager.onNuevaConversacionSelect}" />
+								</p:autoComplete>
 						    </div>
 						
 							<p:repeat value="#{mensajeriaManager.conversaciones}" var="receptor">
@@ -53,8 +56,9 @@
 									</p:outputPanel>
 								</p:commandLink>							
 							</p:repeat>
-						</div>	
-					</div>
+						</div>
+							
+					</p:outputPanel>
 					
 					 
 					<p:outputPanel id="chatBox" layout="block" styleClass="Container70 Responsive100 fullH msgsCol ">

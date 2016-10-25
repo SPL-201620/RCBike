@@ -54,7 +54,8 @@ public class AmigosManager implements Serializable {
     }
 
     public void removerAmigo(String emailAmigo) {
-        modulosManager.root(Modulo.usuarios).path(OperacionesUsuarios.EP_USUARIOS).path("remover-amigo").request()
+        modulosManager.root(Modulo.usuarios).path(OperacionesUsuarios.EP_USUARIOS)
+                .path(OperacionesUsuarios.OP_REMOVER_AMIGO).request()
                 .post(Entity.json(Arrays.asList(AutenticacionManager.emailAutenticado(), emailAmigo)));
 
         amigos.stream().filter(amigo -> amigo.getEmail().equals(emailAmigo)).findFirst()
@@ -64,21 +65,23 @@ public class AmigosManager implements Serializable {
     }
 
     public void agregarAmigo(Usuario nuevoAmigo) {
-        modulosManager.root(Modulo.usuarios).path(OperacionesUsuarios.EP_USUARIOS).path("agregar-amigo").request()
+        modulosManager.root(Modulo.usuarios).path(OperacionesUsuarios.EP_USUARIOS)
+                .path(OperacionesUsuarios.OP_AGREGAR_AMIGO).request()
                 .post(Entity.json(Arrays.asList(AutenticacionManager.emailAutenticado(), nuevoAmigo.getEmail())));
         noAmigos.remove(nuevoAmigo);
         amigos.add(nuevoAmigo);
     }
 
     public void listAmigos() {
-        amigos = modulosManager.root(Modulo.usuarios).path(OperacionesUsuarios.EP_USUARIOS).path("amigos")
-                .path(AutenticacionManager.emailAutenticado()).request().get(UtilRest.TYPE_LIST_USUARIO);
+        amigos = modulosManager.root(Modulo.usuarios).path(OperacionesUsuarios.EP_USUARIOS)
+                .path(OperacionesUsuarios.OP_AMIGOS).path(AutenticacionManager.emailAutenticado()).request()
+                .get(UtilRest.TYPE_LIST_USUARIO);
     }
 
     public void listNoAmigos() {
-        noAmigos = modulosManager.root(Modulo.usuarios).path(OperacionesUsuarios.EP_USUARIOS).path("noamigos")
-                .path(AutenticacionManager.emailAutenticado()).queryParam("filtro", filtroNoAmigo).request()
-                .get(UtilRest.TYPE_LIST_USUARIO);
+        noAmigos = modulosManager.root(Modulo.usuarios).path(OperacionesUsuarios.EP_USUARIOS)
+                .path(OperacionesUsuarios.OP_NOAMIGOS).path(AutenticacionManager.emailAutenticado())
+                .queryParam("filtro", filtroNoAmigo).request().get(UtilRest.TYPE_LIST_USUARIO);
     }
 
     public void cambiarEstadoCandidatos() {

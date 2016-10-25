@@ -20,12 +20,17 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Entity
 @XmlRootElement
 @NamedQueries({
-        @NamedQuery(name = Mensaje.SQ_LISTBYPARTICIPANTES, query = "SELECT e FROM Mensaje e WHERE (e.emailEmisor = :emailEmisor and e.emailReceptor = :emailReceptor) or (e.emailEmisor =  :emailReceptor and e.emailReceptor = :emailEmisor)"),
-        @NamedQuery(name = Mensaje.SQ_LIST_CONVERSACIONES, query = "SELECT DISTINCT(e.participantes) FROM Mensaje e WHERE e.participantes LIKE :participante")})
+        @NamedQuery(name = Mensaje.SQ_LIST_BY_PARTICIPANTES, //
+                query = "SELECT e FROM Mensaje e "
+                        + " WHERE (e.emailEmisor = :emailEmisor and e.emailReceptor = :emailReceptor)"
+                        + " OR (e.emailEmisor =  :emailReceptor and e.emailReceptor = :emailEmisor)"),
+        @NamedQuery(name = Mensaje.SQ_LIST_CONVERSACIONES, //
+                query = "SELECT DISTINCT(e.participantes) FROM Mensaje e "
+                        + " WHERE e.participantes LIKE :participante")})
 
 public class Mensaje implements Serializable {
 
-    public static final String SQ_LISTBYPARTICIPANTES = "listByParticipantes";
+    public static final String SQ_LIST_BY_PARTICIPANTES = "listByParticipantes";
 
     public static final String SQ_LIST_CONVERSACIONES = "listConversaciones";
     public static final String SQ_PARAM_PARTICIPANTE_LIKE = "participante";

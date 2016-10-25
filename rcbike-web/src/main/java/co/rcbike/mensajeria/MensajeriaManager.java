@@ -5,11 +5,15 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.GenericType;
+
+import org.primefaces.event.SelectEvent;
 
 import co.rcbike.autenticacion.AutenticacionManager;
 import co.rcbike.gui.ModulosManager;
@@ -34,19 +38,11 @@ public class MensajeriaManager implements Serializable {
 
     @Getter
     @Setter
-    private List<Mensaje> mensajes;
-
-    @Getter
-    @Setter
-    private Usuario conversacionNueva;
-
-    @Getter
-    @Setter
     private Usuario conversacionSeleccionada;
 
     @Getter
     @Setter
-    private String amigoSelected;
+    private List<Mensaje> mensajesConversacion;
 
     @Getter
     @Setter
@@ -79,20 +75,25 @@ public class MensajeriaManager implements Serializable {
 
     public void seleccionarConversacion(Usuario conversacionSeleccionada) {
         this.conversacionSeleccionada = conversacionSeleccionada;
-
-        List<Mensaje> mensajes = modulosManager.root(Modulo.mensajeria).path(OperacionesMensajeria.EP_MENSAJERIA)
+        mensajesConversacion = modulosManager.root(Modulo.mensajeria).path(OperacionesMensajeria.EP_MENSAJERIA)
                 .path("mensaje").path(AutenticacionManager.emailAutenticado()).path(conversacionSeleccionada.getEmail())
                 .request().get(gTListMensaje);
 
     }
 
-    public void crearConversacionMensaje() {
+    public void onNuevaConversacionSelect(SelectEvent event) {
+        Usuario usuario = (Usuario) event.getObject();
+        if (conversaciones.contains(usuario)) {
+            seleccionarConversacion(usuario);
+        } else {
+            conversaciones.add(usuario);
+            conversacionSeleccionada = usuario;
+        }
+    }
+
+    public void crearMensaje() {
         Mensaje nuevoMensaje = new Mensaje();
-        Date fechaHora = new Date();
-        nuevoMensaje.setContenido(mensaje);
-        nuevoMensaje.setEmailEmisor(AutenticacionManager.emailAutenticado());
-        nuevoMensaje.setEmailReceptor(amigoSelected);
-        nuevoMensaje.setFechaHora(fechaHora);
+
         modulosManager.root(Modulo.mensajeria).path(ModMensajeria.ENDPNT_MENSAJERIA).request()
                 .post(Entity.json(nuevoMensaje));
     }
