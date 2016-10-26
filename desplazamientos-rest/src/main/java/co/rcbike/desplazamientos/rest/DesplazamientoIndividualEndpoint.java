@@ -30,14 +30,18 @@ public class DesplazamientoIndividualEndpoint {
         return "endpoint alive";
     }
 
-    @GET
-    @Path("/listAllWaypointRuta")
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<Waypoint> listAllWaypointRuta() {
-        return service.listWaypointsRuta(new Long(1));
-    }
-    
 	/**
+	 * Lista todos los recorridos individuales 
+	 * 
+	 */
+    @GET
+    @Path("/listTodosViajesIndividuales")
+    @Produces(MediaType.APPLICATION_JSON)
+	public List<Ruta> listTodosViajesIndividuales() {
+    	return service.listTodosViajesIndividuales();
+	}
+
+    /**
 	 * Lista todos los recorridos individuales realizados por un usuario
 	 * 
 	 * @param emailCreador
@@ -57,6 +61,7 @@ public class DesplazamientoIndividualEndpoint {
 	 *            informacion de la ruta a crear
 	 */
     @POST
+    @Path("/guardarViaje")
     @Consumes(MediaType.APPLICATION_JSON)
 	public void guardarViaje(Ruta ruta) {
     	service.guardarViaje(ruta);
@@ -77,5 +82,40 @@ public class DesplazamientoIndividualEndpoint {
 			@QueryParam("longitud") String longitud) {
 		return service.obtenerClima(latitud, longitud);
 	}
+	
+    /**
+     * Lista todos los Waypoints existentes
+     * 
+     */
+	@GET
+	@Path("/listTodosWaypoints")
+	@Produces(MediaType.APPLICATION_JSON)
+    public List<Waypoint> listTodosWaypoints() {
+        return service.listTodosWaypoints();
+    }
+
+    /**
+     * Lista todos las waypoints de una ruta
+     * 
+     * @param idRuta identificador de la ruta
+     */
+	@POST
+	@Path("/listWaypoints")
+	@Produces(MediaType.APPLICATION_JSON)
+    public List<Waypoint> listWaypoints(Long idRuta) {
+        return service.listWaypoints(idRuta);
+    }
+
+    /**
+     * Permite guardar un waypoint de una ruta
+     * 
+     * @param Waypoint Informacion del Waypoint a crear
+     */
+	@POST
+	@Path("/guardarWaypoint")
+	@Consumes(MediaType.APPLICATION_JSON)
+    public void guardarWaypoint(Waypoint configuracion) {
+        service.guardarWaypoint(configuracion);
+    }
 
 }

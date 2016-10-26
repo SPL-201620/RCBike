@@ -13,7 +13,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import co.rcbike.desplazamientos.model.Participante;
 import co.rcbike.desplazamientos.model.Ruta;
+import co.rcbike.desplazamientos.model.Waypoint;
 import co.rcbike.desplazamientos.service.DesplazamientosService;
 
 @Path("/grupal")
@@ -61,25 +63,10 @@ public class DesplazamientoGrupalEndpoint {
 	 * 
 	 */
 	@GET
-	@Path("/listViajesGrupales")
+	@Path("/listTodosViajesGrupales")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Ruta> listViajesGrupales() {
-		return service.listViajesGrupales();
-	}
-
-	/**
-	 * Permite crear un participante en una ruta
-	 * 
-	 * @param idRuta
-	 *            identificador de la ruta
-	 * @param emailParticipante
-	 *            email del usuario participante
-	 */
-	@GET
-	@Path("/guardarParticipante")
-	@Produces(MediaType.APPLICATION_JSON)
-	public void guardarParticipante(@QueryParam("idRuta") Long idRuta, @QueryParam("email") String emailParticipante) {
-		service.guardarParticipante(idRuta, emailParticipante);
+	public List<Ruta> listTodosViajesGrupales() {
+		return service.listTodosViajesGrupales();
 	}
 
 	/**
@@ -89,11 +76,12 @@ public class DesplazamientoGrupalEndpoint {
 	 *            informacion de la ruta a crear
 	 */
 	@POST
+	@Path("/guardarViaje")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void guardarViaje(Ruta ruta) {
 		service.guardarViaje(ruta);
 	}
-	
+
 	/**
 	 * Permite obtener el clima en una latitud y longitud
 	 * 
@@ -105,9 +93,82 @@ public class DesplazamientoGrupalEndpoint {
 	@GET
 	@Path("/obtenerClima")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String obtenerClima(@QueryParam("latitud") String latitud,
-			@QueryParam("longitud") String longitud) {
+	public String obtenerClima(@QueryParam("latitud") String latitud, @QueryParam("longitud") String longitud) {
 		return service.obtenerClima(latitud, longitud);
+	}
+
+	/**
+	 * Lista todos los Waypoints existentes
+	 * 
+	 */
+	@GET
+	@Path("/listTodosWaypoints")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Waypoint> listTodosWaypoints() {
+		return service.listTodosWaypoints();
+	}
+
+	/**
+	 * Lista todos las waypoints de una ruta
+	 * 
+	 * @param idRuta
+	 *            identificador de la ruta
+	 */
+	@POST
+	@Path("/listWaypoints")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Waypoint> listWaypoints(Long idRuta) {
+		return service.listWaypoints(idRuta);
+	}
+
+	/**
+	 * Permite guardar un waypoint de una ruta
+	 * 
+	 * @param Waypoint
+	 *            Informacion del Waypoint a crear
+	 */
+	@POST
+	@Path("/guardarWaypoint")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void guardarWaypoint(Waypoint configuracion) {
+		service.guardarWaypoint(configuracion);
+	}
+
+	/**
+	 * Lista todos los participantes
+	 * 
+	 */
+	@GET
+	@Path("/listTodosParticipantes")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Participante> listTodosParticipantes() {
+		return service.listTodosParticipantes();
+	}
+
+	/**
+	 * Lista todos los participantes de una ruta
+	 * 
+	 * @param idRuta
+	 *            identificador de la ruta
+	 */
+	@POST
+	@Path("/listParticipantes")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Participante> listParticipantes(Long idRuta) {
+		return service.listParticipantes(idRuta);
+	}
+
+	/**
+	 * Permite crear un participante de ruta
+	 * 
+	 * @param participante
+	 *            informacion de la participante de la bicicleta
+	 */
+	@POST
+	@Path("/guardarParticipante")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void guardarParticipante(Participante participante) {
+		service.guardarParticipante(participante);
 	}
 
 }

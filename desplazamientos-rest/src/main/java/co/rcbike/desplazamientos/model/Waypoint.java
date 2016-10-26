@@ -3,12 +3,10 @@ package co.rcbike.desplazamientos.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.validation.constraints.NotNull;
@@ -17,27 +15,28 @@ import javax.xml.bind.annotation.XmlRootElement;
 @SuppressWarnings("serial")
 @Entity
 @XmlRootElement
-@NamedQueries({ @NamedQuery(name = "findByIdRuta", query = "SELECT e FROM Waypoint e WHERE e.ruta.id = :idRuta") })
+@NamedQueries({ @NamedQuery(name = "findAllWaypoints", query = "SELECT w FROM Waypoint w"),
+	@NamedQuery(name = "findWaypointsByIdRuta", query = "SELECT w FROM Waypoint w WHERE w.idRuta = :idRuta") })
 public class Waypoint implements Serializable {
 
-	public static final String SQ_findByIdRuta = "findByIdRuta";
+	public static final String SQ_findAllWaypoints = "findAllWaypoints";
+	public static final String SQ_findWaypointsByIdRuta = "findWaypointsByIdRuta";
 	public static final String SQ_PARAM_ID_RUTA = "idRuta";
 
-	/*No es necesario llenar*/
 	@Id
 	@GeneratedValue
 	private Long id;
 
-	/*No es necesario llenar*/
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ID_RUTA")
-	private Ruta ruta;
+	@NotNull
+	private Long idRuta;
 
 	@NotNull
-	private BigDecimal latitudInicio;
+	@Column(precision = 20, scale = 15)
+	private BigDecimal latitud;
 
 	@NotNull
-	private BigDecimal longitudInicio;
+	@Column(precision = 20, scale = 15)
+	private BigDecimal longitud;
 
 	public Long getId() {
 		return id;
@@ -47,28 +46,28 @@ public class Waypoint implements Serializable {
 		this.id = id;
 	}
 
-	public BigDecimal getLatitudInicio() {
-		return latitudInicio;
+	public BigDecimal getLatitud() {
+		return latitud;
 	}
 
-	public void setLatitudInicio(BigDecimal latitudInicio) {
-		this.latitudInicio = latitudInicio;
+	public void setLatitud(BigDecimal latitudInicio) {
+		this.latitud = latitudInicio;
 	}
 
-	public BigDecimal getLongitudInicio() {
-		return longitudInicio;
+	public BigDecimal getLongitud() {
+		return longitud;
 	}
 
-	public void setLongitudInicio(BigDecimal longitudInicio) {
-		this.longitudInicio = longitudInicio;
+	public void setLongitud(BigDecimal longitudInicio) {
+		this.longitud = longitudInicio;
 	}
 
-	public Ruta getRuta() {
-		return ruta;
+	public Long getIdRuta() {
+		return idRuta;
 	}
 
-	public void setRuta(Ruta ruta) {
-		this.ruta = ruta;
+	public void setRuta(Long idRuta) {
+		this.idRuta = idRuta;
 	}
 
 }

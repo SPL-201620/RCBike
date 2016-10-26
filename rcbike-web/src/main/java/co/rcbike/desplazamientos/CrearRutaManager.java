@@ -102,10 +102,10 @@ public class CrearRutaManager implements Serializable {
         ruta.setDescripcion(descRuta);
         ruta.setTipo(grupal ? Tipo.GRUPAL : Tipo.INDIVIDUAL);
 
-        ruta.setLatitudInicio("" + mapaManager.getOrigen().getLatlng().getLat());
-        ruta.setLongitudInicio("" + mapaManager.getOrigen().getLatlng().getLng());
-        ruta.setLatitudFinal("" + mapaManager.getDestino().getLatlng().getLat());
-        ruta.setLongitudFinal("" + mapaManager.getDestino().getLatlng().getLng());
+        ruta.setLatitudInicio(new BigDecimal(mapaManager.getOrigen().getLatlng().getLat()));
+        ruta.setLongitudInicio(new BigDecimal(mapaManager.getOrigen().getLatlng().getLng()));
+        ruta.setLatitudFinal(new BigDecimal(mapaManager.getDestino().getLatlng().getLat()));
+        ruta.setLongitudFinal(new BigDecimal(mapaManager.getDestino().getLatlng().getLng()));
 
         ruta.setDistancia(new BigDecimal(distancia));
 

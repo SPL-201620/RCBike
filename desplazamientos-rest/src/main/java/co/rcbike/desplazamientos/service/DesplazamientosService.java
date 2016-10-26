@@ -27,6 +27,42 @@ public class DesplazamientosService {
     private static final String OPEN_WEATHER_APP_ID = "8eee44951b419558297ae716a624c9c6";
 
     /**
+     * Optiene un objeto con la informacion del tiempo
+     * 
+     * @param latitud
+     *            latitud geografica de la ruta
+     * @param longitud
+     *            longitud geografica de la ruta
+     * 
+     */
+    public String obtenerClima(String latitud, String longitud) {
+        Response weatherData;
+        Client client = ClientBuilder.newClient();
+        weatherData = client.target("http://api.openweathermap.org/data/2.5/weather").queryParam("lat", latitud)
+                .queryParam("lon", longitud).queryParam("lang", OPEN_WEATHER_LANG_ESPANOL)
+                .queryParam("appid", OPEN_WEATHER_APP_ID).request(MediaType.APPLICATION_JSON).get();
+
+        String jsonString = weatherData.readEntity(String.class);
+
+        int inicio = jsonString.indexOf("\"temp\":") + 7;
+        int fin = jsonString.indexOf(",\"pressure\"");
+
+        float kelvin = Float.parseFloat(jsonString.substring(inicio, fin));
+        // Kelvin to Degree Celsius Conversion
+        float celsius = kelvin - 273.15F;
+        System.out.println("Celsius: " + celsius);
+
+        int inicioDescripcion = jsonString.indexOf("\"description\":\"") + 15;
+        int finDescripcion = jsonString.indexOf("\",\"icon\"");
+
+        int inicioPais = jsonString.indexOf("\"country\":\"") + 11;
+        int finPais = jsonString.indexOf("\",\"sunrise\"");
+
+        return celsius + " ºC, " + jsonString.substring(inicioDescripcion, finDescripcion) + ", "
+                + jsonString.substring(inicioPais, finPais) + ".";
+    }
+
+    /**
      * Velociadad promedio bicicleta m/h
      */
     private static final BigDecimal VEL_PROMEDIO_BICI = new BigDecimal("21430");
@@ -167,12 +203,22 @@ public class DesplazamientosService {
      * Lista todos los recorridos grupales
      * 
      */
-    public List<Ruta> listViajesGrupales() {
+    public List<Ruta> listTodosViajesGrupales() {
         TypedQuery<Ruta> q = em.createNamedQuery(Ruta.SQ_findByTipo, Ruta.class);
         q.setParameter(Ruta.SQ_PARAM_TIPO, Tipo.GRUPAL);
         return q.getResultList();
     }
 
+    /**
+     * Lista todos los recorridos individuales 
+     * 
+     */
+    public List<Ruta> listTodosViajesIndividuales() {
+        TypedQuery<Ruta> q = em.createNamedQuery(Ruta.SQ_findByTipo, Ruta.class);
+        q.setParameter(Ruta.SQ_PARAM_TIPO, Tipo.INDIVIDUAL);
+        return q.getResultList();
+    }
+    
     /**
      * Lista todos los recorridos individuales realizados por un usuario
      * 
@@ -185,80 +231,72 @@ public class DesplazamientosService {
         q.setParameter(Ruta.SQ_PARAM_EMAIL_CREADOR, emailCreador);
         return q.getResultList();
     }
-
+    
     /**
-     * Permite crear un participante en una ruta
+     * Permite guardar una ruta
      * 
-     * @param idRuta
-     *            identificador de la ruta
-     * @param emailParticipante
-     *            email del usuario participante
-     */
-    public void guardarParticipante(Long idRuta, String emailParticipante) {
-        java.lang.System.out.print("\n El Email: " + emailParticipante);
-        java.lang.System.out.print("\n El idRuta: " + idRuta + "\n");
-        Participante participante = new Participante();
-        participante.setRuta(em.getReference(Ruta.class, idRuta));
-        participante.setEmail(emailParticipante);
-        em.persist(participante);
-    }
-
-    /**
-     * Permite guardar un recorrido individual o crear un recorrido organizado
-     * 
-     * @param ruta
-     *            informacion de la ruta a crear
+     * @param ruta Informacion de la ruta a crear
      */
     public void guardarViaje(Ruta ruta) {
-        ruta.setCalorias(200);
         em.persist(ruta);
     }
 
     /**
-     * TEMP Lista todos los Waypoints de una Ruta
+     * Lista todos los Waypoints existentes
      * 
-     * @param idRuta
-     *            identificador de la ruta
      */
-    public List<Waypoint> listWaypointsRuta(Long idRuta) {
-        TypedQuery<Waypoint> q = em.createNamedQuery(Waypoint.SQ_findByIdRuta, Waypoint.class);
+    public List<Waypoint> listTodosWaypoints() {
+        TypedQuery<Waypoint> q = em.createNamedQuery(Waypoint.SQ_findAllWaypoints, Waypoint.class);
+        return q.getResultList();
+    }
+
+    /**
+     * Lista todos las waypoints de una ruta
+     * 
+     * @param idRuta identificador de la ruta
+     */
+    public List<Waypoint> listWaypoints(Long idRuta) {
+        TypedQuery<Waypoint> q = em.createNamedQuery(Waypoint.SQ_findWaypointsByIdRuta, Waypoint.class);
         q.setParameter(Waypoint.SQ_PARAM_ID_RUTA, idRuta);
         return q.getResultList();
     }
 
     /**
-     * Optiene un objeto con la informacion del tiempo
+     * Permite guardar un waypoint de una ruta
      * 
-     * @param latitud
-     *            latitud geografica de la ruta
-     * @param longitud
-     *            longitud geografica de la ruta
+     * @param Waypoint Informacion del Waypoint a crear
+     */
+    public void guardarWaypoint(Waypoint configuracion) {
+        em.persist(configuracion);
+    }
+
+    /**
+     * Lista todos los participantes
      * 
      */
-    public String obtenerClima(String latitud, String longitud) {
-        Response weatherData;
-        Client client = ClientBuilder.newClient();
-        weatherData = client.target("http://api.openweathermap.org/data/2.5/weather").queryParam("lat", latitud)
-                .queryParam("lon", longitud).queryParam("lang", OPEN_WEATHER_LANG_ESPANOL)
-                .queryParam("appid", OPEN_WEATHER_APP_ID).request(MediaType.APPLICATION_JSON).get();
-
-        String jsonString = weatherData.readEntity(String.class);
-
-        int inicio = jsonString.indexOf("\"temp\":") + 7;
-        int fin = jsonString.indexOf(",\"pressure\"");
-
-        float kelvin = Float.parseFloat(jsonString.substring(inicio, fin));
-        // Kelvin to Degree Celsius Conversion
-        float celsius = kelvin - 273.15F;
-        System.out.println("Celsius: " + celsius);
-
-        int inicioDescripcion = jsonString.indexOf("\"description\":\"") + 15;
-        int finDescripcion = jsonString.indexOf("\",\"icon\"");
-
-        int inicioPais = jsonString.indexOf("\"country\":\"") + 11;
-        int finPais = jsonString.indexOf("\",\"sunrise\"");
-
-        return celsius + " ºC, " + jsonString.substring(inicioDescripcion, finDescripcion) + ", "
-                + jsonString.substring(inicioPais, finPais) + ".";
+    public List<Participante> listTodosParticipantes() {
+        TypedQuery<Participante> q = em.createNamedQuery(Participante.SQ_findAllParticipantes, Participante.class);
+        return q.getResultList();
     }
+
+    /**
+     * Lista todos los participantes de una ruta
+     * 
+     * @param idRuta identificador de la ruta
+     */
+    public List<Participante> listParticipantes(Long idRuta) {
+        TypedQuery<Participante> q = em.createNamedQuery(Participante.SQ_findParticipantesByIdRuta, Participante.class);
+        q.setParameter(Participante.SQ_PARAM_ID_RUTA, idRuta);
+        return q.getResultList();
+    }
+
+    /**
+     * Permite crear un participante de ruta 
+     * 
+     * @param participante informacion de la participante de la bicicleta
+     */
+    public void guardarParticipante(Participante participante) {
+        em.persist(participante);
+    }
+
 }

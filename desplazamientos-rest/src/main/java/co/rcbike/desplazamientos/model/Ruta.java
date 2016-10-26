@@ -3,18 +3,16 @@ package co.rcbike.desplazamientos.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -74,16 +72,20 @@ public class Ruta implements Serializable {
     private Tipo tipo;
 
     @NotNull
-    private String latitudInicio;
+    @Column(precision = 20, scale = 15)
+	private BigDecimal latitudInicio;
 
     @NotNull
-    private String longitudInicio;
+    @Column(precision = 20, scale = 15)
+	private BigDecimal longitudInicio;
 
     @NotNull
-    private String latitudFinal;
+    @Column(precision = 20, scale = 15)
+	private BigDecimal latitudFinal;
 
     @NotNull
-    private String longitudFinal;
+    @Column(precision = 20, scale = 15)
+	private BigDecimal longitudFinal;
 
     @NotNull
     private BigDecimal distancia;
@@ -112,12 +114,6 @@ public class Ruta implements Serializable {
 
     private String dias;
 
-    @OneToMany(mappedBy = "ruta", fetch = FetchType.EAGER)
-    private Set<Waypoint> waypoints;
-
-    @OneToMany(mappedBy = "ruta", fetch = FetchType.EAGER)
-    private Set<Participante> participantes;
-
     public Long getId() {
         return id;
     }
@@ -142,35 +138,35 @@ public class Ruta implements Serializable {
         this.tipo = tipo;
     }
 
-    public String getLatitudInicio() {
+    public BigDecimal getLatitudInicio() {
         return latitudInicio;
     }
 
-    public void setLatitudInicio(String latitudInicio) {
+    public void setLatitudInicio(BigDecimal latitudInicio) {
         this.latitudInicio = latitudInicio;
     }
 
-    public String getLongitudInicio() {
+    public BigDecimal getLongitudInicio() {
         return longitudInicio;
     }
 
-    public void setLongitudInicio(String longitudInicio) {
+    public void setLongitudInicio(BigDecimal longitudInicio) {
         this.longitudInicio = longitudInicio;
     }
 
-    public String getLatitudFinal() {
+    public BigDecimal getLatitudFinal() {
         return latitudFinal;
     }
 
-    public void setLatitudFinal(String latitudFinal) {
+    public void setLatitudFinal(BigDecimal latitudFinal) {
         this.latitudFinal = latitudFinal;
     }
 
-    public String getLongitudFinal() {
+    public BigDecimal getLongitudFinal() {
         return longitudFinal;
     }
 
-    public void setLongitudFinal(String longitudFinal) {
+    public void setLongitudFinal(BigDecimal longitudFinal) {
         this.longitudFinal = longitudFinal;
     }
 
@@ -228,22 +224,6 @@ public class Ruta implements Serializable {
 
     public void setDias(String dias) {
         this.dias = dias;
-    }
-
-    public Set<Waypoint> getWaypoints() {
-        return waypoints;
-    }
-
-    public void setWaypoints(Set<Waypoint> waypoints) {
-        this.waypoints = waypoints;
-    }
-
-    public Set<Participante> getParticipantes() {
-        return participantes;
-    }
-
-    public void setParticipantes(Set<Participante> participantes) {
-        this.participantes = participantes;
     }
 
     public String getNombre() {
