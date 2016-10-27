@@ -14,7 +14,7 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 
 import co.rcbike.autenticacion.AutenticacionManager;
-import co.rcbike.desplazamientos.model.Ruta;
+import co.rcbike.desplazamientos.model.RutaWeb;
 import co.rcbike.desplazamientos.model.Tipo;
 import co.rcbike.gui.ModulosManager;
 import co.rcbike.gui.ModulosManager.ModDesplazamientos;
@@ -88,7 +88,7 @@ public class CrearRutaManager implements Serializable {
     public String crearRuta() {
         WebTarget root = modulosManager.root(Modulo.desplazamientos);
 
-        Ruta ruta = new Ruta();
+        RutaWeb ruta = new RutaWeb();
         if (grupal) {
             root = root.path(ModDesplazamientos.ENDPNT_GRUPAL);
             ruta.setFecha(fechaHora == null ? new Date() : fechaHora);

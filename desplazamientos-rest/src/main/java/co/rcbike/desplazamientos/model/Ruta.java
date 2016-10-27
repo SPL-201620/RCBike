@@ -1,57 +1,24 @@
 package co.rcbike.desplazamientos.model;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
-import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlRootElement;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
-@SuppressWarnings("serial")
-@Entity
-@XmlRootElement
-@NamedQueries({
-        @NamedQuery(name = "findByTipoAndCreador", query = "SELECT e FROM Ruta e WHERE e.emailCreador = :emailCreador AND e.tipo = :tipo"),
-        @NamedQuery(name = "findByTipo", query = "SELECT e FROM Ruta e WHERE e.tipo = :tipo"),
-        @NamedQuery(name = "findByTipoAndFrecuente", query = "SELECT e FROM Ruta e WHERE e.tipo = :tipo and e.frecuente = :frecuente"),
-        @NamedQuery(name = "findByTipoAndFechaAndFrecuente", query = "SELECT e FROM Ruta e WHERE e.tipo = :tipo and e.fecha >= :fecha and e.frecuente = :frecuente"),
-        @NamedQuery(name = "findByTipoAndFrecuenteAndPunto", query = "SELECT e FROM Ruta e WHERE e.tipo = :tipo and e.frecuente = :frecuente "
-                + "and e.latitudInicio >= :latitudInicio and e.latitudInicio <= :latitudFinal "
-                + "and e.longitudInicio >= :longitudInicio and e.longitudInicio <= :longitudFinal"),
-        @NamedQuery(name = "findByTipoAndFechaAndFrecuenteAndPunto", query = "SELECT e FROM Ruta e WHERE e.tipo = :tipo and e.fecha >= :fecha and e.frecuente = :frecuente "
-                + "and e.latitudInicio >= :latitudInicio and e.latitudInicio <= :latitudFinal "
-                + "and e.longitudInicio >= :longitudInicio and e.longitudInicio <= :longitudFinal")})
-
-public class Ruta implements Serializable {
-
-    public static final String SQ_findByTipoAndCreador = "findByTipoAndCreador";
-    public static final String SQ_findByTipo = "findByTipo";
-    public static final String SQ_findByTipoAndFrecuente = "findByTipoAndFrecuente";
-    public static final String SQ_findByTipoAndFechaAndFrecuente = "findByTipoAndFechaAndFrecuente";
-    public static final String SQ_findByTipoAndFrecuenteAndPunto = "findByTipoAndFrecuenteAndPunto";
-    public static final String SQ_findByTipoAndFechaAndFrecuenteAndPunto = "findByTipoAndFechaAndFrecuenteAndPunto";
-    public static final String SQ_PARAM_EMAIL_CREADOR = "emailCreador";
-    public static final String SQ_PARAM_TIPO = "tipo";
-    public static final String SQ_PARAM_FECHA = "fecha";
-    public static final String SQ_PARAM_FRECUENTE = "frecuente";
-    public static final String SQ_PARAM_LATITUD_INICIO = "latitudInicio";
-    public static final String SQ_PARAM_LATITUD_FINAL = "latitudFinal";
-    public static final String SQ_PARAM_LONGITUD_INICIO = "longitudInicio";
-    public static final String SQ_PARAM_LONGITUD_FINAL = "longitudFinal";
+@MappedSuperclass
+public abstract class Ruta {
 
     @Id
     @GeneratedValue

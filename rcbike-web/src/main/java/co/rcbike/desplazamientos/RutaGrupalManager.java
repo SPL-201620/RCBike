@@ -9,7 +9,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 import co.rcbike.autenticacion.AutenticacionManager;
-import co.rcbike.desplazamientos.model.Ruta;
+import co.rcbike.desplazamientos.model.RutaWeb;
 import co.rcbike.gui.ModulosManager;
 import co.rcbike.gui.ModulosManager.Modulo;
 import eu.agilejava.snoop.client.SnoopServiceClient;
@@ -24,7 +24,7 @@ import lombok.extern.jbosslog.JBossLog;
 public class RutaGrupalManager implements Serializable {
 	@Getter
     @Setter
-    private List<Ruta> rutas;
+    private List<RutaWeb> rutas;
 	
 	@Getter
     @Setter
@@ -32,7 +32,7 @@ public class RutaGrupalManager implements Serializable {
 	
 	@Getter
 	@Setter
-	private Ruta ruta;
+	private RutaWeb ruta;
 	
 	@Getter
     @Setter

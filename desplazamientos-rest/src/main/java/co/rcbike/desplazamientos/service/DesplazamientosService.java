@@ -14,10 +14,10 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import co.rcbike.desplazamientos.model.Participante;
-import co.rcbike.desplazamientos.model.Ruta;
+import co.rcbike.desplazamientos.model.ParticipanteJpa;
+import co.rcbike.desplazamientos.model.RutaJpa;
 import co.rcbike.desplazamientos.model.Tipo;
-import co.rcbike.desplazamientos.model.Waypoint;
+import co.rcbike.desplazamientos.model.WaypointJpa;
 
 @Stateless
 public class DesplazamientosService {
@@ -25,6 +25,17 @@ public class DesplazamientosService {
     private static final String OPEN_WEATHER_LANG_ESPANOL = "es";
 
     private static final String OPEN_WEATHER_APP_ID = "8eee44951b419558297ae716a624c9c6";
+
+//    public void guardarPieza(Long idConfiguracion, TipoPiezaBicicleta tipo, String descripcion) {
+//    	log.info("\n La descripcion: " + descripcion);
+//    	log.info("\n El tipo: " + tipo);
+//    	log.info("\n El idConfiguracion: " + idConfiguracion + "\n");
+//        PiezaBicicleta pieza = new PiezaBicicleta();
+//        pieza.setConfiguracion(em.getReference(ConfiguracionBicicleta.class, idConfiguracion));
+//        pieza.setTipo(tipo);
+//        pieza.setDescripcion(descripcion);
+//        em.persist(pieza);
+//    }
 
     /**
      * Optiene un objeto con la informacion del tiempo
@@ -85,10 +96,10 @@ public class DesplazamientosService {
      * Lista todos los recorridos grupales frecuentes
      * 
      */
-    private List<Ruta> listViajesGrupalesFrecuentes() {
-        TypedQuery<Ruta> q = em.createNamedQuery(Ruta.SQ_findByTipoAndFrecuente, Ruta.class);
-        q.setParameter(Ruta.SQ_PARAM_TIPO, Tipo.GRUPAL);
-        q.setParameter(Ruta.SQ_PARAM_FRECUENTE, true);
+    private List<RutaJpa> listViajesGrupalesFrecuentes() {
+        TypedQuery<RutaJpa> q = em.createNamedQuery(RutaJpa.SQ_findByTipoAndFrecuente, RutaJpa.class);
+        q.setParameter(RutaJpa.SQ_PARAM_TIPO, Tipo.GRUPAL);
+        q.setParameter(RutaJpa.SQ_PARAM_FRECUENTE, true);
         return q.getResultList();
     }
 
@@ -96,16 +107,16 @@ public class DesplazamientosService {
      * Lista todos los recorridos grupales no frecuentes no vencidos
      * 
      */
-    private List<Ruta> listViajesGrupalesNoFrecuentesNoVencidos() {
+    private List<RutaJpa> listViajesGrupalesNoFrecuentesNoVencidos() {
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.HOUR_OF_DAY, 0);
         cal.set(Calendar.MINUTE, 0);
         cal.set(Calendar.SECOND, 0);
         cal.set(Calendar.MILLISECOND, 0);
-        TypedQuery<Ruta> q = em.createNamedQuery(Ruta.SQ_findByTipoAndFechaAndFrecuente, Ruta.class);
-        q.setParameter(Ruta.SQ_PARAM_TIPO, Tipo.GRUPAL);
-        q.setParameter(Ruta.SQ_PARAM_FECHA, cal.getTime());
-        q.setParameter(Ruta.SQ_PARAM_FRECUENTE, false);
+        TypedQuery<RutaJpa> q = em.createNamedQuery(RutaJpa.SQ_findByTipoAndFechaAndFrecuente, RutaJpa.class);
+        q.setParameter(RutaJpa.SQ_PARAM_TIPO, Tipo.GRUPAL);
+        q.setParameter(RutaJpa.SQ_PARAM_FECHA, cal.getTime());
+        q.setParameter(RutaJpa.SQ_PARAM_FRECUENTE, false);
         return q.getResultList();
     }
 
@@ -113,8 +124,8 @@ public class DesplazamientosService {
      * Lista todos los recorridos grupales no vencidos
      * 
      */
-    public List<Ruta> listViajesGrupalesNoVencidos() {
-        List<Ruta> result = new ArrayList<Ruta>();
+    public List<RutaJpa> listViajesGrupalesNoVencidos() {
+        List<RutaJpa> result = new ArrayList<RutaJpa>();
         result.addAll(listViajesGrupalesFrecuentes());
         result.addAll(listViajesGrupalesNoFrecuentesNoVencidos());
         return result;
@@ -133,15 +144,15 @@ public class DesplazamientosService {
      * @param longitud
      *            longitud Final de la ruta
      */
-    private List<Ruta> listViajesGrupalesFrecuentesPunto(BigDecimal latitudInicio, BigDecimal latitudFinal,
+    private List<RutaJpa> listViajesGrupalesFrecuentesPunto(BigDecimal latitudInicio, BigDecimal latitudFinal,
             BigDecimal longitudInicio, BigDecimal longitudFinal) {
-        TypedQuery<Ruta> q = em.createNamedQuery(Ruta.SQ_findByTipoAndFrecuenteAndPunto, Ruta.class);
-        q.setParameter(Ruta.SQ_PARAM_TIPO, Tipo.GRUPAL);
-        q.setParameter(Ruta.SQ_PARAM_FRECUENTE, true);
-        q.setParameter(Ruta.SQ_PARAM_LATITUD_INICIO, latitudInicio);
-        q.setParameter(Ruta.SQ_PARAM_LATITUD_FINAL, latitudFinal);
-        q.setParameter(Ruta.SQ_PARAM_LONGITUD_INICIO, longitudInicio);
-        q.setParameter(Ruta.SQ_PARAM_LONGITUD_FINAL, longitudFinal);
+        TypedQuery<RutaJpa> q = em.createNamedQuery(RutaJpa.SQ_findByTipoAndFrecuenteAndPunto, RutaJpa.class);
+        q.setParameter(RutaJpa.SQ_PARAM_TIPO, Tipo.GRUPAL);
+        q.setParameter(RutaJpa.SQ_PARAM_FRECUENTE, true);
+        q.setParameter(RutaJpa.SQ_PARAM_LATITUD_INICIO, latitudInicio);
+        q.setParameter(RutaJpa.SQ_PARAM_LATITUD_FINAL, latitudFinal);
+        q.setParameter(RutaJpa.SQ_PARAM_LONGITUD_INICIO, longitudInicio);
+        q.setParameter(RutaJpa.SQ_PARAM_LONGITUD_FINAL, longitudFinal);
         return q.getResultList();
     }
 
@@ -159,21 +170,21 @@ public class DesplazamientosService {
      *            longitud Final de la ruta
      * 
      */
-    private List<Ruta> listViajesGrupalesNoFrecuentesNoVencidosPunto(BigDecimal latitudInicio, BigDecimal latitudFinal,
+    private List<RutaJpa> listViajesGrupalesNoFrecuentesNoVencidosPunto(BigDecimal latitudInicio, BigDecimal latitudFinal,
             BigDecimal longitudInicio, BigDecimal longitudFinal) {
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.HOUR_OF_DAY, 0);
         cal.set(Calendar.MINUTE, 0);
         cal.set(Calendar.SECOND, 0);
         cal.set(Calendar.MILLISECOND, 0);
-        TypedQuery<Ruta> q = em.createNamedQuery(Ruta.SQ_findByTipoAndFechaAndFrecuenteAndPunto, Ruta.class);
-        q.setParameter(Ruta.SQ_PARAM_TIPO, Tipo.GRUPAL);
-        q.setParameter(Ruta.SQ_PARAM_FECHA, cal.getTime());
-        q.setParameter(Ruta.SQ_PARAM_FRECUENTE, false);
-        q.setParameter(Ruta.SQ_PARAM_LATITUD_INICIO, latitudInicio);
-        q.setParameter(Ruta.SQ_PARAM_LATITUD_FINAL, latitudFinal);
-        q.setParameter(Ruta.SQ_PARAM_LONGITUD_INICIO, longitudInicio);
-        q.setParameter(Ruta.SQ_PARAM_LONGITUD_FINAL, longitudFinal);
+        TypedQuery<RutaJpa> q = em.createNamedQuery(RutaJpa.SQ_findByTipoAndFechaAndFrecuenteAndPunto, RutaJpa.class);
+        q.setParameter(RutaJpa.SQ_PARAM_TIPO, Tipo.GRUPAL);
+        q.setParameter(RutaJpa.SQ_PARAM_FECHA, cal.getTime());
+        q.setParameter(RutaJpa.SQ_PARAM_FRECUENTE, false);
+        q.setParameter(RutaJpa.SQ_PARAM_LATITUD_INICIO, latitudInicio);
+        q.setParameter(RutaJpa.SQ_PARAM_LATITUD_FINAL, latitudFinal);
+        q.setParameter(RutaJpa.SQ_PARAM_LONGITUD_INICIO, longitudInicio);
+        q.setParameter(RutaJpa.SQ_PARAM_LONGITUD_FINAL, longitudFinal);
         return q.getResultList();
     }
 
@@ -187,12 +198,12 @@ public class DesplazamientosService {
      *            longitud geografica de la ruta
      * 
      */
-    public List<Ruta> listViajesGrupalesCercanos(BigDecimal latitud, BigDecimal longitud) {
+    public List<RutaJpa> listViajesGrupalesCercanos(BigDecimal latitud, BigDecimal longitud) {
         BigDecimal latitudInicio = latitud.subtract(DISTANCIA_RUTA_CERCANA);
         BigDecimal latitudFinal = latitud.add(DISTANCIA_RUTA_CERCANA);
         BigDecimal longitudInicio = longitud.subtract(DISTANCIA_RUTA_CERCANA);
         BigDecimal longitudFinal = longitud.add(DISTANCIA_RUTA_CERCANA);
-        List<Ruta> result = new ArrayList<Ruta>();
+        List<RutaJpa> result = new ArrayList<RutaJpa>();
         result.addAll(listViajesGrupalesFrecuentesPunto(latitudInicio, latitudFinal, longitudInicio, longitudFinal));
         result.addAll(listViajesGrupalesNoFrecuentesNoVencidosPunto(latitudInicio, latitudFinal, longitudInicio,
                 longitudFinal));
@@ -203,9 +214,9 @@ public class DesplazamientosService {
      * Lista todos los recorridos grupales
      * 
      */
-    public List<Ruta> listTodosViajesGrupales() {
-        TypedQuery<Ruta> q = em.createNamedQuery(Ruta.SQ_findByTipo, Ruta.class);
-        q.setParameter(Ruta.SQ_PARAM_TIPO, Tipo.GRUPAL);
+    public List<RutaJpa> listTodosViajesGrupales() {
+        TypedQuery<RutaJpa> q = em.createNamedQuery(RutaJpa.SQ_findByTipo, RutaJpa.class);
+        q.setParameter(RutaJpa.SQ_PARAM_TIPO, Tipo.GRUPAL);
         return q.getResultList();
     }
 
@@ -213,9 +224,9 @@ public class DesplazamientosService {
      * Lista todos los recorridos individuales 
      * 
      */
-    public List<Ruta> listTodosViajesIndividuales() {
-        TypedQuery<Ruta> q = em.createNamedQuery(Ruta.SQ_findByTipo, Ruta.class);
-        q.setParameter(Ruta.SQ_PARAM_TIPO, Tipo.INDIVIDUAL);
+    public List<RutaJpa> listTodosViajesIndividuales() {
+        TypedQuery<RutaJpa> q = em.createNamedQuery(RutaJpa.SQ_findByTipo, RutaJpa.class);
+        q.setParameter(RutaJpa.SQ_PARAM_TIPO, Tipo.INDIVIDUAL);
         return q.getResultList();
     }
     
@@ -225,10 +236,10 @@ public class DesplazamientosService {
      * @param emailCreador
      *            email del usuario creador
      */
-    public List<Ruta> listViajesIndividuales(String emailCreador) {
-        TypedQuery<Ruta> q = em.createNamedQuery(Ruta.SQ_findByTipoAndCreador, Ruta.class);
-        q.setParameter(Ruta.SQ_PARAM_TIPO, Tipo.INDIVIDUAL);
-        q.setParameter(Ruta.SQ_PARAM_EMAIL_CREADOR, emailCreador);
+    public List<RutaJpa> listViajesIndividuales(String emailCreador) {
+        TypedQuery<RutaJpa> q = em.createNamedQuery(RutaJpa.SQ_findByTipoAndCreador, RutaJpa.class);
+        q.setParameter(RutaJpa.SQ_PARAM_TIPO, Tipo.INDIVIDUAL);
+        q.setParameter(RutaJpa.SQ_PARAM_EMAIL_CREADOR, emailCreador);
         return q.getResultList();
     }
     
@@ -237,16 +248,17 @@ public class DesplazamientosService {
      * 
      * @param ruta Informacion de la ruta a crear
      */
-    public void guardarViaje(Ruta ruta) {
+    public Long guardarViaje(RutaJpa ruta) {
         em.persist(ruta);
+        return ruta.getId();
     }
 
     /**
      * Lista todos los Waypoints existentes
      * 
      */
-    public List<Waypoint> listTodosWaypoints() {
-        TypedQuery<Waypoint> q = em.createNamedQuery(Waypoint.SQ_findAllWaypoints, Waypoint.class);
+    public List<WaypointJpa> listTodosWaypoints() {
+        TypedQuery<WaypointJpa> q = em.createNamedQuery(WaypointJpa.SQ_findAllWaypoints, WaypointJpa.class);
         return q.getResultList();
     }
 
@@ -255,27 +267,28 @@ public class DesplazamientosService {
      * 
      * @param idRuta identificador de la ruta
      */
-    public List<Waypoint> listWaypoints(Long idRuta) {
-        TypedQuery<Waypoint> q = em.createNamedQuery(Waypoint.SQ_findWaypointsByIdRuta, Waypoint.class);
-        q.setParameter(Waypoint.SQ_PARAM_ID_RUTA, idRuta);
+    public List<WaypointJpa> listWaypoints(Long idRuta) {
+        TypedQuery<WaypointJpa> q = em.createNamedQuery(WaypointJpa.SQ_findWaypointsByIdRuta, WaypointJpa.class);
+        q.setParameter(WaypointJpa.SQ_PARAM_ID_RUTA, idRuta);
         return q.getResultList();
     }
 
     /**
      * Permite guardar un waypoint de una ruta
      * 
-     * @param Waypoint Informacion del Waypoint a crear
+     * @param WaypointJpa Informacion del WaypointJpa a crear
      */
-    public void guardarWaypoint(Waypoint configuracion) {
+    public Long guardarWaypoint(WaypointJpa configuracion) {
         em.persist(configuracion);
+        return configuracion.getId();
     }
 
     /**
      * Lista todos los participantes
      * 
      */
-    public List<Participante> listTodosParticipantes() {
-        TypedQuery<Participante> q = em.createNamedQuery(Participante.SQ_findAllParticipantes, Participante.class);
+    public List<ParticipanteJpa> listTodosParticipantes() {
+        TypedQuery<ParticipanteJpa> q = em.createNamedQuery(ParticipanteJpa.SQ_findAllParticipantes, ParticipanteJpa.class);
         return q.getResultList();
     }
 
@@ -284,9 +297,9 @@ public class DesplazamientosService {
      * 
      * @param idRuta identificador de la ruta
      */
-    public List<Participante> listParticipantes(Long idRuta) {
-        TypedQuery<Participante> q = em.createNamedQuery(Participante.SQ_findParticipantesByIdRuta, Participante.class);
-        q.setParameter(Participante.SQ_PARAM_ID_RUTA, idRuta);
+    public List<ParticipanteJpa> listParticipantes(Long idRuta) {
+        TypedQuery<ParticipanteJpa> q = em.createNamedQuery(ParticipanteJpa.SQ_findParticipantesByIdRuta, ParticipanteJpa.class);
+        q.setParameter(ParticipanteJpa.SQ_PARAM_ID_RUTA, idRuta);
         return q.getResultList();
     }
 
@@ -295,8 +308,9 @@ public class DesplazamientosService {
      * 
      * @param participante informacion de la participante de la bicicleta
      */
-    public void guardarParticipante(Participante participante) {
+    public Long guardarParticipante(ParticipanteJpa participante) {
         em.persist(participante);
+        return participante.getId();
     }
 
 }

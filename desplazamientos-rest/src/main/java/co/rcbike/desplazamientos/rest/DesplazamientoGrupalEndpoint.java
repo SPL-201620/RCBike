@@ -13,9 +13,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-import co.rcbike.desplazamientos.model.Participante;
-import co.rcbike.desplazamientos.model.Ruta;
-import co.rcbike.desplazamientos.model.Waypoint;
+import co.rcbike.desplazamientos.model.ParticipanteWeb;
+import co.rcbike.desplazamientos.model.RutaWeb;
+import co.rcbike.desplazamientos.model.TransformadorDesplazamientos;
+import co.rcbike.desplazamientos.model.WaypointWeb;
 import co.rcbike.desplazamientos.service.DesplazamientosService;
 
 @Path("/grupal")
@@ -39,8 +40,8 @@ public class DesplazamientoGrupalEndpoint {
 	@GET
 	@Path("/listViajesGrupalesNoVencidos")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Ruta> listViajesGrupalesNoVencidos() {
-		return service.listViajesGrupalesNoVencidos();
+	public List<RutaWeb> listViajesGrupalesNoVencidos() {
+		return TransformadorDesplazamientos.toListRutaWeb(service.listViajesGrupalesNoVencidos());
 	}
 
 	/**
@@ -53,9 +54,9 @@ public class DesplazamientoGrupalEndpoint {
 	@GET
 	@Path("/listViajesGrupalesCercanos")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Ruta> listViajesGrupalesCercanos(@QueryParam("latitud") BigDecimal latitud,
+	public List<RutaWeb> listViajesGrupalesCercanos(@QueryParam("latitud") BigDecimal latitud,
 			@QueryParam("longitud") BigDecimal longitud) {
-		return service.listViajesGrupalesCercanos(latitud, longitud);
+		return TransformadorDesplazamientos.toListRutaWeb(service.listViajesGrupalesCercanos(latitud, longitud));
 	}
 
 	/**
@@ -65,8 +66,8 @@ public class DesplazamientoGrupalEndpoint {
 	@GET
 	@Path("/listTodosViajesGrupales")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Ruta> listTodosViajesGrupales() {
-		return service.listTodosViajesGrupales();
+	public List<RutaWeb> listTodosViajesGrupales() {
+		return TransformadorDesplazamientos.toListRutaWeb(service.listTodosViajesGrupales());
 	}
 
 	/**
@@ -78,8 +79,9 @@ public class DesplazamientoGrupalEndpoint {
 	@POST
 	@Path("/guardarViaje")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void guardarViaje(Ruta ruta) {
-		service.guardarViaje(ruta);
+	@Produces(MediaType.APPLICATION_JSON)
+	public Long guardarViaje(RutaWeb ruta) {
+		return service.guardarViaje(TransformadorDesplazamientos.toRutaJpa(ruta));
 	}
 
 	/**
@@ -104,8 +106,8 @@ public class DesplazamientoGrupalEndpoint {
 	@GET
 	@Path("/listTodosWaypoints")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Waypoint> listTodosWaypoints() {
-		return service.listTodosWaypoints();
+	public List<WaypointWeb> listTodosWaypoints() {
+		return TransformadorDesplazamientos.toListWaypointWeb(service.listTodosWaypoints());
 	}
 
 	/**
@@ -117,21 +119,22 @@ public class DesplazamientoGrupalEndpoint {
 	@POST
 	@Path("/listWaypoints")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Waypoint> listWaypoints(Long idRuta) {
-		return service.listWaypoints(idRuta);
+	public List<WaypointWeb> listWaypoints(Long idRuta) {
+		return TransformadorDesplazamientos.toListWaypointWeb(service.listWaypoints(idRuta));
 	}
 
 	/**
 	 * Permite guardar un waypoint de una ruta
 	 * 
-	 * @param Waypoint
-	 *            Informacion del Waypoint a crear
+	 * @param WaypointWeb
+	 *            Informacion del WaypointWeb a crear
 	 */
 	@POST
 	@Path("/guardarWaypoint")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void guardarWaypoint(Waypoint configuracion) {
-		service.guardarWaypoint(configuracion);
+	@Produces(MediaType.APPLICATION_JSON)
+	public Long guardarWaypoint(WaypointWeb waypoint) {
+		return service.guardarWaypoint(TransformadorDesplazamientos.toWaypointJpa(waypoint));
 	}
 
 	/**
@@ -141,8 +144,8 @@ public class DesplazamientoGrupalEndpoint {
 	@GET
 	@Path("/listTodosParticipantes")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Participante> listTodosParticipantes() {
-		return service.listTodosParticipantes();
+	public List<ParticipanteWeb> listTodosParticipantes() {
+		return TransformadorDesplazamientos.toListParticipanteWeb(service.listTodosParticipantes());
 	}
 
 	/**
@@ -154,8 +157,8 @@ public class DesplazamientoGrupalEndpoint {
 	@POST
 	@Path("/listParticipantes")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Participante> listParticipantes(Long idRuta) {
-		return service.listParticipantes(idRuta);
+	public List<ParticipanteWeb> listParticipantes(Long idRuta) {
+		return TransformadorDesplazamientos.toListParticipanteWeb(service.listParticipantes(idRuta));
 	}
 
 	/**
@@ -167,8 +170,9 @@ public class DesplazamientoGrupalEndpoint {
 	@POST
 	@Path("/guardarParticipante")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void guardarParticipante(Participante participante) {
-		service.guardarParticipante(participante);
+	@Produces(MediaType.APPLICATION_JSON)
+	public Long guardarParticipante(ParticipanteWeb participante) {
+		return service.guardarParticipante(TransformadorDesplazamientos.toParticipanteJpa(participante));
 	}
 
 }
