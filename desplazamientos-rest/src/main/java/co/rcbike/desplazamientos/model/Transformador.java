@@ -10,36 +10,37 @@ public class Transformador {
 
 	public static void asignarSuperAtributosPorNombre(Object origen, Object destino) {
 		try {
-			Class<?> superClaseOrigen = origen.getClass().getSuperclass();
-			Class<?> superClaseDestino = destino.getClass().getSuperclass();
+			Class<?> claseOrigen = origen.getClass().getSuperclass();
+			Class<?> claseDestino = destino.getClass().getSuperclass();
 
-			if (superClaseOrigen.isAssignableFrom(superClaseDestino)) {
-				Method[] methods = superClaseDestino.getMethods();
-				for (int i = 0; i < methods.length; i++) {
-					Method method = methods[i];
-					String methodName = method.getName();
-					String methodType = methodName.substring(0, 3);
-					String methodPart = methodName.substring(3);
-					if (("set".equals(methodType)) && (method.getParameterTypes().length == 1)) {
+				Method[] metodosClaseDestino = claseDestino.getMethods();
+				for (int i = 0; i < metodosClaseDestino.length; i++) {
+					Method metodoClaseDestino = metodosClaseDestino[i];
+					String nombreMetodoClaseDestino = metodoClaseDestino.getName();
+					String tipoMetodoClaseDestino = nombreMetodoClaseDestino.substring(0, 3);
+					String parteMetodoClaseDestino = nombreMetodoClaseDestino.substring(3);
+					if (("set".equals(tipoMetodoClaseDestino)) && (metodoClaseDestino.getParameterTypes().length == 1)) {
 						Class<?> parameterTypes[] = new Class[] {};
-						Method getMethod = null;
+						Method metodoGetClaseDestino = null;
 						try {
-							getMethod = superClaseOrigen.getMethod("get" + methodPart, parameterTypes);
+							metodoGetClaseDestino = claseOrigen.getMethod("get" + parteMetodoClaseDestino, parameterTypes);
 						} catch (NoSuchMethodException e) {
-							getMethod = superClaseOrigen.getMethod("is" + methodPart, parameterTypes);
+							metodoGetClaseDestino = claseOrigen.getMethod("is" + parteMetodoClaseDestino, parameterTypes);
 						}
-						if (getMethod != null) {
+						if (metodoGetClaseDestino != null) {
 							Object parametrosGetObjeto[] = new Object[0];
-							Object value = getMethod.invoke(origen, parametrosGetObjeto);
-
-							Object parametrosSetObjeto[] = new Object[1];
-							parametrosSetObjeto[0] = value;
-							methods[i].invoke(destino, parametrosSetObjeto);
+							Object value = metodoGetClaseDestino.invoke(origen, parametrosGetObjeto);
+							if (value != null) {
+								if (value.getClass().getName().equals(metodoGetClaseDestino.getReturnType().getName())) {
+									Object parametrosSetObjeto[] = new Object[1];
+									parametrosSetObjeto[0] = value;
+									metodosClaseDestino[i].invoke(destino, parametrosSetObjeto);
+								}
+							}
 						}
 
 					}
 				}
-			}
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
