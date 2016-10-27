@@ -17,7 +17,10 @@
     </h:head>
 
     <h:body styleClass="GrayModena Geometry" style="height:auto;">
-        <h:form>
+    	
+    	<ui:include src="/WEB-INF/include/facebook-sdk.xhtml"/>
+    	<ui:include src="/WEB-INF/include/facebook-login.xhtml"/>
+	
         <div class="Wid90 DispBlock MarAuto MarTopPerc5 TexAlCenter">
             <div class="Wid40 MarAuto WidAutoOnMobile">
             	<h:graphicImage name="images/logo_b.png" library="rcbike" style="width:40%; max-width:400px;"/>
@@ -26,47 +29,55 @@
                     <div class="Wid100 OvHidden BigTopic Fs30">
                     	<i class="icon-security Fs60 DispBlock"/> Ingreso / Registro
                     </div>
-	                <div class="EmptyBox10" style="display:none"/>
-                    <div class="Wid100" style="display:none">
-	                    <div class="Container50">
-	                    	<p:button value="Facebook" icon="fa fa-facebook" 
-	                    	styleClass="Wid90 Fs18 White RaisedButton FloatNoneOnMobile" href="dashboard.xhtml"/>
-	                    </div>
-	                    <div class="Container50">
-	                    	<p:button value="Twitter" icon="fa fa-twitter" 
-	                    	styleClass="Wid90 Fs18 White RaisedButton FloatNoneOnMobile" href="dashboard.xhtml"/>
-	                    </div>
-                    </div>
+	                <div class="EmptyBox10" />
+                    <p:outputPanel layout="block" styleClass="Wid100">
+	                    	<p:button value="Facebook" icon="fa fa-facebook"
+	                    	styleClass="Wid80 Fs18 White RaisedButton FloatNoneOnMobile" style="background-color: #3b5998;"
+	                    	onclick="loginFacebook(); return false;"/>
+                    </p:outputPanel>
+	                    
+	                <div class="EmptyBox10" />
+
+                    <p:outputPanel layout="block" styleClass="Wid100">
+                    	<p:button value="Twitter" icon="fa fa-twitter" 
+                    	styleClass="Wid80 Fs18 White RaisedButton FloatNoneOnMobile" style="background-color: #1da1f2;" hhref="#"
+                    	/>
+					</p:outputPanel>
+	                    
                     <div class="EmptyBox10"/>
                     <div class="Separator"/>
+                    
+                    <h:form>
                     <div class="Wid100">
-                    	<p:inputText id="login-email" placeholder="Correo" value="#{autenticacionManager.email}" styleClass="Wid80 TexAlCenter Fs18"/>
+                    	<p:inputText id="login-email" placeholder="Correo" value="#{autenticacionManager.email}" styleClass="Wid70 TexAlCenter Fs18"/>
                     </div>
                     <div class="EmptyBox10"/>
                     <div class="Wid100">
                     	<p:inputText id="login-clave" type="password" placeholder="Contraseña" value="#{autenticacionManager.clave}" 
-                    	styleClass="Wid80 TexAlCenter Fs18"/>
+                    	styleClass="Wid70 TexAlCenter Fs18"/>
                     </div>
-                    <div class="EmptyBox30"/>
+                    <div class="EmptyBox20"/>
                     <div class="Wid100">
                     	<p:commandButton id="login-continue" value="Ingresar / Registrarme" action="#{autenticacionManager.autenticar()}" 
-                    	icon="fa fa-sign-in" styleClass="Wid80 Fs18 White RaisedButton FloatNoneOnMobile"/>
-                    	</div>
+                    	icon="fa fa-sign-in" styleClass="Wid80 Fs18 White RaisedButton FloatNoneOnMobile GreenButton"/>
+                    </div>
                     <div class="Separator" style="display:none"/>
                     <div class="Wid100" style="display:none">
                     	<p:button value="Olvide mi contraseña" icon="fa fa-lock" 
                     	styleClass="Wid80 RedButton Fs18 White RaisedButton FloatNoneOnMobile"/>
                     	</div>
-                    <div class="EmptyBox20"></div>
+                    <div class="EmptyBox20"/>
+                    </h:form>
+                    
                 </div>
                 <div class="Wid100 TexAlCenter MarTop20 Fs14 FontRobotoRegular Gray">
         	        <i class="fa fa-copyright"></i>  Los 4 Fantasticos <br/> All rights reserved.
                 </div>
             </div>
         </div>
-        </h:form>
         
-        <h:outputStylesheet name="css/rcbike.min.css" library="modena-layout" />>
+        
+        <h:outputStylesheet name="css/rcbike.min.css" library="modena-layout" />
     </h:body>
 
 </html>
