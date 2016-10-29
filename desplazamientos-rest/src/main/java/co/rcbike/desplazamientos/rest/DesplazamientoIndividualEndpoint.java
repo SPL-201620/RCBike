@@ -5,69 +5,58 @@ import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import co.rcbike.desplazamientos.model.RutaWeb;
-import co.rcbike.desplazamientos.model.TransformadorDesplazamientos;
 import co.rcbike.desplazamientos.model.WaypointWeb;
 import co.rcbike.desplazamientos.service.DesplazamientosService;
+import co.rcbike.desplazamientos.service.TransformadorDesplazamientos;
 
 @Path("/individual")
 @RequestScoped
 public class DesplazamientoIndividualEndpoint {
+	
+	/** PARAMETROS REST **/
 
-    @Inject
+	//Separadores
+	private static final String PATH_DELIM = "/";
+	private static final String LCURL = "{";
+	private static final String RCURL = "}";
+	//Paths
+    private static final String ALIVE = "alive";
+    private static final String CLIMA = "clima";
+    private static final String RUTAS_INDIVIDUALES = "rutasIndividuales";
+    private static final String WAYPOINTS = "waypoints";
+    private static final String RUTA_INDIVIDUAL = "rutaIndividual";
+    private static final String WAYPOINT = "waypoint";
+    //Operaciones
+    private static final String POR_EMAIL = "porEmail";
+    //Parametros
+    private static final String PARAM_EMAIL_CREADOR = "emailCreador";
+	private static final String PARAM_ID = "id";
+
+	/** FIN PARAMETROS REST **/
+
+	@Inject
     private DesplazamientosService service;
+	
+	@Inject
+	private TransformadorDesplazamientos transformadorDesplazamientos;
 
     @GET
-    @Path("/alive")
+    @Path(PATH_DELIM + ALIVE)
     @Produces(MediaType.APPLICATION_JSON)
     public String alive() {
         return "endpoint alive";
     }
-
-	/**
-	 * Lista todos los recorridos individuales 
-	 * 
-	 */
-    @GET
-    @Path("/listTodosViajesIndividuales")
-    @Produces(MediaType.APPLICATION_JSON)
-	public List<RutaWeb> listTodosViajesIndividuales() {
-    	return TransformadorDesplazamientos.toListRutaWeb(service.listTodosViajesIndividuales());
-	}
-
-    /**
-	 * Lista todos los recorridos individuales realizados por un usuario
-	 * 
-	 * @param emailCreador
-	 *            email del usuario
-	 */
-    @GET
-    @Path("/listViajesIndividuales")
-    @Produces(MediaType.APPLICATION_JSON)
-	public List<RutaWeb> listViajesIndividuales(@QueryParam("emailCreador") String emailCreador) {
-    	return TransformadorDesplazamientos.toListRutaWeb(service.listViajesIndividuales(emailCreador));
-	}
-
-	/**
-	 * Permite guardar un recorrido individual
-	 * 
-	 * @param ruta
-	 *            informacion de la ruta a crear
-	 */
-    @POST
-    @Path("/guardarViaje")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-	public Long guardarViaje(RutaWeb ruta) {
-    	return service.guardarViaje(TransformadorDesplazamientos.toRutaJpa(ruta));
-	}
 
 	/**
 	 * Permite obtener el clima en una latitud y longitud
@@ -78,47 +67,183 @@ public class DesplazamientoIndividualEndpoint {
 	 *            longitud geografica de la ruta
 	 */
 	@GET
-	@Path("/obtenerClima")
+	@Path(PATH_DELIM + CLIMA)
 	@Produces(MediaType.APPLICATION_JSON)
-	public String obtenerClima(@QueryParam("latitud") String latitud,
+	public String getClima(@QueryParam("latitud") String latitud,
 			@QueryParam("longitud") String longitud) {
 		return service.obtenerClima(latitud, longitud);
 	}
 	
+	/***** RUTA INDIVIDUAL ****/
+	
     /**
-     * Lista todos los Waypoints existentes
-     * 
-     */
-	@GET
-	@Path("/listTodosWaypoints")
-	@Produces(MediaType.APPLICATION_JSON)
-    public List<WaypointWeb> listTodosWaypoints() {
-        return TransformadorDesplazamientos.toListWaypointWeb(service.listTodosWaypoints());
-    }
+	 * REST: GET,/rutaIndividual/{id}
+	 * Lista todos los recorridos individuales por un id
+	 * 
+	 * @param id Identificador de ruta
+	 */
+    @GET
+    @Path(PATH_DELIM + RUTA_INDIVIDUAL + PATH_DELIM + LCURL + PARAM_ID + RCURL)
+    @Produces(MediaType.APPLICATION_JSON)
+	public RutaWeb getRutaIndividual(@PathParam(PARAM_ID) Long id) {
+    	return transformadorDesplazamientos.toRutaWeb(service.getRuta(id));
+	}
+
+	/**
+	 * REST: POST,/rutaIndividual, save one
+	 * Permite guardar un recorrido individual
+	 * 
+	 * @param ruta Informacion de la ruta a crear
+	 * @return Identificador de ruta creada
+	 */
+    @POST
+    @Path(PATH_DELIM + RUTA_INDIVIDUAL)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+	public Long postRutaIndividual(RutaWeb ruta) {
+    	return service.persistRuta(transformadorDesplazamientos.toRutaJpa(ruta));
+	}
+
+	/**
+	 * REST: PUT,/rutaIndividual, update one
+	 * Permite guardar un recorrido individual
+	 * 
+	 * @param ruta Informacion de la ruta a crear
+	 * @return Identificador de ruta creada
+	 */
+    @PUT
+    @Path(PATH_DELIM + RUTA_INDIVIDUAL)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+	public Long putRutaIndividual(RutaWeb ruta) {
+    	return service.mergeRuta(transformadorDesplazamientos.toRutaJpa(ruta));
+	}
+
 
     /**
-     * Lista todos las waypoints de una ruta
-     * 
-     * @param idRuta identificador de la ruta
-     */
-	@POST
-	@Path("/listWaypoints")
-	@Produces(MediaType.APPLICATION_JSON)
-    public List<WaypointWeb> listWaypoints(Long idRuta) {
-        return TransformadorDesplazamientos.toListWaypointWeb(service.listWaypoints(idRuta));
-    }
+	 * REST: DELETE,/rutaIndividual/{id}, cancel one
+	 * Lista todos los recorridos individuales por un id
+	 * 
+	 * @param id Identificador de ruta
+	 */
+    @DELETE
+    @Path(PATH_DELIM + RUTA_INDIVIDUAL + PATH_DELIM + LCURL + PARAM_ID + RCURL)
+	public void deleteRutaIndividual(@PathParam(PARAM_ID) Long id) {
+    	service.deleteRuta(id);
+	}
+
+	/***** RUTAS INDIVIDUALES ****/
+	
+	/**
+	 * REST: GET,/rutasIndividuales, list all 
+	 * Lista todos los recorridos individuales 
+	 * 
+	 */
+    @GET
+    @Path(PATH_DELIM + RUTAS_INDIVIDUALES)
+    @Produces(MediaType.APPLICATION_JSON)
+	public List<RutaWeb> getRutasIndividuales() {
+    	return transformadorDesplazamientos.toListRutaWeb(service.listTodosRutasIndividuales());
+	}
 
     /**
-     * Permite guardar un waypoint de una ruta
-     * 
-     * @param WaypointWeb Informacion del WaypointWeb a crear
-     */
-	@POST
-	@Path("/guardarWaypoint")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-    public Long guardarWaypoint(WaypointWeb waypoint) {
-        return service.guardarWaypoint(TransformadorDesplazamientos.toWaypointJpa(waypoint));
-    }
+	 * REST: GET,/rutasIndividuales/{email}, list 
+	 * Lista todos los recorridos individuales realizados por un usuario
+	 * 
+	 * @param emailCreador
+	 *            email del usuario
+	 */
+    @GET
+    @Path(PATH_DELIM + RUTAS_INDIVIDUALES + PATH_DELIM + POR_EMAIL)
+    @Produces(MediaType.APPLICATION_JSON)
+	public List<RutaWeb> getRutasIndividuales(@QueryParam(PARAM_EMAIL_CREADOR) String emailCreador) {
+    	return transformadorDesplazamientos.toListRutaWeb(service.listRutasIndividuales(emailCreador));
+	}
+
+    /***** WAYPOINT *****/
+    
+    /**
+	 * REST: GET,/waypoint/{id}
+	 * Lista todos los recorridos individuales por un id
+	 * 
+	 * @param id Identificador de waypoint
+	 */
+    @GET
+    @Path(PATH_DELIM + WAYPOINT + PATH_DELIM + LCURL + PARAM_ID + RCURL)
+    @Produces(MediaType.APPLICATION_JSON)
+	public WaypointWeb getWaypoint(@PathParam(PARAM_ID) Long id) {
+    	return transformadorDesplazamientos.toWaypointWeb(service.getWaypoint(id));
+	}
+
+	/**
+	 * REST: POST,/waypoint, save one
+	 * Permite guardar un recorrido individual
+	 * 
+	 * @param waypoint Informacion de la waypoint a crear
+	 * @return Identificador de waypoint creada
+	 */
+    @POST
+    @Path(PATH_DELIM + WAYPOINT)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+	public Long postWaypoint(WaypointWeb waypoint) {
+    	return service.persistWaypoint(transformadorDesplazamientos.toWaypointJpa(waypoint));
+	}
+
+	/**
+	 * REST: PUT,/waypoint, update one
+	 * Permite guardar un recorrido individual
+	 * 
+	 * @param waypoint Informacion de la waypoint a crear
+	 * @return Identificador de waypoint creada
+	 */
+    @PUT
+    @Path(PATH_DELIM + WAYPOINT)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+	public Long putWaypoint(WaypointWeb waypoint) {
+    	return service.mergeWaypoint(transformadorDesplazamientos.toWaypointJpa(waypoint));
+	}
+
+
+    /**
+	 * REST: DELETE,/waypoint/{id}, cancel one
+	 * Lista todos los recorridos individuales por un id
+	 * 
+	 * @param id Identificador de waypoint
+	 */
+    @DELETE
+    @Path(PATH_DELIM + WAYPOINT + PATH_DELIM + LCURL + PARAM_ID + RCURL)
+	public void deleteWaypoint(@PathParam(PARAM_ID) Long id) {
+    	service.deleteWaypoint(id);
+	}
+
+	/***** WAYPOINTS ****/
+	
+	/**
+	 * REST: GET,/waypoints, list all 
+	 * Lista todos los recorridos individuales 
+	 * 
+	 */
+    @GET
+    @Path(PATH_DELIM + WAYPOINTS)
+    @Produces(MediaType.APPLICATION_JSON)
+	public List<WaypointWeb> getWaypoints() {
+    	return transformadorDesplazamientos.toListWaypointWeb(service.listTodosWaypoints());
+	}
+
+    /**
+	 * REST: GET,/rutaIndividual/{id}/waypoints, list 
+	 * Lista todos los recorridos individuales realizados por un usuario
+	 * 
+	 * @param emailCreador
+	 *            email del usuario
+	 */
+    @GET
+    @Path(PATH_DELIM + RUTA_INDIVIDUAL + PATH_DELIM + LCURL + PARAM_ID + RCURL + PATH_DELIM + WAYPOINTS)
+    @Produces(MediaType.APPLICATION_JSON)
+	public List<WaypointWeb> getWaypoints(@PathParam(PARAM_ID) Long id) {
+    	return transformadorDesplazamientos.toListWaypointWeb(service.listWaypoints(id));
+	}
 
 }

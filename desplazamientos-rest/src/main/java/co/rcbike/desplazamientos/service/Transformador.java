@@ -1,4 +1,4 @@
-package co.rcbike.desplazamientos.model;
+package co.rcbike.desplazamientos.service;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -31,7 +31,7 @@ public class Transformador {
 							Object parametrosGetObjeto[] = new Object[0];
 							Object value = metodoGetClaseDestino.invoke(origen, parametrosGetObjeto);
 							if (value != null) {
-								if (value.getClass().getName().equals(metodoGetClaseDestino.getReturnType().getName())) {
+								if (metodoGetClaseDestino.getReturnType().isAssignableFrom(value.getClass())) {
 									Object parametrosSetObjeto[] = new Object[1];
 									parametrosSetObjeto[0] = value;
 									metodosClaseDestino[i].invoke(destino, parametrosSetObjeto);
@@ -46,39 +46,37 @@ public class Transformador {
 		}
 	}
 
-	public static <A, B> List<B> crearListObjetosDestino(List<A> listaObjetosOrigen, Class<B> claseDestino) {
-		List<B> result = null;
-		try {
-			if (listaObjetosOrigen != null) {
-				result = new ArrayList<>();
-				for (A objetoOrigen : listaObjetosOrigen) {
-					B objetoDestino = claseDestino.newInstance();
-					asignarSuperAtributosPorNombre(objetoOrigen, objetoDestino);
-					result.add(objetoDestino);
-				}
-			}
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-		return result;
-	}
-
-	public static <A, B> Set<B> crearSetObjetosDestino(Set<A> setObjetosOrigen, Class<B> claseDestino) {
-		Set<B> result = null;
-		try {
-			if (setObjetosOrigen != null) {
-				result = new HashSet<>();
-				for (A objetoOrigen : setObjetosOrigen) {
-					B objetoDestino = claseDestino.newInstance();
-					asignarSuperAtributosPorNombre(objetoOrigen, objetoDestino);
-					result.add(objetoDestino);
-				}
-			}
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-		return result;
-	}
+//	public static <A, B> List<B> crearListObjetosDestino(List<A> listaObjetosOrigen, Class<B> claseDestino) {
+//		List<B> result = null;
+//		try {
+//			if (listaObjetosOrigen != null) {
+//				result = new ArrayList<>();
+//				for (A objetoOrigen : listaObjetosOrigen) {
+//					B objetoDestino = claseDestino.newInstance();
+//					asignarSuperAtributosPorNombre(objetoOrigen, objetoDestino);
+//					result.add(objetoDestino);
+//				}
+//			}
+//		} catch (Exception e) {
+//			throw new RuntimeException(e);
+//		}
+//		return result;
+//	}
+//
+//	public static <A, B> Set<B> crearSetObjetosDestino(Set<A> setObjetosOrigen, Class<B> claseDestino) {
+//		Set<B> result = null;
+//		try {
+//			if (setObjetosOrigen != null) {
+//				result = new HashSet<>();
+//				for (A objetoOrigen : setObjetosOrigen) {
+//					result.add(crearObjetoDestino(objetoOrigen, claseDestino));
+//				}
+//			}
+//		} catch (Exception e) {
+//			throw new RuntimeException(e);
+//		}
+//		return result;
+//	}
 
 	public static <A, B> B crearObjetoDestino(A objetoOrigen, Class<B> claseDestino) {
 		B result = null;
