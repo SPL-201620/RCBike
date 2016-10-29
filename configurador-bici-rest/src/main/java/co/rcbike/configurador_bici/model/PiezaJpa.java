@@ -8,7 +8,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@SuppressWarnings("serial")
 @Entity(name = "Pieza")
 @Table(name = "Pieza")
 @XmlRootElement
@@ -16,6 +15,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 	@NamedQuery(name = "findAllPiezas", query = "SELECT w FROM Pieza w") })
 public class PiezaJpa extends Pieza implements Serializable {
 
+	private static final long serialVersionUID = -1043399871522964339L;
 	public static final String SQ_findAllPiezas = "findAllPiezas";
 	public static final String SQ_findByIdPieza = "findByIdPieza";
 	public static final String SQ_PARAM_ID = "id";

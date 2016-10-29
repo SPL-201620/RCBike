@@ -8,7 +8,6 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -16,7 +15,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import co.rcbike.desplazamientos.model.ParticipanteJpa;
-import co.rcbike.desplazamientos.model.Ruta;
 import co.rcbike.desplazamientos.model.RutaJpa;
 import co.rcbike.desplazamientos.model.Tipo;
 import co.rcbike.desplazamientos.model.WaypointJpa;

@@ -16,11 +16,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "Configuracion")
 @XmlRootElement
 @NamedQueries({
-        @NamedQuery(name = "findByCreador", query = "SELECT e FROM Configuracion e WHERE e.emailCreador = :emailCreador"),
-        @NamedQuery(name = "findByIdConfiguracion", query = "SELECT e FROM Configuracion e WHERE e.id = :id")})
+	@NamedQuery(name = "findAllConfiguraciones", query = "SELECT c FROM Configuracion c"),
+        @NamedQuery(name = "findByCreador", query = "SELECT c FROM Configuracion c WHERE c.emailCreador = :emailCreador"),
+        @NamedQuery(name = "findByIdConfiguracion", query = "SELECT c FROM Configuracion c WHERE c.id = :id")})
 public class ConfiguracionJpa extends Configuracion implements Serializable {
 
-	private static final long serialVersionUID = 8994402921863756631L;
+	private static final long serialVersionUID = -2552218708219836598L;
+	public static final String SQ_findAllConfiguraciones = "findAllConfiguraciones";
 	public static final String SQ_findByCreador = "findByCreador";
 	public static final String SQ_findByIdConfiguracion = "findByIdConfiguracion";
     public static final String SQ_PARAM_EMAIL_CREADOR = "emailCreador";

@@ -8,16 +8,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class ConfiguracionWeb extends Configuracion implements Serializable {
 
-	private static final long serialVersionUID = 4096409486896497757L;
+	private static final long serialVersionUID = 4744377178698759581L;
 	
-	private Set<PiezaWeb> piezasWeb;
+	private Set<PiezaConfiguracionWeb> piezasConfiguracion;
 
-	public Set<PiezaWeb> getPiezasWeb() {
-		return piezasWeb;
+	public Set<PiezaConfiguracionWeb> getPiezasConfiguracion() {
+		return piezasConfiguracion;
 	}
 
-	public void setPiezasWeb(Set<PiezaWeb> piezasWeb) {
-		this.piezasWeb = piezasWeb;
+	public void setPiezasConfiguracion(Set<PiezaConfiguracionWeb> piezasConfiguracionWeb) {
+		this.piezasConfiguracion = piezasConfiguracionWeb;
 	}
     
  }

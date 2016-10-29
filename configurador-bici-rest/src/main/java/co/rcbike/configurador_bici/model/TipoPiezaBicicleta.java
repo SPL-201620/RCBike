@@ -5,5 +5,7 @@ public enum TipoPiezaBicicleta {
     LLANTA_DELANTERA,
     LLANTA_TRASERA,
     FRENOS,
-    TRANSMISION;
+    CAMBIOS,
+    LUZ,
+    PITO;
 }
