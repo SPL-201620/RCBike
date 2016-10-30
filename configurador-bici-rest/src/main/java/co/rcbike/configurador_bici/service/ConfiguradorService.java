@@ -286,11 +286,21 @@ public class ConfiguradorService {
 	}
 
 	/**
-	 * Lista todos los piezas
+	 * Lista todas las piezas
 	 * 
 	 */
-	public List<PiezaJpa> listTodosPiezas() {
+	public List<PiezaJpa> listTodasPiezas() {
 		TypedQuery<PiezaJpa> q = em.createNamedQuery(PiezaJpa.SQ_findAllPiezas, PiezaJpa.class);
+		return q.getResultList();
+	}
+
+	/**
+	 * Lista todas las piezas
+	 * 
+	 */
+	public List<PiezaJpa> listPiezas(TipoPiezaBicicleta tipo) {
+		TypedQuery<PiezaJpa> q = em.createNamedQuery(PiezaJpa.SQ_findByTipo, PiezaJpa.class);
+		q.setParameter(PiezaJpa.SQ_PARAM_TIPO, tipo);
 		return q.getResultList();
 	}
 

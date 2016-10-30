@@ -19,6 +19,7 @@ import co.rcbike.configurador_bici.model.ColorWeb;
 import co.rcbike.configurador_bici.model.ConfiguracionWeb;
 import co.rcbike.configurador_bici.model.PiezaConfiguracionWeb;
 import co.rcbike.configurador_bici.model.PiezaWeb;
+import co.rcbike.configurador_bici.model.TipoPiezaBicicleta;
 import co.rcbike.configurador_bici.model.ValidacionConfiguracion;
 import co.rcbike.configurador_bici.service.ConfiguradorService;
 import co.rcbike.configurador_bici.service.TransformadorConfigurador;
@@ -46,9 +47,11 @@ public class ConfiguradorBiciEndpoint {
     private static final String COLOR = "color";
     //Operaciones
     private static final String POR_EMAIL = "porEmail";
+    private static final String POR_TIPO = "porTipo";
     //Parametros
     private static final String PARAM_EMAIL_CREADOR = "emailCreador";
 	private static final String PARAM_ID = "id";
+	private static final String PARAM_TIPO = "tipo";
 
 	/** FIN PARAMETROS REST **/
 
@@ -326,7 +329,7 @@ public class ConfiguradorBiciEndpoint {
 	/***** PIEZAS ****/
 	
 	/**
-	 * REST: GET,/waypoints, list all 
+	 * REST: GET,/piezas, list all 
 	 * Lista todos los recorridos individuales 
 	 * 
 	 */
@@ -334,8 +337,23 @@ public class ConfiguradorBiciEndpoint {
     @Path(PATH_DELIM + PIEZAS)
     @Produces(MediaType.APPLICATION_JSON)
 	public List<PiezaWeb> getPiezas() {
-    	return transformador.toListPiezaWeb(service.listTodosPiezas());
+    	return transformador.toListPiezaWeb(service.listTodasPiezas());
 	}
+    
+    /**
+	 * REST: GET,/piezas/porTipo?tipo=?, list 
+	 * Lista todos los recorridos  realizados por un usuario
+	 * 
+	 * @param emailCreador
+	 *            email del usuario
+	 */
+    @GET
+    @Path(PATH_DELIM + PIEZAS + PATH_DELIM + POR_TIPO)
+    @Produces(MediaType.APPLICATION_JSON)
+	public List<PiezaWeb> getPiezas(@QueryParam(PARAM_TIPO) TipoPiezaBicicleta tipo) {
+    	return transformador.toListPiezaWeb(service.listPiezas(tipo));
+	}
+
 
     /***** COLOR *****/
     
