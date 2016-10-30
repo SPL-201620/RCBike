@@ -1,37 +1,19 @@
 package co.rcbike.ventas.model;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Convert;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
+import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlRootElement;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
-@SuppressWarnings("serial")
-@Entity
-@XmlRootElement
-@NamedQueries({ 
-	@NamedQuery(name = "findAllVentas", query = "SELECT v FROM VentaBicicleta v"),
-	@NamedQuery(name = "findById", query = "SELECT v FROM VentaBicicleta v WHERE v.id = :idVenta"),
-		@NamedQuery(name = "findByCreador", query = "SELECT v FROM VentaBicicleta v WHERE v.emailCreador = :emailCreador") })
-public class VentaBicicleta implements Serializable {
+@MappedSuperclass
+public abstract class Venta {
 
-	public static final String SQ_findAll = "findAllVentas";
-	public static final String SQ_findById = "findById";
-	public static final String SQ_findByCreador = "findByCreador";
-	public static final String SQ_PARAM_EMAIL_CREADOR = "emailCreador";
-	public static final String SQ_PARAM_ID_VENTA = "idVenta";
-
-	/* No es necesario llenar */
 	@Id
 	@GeneratedValue
 	private Long id;
@@ -66,12 +48,23 @@ public class VentaBicicleta implements Serializable {
 	@Lob
 	private String foto;
 
+	@NotNull
+	private Long idConfiguracion;
+
 	public Long getId() {
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getEmailCreador() {
+		return emailCreador;
+	}
+
+	public void setEmailCreador(String emailCreador) {
+		this.emailCreador = emailCreador;
 	}
 
 	public String getValor() {
@@ -138,12 +131,11 @@ public class VentaBicicleta implements Serializable {
 		this.foto = foto;
 	}
 
-	public String getEmailCreador() {
-		return emailCreador;
+	public Long getIdConfiguracion() {
+		return idConfiguracion;
 	}
 
-	public void setEmailCreador(String emailCreador) {
-		this.emailCreador = emailCreador;
+	public void setIdConfiguracion(Long idConfiguracion) {
+		this.idConfiguracion = idConfiguracion;
 	}
-
 }
