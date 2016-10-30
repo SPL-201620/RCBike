@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
 
 import co.rcbike.ventas.model.VentaJpa;
 import co.rcbike.ventas.model.VentaWeb;
@@ -12,7 +11,7 @@ import co.rcbike.ventas.model.VentaWeb;
 @RequestScoped
 public class TransformadorVentas extends Transformador {
 
-	//***** CONFIGURACION *****//
+	//***** VENTA *****//
 	
 	public VentaWeb toVentaWeb(VentaJpa rutaJpa) {
 		VentaWeb result = crearObjetoDestino(rutaJpa, VentaWeb.class);

@@ -1,38 +1,18 @@
 package co.rcbike.alquiler.model;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
+import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlRootElement;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
-@SuppressWarnings("serial")
-@Entity
-@XmlRootElement
-@NamedQueries({ @NamedQuery(name = "findConfiguracionesBicicleta", query = "SELECT c FROM SitioAlquiler c"),
-		@NamedQuery(name = "findByCreador", query = "SELECT c FROM SitioAlquiler c WHERE c.emailCreador = :emailCreador"),
-		@NamedQuery(name = "findByPunto", query = "SELECT s FROM SitioAlquiler s WHERE "
-				+ "s.latitud >= :latitudInicio and s.latitud <= :latitudFinal "
-				+ "and s.longitud >= :longitudInicio and s.longitud <= :longitudFinal") })
-public class SitioAlquiler implements Serializable {
-
-	public static final String SQ_find = "findConfiguracionesBicicleta";
-	public static final String SQ_findByCreador = "findByCreador";
-	public static final String SQ_findByPunto = "findByPunto";
-	public static final String SQ_PARAM_EMAIL_CREADOR = "emailCreador";
-	public static final String SQ_PARAM_LATITUD_INICIO = "latitudInicio";
-	public static final String SQ_PARAM_LATITUD_FINAL = "latitudFinal";
-	public static final String SQ_PARAM_LONGITUD_INICIO = "longitudInicio";
-	public static final String SQ_PARAM_LONGITUD_FINAL = "longitudFinal";
+@MappedSuperclass
+public abstract class SitioAlquiler {
 
 	@Id
 	@GeneratedValue
