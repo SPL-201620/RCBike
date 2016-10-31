@@ -1,6 +1,10 @@
 package co.rcbike.desplazamientos.rest;
 
 import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
@@ -35,6 +39,7 @@ public class DesplazamientoGrupalEndpoint {
 	//Paths
     private static final String ALIVE = "alive";
     private static final String CLIMA = "clima";
+    private static final String RUTAS = "rutas";
 	private static final String RUTA_GRUPAL = "rutaGrupal";
     private static final String RUTAS_GRUPALES = "rutasGrupales";
     private static final String WAYPOINT = "waypoint";
@@ -46,6 +51,7 @@ public class DesplazamientoGrupalEndpoint {
     private static final String NO_VENCIDOS = "noVencidos";
     //Parametros
 	private static final String PARAM_ID = "id";
+	private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyyMMdd");
 
 	/** FIN PARAMETROS REST **/
 
@@ -54,6 +60,7 @@ public class DesplazamientoGrupalEndpoint {
 	
 	@Inject
 	private TransformadorDesplazamientos transformadorDesplazamientos;
+	
 
 	
     @GET
@@ -135,6 +142,35 @@ public class DesplazamientoGrupalEndpoint {
     @Path(PATH_DELIM + RUTA_GRUPAL + PATH_DELIM + LCURL + PARAM_ID + RCURL)
 	public void deleteRutaGrupal(@PathParam(PARAM_ID) Long id) {
     	service.deleteRuta(id);
+	}
+
+	/***** RUTAS *****/
+
+	/**
+	 * REST: GET,/rutasIndividuales, list all Lista todos los recorridos
+	 * individuales
+	 * 
+	 * @param emailCreador
+	 * @param fechaInicio
+	 * @param fechaFinal
+	 * 
+	 */
+	@GET
+	@Path(PATH_DELIM + RUTAS)
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<RutaWeb> getRutas(@QueryParam("emailCreador") String emailCreador,
+			@QueryParam("fechaInicio") String fechaInicio, @QueryParam("fechaFinal") String fechaFinal) {
+		
+		Date dateFechaInicio = null;
+        Date dateFechaFinal = null;
+		try {
+			dateFechaInicio = DATE_FORMAT.parse(fechaInicio);
+	        dateFechaFinal = DATE_FORMAT.parse(fechaFinal);
+		} catch (ParseException e) {
+			return null;
+		}
+		return transformadorDesplazamientos
+				.toListRutaWeb(service.listRutasFechas(emailCreador, dateFechaInicio, dateFechaFinal));
 	}
 
 	/***** RUTAS GRUPALES ****/
