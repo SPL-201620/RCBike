@@ -6,18 +6,20 @@ import static co.rcbike.web.util.Navegacion.Views.registro;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import co.rcbike.autenticacion.model.OperacionesAutenticacion;
 import co.rcbike.gui.ModulosManager;
-import co.rcbike.gui.ModulosManager.ModAutenticacion;
 import co.rcbike.gui.ModulosManager.Modulo;
 import co.rcbike.web.util.Navegacion;
 import lombok.Getter;
@@ -32,6 +34,9 @@ public class AutenticacionManager implements Serializable {
 
     public static final String AUTENTICADO_ATTR = "sat_autenticado";
     public static final String EMAIL_ATTR = "sat_email";
+
+    @Getter
+    private static final String PARAM_AUTH_SERVICE = "auth-service";
 
     @Getter
     private final String serverIp = "localhost:8080";
@@ -60,10 +65,18 @@ public class AutenticacionManager implements Serializable {
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put(AUTENTICADO_ATTR, false);
     }
 
+    public String autenticar2() {
+        return null;
+    }
+
     public String autenticar() throws IOException {
+        Map<String, String> requestParameterMap = FacesContext.getCurrentInstance().getExternalContext()
+                .getRequestParameterMap();
+        String authContent = requestParameterMap.get(PARAM_AUTH_SERVICE);
+
         WebTarget serviceRoot = modulos.clienteSnoop(Modulo.autenticacion).getServiceRoot();
-        Response response = serviceRoot.path(ModAutenticacion.ENDPNT_AUTENTICACION).queryParam("email", email)
-                .queryParam("clave", clave).request().get();
+        Response response = serviceRoot.path(OperacionesAutenticacion.EP_AUTENTICACION).request()
+                .post(Entity.json(authContent));
         Status status = Response.Status.fromStatusCode(response.getStatus());
 
         cambiarEstadoAutenticacion(false);

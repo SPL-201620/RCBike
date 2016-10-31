@@ -1,20 +1,18 @@
 package co.rcbike.autenticacion.service;
 
-import java.util.logging.Logger;
+import java.util.Map;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
-import javax.persistence.TypedQuery;
 
 import co.rcbike.autenticacion.model.AutenticacionUsuario;
+import co.rcbike.autenticacion.strategy.AutenticacionStrategy;
 
 @Stateless
 public class AutenticacionService {
-
-    @Inject
-    private Logger log;
 
     @Inject
     private EntityManager em;
@@ -25,30 +23,22 @@ public class AutenticacionService {
         NO_EXISTE_USUARIO;
     }
 
-    public EstadoAutenticacion autenticar(String email, String clave) {
-        AutenticacionUsuario aut = findByEmail(email);
-        if (aut != null) {
-            return aut.getClave().equals(clave) ? EstadoAutenticacion.OK : EstadoAutenticacion.CLAVE_ERRONEA;
-        } else {
-            return EstadoAutenticacion.NO_EXISTE_USUARIO;
-        }
-    }
-
-    private AutenticacionUsuario findByEmail(String email) {
-        TypedQuery<AutenticacionUsuario> q = em.createNamedQuery(AutenticacionUsuario.SQ_autByEmail,
-                AutenticacionUsuario.class);
-		q.setParameter(AutenticacionUsuario.SQ_PARAM_EMAIL, email);
-        try {
-            return q.getSingleResult();
-        } catch (NoResultException e) {
-            return null;
-        }
-    }
-    
-    public void registrar(String email, String clave){
+    public void registrar(String email, String clave) {
         AutenticacionUsuario entity = new AutenticacionUsuario();
         entity.setEmail(email);
         entity.setClave(clave);
         em.persist(entity);
+    }
+
+    public EstadoAutenticacion autenticar(Map<String, Object> valoresAutenticacion) {
+
+        String authStrategy = (String) valoresAutenticacion.get("authStrategy");
+        try {
+            AutenticacionStrategy strategy = (AutenticacionStrategy) new InitialContext()
+                    .lookup("java:module/Autenticacion" + authStrategy);
+            return strategy.autenticar(valoresAutenticacion);
+        } catch (NamingException e) {
+            throw new UnknownError(e.getMessage());
+        }
     }
 }
