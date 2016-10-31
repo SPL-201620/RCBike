@@ -1,6 +1,7 @@
 package co.rcbike.desplazamientos.service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -64,7 +65,7 @@ public class DesplazamientosService {
 		int inicioPais = jsonString.indexOf("\"country\":\"") + 11;
 		int finPais = jsonString.indexOf("\",\"sunrise\"");
 
-		return celsius + " ºC, " + jsonString.substring(inicioDescripcion, finDescripcion) + ", "
+		return String.format("%.2f", celsius) + " ºC, " + jsonString.substring(inicioDescripcion, finDescripcion) + ", "
 				+ jsonString.substring(inicioPais, finPais) + ".";
 	}
 

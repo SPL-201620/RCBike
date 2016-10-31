@@ -128,8 +128,13 @@ public class CrearRutaManager implements Serializable {
         
         java.lang.System.out.print("----Entidad:"+ruta.toString());
         
-        //root.request().post(Entity.json(ruta));
-        Response response = desplazamientoRest.getServiceRoot().path("individual").path("rutaIndividual").request().post(Entity.json(ruta));
+        Response response;
+        
+        if (grupal) {
+        	response = desplazamientoRest.getServiceRoot().path("grupal").path("rutaGrupal").request().post(Entity.json(ruta));
+        } else {
+        	response = desplazamientoRest.getServiceRoot().path("individual").path("rutaIndividual").request().post(Entity.json(ruta));
+        }
         
         log.debug(response);
         java.lang.System.out.print("----Respuesta Servicio:["+response.readEntity(String.class)+"]");
