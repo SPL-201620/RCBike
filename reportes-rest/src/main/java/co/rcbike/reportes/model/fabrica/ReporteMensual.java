@@ -1,19 +1,19 @@
 package co.rcbike.reportes.model.fabrica;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 import co.rcbike.reportes.model.ResumenWeb;
+import co.rcbike.reportes.model.RutaWeb;
 
 public class ReporteMensual extends ReporteBasico implements IReporteRecorridos {
 
 	@Override
-	protected ResumenWeb crearResumen(Date fecha) {
-		ResumenWeb result = new ResumenWeb();
+	protected ResumenWeb crearResumen(RutaWeb ruta) {
+		ResumenWeb result = super.crearResumen(ruta);
 
 		GregorianCalendar cal = new GregorianCalendar();
-		cal.setTime(fecha);
+		cal.setTime(ruta.getFecha());
 
 		GregorianCalendar gc = new GregorianCalendar(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), 1);
 		gc.set(Calendar.HOUR_OF_DAY, 0); // ! clear would not reset the hour of day !
