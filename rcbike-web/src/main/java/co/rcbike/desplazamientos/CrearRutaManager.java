@@ -119,7 +119,7 @@ public class CrearRutaManager implements Serializable {
         	ruta.setDistancia(new BigDecimal("200.0"));
         }
         ruta.setTiempoEstimado(tiempo);
-        ruta.setCalorias(1);
+        ruta.setCalorias(Integer.parseInt(calorias));
 
         ruta.setClima(clima);
 
