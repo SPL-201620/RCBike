@@ -18,9 +18,19 @@
 
     <h:body styleClass="GrayModena Geometry" style="height:auto;">
     	
-    	<ui:include src="/WEB-INF/include/facebook-sdk.xhtml"/>
-    	<ui:include src="/WEB-INF/include/facebook-login.xhtml"/>
-	
+    	
+	    <h:form>
+			<p:remoteCommand name="autenticarRCBike" update=""
+						action="#{autenticacionManager.autenticar}"/>
+		</h:form>
+    	
+    	
+    	<p:outputPanel>
+    		<ui:include src="/WEB-INF/include/facebook/facebook-sdk.xhtml"/>
+    		<ui:include src="/WEB-INF/include/facebook/facebook-login.xhtml"/>
+		</p:outputPanel>
+		
+		
         <div class="Wid90 DispBlock MarAuto MarTopPerc5 TexAlCenter">
             <div class="Wid40 MarAuto WidAutoOnMobile">
             	<h:graphicImage name="images/logo_b.png" library="rcbike" style="width:40%; max-width:400px;"/>
