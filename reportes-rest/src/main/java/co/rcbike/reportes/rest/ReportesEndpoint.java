@@ -10,6 +10,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import co.rcbike.reportes.model.OperacionesReportes;
 import co.rcbike.reportes.model.ResumenWeb;
 import co.rcbike.reportes.model.TipoReporte;
 import co.rcbike.reportes.service.ReportesService;
@@ -18,21 +19,13 @@ import co.rcbike.reportes.service.ReportesService;
 @RequestScoped
 public class ReportesEndpoint {
 
-	/** PARAMETROS REST **/
-
-	// Separadores
-	private static final String PATH_DELIM = "/";
-	// Paths
-	private static final String ALIVE = "alive";
-	private static final String REPORTE = "reporte";
-
-	/** FIN PARAMETROS REST **/
+	
 
 	@Inject
 	private ReportesService service;
 
 	@GET
-	@Path(PATH_DELIM + ALIVE)
+	@Path(OperacionesReportes.PATH_DELIM + OperacionesReportes.ALIVE)
 	@Produces(MediaType.APPLICATION_JSON)
 	public String alive() {
 		return "endpoint alive";
@@ -47,7 +40,7 @@ public class ReportesEndpoint {
 	 *            longitud geografica de la ruta
 	 */
 	@GET
-	@Path(PATH_DELIM + REPORTE)
+	@Path(OperacionesReportes.PATH_DELIM + OperacionesReportes.REPORTE)
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<ResumenWeb> getReporte(@QueryParam("tipo") TipoReporte tipoReporte,
 			@QueryParam("emailCreador") String emailCreador, @QueryParam("fechaInicio") String fechaInicio,
