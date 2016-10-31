@@ -209,4 +209,13 @@ public abstract class Ruta {
         this.descripcion = descripcion;
     }
 
+	@Override
+	public String toString() {
+		return "Ruta [id=" + id + ", emailCreador=" + emailCreador + ", nombre=" + nombre + ", descripcion="
+				+ descripcion + ", tipo=" + tipo + ", latitudInicio=" + latitudInicio + ", longitudInicio="
+				+ longitudInicio + ", latitudFinal=" + latitudFinal + ", longitudFinal=" + longitudFinal
+				+ ", distancia=" + distancia + ", tiempoEstimado=" + tiempoEstimado + ", calorias=" + calorias
+				+ ", clima=" + clima + ", fecha=" + fecha + ", frecuente=" + frecuente + ", dias=" + dias + "]";
+	}
+
 }

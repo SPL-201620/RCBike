@@ -2,6 +2,7 @@ package co.rcbike.desplazamientos;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -12,6 +13,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.Response;
 
 import co.rcbike.autenticacion.AutenticacionManager;
 import co.rcbike.desplazamientos.model.RutaWeb;
@@ -86,14 +88,17 @@ public class CrearRutaManager implements Serializable {
     }
 
     public String crearRuta() {
-        WebTarget root = modulosManager.root(Modulo.desplazamientos);
-
+        //WebTarget root = modulosManager.root(Modulo.desplazamientos);
+    	SnoopServiceClient desplazamientoRest = modulosManager.clienteSnoop(Modulo.desplazamientos);
+    	
         RutaWeb ruta = new RutaWeb();
         if (grupal) {
-            root = root.path(ModDesplazamientos.ENDPNT_GRUPAL);
+        	//desplazamientoRest.getServiceRoot().path("individual").path("grupal");
+        	//desplazamientoRest = desplazamientoRest.path(ModDesplazamientos.ENDPNT_GRUPAL);
             ruta.setFecha(fechaHora == null ? new Date() : fechaHora);
         } else {
-            root = root.path(ModDesplazamientos.ENDPNT_INDIVIDUAL);
+        	//desplazamientoRest.getServiceRoot().path("individual").path("rutaIndividual");
+        	//root = root.path(ModDesplazamientos.ENDPNT_INDIVIDUAL);
             ruta.setFecha(new Date());
         }
 
@@ -101,29 +106,40 @@ public class CrearRutaManager implements Serializable {
         ruta.setNombre(nombreRuta);
         ruta.setDescripcion(descRuta);
         ruta.setTipo(grupal ? Tipo.GRUPAL : Tipo.INDIVIDUAL);
+        
+        ruta.setLatitudInicio(new BigDecimal(mapaManager.getOrigen().getLatlng().getLat()).setScale(8, RoundingMode.HALF_UP));
+        ruta.setLongitudInicio(new BigDecimal(mapaManager.getOrigen().getLatlng().getLng()).setScale(8, RoundingMode.HALF_UP));
+        ruta.setLatitudFinal(new BigDecimal(mapaManager.getDestino().getLatlng().getLat()).setScale(8, RoundingMode.HALF_UP));
+        ruta.setLongitudFinal(new BigDecimal(mapaManager.getDestino().getLatlng().getLng()).setScale(8, RoundingMode.HALF_UP));
 
-        ruta.setLatitudInicio(new BigDecimal(mapaManager.getOrigen().getLatlng().getLat()));
-        ruta.setLongitudInicio(new BigDecimal(mapaManager.getOrigen().getLatlng().getLng()));
-        ruta.setLatitudFinal(new BigDecimal(mapaManager.getDestino().getLatlng().getLat()));
-        ruta.setLongitudFinal(new BigDecimal(mapaManager.getDestino().getLatlng().getLng()));
-
+        java.lang.System.out.print("\nDistancia: "+distancia);
+        try{
         ruta.setDistancia(new BigDecimal(distancia));
-
+        }catch(Exception e){
+        	ruta.setDistancia(new BigDecimal("200.0"));
+        }
         ruta.setTiempoEstimado(tiempo);
         ruta.setCalorias(1);
 
         ruta.setClima(clima);
 
         ruta.setFrecuente(repetir);
-        ruta.setDias(dias.toString());
-        root.request().post(Entity.json(ruta));
+        ruta.setDias(dias.size()==0?null: dias.toString());
+        
+        java.lang.System.out.print("----Entidad:"+ruta.toString());
+        
+        //root.request().post(Entity.json(ruta));
+        Response response = desplazamientoRest.getServiceRoot().path("individual").path("rutaIndividual").request().post(Entity.json(ruta));
+        
+        log.debug(response);
+        java.lang.System.out.print("----Respuesta Servicio:["+response.readEntity(String.class)+"]");
         return "recorrido";
     }
 
     public void rutaCalculada() {
         SnoopServiceClient desplazamientoRest = modulosManager.clienteSnoop(Modulo.desplazamientos);
 
-        String response = desplazamientoRest.getServiceRoot().path("individual").path("obtenerClima")
+        String response = desplazamientoRest.getServiceRoot().path("individual").path("clima")
                 .queryParam("latitud", mapaManager.getOrigen().getLatlng().getLat())
                 .queryParam("longitud", mapaManager.getOrigen().getLatlng().getLng()).request().get(String.class);
 

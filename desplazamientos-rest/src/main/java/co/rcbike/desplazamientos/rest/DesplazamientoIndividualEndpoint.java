@@ -101,6 +101,7 @@ public class DesplazamientoIndividualEndpoint {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
 	public Long postRutaIndividual(RutaWeb ruta) {
+    	System.out.println("---Ruta recibida: " + ruta.toString());
     	return service.persistRuta(transformadorDesplazamientos.toRutaJpa(ruta));
 	}
 
