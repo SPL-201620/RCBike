@@ -1,0 +1,50 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="subheader">
+        Configirador
+    </ui:define>
+
+	<ui:define name="content">
+		<h:form id="frmConfigurador" prependId="false">
+			<div class="Container100">
+				<div class="ContainerIndent">
+					<div class="Card ShadowEffect">
+						<div class="ContainerIndent">
+							<h2 class="BigTopic" align="center">Configurador RC-BIKE</h2>
+
+							<p:panel id="pnlConfiguracion">
+
+								<p:repeat var="tipoPieza"
+									value="#{piezaConfiguradorManager.tiposPiezasBiclicleta()}">
+									<div class="Container">
+									<div class="Container33">
+										<p:outputLabel value="Seleccione #{tipoPieza}" />
+									</div>
+									<div class="Container33">
+										<p:selectOneMenu required="true">
+											<f:selectItem noSelectionOption="true" />
+											<f:selectItems
+												value="#{configuradorManager.marcos}"
+												var="pieza" itemLabel="#{pieza.descripcion}"
+												itemValue="#{pieza.id}" />
+										</p:selectOneMenu>
+									</div>
+									</div>
+								</p:repeat>
+
+							</p:panel>
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>
