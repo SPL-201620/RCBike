@@ -26,7 +26,7 @@
                 <div class="Card ShadowEffect">
                     <div class="Wid100 OvHidden BigTopic Fs30">Registro</div>
                 	
-                	<div class="Container100 Responsive">
+                	<div class="Container100 Responsive100">
 	                <h:form id="formCargaImagen">
                 	<div class="Container40 Responsive">
                     	<h:panelGroup layout="block" rendered="#{empty registroManager.foto}">
@@ -55,7 +55,7 @@
 	                   	 	styleClass="Wid80 TexAlCenter Fs18" />
                     	<div class="EmptyBox10 Wid80"/>
 						<p:inputText type="password" placeholder="Contraseña" value="#{registroManager.clave}" 
-	                   		required="true" styleClass="Wid80 TexAlCenter Fs18" />
+	                   		required="true" styleClass="Wid80 TexAlCenter Fs18" rendered="#{registroManager.registroLocal}"/>
                     	<div class="EmptyBox10 Wid80"/>
                     	<p:inputText placeholder="Nombres" value="#{registroManager.nombres}" required="true"
                     	 	styleClass="Wid80 TexAlCenter Fs18" />

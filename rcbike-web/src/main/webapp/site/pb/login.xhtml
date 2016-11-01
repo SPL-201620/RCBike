@@ -19,9 +19,9 @@
     <h:body styleClass="GrayModena Geometry" style="height:auto;">
     	
     	
-	    <h:form>
-			<p:remoteCommand name="autenticarRCBike" update=""
-						action="#{autenticacionManager.autenticar}"/>
+	    <h:form id="formAuthExterna">
+	    	<h:inputHidden id="#{autenticacionManager.getPARAM_AUTH_SERVICE()}" value="#{autenticacionManager.authContent}" required="true"/>
+			<p:remoteCommand name="autenticarRCBike" action="#{autenticacionManager.autenticar}" update="growl"/>
 		</h:form>
     	
     	
@@ -67,11 +67,13 @@
                     <div class="EmptyBox10"/>
                     <div class="Wid100">
                     	<p:inputText id="login-clave" type="password" placeholder="Contraseña" styleClass="Wid70 TexAlCenter Fs18" required="true"/>
+                    	<h:inputHidden id="#{autenticacionManager.getPARAM_AUTH_SERVICE()}" value="#{autenticacionManager.authContent}" required="true"/>
                     </div>
                     <div class="EmptyBox20"/>
                     <div class="Wid100">
-                    	<p:commandButton id="login-continue" value="Ingresar / Registrarme" onclick="loginLocal(); return false;"
-                    	icon="fa fa-sign-in" styleClass="Wid80 Fs18 White RaisedButton FloatNoneOnMobile GreenButton"/>
+                    	<p:commandButton id="login-continue" value="Ingresar / Registrarme" onclick="loginLocal();"
+                    	icon="fa fa-sign-in" styleClass="Wid80 Fs18 White RaisedButton FloatNoneOnMobile GreenButton" update="growl"
+						action="#{autenticacionManager.autenticar}"/>
                     </div>
                     <div class="Separator" style="display:none"/>
                     <div class="Wid100" style="display:none">
