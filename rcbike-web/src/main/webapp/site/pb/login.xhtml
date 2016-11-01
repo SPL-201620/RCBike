@@ -26,10 +26,13 @@
     	
     	
     	<p:outputPanel>
-    		<ui:include src="/WEB-INF/include/facebook/facebook-sdk.xhtml"/>
-    		<ui:include src="/WEB-INF/include/facebook/facebook-login.xhtml"/>
+    		<ui:include src="/WEB-INF/include/facebook-auth/facebook-sdk.xhtml"/>
+    		<ui:include src="/WEB-INF/include/facebook-auth/facebook-login.xhtml"/>
 		</p:outputPanel>
 		
+		<p:outputPanel>
+    		<ui:include src="/WEB-INF/include/local-auth/local-login.xhtml"/>
+		</p:outputPanel>
 		
         <div class="Wid90 DispBlock MarAuto MarTopPerc5 TexAlCenter">
             <div class="Wid40 MarAuto WidAutoOnMobile">
@@ -50,25 +53,24 @@
 
                     <p:outputPanel layout="block" styleClass="Wid100">
                     	<p:button value="Twitter" icon="fa fa-twitter" 
-                    	styleClass="Wid80 Fs18 White RaisedButton FloatNoneOnMobile" style="background-color: #1da1f2;" hhref="#"
+                    	styleClass="Wid80 Fs18 White RaisedButton FloatNoneOnMobile" style="background-color: #1da1f2;" href="#"
                     	/>
 					</p:outputPanel>
 	                    
                     <div class="EmptyBox10"/>
                     <div class="Separator"/>
                     
-                    <h:form>
+                    <h:form id="formAuthLocal">
                     <div class="Wid100">
-                    	<p:inputText id="login-email" placeholder="Correo" value="#{autenticacionManager.email}" styleClass="Wid70 TexAlCenter Fs18"/>
+                    	<p:inputText id="login-email" placeholder="Correo" styleClass="Wid70 TexAlCenter Fs18" required="true"/>
                     </div>
                     <div class="EmptyBox10"/>
                     <div class="Wid100">
-                    	<p:inputText id="login-clave" type="password" placeholder="Contraseña" value="#{autenticacionManager.clave}" 
-                    	styleClass="Wid70 TexAlCenter Fs18"/>
+                    	<p:inputText id="login-clave" type="password" placeholder="Contraseña" styleClass="Wid70 TexAlCenter Fs18" required="true"/>
                     </div>
                     <div class="EmptyBox20"/>
                     <div class="Wid100">
-                    	<p:commandButton id="login-continue" value="Ingresar / Registrarme" action="#{autenticacionManager.autenticar()}" 
+                    	<p:commandButton id="login-continue" value="Ingresar / Registrarme" onclick="loginLocal(); return false;"
                     	icon="fa fa-sign-in" styleClass="Wid80 Fs18 White RaisedButton FloatNoneOnMobile GreenButton"/>
                     </div>
                     <div class="Separator" style="display:none"/>
@@ -86,7 +88,7 @@
             </div>
         </div>
         
-        
+        <p:growl id="growl" showDetail="true"/>
         <h:outputStylesheet name="css/rcbike.min.css" library="modena-layout" />
     </h:body>
 

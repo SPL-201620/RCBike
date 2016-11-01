@@ -8,9 +8,11 @@ import java.io.Serializable;
 import java.util.Base64;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.imageio.ImageIO;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.client.Entity;
@@ -73,8 +75,11 @@ public class RegistroManager implements Serializable {
 
     @PostConstruct
     public void init() {
-        this.email = autenticacionManager.getEmail();
-        this.clave = autenticacionManager.getClave();
+        this.email = autenticacionManager.getResAutenticacion().getEmail();
+        this.clave = autenticacionManager.getResAutenticacion().getClave();
+
+        this.nombres = autenticacionManager.getResAutenticacion().getNombresExternos();
+        this.clave = autenticacionManager.getResAutenticacion().getApellidosExternos();
     }
 
     public String registrar() throws IOException {
@@ -88,11 +93,9 @@ public class RegistroManager implements Serializable {
         Response response = modulosManager.root(Modulo.usuarios).path(OperacionesUsuarios.EP_USUARIOS).request()
                 .post(Entity.json(regUsuario));
         log.debug(response);
-
-        autenticacionManager.setEmail(email);
-        autenticacionManager.setClave(clave);
-        autenticacionManager.autenticar();
-        return Navegacion.redirectView(Views.dashboard);
+        FacesContext.getCurrentInstance().addMessage(null,
+                new FacesMessage("Usuario Creado", "Por favor ingrese nuevamente."));
+        return Navegacion.redirectView(Views.login);
     }
 
     public void cargarImagen(FileUploadEvent event) throws IOException {

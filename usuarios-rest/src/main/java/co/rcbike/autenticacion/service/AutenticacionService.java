@@ -9,6 +9,7 @@ import javax.naming.NamingException;
 import javax.persistence.EntityManager;
 
 import co.rcbike.autenticacion.model.AutenticacionUsuario;
+import co.rcbike.autenticacion.model.ResultadoAutenticacion;
 import co.rcbike.autenticacion.strategy.AutenticacionStrategy;
 
 @Stateless
@@ -17,12 +18,6 @@ public class AutenticacionService {
     @Inject
     private EntityManager em;
 
-    public enum EstadoAutenticacion {
-        OK,
-        CLAVE_ERRONEA,
-        NO_EXISTE_USUARIO;
-    }
-
     public void registrar(String email, String clave) {
         AutenticacionUsuario entity = new AutenticacionUsuario();
         entity.setEmail(email);
@@ -30,7 +25,7 @@ public class AutenticacionService {
         em.persist(entity);
     }
 
-    public EstadoAutenticacion autenticar(Map<String, Object> valoresAutenticacion) {
+    public ResultadoAutenticacion autenticar(Map<String, Object> valoresAutenticacion) {
 
         String authStrategy = (String) valoresAutenticacion.get("authStrategy");
         try {

@@ -49,7 +49,7 @@ public class RutaManager implements Serializable {
     public void init() {
         java.lang.System.out.print(".-----inicio\n");
 
-        this.email = autenticacionManager.getEmail();
+        this.email = AutenticacionManager.emailAutenticado();
 
         java.lang.System.out.print("El Email:" + this.email);
 

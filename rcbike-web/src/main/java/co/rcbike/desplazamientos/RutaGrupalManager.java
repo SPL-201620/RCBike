@@ -22,43 +22,38 @@ import lombok.extern.jbosslog.JBossLog;
 @ViewScoped
 @JBossLog
 public class RutaGrupalManager implements Serializable {
-	@Getter
+    @Getter
     @Setter
     private List<RutaWeb> rutas;
-	
-	@Getter
+
+    @Getter
     @Setter
     private String email;
-	
-	@Getter
-	@Setter
-	private RutaWeb ruta;
-	
-	@Getter
+
+    @Getter
+    @Setter
+    private RutaWeb ruta;
+
+    @Getter
     @Setter
     @ManagedProperty(value = "#{modulosManager}")
     private ModulosManager modulosManager;
-	
-	@Getter
-    @Setter
-    @ManagedProperty(value = "#{autenticacionManager}")
-    private AutenticacionManager autenticacionManager;
 
-	@SuppressWarnings("unchecked")
-	@PostConstruct
+    @SuppressWarnings("unchecked")
+    @PostConstruct
     public void init() {
-		java.lang.System.out.print(".-----inicioGrupales\n");
+        java.lang.System.out.print(".-----inicioGrupales\n");
 
-		this.email = autenticacionManager.getEmail();
-		
-		java.lang.System.out.print("El Email:" +this.email);
-		
-		SnoopServiceClient desplazamientoRest = modulosManager.clienteSnoop(Modulo.desplazamientos);
-        
+        this.email = AutenticacionManager.emailAutenticado();
+
+        java.lang.System.out.print("El Email:" + this.email);
+
+        SnoopServiceClient desplazamientoRest = modulosManager.clienteSnoop(Modulo.desplazamientos);
+
         rutas = desplazamientoRest.getServiceRoot().path("grupal").path("listViajesGrupales").request().get(List.class);
-        
+
         java.lang.System.out.print("\n");
-        
+
         java.lang.System.out.print(rutas.toString());
     }
 }
