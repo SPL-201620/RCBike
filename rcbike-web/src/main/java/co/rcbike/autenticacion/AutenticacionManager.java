@@ -49,6 +49,10 @@ public class AutenticacionManager implements Serializable {
 
     @Getter
     @Setter
+    private String authContent;
+
+    @Getter
+    @Setter
     @ManagedProperty(value = "#{modulosManager}")
     private ModulosManager modulos;
 
@@ -64,10 +68,6 @@ public class AutenticacionManager implements Serializable {
     }
 
     public String autenticar() throws IOException {
-        Map<String, String> requestParameterMap = FacesContext.getCurrentInstance().getExternalContext()
-                .getRequestParameterMap();
-        String authContent = requestParameterMap.get(PARAM_AUTH_SERVICE);
-
         WebTarget serviceRoot = modulos.clienteSnoop(Modulo.autenticacion).getServiceRoot();
         Response response = serviceRoot.path(OperacionesAutenticacion.EP_AUTENTICACION).request()
                 .post(Entity.json(authContent));
@@ -94,11 +94,9 @@ public class AutenticacionManager implements Serializable {
     }
 
     private void extractResultadoAutenticacion(Response response) throws IOException {
-        Map<String, String> readEntity = response.readEntity(Map.class);
-
         ObjectMapper objectMapper = new ObjectMapper();
         String writeValueAsString = objectMapper.writer().withDefaultPrettyPrinter()
-                .writeValueAsString(readEntity.get("entity"));
+                .writeValueAsString(response.readEntity(Map.class).get("entity"));
         resAutenticacion = objectMapper.readValue(writeValueAsString, ResultadoAutenticacion.class);
     }
 

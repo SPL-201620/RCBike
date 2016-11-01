@@ -23,6 +23,8 @@ public class ResultadoAutenticacion implements Serializable {
 
     private String clave;
 
+    private boolean requiereClave;
+
     private String nombresExternos;
 
     private String apellidosExternos;
@@ -75,6 +77,14 @@ public class ResultadoAutenticacion implements Serializable {
 
     public void setFotoExterna(String fotoExterna) {
         this.fotoExterna = fotoExterna;
+    }
+
+    public boolean isRequiereClave() {
+        return requiereClave;
+    }
+
+    public void setRequiereClave(boolean requiereClave) {
+        this.requiereClave = requiereClave;
     }
 
 }

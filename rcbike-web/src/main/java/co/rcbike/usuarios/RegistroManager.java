@@ -64,6 +64,9 @@ public class RegistroManager implements Serializable {
     private String foto;
 
     @Getter
+    private boolean registroLocal;
+
+    @Getter
     @Setter
     @ManagedProperty(value = "#{autenticacionManager}")
     private AutenticacionManager autenticacionManager;
@@ -78,8 +81,10 @@ public class RegistroManager implements Serializable {
         this.email = autenticacionManager.getResAutenticacion().getEmail();
         this.clave = autenticacionManager.getResAutenticacion().getClave();
 
+        this.registroLocal = autenticacionManager.getResAutenticacion().isRequiereClave();
+
         this.nombres = autenticacionManager.getResAutenticacion().getNombresExternos();
-        this.clave = autenticacionManager.getResAutenticacion().getApellidosExternos();
+        this.apellidos = autenticacionManager.getResAutenticacion().getApellidosExternos();
     }
 
     public String registrar() throws IOException {

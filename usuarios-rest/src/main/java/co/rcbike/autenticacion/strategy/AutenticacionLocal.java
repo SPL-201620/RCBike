@@ -1,7 +1,6 @@
 package co.rcbike.autenticacion.strategy;
 
 import java.util.Map;
-import java.util.logging.Logger;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -17,9 +16,6 @@ import co.rcbike.autenticacion.model.ResultadoAutenticacion.EstadoAutenticacion;
 public class AutenticacionLocal extends AutenticacionStrategy {
 
     @Inject
-    private Logger log;
-
-    @Inject
     private EntityManager em;
 
     @SuppressWarnings("unchecked")
@@ -27,11 +23,16 @@ public class AutenticacionLocal extends AutenticacionStrategy {
     public ResultadoAutenticacion autenticar(Map<String, Object> valoresAutenticacion) {
         Map<String, String> payload = (Map<String, String>) valoresAutenticacion.get(ATTR_PAYLOAD);
         String email = payload.get("email");
-        log.fine("Autenticando Localmente: " + email);
-        EstadoAutenticacion autenticar = autenticar(email, payload.get("clave"));
+        String clave = payload.get("clave");
+        EstadoAutenticacion autenticar = autenticar(email, clave);
+
         ResultadoAutenticacion retorno = new ResultadoAutenticacion();
         retorno.setEstado(autenticar);
         retorno.setEmail(email);
+        if (autenticar.equals(EstadoAutenticacion.NO_EXISTE_USUARIO)) {
+            retorno.setClave(clave);
+            retorno.setRequiereClave(true);
+        }
         return retorno;
     }
 

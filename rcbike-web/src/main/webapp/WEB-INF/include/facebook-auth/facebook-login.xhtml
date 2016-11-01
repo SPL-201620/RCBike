@@ -11,11 +11,8 @@
 			if (response.status === 'connected') {
 				// Logged into your app and Facebook.
 				console.log("status connected")
-				autenticarRCBike([
-					{
-						name:'#{autenticacionManager.getPARAM_AUTH_SERVICE()}',
-						value: JSON.stringify({"authStrategy":"Facebook", "payload":response })
-					}]);
+				$("#formAuthExterna\\:#{autenticacionManager.getPARAM_AUTH_SERVICE()}").val(JSON.stringify({"authStrategy":"Facebook", "payload":response }));
+				autenticarRCBike();
 				         
 			} else if (response.status === 'not_authorized') {
 				// The person is logged into Facebook, but not your app.

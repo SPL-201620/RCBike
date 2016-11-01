@@ -79,8 +79,10 @@ public class AutenticacionFacebook extends AutenticacionStrategy {
         if (usuario == null) {
             retorno.setNombresExternos(map.get(respFirstName).toString());
             retorno.setApellidosExternos(map.get(respLastName).toString());
+            retorno.setEstado(EstadoAutenticacion.NO_EXISTE_USUARIO);
+        } else {
+            retorno.setEstado(EstadoAutenticacion.OK);
         }
         retorno.setEmail(emailFacebook);
-        retorno.setEstado(EstadoAutenticacion.OK);
     }
 }

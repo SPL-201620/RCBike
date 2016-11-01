@@ -96,12 +96,9 @@ public class UsuariosService {
         usuario.setNombres(registroUsuario.getNombres());
         usuario.setApellidos(registroUsuario.getApellidos());
         usuario.setFoto(registroUsuario.getFoto());
-        try {
-            em.persist(usuario);
+        em.persist(usuario);
+        if (registroUsuario.getClave() != null) {
             autenticacion.registrar(registroUsuario.getEmail(), registroUsuario.getClave());
-        } catch (Exception e) {
-            // TODO usuario ya existe
-            e.printStackTrace();
         }
     }
 
