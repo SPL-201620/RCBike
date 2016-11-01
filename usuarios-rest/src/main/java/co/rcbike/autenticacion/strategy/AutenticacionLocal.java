@@ -10,8 +10,8 @@ import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
 import co.rcbike.autenticacion.model.AutenticacionUsuario;
-import co.rcbike.autenticacion.model.ConstantesAutenticacion;
-import co.rcbike.autenticacion.service.AutenticacionService.EstadoAutenticacion;
+import co.rcbike.autenticacion.model.ResultadoAutenticacion;
+import co.rcbike.autenticacion.model.ResultadoAutenticacion.EstadoAutenticacion;
 
 @Stateless
 public class AutenticacionLocal extends AutenticacionStrategy {
@@ -22,14 +22,20 @@ public class AutenticacionLocal extends AutenticacionStrategy {
     @Inject
     private EntityManager em;
 
+    @SuppressWarnings("unchecked")
     @Override
-    public EstadoAutenticacion autenticar(Map<String, Object> valoresAutenticacion) {
-        String email = (String) valoresAutenticacion.get(ConstantesAutenticacion.AUTH_LOCAL_PARAM_EMAIL);
+    public ResultadoAutenticacion autenticar(Map<String, Object> valoresAutenticacion) {
+        Map<String, String> payload = (Map<String, String>) valoresAutenticacion.get(ATTR_PAYLOAD);
+        String email = payload.get("email");
         log.fine("Autenticando Localmente: " + email);
-        return autenticar(email, (String) valoresAutenticacion.get(ConstantesAutenticacion.AUTH_LOCAL_PARAM_CLAVE));
+        EstadoAutenticacion autenticar = autenticar(email, payload.get("clave"));
+        ResultadoAutenticacion retorno = new ResultadoAutenticacion();
+        retorno.setEstado(autenticar);
+        retorno.setEmail(email);
+        return retorno;
     }
 
-    public EstadoAutenticacion autenticar(String email, String clave) {
+    private EstadoAutenticacion autenticar(String email, String clave) {
         AutenticacionUsuario aut = findByEmail(email);
         if (aut != null) {
             return aut.getClave().equals(clave) ? EstadoAutenticacion.OK : EstadoAutenticacion.CLAVE_ERRONEA;

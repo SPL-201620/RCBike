@@ -96,8 +96,6 @@
 			<scope>test</scope>
 		</dependency>
 
-
-
 		<!-- RCBIKE DEPENDENCIES -->
 		<dependency>
 			<groupId>eu.agilejava</groupId>

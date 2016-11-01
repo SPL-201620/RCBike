@@ -1,7 +1,6 @@
 package co.rcbike.autenticacion.strategy.facebook;
 
 import java.util.Map;
-import java.util.logging.Logger;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -11,13 +10,17 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 
-import co.rcbike.autenticacion.service.AutenticacionService.EstadoAutenticacion;
+import co.rcbike.autenticacion.model.ResultadoAutenticacion;
+import co.rcbike.autenticacion.model.ResultadoAutenticacion.EstadoAutenticacion;
 import co.rcbike.autenticacion.strategy.AutenticacionStrategy;
+import co.rcbike.usuarios.model.Usuario;
+import co.rcbike.usuarios.service.UsuariosService;
 
 @Stateless
 public class AutenticacionFacebook extends AutenticacionStrategy {
+
     @Inject
-    private Logger logger;
+    private UsuariosService usuarioService;
 
     private static final String FB_RS_ATTR_STATUS = "status";
 
@@ -36,41 +39,48 @@ public class AutenticacionFacebook extends AutenticacionStrategy {
      *      Facebook Login Status</a>
      */
 
+    @SuppressWarnings({"unchecked", "rawtypes"})
     @Override
-    public EstadoAutenticacion autenticar(Map<String, Object> valoresAutenticacion) {
-
-        Map payload = (Map) valoresAutenticacion.get(super.ATTR_PAYLOAD);
+    public ResultadoAutenticacion autenticar(Map<String, Object> valoresAutenticacion) {
+        ResultadoAutenticacion retornoAutenticacion = new ResultadoAutenticacion();
+        Map payload = (Map) valoresAutenticacion.get(ATTR_PAYLOAD);
         String authVal = (String) payload.get(FB_RS_ATTR_STATUS);
 
         switch (authVal) {
             case AUTH_OK_VAL :
-                processAuthOk((Map) payload.get(FB_RS_ATTR_AUTH_RESP));
+                processAuthOk(retornoAutenticacion, (Map) payload.get(FB_RS_ATTR_AUTH_RESP));
                 break;
             case AUTH_FAIL_VAL :
-                return EstadoAutenticacion.CLAVE_ERRONEA;
+                retornoAutenticacion.setEstado(EstadoAutenticacion.CLAVE_ERRONEA);
+                break;
             default :
                 break;
         }
-        return null;
+        return retornoAutenticacion;
     }
 
-    private void processAuthOk(Map<String, String> authResponse) {
+    private void processAuthOk(ResultadoAutenticacion retorno, Map<String, String> authResponse) {
         // picture?type=square&height=140
-        String respCover = "cover";
         String respLastName = "last_name";
         String respFirstName = "first_name";
         String respEmail = "email";
         Client cl = ClientBuilder.newClient();
+
         WebTarget mainEndpoint = cl.target("https://graph.facebook.com/v2.8").path(authResponse.get(FB_RS_ATTR_UID));
         WebTarget profileEP = mainEndpoint.queryParam("access_token", authResponse.get(FB_RS_ATTR_TOKEN))
                 .queryParam("fields", "id,email,first_name,last_name");
+
         Map<String, Object> map = profileEP.request(MediaType.APPLICATION_JSON_TYPE)
                 .get(new GenericType<Map<String, Object>>() {
                 });
-        logger.info("respuesta facebook ");
-        logger.info(map.get(respEmail).toString());
-        logger.info(map.get(respFirstName).toString());
-        logger.info(map.get(respLastName).toString());
 
+        String emailFacebook = map.get(respEmail).toString();
+        Usuario usuario = usuarioService.findUsuario(emailFacebook);
+        if (usuario == null) {
+            retorno.setNombresExternos(map.get(respFirstName).toString());
+            retorno.setApellidosExternos(map.get(respLastName).toString());
+        }
+        retorno.setEmail(emailFacebook);
+        retorno.setEstado(EstadoAutenticacion.OK);
     }
 }

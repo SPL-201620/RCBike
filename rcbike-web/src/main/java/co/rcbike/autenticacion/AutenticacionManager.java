@@ -18,7 +18,10 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import co.rcbike.autenticacion.model.OperacionesAutenticacion;
+import co.rcbike.autenticacion.model.ResultadoAutenticacion;
 import co.rcbike.gui.ModulosManager;
 import co.rcbike.gui.ModulosManager.Modulo;
 import co.rcbike.web.util.Navegacion;
@@ -42,12 +45,7 @@ public class AutenticacionManager implements Serializable {
     private final String serverIp = "localhost:8080";
 
     @Getter
-    @Setter
-    private String email;
-
-    @Getter
-    @Setter
-    private String clave;
+    private ResultadoAutenticacion resAutenticacion;
 
     @Getter
     @Setter
@@ -65,10 +63,6 @@ public class AutenticacionManager implements Serializable {
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put(AUTENTICADO_ATTR, false);
     }
 
-    public String autenticar2() {
-        return null;
-    }
-
     public String autenticar() throws IOException {
         Map<String, String> requestParameterMap = FacesContext.getCurrentInstance().getExternalContext()
                 .getRequestParameterMap();
@@ -77,24 +71,35 @@ public class AutenticacionManager implements Serializable {
         WebTarget serviceRoot = modulos.clienteSnoop(Modulo.autenticacion).getServiceRoot();
         Response response = serviceRoot.path(OperacionesAutenticacion.EP_AUTENTICACION).request()
                 .post(Entity.json(authContent));
+
         Status status = Response.Status.fromStatusCode(response.getStatus());
 
         cambiarEstadoAutenticacion(false);
         switch (status) {
             case NOT_FOUND :
+                extractResultadoAutenticacion(response);
                 return redirectView(registro);
             case UNAUTHORIZED :
-                clave = null;
                 return null;
             case OK :
-                clave = null;
+                extractResultadoAutenticacion(response);
                 cambiarEstadoAutenticacion(true);
-                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put(EMAIL_ATTR, email);
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put(EMAIL_ATTR,
+                        resAutenticacion.getEmail());
                 Navegacion.sendRedirect("/site/usuarios/dashboard.xhtml");
                 return null;
             default :
                 return redirectView(error);
         }
+    }
+
+    private void extractResultadoAutenticacion(Response response) throws IOException {
+        Map<String, String> readEntity = response.readEntity(Map.class);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String writeValueAsString = objectMapper.writer().withDefaultPrettyPrinter()
+                .writeValueAsString(readEntity.get("entity"));
+        resAutenticacion = objectMapper.readValue(writeValueAsString, ResultadoAutenticacion.class);
     }
 
     public boolean autenticado() {
