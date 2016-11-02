@@ -51,12 +51,13 @@
 	                    
 	                <div class="EmptyBox10" />
 
+<h:form>
                     <p:outputPanel layout="block" styleClass="Wid100">
-                    	<p:button value="Twitter" icon="fa fa-twitter" 
-                    	styleClass="Wid80 Fs18 White RaisedButton FloatNoneOnMobile" style="background-color: #1da1f2;" href="#"
-                    	/>
+                    	<p:commandButton value="Twitter" icon="fa fa-twitter" 
+                    	styleClass="Wid80 Fs18 White RaisedButton FloatNoneOnMobile" style="background-color: #1da1f2;"
+                    	action="#{autenticacionTwitter.requestToken()}"/>
 					</p:outputPanel>
-	                    
+	    </h:form>                
                     <div class="EmptyBox10"/>
                     <div class="Separator"/>
                     
