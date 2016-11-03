@@ -45,6 +45,7 @@ public class AutenticacionManager implements Serializable {
     private final String serverIp = "localhost:8080";
 
     @Getter
+    @Setter
     private ResultadoAutenticacion resAutenticacion;
 
     @Getter

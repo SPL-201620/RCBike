@@ -1,0 +1,45 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<script>
+	//<![CDATA[
+	$.extend({
+	  getUrlVars: function(){
+	    var vars = [], hash;
+	    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+	    for(var i = 0; i < hashes.length; i++)
+	    {
+	      hash = hashes[i].split('=');
+	      vars.push(hash[0]);
+	      vars[hash[0]] = hash[1];
+	    }
+	    return vars;
+	  },
+	  getUrlVar: function(name){
+	    return $.getUrlVars()[name];
+	  }
+	});
+	
+	function loginTwitter(){
+		var payload = { "oauth_token":$.getUrlVar('oauth_token'),"oauth_verifier":$.getUrlVar('oauth_verifier') };
+		$("#formAuthTwitter\\:#{autenticacionManager.getPARAM_AUTH_SERVICE()}").val(JSON.stringify({"authStrategy":"Twitter", "payload":payload }));
+		autenticarTwitter();
+	}
+	
+	if($.getUrlVar('serv')=='twitter'){
+		$().ready(function(){
+			loginTwitter()
+		});
+	}
+	//]]>
+	</script>
+	
+	<h:form id="formAuthTwitter">
+		<h:inputHidden id="#{autenticacionManager.getPARAM_AUTH_SERVICE()}" value="#{autenticacionTwitter.authContent}" required="true"/>
+		<p:remoteCommand name="autenticarTwitter" action="#{autenticacionTwitter.accessToken}" update="growl"/>
+	</h:form>
+	
+</ui:composition>

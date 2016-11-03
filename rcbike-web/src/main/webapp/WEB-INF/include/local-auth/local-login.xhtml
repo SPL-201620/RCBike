@@ -7,7 +7,8 @@
 	<script>
 	function loginLocal() {
 		var payload = { "email": $("#formAuthLocal\\:login-email").val(), "clave": $("#formAuthLocal\\:login-clave").val() };
-		$("#formAuthLocal\\:#{autenticacionManager.getPARAM_AUTH_SERVICE()}").val(JSON.stringify({"authStrategy":"Local", "payload":payload }));
+		$("#formAuthExterna\\:#{autenticacionManager.getPARAM_AUTH_SERVICE()}").val(JSON.stringify({"authStrategy":"Local", "payload":payload }));
+		autenticarRCBike();
 	}
 	</script>
 	
