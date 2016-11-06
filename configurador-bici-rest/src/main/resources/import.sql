@@ -9,6 +9,10 @@ insert into Pieza (id,tipo,descripcion) values(-10,'MARCO','Marco elastico');
 insert into Pieza (id,tipo,descripcion) values(-11,'LLANTA_DELANTERA','Llanta subliminal');
 insert into Pieza (id,tipo,descripcion) values(-12,'FRENOS','Freno disco');
 insert into Pieza (id,tipo,descripcion) values(-13,'CAMBIOS','9 pinones');
+insert into Pieza (id,tipo,descripcion) values(-14,'LUZ','LED');
+insert into Pieza (id,tipo,descripcion) values(-15,'LUZ','Encandecente');
+insert into Pieza (id,tipo,descripcion) values(-16,'PITO','Tipo moto');
+insert into Pieza (id,tipo,descripcion) values(-17,'PITO','Bocina');
 
 --Colores
 insert into Color (id,descripcion) values(-1,'NO APLICA');

@@ -16,29 +16,84 @@
 						<div class="ContainerIndent">
 							<h2 class="BigTopic" align="center">Configurador RC-BIKE</h2>
 
-							<p:panel id="pnlConfiguracion">
+							<p:panel id="pnlConfiguracion" header="Realice su configuracion"
+								style="margin-bottom:20px" collapsed="4">
 
 								<p:repeat var="tipoPieza"
 									value="#{piezaConfiguradorManager.tiposPiezasBiclicleta()}">
 									<div class="Container">
-									<div class="Container33">
-										<p:outputLabel value="Seleccione #{tipoPieza}" />
-									</div>
-									<div class="Container33">
-										<p:selectOneMenu required="true">
-											<f:selectItem noSelectionOption="true" />
-											<f:selectItems
-												value="#{configuradorManager.marcos}"
-												var="pieza" itemLabel="#{pieza.descripcion}"
-												itemValue="#{pieza.id}" />
-										</p:selectOneMenu>
-									</div>
+										<div class="Container25">
+											<p:outputLabel value="Seleccione #{tipoPieza}" />
+										</div>
+										<div class="Container25">
+											<p:selectOneMenu required="true" style="width:125px"
+												converter="genericConverter"
+												value="#{configuradorManager.pieza}">
+												<p:ajax
+													listener="#{configuradorManager.piezasConfiguradas()}" />
+												<f:selectItem noSelectionOption="true" />
+												<f:selectItems
+													value="#{piezaConfiguradorManager.piezaPorTipo(tipoPieza)}"
+													var="pieza" itemLabel="#{pieza.descripcion}"
+													itemValue="#{pieza}" />
+											</p:selectOneMenu>
+										</div>
 									</div>
 								</p:repeat>
-
 							</p:panel>
+							<p:panel id="pnlConfiguracionGeneral"
+								header="Termine su configuracion" style="margin-bottom:20px">
+								<div class="Container">
+									<div class="Container25">
+										<p:outputLabel value="Seleccione el color:" />
+									</div>
+									<div class="Container25">
+
+										<p:selectOneMenu required="true" style="width:125px"
+											value="#{configuradorManager.color}">
+											<f:selectItem noSelectionOption="true" />
+											<f:selectItems value="#{piezaConfiguradorManager.listColor}"
+												var="color" itemLabel="#{color.descripcion}"
+												itemValue="#{color.descripcion}" />
+										</p:selectOneMenu>
+									</div>
+									<div class="Container25">
+										<p:outputLabel
+											value="Inserte la descripcion para esta configuracion:" />
+									</div>
+									<div class="Container25">
+										<p:inputText id="descConfiguracion"
+											value="#{configuradorManager.descripcionConfiguracion}"
+											styleClass="Fs18" autocomplete="off" required="true" />
+									</div>
+									<div class="Container25">
+										<p:commandButton value="Insertar"
+											action="#{configuradorManager.insertConfiguracion()}"
+											process="@form" />
+									</div>
+								</div>
+							</p:panel>
+							<p:panel id="pnlConfiguracionesUsuario"
+								header="Configuraciones realizadas" style="margin-bottom:20px">
 
 
+								<p:dataTable var="configuraciones"
+									value="#{piezaConfiguradorManager.listConfiguraciones}">
+
+									<p:subTable var="piezas"
+										value="#{configuraciones.piezasConfiguracion}">
+										<f:facet name="header">
+											<h:outputText value="#{configuraciones.descripcion}" />
+										</f:facet>										
+										<p:column>
+											<h:outputText value="#{piezas.tipo}" />
+										</p:column>
+										<p:column>
+											<h:outputText value="#{piezas.descripcion}" />
+										</p:column>
+									</p:subTable>
+								</p:dataTable>
+							</p:panel>
 						</div>
 					</div>
 				</div>
