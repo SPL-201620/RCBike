@@ -5,18 +5,19 @@
 	xmlns:p="http://primefaces.org/ui" 
 	template="/WEB-INF/template.xhtml">
 
-
 	<ui:define name="content">
 		<div class="Container100">
 			<div class="ContainerIndent">
 				<div class="Card ShadowEffect">
 					<h2 class="CardTopic TexAlCenter Fs30">Recorridos</h2>
-					<p:tabView orientation="left">
-						<p:tab title="Individual">
+					<script
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfB1qF1ZdhXSYI_zBqrhRh03xy05pQfKs&amp;signed_in=true&amp;libraries=places"></script>
+					<p:tabView orientation="top">
+						<p:tab title="Mis recorridos individuales">
 							<ui:include src="individual.xhtml" />
 						</p:tab>
-						<p:tab title="Grupal">
-							<ui:include src="grupal.xhtml" />
+						<p:tab title="Recorridos Grupales públicos">
+							<ui:include src="grupal-publico.xhtml" />
 						</p:tab>
 					</p:tabView>
 				</div>
