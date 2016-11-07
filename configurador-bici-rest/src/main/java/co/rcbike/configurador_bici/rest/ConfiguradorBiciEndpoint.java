@@ -29,7 +29,6 @@ import co.rcbike.configurador_bici.service.TransformadorConfigurador;
 @RequestScoped
 public class ConfiguradorBiciEndpoint {
 
-<<<<<<< HEAD
 	/** PARAMETROS REST **/
 
 	// Separadores
@@ -56,9 +55,6 @@ public class ConfiguradorBiciEndpoint {
 	private static final String PARAM_TIPO = "tipo";
 
 	/** FIN PARAMETROS REST **/
-=======
-	
->>>>>>> branch 'master' of https://juanca0517@github.com/SPL-201620/RCBike.git
 
 	@Inject
 	private ConfiguradorService service;
@@ -66,21 +62,12 @@ public class ConfiguradorBiciEndpoint {
 	@Inject
 	private TransformadorConfigurador transformador;
 
-<<<<<<< HEAD
 	@GET
-	@Path(PATH_DELIM + ALIVE)
+	@Path(OperacionesConfigurador.PATH_DELIM + OperacionesConfigurador.ALIVE)
 	@Produces(MediaType.APPLICATION_JSON)
 	public String alive() {
 		return "endpoint alive";
 	}
-=======
-    @GET
-    @Path(OperacionesConfigurador.PATH_DELIM + OperacionesConfigurador.ALIVE)
-    @Produces(MediaType.APPLICATION_JSON)
-    public String alive() {
-        return "endpoint alive";
-    }
->>>>>>> branch 'master' of https://juanca0517@github.com/SPL-201620/RCBike.git
 
 	/***** CONFIGURACONES ****/
 
@@ -90,19 +77,18 @@ public class ConfiguradorBiciEndpoint {
 	 * @param id
 	 *            Identificador de configuracion
 	 */
-<<<<<<< HEAD
+
 	@GET
-	@Path(PATH_DELIM + CONFIGURACION + PATH_DELIM + LCURL + PARAM_ID + RCURL)
+	@Path(OperacionesConfigurador.PATH_DELIM
+			+ OperacionesConfigurador.CONFIGURACION
+			+ OperacionesConfigurador.PATH_DELIM
+			+ OperacionesConfigurador.LCURL + OperacionesConfigurador.PARAM_ID
+			+ OperacionesConfigurador.RCURL)
 	@Produces(MediaType.APPLICATION_JSON)
-	public ConfiguracionWeb getConfiguracion(@PathParam(PARAM_ID) Long id) {
+	public ConfiguracionWeb getConfiguracion(
+			@PathParam(OperacionesConfigurador.PARAM_ID) Long id) {
 		return transformador.toConfiguracionWeb(service.getConfiguracion(id));
-=======
-    @GET
-    @Path(OperacionesConfigurador.PATH_DELIM + OperacionesConfigurador.CONFIGURACION + OperacionesConfigurador.PATH_DELIM + OperacionesConfigurador.LCURL + OperacionesConfigurador.PARAM_ID + OperacionesConfigurador.RCURL)
-    @Produces(MediaType.APPLICATION_JSON)
-	public ConfiguracionWeb getConfiguracion(@PathParam(OperacionesConfigurador.PARAM_ID) Long id) {
-    	return transformador.toConfiguracionWeb(service.getConfiguracion(id));
->>>>>>> branch 'master' of https://juanca0517@github.com/SPL-201620/RCBike.git
+
 	}
 
 	/**
@@ -112,17 +98,12 @@ public class ConfiguradorBiciEndpoint {
 	 *            Informacion de la configuracion a crear
 	 * @return Identificador de configuracion creada
 	 */
-<<<<<<< HEAD
+
 	@POST
-	@Path(PATH_DELIM + CONFIGURACION)
+	@Path(OperacionesConfigurador.PATH_DELIM
+			+ OperacionesConfigurador.CONFIGURACION)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-=======
-    @POST
-    @Path(OperacionesConfigurador.PATH_DELIM + OperacionesConfigurador.CONFIGURACION)
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
->>>>>>> branch 'master' of https://juanca0517@github.com/SPL-201620/RCBike.git
 	public Long postConfiguracion(ConfiguracionWeb configuracion) {
 		return service.persistConfiguracion(transformador
 				.toConfiguracionJpa(configuracion));
@@ -135,17 +116,12 @@ public class ConfiguradorBiciEndpoint {
 	 *            Informacion de la configuracion a crear
 	 * @return Identificador de configuracion creada
 	 */
-<<<<<<< HEAD
+
 	@PUT
-	@Path(PATH_DELIM + CONFIGURACION)
+	@Path(OperacionesConfigurador.PATH_DELIM
+			+ OperacionesConfigurador.CONFIGURACION)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-=======
-    @PUT
-    @Path(OperacionesConfigurador.PATH_DELIM + OperacionesConfigurador.CONFIGURACION)
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
->>>>>>> branch 'master' of https://juanca0517@github.com/SPL-201620/RCBike.git
 	public Long putConfiguracion(ConfiguracionWeb configuracion) {
 		return service.mergeConfiguracion(transformador
 				.toConfiguracionJpa(configuracion));
@@ -158,17 +134,16 @@ public class ConfiguradorBiciEndpoint {
 	 * @param id
 	 *            Identificador de configuracion
 	 */
-<<<<<<< HEAD
+
 	@DELETE
-	@Path(PATH_DELIM + CONFIGURACION + PATH_DELIM + LCURL + PARAM_ID + RCURL)
-	public void deleteConfiguracion(@PathParam(PARAM_ID) Long id) {
+	@Path(OperacionesConfigurador.PATH_DELIM
+			+ OperacionesConfigurador.CONFIGURACION
+			+ OperacionesConfigurador.PATH_DELIM
+			+ OperacionesConfigurador.LCURL + OperacionesConfigurador.PARAM_ID
+			+ OperacionesConfigurador.RCURL)
+	public void deleteConfiguracion(
+			@PathParam(OperacionesConfigurador.PARAM_ID) Long id) {
 		service.deleteConfiguracion(id);
-=======
-    @DELETE
-    @Path(OperacionesConfigurador.PATH_DELIM + OperacionesConfigurador.CONFIGURACION + OperacionesConfigurador.PATH_DELIM + OperacionesConfigurador.LCURL + OperacionesConfigurador.PARAM_ID + OperacionesConfigurador.RCURL)
-	public void deleteConfiguracion(@PathParam(OperacionesConfigurador.PARAM_ID) Long id) {
-    	service.deleteConfiguracion(id);
->>>>>>> branch 'master' of https://juanca0517@github.com/SPL-201620/RCBike.git
 	}
 
 	/**
@@ -178,7 +153,10 @@ public class ConfiguradorBiciEndpoint {
 	 *            configuracion de una bicicleta
 	 */
 	@POST
-	@Path(OperacionesConfigurador.PATH_DELIM + OperacionesConfigurador.CONFIGURACION + OperacionesConfigurador.PATH_DELIM + OperacionesConfigurador.VALIDAR)
+	@Path(OperacionesConfigurador.PATH_DELIM
+			+ OperacionesConfigurador.CONFIGURACION
+			+ OperacionesConfigurador.PATH_DELIM
+			+ OperacionesConfigurador.VALIDAR)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public ValidacionConfiguracion validarConfiguracion(
@@ -194,20 +172,17 @@ public class ConfiguradorBiciEndpoint {
 	 *            configuracion de una bicicleta
 	 */
 	@GET
-<<<<<<< HEAD
-	@Path(PATH_DELIM + CONFIGURACION + PATH_DELIM + LCURL + PARAM_ID + RCURL
-			+ PATH_DELIM + VALIDAR)
-=======
-	@Path(OperacionesConfigurador.PATH_DELIM + OperacionesConfigurador.CONFIGURACION + OperacionesConfigurador.PATH_DELIM + OperacionesConfigurador.LCURL + OperacionesConfigurador.PARAM_ID + OperacionesConfigurador.RCURL + OperacionesConfigurador.PATH_DELIM + OperacionesConfigurador.VALIDAR)
->>>>>>> branch 'master' of https://juanca0517@github.com/SPL-201620/RCBike.git
+	@Path(OperacionesConfigurador.PATH_DELIM
+			+ OperacionesConfigurador.CONFIGURACION
+			+ OperacionesConfigurador.PATH_DELIM
+			+ OperacionesConfigurador.LCURL + OperacionesConfigurador.PARAM_ID
+			+ OperacionesConfigurador.RCURL
+			+ OperacionesConfigurador.PATH_DELIM
+			+ OperacionesConfigurador.VALIDAR)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-<<<<<<< HEAD
 	public ValidacionConfiguracion validarConfiguracion(
-			@PathParam(PARAM_ID) Long id) {
-=======
-	public ValidacionConfiguracion validarConfiguracion(@PathParam(OperacionesConfigurador.PARAM_ID) Long id) {
->>>>>>> branch 'master' of https://juanca0517@github.com/SPL-201620/RCBike.git
+			@PathParam(OperacionesConfigurador.PARAM_ID) Long id) {
 		return service.validarConfiguracion(id);
 	}
 
@@ -217,15 +192,11 @@ public class ConfiguradorBiciEndpoint {
 	 * REST: GET,/configuraciones, list all Lista todos los recorridos
 	 * 
 	 */
-<<<<<<< HEAD
+
 	@GET
-	@Path(PATH_DELIM + CONFIGURACIONES)
+	@Path(OperacionesConfigurador.PATH_DELIM
+			+ OperacionesConfigurador.CONFIGURACIONES)
 	@Produces(MediaType.APPLICATION_JSON)
-=======
-    @GET
-    @Path(OperacionesConfigurador.PATH_DELIM + OperacionesConfigurador.CONFIGURACIONES)
-    @Produces(MediaType.APPLICATION_JSON)
->>>>>>> branch 'master' of https://juanca0517@github.com/SPL-201620/RCBike.git
 	public List<ConfiguracionWeb> getConfiguraciones() {
 		return transformador.toListConfiguracionWeb(service
 				.listTodosConfiguraciones());
@@ -238,21 +209,18 @@ public class ConfiguradorBiciEndpoint {
 	 * @param emailCreador
 	 *            email del usuario
 	 */
-<<<<<<< HEAD
+
 	@GET
-	@Path(PATH_DELIM + CONFIGURACIONES + PATH_DELIM + POR_EMAIL)
+	@Path(OperacionesConfigurador.PATH_DELIM
+			+ OperacionesConfigurador.CONFIGURACIONES
+			+ OperacionesConfigurador.PATH_DELIM
+			+ OperacionesConfigurador.POR_EMAIL)
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<ConfiguracionWeb> getConfiguraciones(
-			@QueryParam(PARAM_EMAIL_CREADOR) String emailCreador) {
+			@QueryParam(OperacionesConfigurador.PARAM_EMAIL_CREADOR) String emailCreador) {
 		return transformador.toListConfiguracionWeb(service
 				.listConfiguraciones(emailCreador));
-=======
-    @GET
-    @Path(OperacionesConfigurador.PATH_DELIM + OperacionesConfigurador.CONFIGURACIONES + OperacionesConfigurador.PATH_DELIM + OperacionesConfigurador.POR_EMAIL)
-    @Produces(MediaType.APPLICATION_JSON)
-	public List<ConfiguracionWeb> getConfiguraciones(@QueryParam(OperacionesConfigurador.PARAM_EMAIL_CREADOR) String emailCreador) {
-    	return transformador.toListConfiguracionWeb(service.listConfiguraciones(emailCreador));
->>>>>>> branch 'master' of https://juanca0517@github.com/SPL-201620/RCBike.git
+
 	}
 
 	/***** PIEZA CONFIGURACION *****/
@@ -263,22 +231,19 @@ public class ConfiguradorBiciEndpoint {
 	 * @param id
 	 *            Identificador de piezaConfiguracion
 	 */
-<<<<<<< HEAD
+
 	@GET
-	@Path(PATH_DELIM + PIEZA_CONFIGURACION + PATH_DELIM + LCURL + PARAM_ID
-			+ RCURL)
+	@Path(OperacionesConfigurador.PATH_DELIM
+			+ OperacionesConfigurador.PIEZA_CONFIGURACION
+			+ OperacionesConfigurador.PATH_DELIM
+			+ OperacionesConfigurador.LCURL + OperacionesConfigurador.PARAM_ID
+			+ OperacionesConfigurador.RCURL)
 	@Produces(MediaType.APPLICATION_JSON)
 	public PiezaConfiguracionWeb getPiezaConfiguracion(
-			@PathParam(PARAM_ID) Long id) {
+			@PathParam(OperacionesConfigurador.PARAM_ID) Long id) {
 		return transformador.toPiezaConfiguracionWeb(service
 				.getPiezaConfiguracion(id));
-=======
-    @GET
-    @Path(OperacionesConfigurador.PATH_DELIM + OperacionesConfigurador.PIEZA_CONFIGURACION + OperacionesConfigurador.PATH_DELIM + OperacionesConfigurador.LCURL + OperacionesConfigurador.PARAM_ID + OperacionesConfigurador.RCURL)
-    @Produces(MediaType.APPLICATION_JSON)
-	public PiezaConfiguracionWeb getPiezaConfiguracion(@PathParam(OperacionesConfigurador.PARAM_ID) Long id) {
-    	return transformador.toPiezaConfiguracionWeb(service.getPiezaConfiguracion(id));
->>>>>>> branch 'master' of https://juanca0517@github.com/SPL-201620/RCBike.git
+
 	}
 
 	/**
@@ -288,17 +253,12 @@ public class ConfiguradorBiciEndpoint {
 	 *            Informacion de la piezaConfiguracion a crear
 	 * @return Identificador de piezaConfiguracion creada
 	 */
-<<<<<<< HEAD
+
 	@POST
-	@Path(PATH_DELIM + PIEZA_CONFIGURACION)
+	@Path(OperacionesConfigurador.PATH_DELIM
+			+ OperacionesConfigurador.PIEZA_CONFIGURACION)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-=======
-    @POST
-    @Path(OperacionesConfigurador.PATH_DELIM + OperacionesConfigurador.PIEZA_CONFIGURACION)
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
->>>>>>> branch 'master' of https://juanca0517@github.com/SPL-201620/RCBike.git
 	public Long postPiezaConfiguracion(PiezaConfiguracionWeb piezaConfiguracion) {
 		return service.persistPiezaConfiguracion(transformador
 				.toPiezaConfiguracionJpa(piezaConfiguracion));
@@ -311,17 +271,12 @@ public class ConfiguradorBiciEndpoint {
 	 *            Informacion de la piezaConfiguracion a crear
 	 * @return Identificador de piezaConfiguracion creada
 	 */
-<<<<<<< HEAD
+
 	@PUT
-	@Path(PATH_DELIM + PIEZA_CONFIGURACION)
+	@Path(OperacionesConfigurador.PATH_DELIM
+			+ OperacionesConfigurador.PIEZA_CONFIGURACION)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-=======
-    @PUT
-    @Path(OperacionesConfigurador.PATH_DELIM + OperacionesConfigurador.PIEZA_CONFIGURACION)
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
->>>>>>> branch 'master' of https://juanca0517@github.com/SPL-201620/RCBike.git
 	public Long putPiezaConfiguracion(PiezaConfiguracionWeb piezaConfiguracion) {
 		return service.mergePiezaConfiguracion(transformador
 				.toPiezaConfiguracionJpa(piezaConfiguracion));
@@ -334,18 +289,15 @@ public class ConfiguradorBiciEndpoint {
 	 * @param id
 	 *            Identificador de piezaConfiguracion
 	 */
-<<<<<<< HEAD
 	@DELETE
-	@Path(PATH_DELIM + PIEZA_CONFIGURACION + PATH_DELIM + LCURL + PARAM_ID
-			+ RCURL)
-	public void deletePiezaConfiguracion(@PathParam(PARAM_ID) Long id) {
+	@Path(OperacionesConfigurador.PATH_DELIM
+			+ OperacionesConfigurador.PIEZA_CONFIGURACION
+			+ OperacionesConfigurador.PATH_DELIM
+			+ OperacionesConfigurador.LCURL + OperacionesConfigurador.PARAM_ID
+			+ OperacionesConfigurador.RCURL)
+	public void deletePiezaConfiguracion(
+			@PathParam(OperacionesConfigurador.PARAM_ID) Long id) {
 		service.deletePiezaConfiguracion(id);
-=======
-    @DELETE
-    @Path(OperacionesConfigurador.PATH_DELIM + OperacionesConfigurador.PIEZA_CONFIGURACION + OperacionesConfigurador.PATH_DELIM + OperacionesConfigurador.LCURL + OperacionesConfigurador.PARAM_ID + OperacionesConfigurador.RCURL)
-	public void deletePiezaConfiguracion(@PathParam(OperacionesConfigurador.PARAM_ID) Long id) {
-    	service.deletePiezaConfiguracion(id);
->>>>>>> branch 'master' of https://juanca0517@github.com/SPL-201620/RCBike.git
 	}
 
 	/***** PIEZAS CONFIGURACION ****/
@@ -354,15 +306,11 @@ public class ConfiguradorBiciEndpoint {
 	 * REST: GET,/piezasConfiguracion, list all Lista todos los recorridos
 	 * 
 	 */
-<<<<<<< HEAD
+
 	@GET
-	@Path(PATH_DELIM + PIEZAS_CONFIGURACION)
+	@Path(OperacionesConfigurador.PATH_DELIM
+			+ OperacionesConfigurador.PIEZAS_CONFIGURACION)
 	@Produces(MediaType.APPLICATION_JSON)
-=======
-    @GET
-    @Path(OperacionesConfigurador.PATH_DELIM + OperacionesConfigurador.PIEZAS_CONFIGURACION)
-    @Produces(MediaType.APPLICATION_JSON)
->>>>>>> branch 'master' of https://juanca0517@github.com/SPL-201620/RCBike.git
 	public List<PiezaConfiguracionWeb> getPiezasConfiguracion() {
 		return transformador.toListPiezaConfiguracionWeb(service
 				.listTodosPiezasConfiguracion());
@@ -375,22 +323,20 @@ public class ConfiguradorBiciEndpoint {
 	 * @param emailCreador
 	 *            email del usuario
 	 */
-<<<<<<< HEAD
+
 	@GET
-	@Path(PATH_DELIM + CONFIGURACION + PATH_DELIM + LCURL + PARAM_ID + RCURL
-			+ PATH_DELIM + PIEZAS_CONFIGURACION)
+	@Path(OperacionesConfigurador.PATH_DELIM
+			+ OperacionesConfigurador.CONFIGURACION
+			+ OperacionesConfigurador.PATH_DELIM
+			+ OperacionesConfigurador.LCURL + OperacionesConfigurador.PARAM_ID
+			+ OperacionesConfigurador.RCURL
+			+ OperacionesConfigurador.PATH_DELIM
+			+ OperacionesConfigurador.PIEZAS_CONFIGURACION)
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<PiezaConfiguracionWeb> getPiezasConfiguracion(
-			@PathParam(PARAM_ID) Long id) {
+			@PathParam(OperacionesConfigurador.PARAM_ID) Long id) {
 		return transformador.toListPiezaConfiguracionWeb(service
 				.listPiezasConfiguracion(id));
-=======
-    @GET
-    @Path(OperacionesConfigurador.PATH_DELIM + OperacionesConfigurador.CONFIGURACION + OperacionesConfigurador.PATH_DELIM + OperacionesConfigurador.LCURL + OperacionesConfigurador.PARAM_ID + OperacionesConfigurador.RCURL + OperacionesConfigurador.PATH_DELIM + OperacionesConfigurador.PIEZAS_CONFIGURACION)
-    @Produces(MediaType.APPLICATION_JSON)
-	public List<PiezaConfiguracionWeb> getPiezasConfiguracion(@PathParam(OperacionesConfigurador.PARAM_ID) Long id) {
-    	return transformador.toListPiezaConfiguracionWeb(service.listPiezasConfiguracion(id));
->>>>>>> branch 'master' of https://juanca0517@github.com/SPL-201620/RCBike.git
 	}
 
 	/***** PIEZA *****/
@@ -402,19 +348,16 @@ public class ConfiguradorBiciEndpoint {
 	 * @param id
 	 *            Identificador de waypoint
 	 */
-<<<<<<< HEAD
+
 	@GET
-	@Path(PATH_DELIM + PIEZA + PATH_DELIM + LCURL + PARAM_ID + RCURL)
+	@Path(OperacionesConfigurador.PATH_DELIM + OperacionesConfigurador.PIEZA
+			+ OperacionesConfigurador.PATH_DELIM
+			+ OperacionesConfigurador.LCURL + OperacionesConfigurador.PARAM_ID
+			+ OperacionesConfigurador.RCURL)
 	@Produces(MediaType.APPLICATION_JSON)
-	public PiezaWeb getPieza(@PathParam(PARAM_ID) Long id) {
+	public PiezaWeb getPieza(
+			@PathParam(OperacionesConfigurador.PARAM_ID) Long id) {
 		return transformador.toPiezaWeb(service.getPieza(id));
-=======
-    @GET
-    @Path(OperacionesConfigurador.PATH_DELIM + OperacionesConfigurador.PIEZA + OperacionesConfigurador.PATH_DELIM + OperacionesConfigurador.LCURL + OperacionesConfigurador.PARAM_ID + OperacionesConfigurador.RCURL)
-    @Produces(MediaType.APPLICATION_JSON)
-	public PiezaWeb getPieza(@PathParam(OperacionesConfigurador.PARAM_ID) Long id) {
-    	return transformador.toPiezaWeb(service.getPieza(id));
->>>>>>> branch 'master' of https://juanca0517@github.com/SPL-201620/RCBike.git
 	}
 
 	/**
@@ -424,17 +367,11 @@ public class ConfiguradorBiciEndpoint {
 	 *            Informacion de la waypoint a crear
 	 * @return Identificador de waypoint creada
 	 */
-<<<<<<< HEAD
+
 	@POST
-	@Path(PATH_DELIM + PIEZA)
+	@Path(OperacionesConfigurador.PATH_DELIM + OperacionesConfigurador.PIEZA)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-=======
-    @POST
-    @Path(OperacionesConfigurador.PATH_DELIM + OperacionesConfigurador.PIEZA)
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
->>>>>>> branch 'master' of https://juanca0517@github.com/SPL-201620/RCBike.git
 	public Long postPieza(PiezaWeb waypoint) {
 		return service.persistPieza(transformador.toPiezaJpa(waypoint));
 	}
@@ -446,17 +383,10 @@ public class ConfiguradorBiciEndpoint {
 	 *            Informacion de la waypoint a crear
 	 * @return Identificador de waypoint creada
 	 */
-<<<<<<< HEAD
 	@PUT
-	@Path(PATH_DELIM + PIEZA)
+	@Path(OperacionesConfigurador.PATH_DELIM + OperacionesConfigurador.PIEZA)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-=======
-    @PUT
-    @Path(OperacionesConfigurador.PATH_DELIM + OperacionesConfigurador.PIEZA)
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
->>>>>>> branch 'master' of https://juanca0517@github.com/SPL-201620/RCBike.git
 	public Long putPieza(PiezaWeb waypoint) {
 		return service.mergePieza(transformador.toPiezaJpa(waypoint));
 	}
@@ -468,17 +398,13 @@ public class ConfiguradorBiciEndpoint {
 	 * @param id
 	 *            Identificador de waypoint
 	 */
-<<<<<<< HEAD
 	@DELETE
-	@Path(PATH_DELIM + PIEZA + PATH_DELIM + LCURL + PARAM_ID + RCURL)
-	public void deletePieza(@PathParam(PARAM_ID) Long id) {
-		service.deletePieza(id);
-=======
-    @DELETE
-    @Path(OperacionesConfigurador.PATH_DELIM + OperacionesConfigurador.PIEZA + OperacionesConfigurador.PATH_DELIM + OperacionesConfigurador.LCURL + OperacionesConfigurador.PARAM_ID + OperacionesConfigurador.RCURL)
+	@Path(OperacionesConfigurador.PATH_DELIM + OperacionesConfigurador.PIEZA
+			+ OperacionesConfigurador.PATH_DELIM
+			+ OperacionesConfigurador.LCURL + OperacionesConfigurador.PARAM_ID
+			+ OperacionesConfigurador.RCURL)
 	public void deletePieza(@PathParam(OperacionesConfigurador.PARAM_ID) Long id) {
-    	service.deletePieza(id);
->>>>>>> branch 'master' of https://juanca0517@github.com/SPL-201620/RCBike.git
+		service.deletePieza(id);
 	}
 
 	/***** PIEZAS ****/
@@ -487,15 +413,10 @@ public class ConfiguradorBiciEndpoint {
 	 * REST: GET,/piezas, list all Lista todos los recorridos individuales
 	 * 
 	 */
-<<<<<<< HEAD
+
 	@GET
-	@Path(PATH_DELIM + PIEZAS)
+	@Path(OperacionesConfigurador.PATH_DELIM + OperacionesConfigurador.PIEZAS)
 	@Produces(MediaType.APPLICATION_JSON)
-=======
-    @GET
-    @Path(OperacionesConfigurador.PATH_DELIM + OperacionesConfigurador.PIEZAS)
-    @Produces(MediaType.APPLICATION_JSON)
->>>>>>> branch 'master' of https://juanca0517@github.com/SPL-201620/RCBike.git
 	public List<PiezaWeb> getPiezas() {
 		return transformador.toListPiezaWeb(service.listTodasPiezas());
 	}
@@ -507,20 +428,15 @@ public class ConfiguradorBiciEndpoint {
 	 * @param emailCreador
 	 *            email del usuario
 	 */
-<<<<<<< HEAD
+
 	@GET
-	@Path(PATH_DELIM + PIEZAS + PATH_DELIM + POR_TIPO)
+	@Path(OperacionesConfigurador.PATH_DELIM + OperacionesConfigurador.PIEZAS
+			+ OperacionesConfigurador.PATH_DELIM
+			+ OperacionesConfigurador.POR_TIPO)
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<PiezaWeb> getPiezas(@QueryParam(PARAM_TIPO) String tipo) {
-		return transformador.toListPiezaWeb(service
-				.listPiezas(TipoPiezaBicicleta.valueOf(tipo)));
-=======
-    @GET
-    @Path(OperacionesConfigurador.PATH_DELIM + OperacionesConfigurador.PIEZAS + OperacionesConfigurador.PATH_DELIM + OperacionesConfigurador.POR_TIPO)
-    @Produces(MediaType.APPLICATION_JSON)
-	public List<PiezaWeb> getPiezas(@QueryParam(OperacionesConfigurador.PARAM_TIPO) TipoPiezaBicicleta tipo) {
-    	return transformador.toListPiezaWeb(service.listPiezas(tipo));
->>>>>>> branch 'master' of https://juanca0517@github.com/SPL-201620/RCBike.git
+	public List<PiezaWeb> getPiezas(
+			@QueryParam(OperacionesConfigurador.PARAM_TIPO) TipoPiezaBicicleta tipo) {
+		return transformador.toListPiezaWeb(service.listPiezas(tipo));
 	}
 
 	/***** COLOR *****/
@@ -532,19 +448,16 @@ public class ConfiguradorBiciEndpoint {
 	 * @param id
 	 *            Identificador de waypoint
 	 */
-<<<<<<< HEAD
+
 	@GET
-	@Path(PATH_DELIM + COLOR + PATH_DELIM + LCURL + PARAM_ID + RCURL)
+	@Path(OperacionesConfigurador.PATH_DELIM + OperacionesConfigurador.COLOR
+			+ OperacionesConfigurador.PATH_DELIM
+			+ OperacionesConfigurador.LCURL + OperacionesConfigurador.PARAM_ID
+			+ OperacionesConfigurador.RCURL)
 	@Produces(MediaType.APPLICATION_JSON)
-	public ColorWeb getColor(@PathParam(PARAM_ID) Long id) {
+	public ColorWeb getColor(
+			@PathParam(OperacionesConfigurador.PARAM_ID) Long id) {
 		return transformador.toColorWeb(service.getColor(id));
-=======
-    @GET
-    @Path(OperacionesConfigurador.PATH_DELIM + OperacionesConfigurador.COLOR + OperacionesConfigurador.PATH_DELIM + OperacionesConfigurador.LCURL + OperacionesConfigurador.PARAM_ID + OperacionesConfigurador.RCURL)
-    @Produces(MediaType.APPLICATION_JSON)
-	public ColorWeb getColor(@PathParam(OperacionesConfigurador.PARAM_ID) Long id) {
-    	return transformador.toColorWeb(service.getColor(id));
->>>>>>> branch 'master' of https://juanca0517@github.com/SPL-201620/RCBike.git
 	}
 
 	/**
@@ -554,17 +467,11 @@ public class ConfiguradorBiciEndpoint {
 	 *            Informacion de la waypoint a crear
 	 * @return Identificador de waypoint creada
 	 */
-<<<<<<< HEAD
+
 	@POST
-	@Path(PATH_DELIM + COLOR)
+	@Path(OperacionesConfigurador.PATH_DELIM + OperacionesConfigurador.COLOR)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-=======
-    @POST
-    @Path(OperacionesConfigurador.PATH_DELIM + OperacionesConfigurador.COLOR)
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
->>>>>>> branch 'master' of https://juanca0517@github.com/SPL-201620/RCBike.git
 	public Long postColor(ColorWeb waypoint) {
 		return service.persistColor(transformador.toColorJpa(waypoint));
 	}
@@ -576,17 +483,11 @@ public class ConfiguradorBiciEndpoint {
 	 *            Informacion de la waypoint a crear
 	 * @return Identificador de waypoint creada
 	 */
-<<<<<<< HEAD
+
 	@PUT
-	@Path(PATH_DELIM + COLOR)
+	@Path(OperacionesConfigurador.PATH_DELIM + OperacionesConfigurador.COLOR)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-=======
-    @PUT
-    @Path(OperacionesConfigurador.PATH_DELIM + OperacionesConfigurador.COLOR)
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
->>>>>>> branch 'master' of https://juanca0517@github.com/SPL-201620/RCBike.git
 	public Long putColor(ColorWeb waypoint) {
 		return service.mergeColor(transformador.toColorJpa(waypoint));
 	}
@@ -598,17 +499,14 @@ public class ConfiguradorBiciEndpoint {
 	 * @param id
 	 *            Identificador de waypoint
 	 */
-<<<<<<< HEAD
 	@DELETE
-	@Path(PATH_DELIM + COLOR + PATH_DELIM + LCURL + PARAM_ID + RCURL)
-	public void deleteColor(@PathParam(PARAM_ID) Long id) {
-		service.deleteColor(id);
-=======
-    @DELETE
-    @Path(OperacionesConfigurador.PATH_DELIM + OperacionesConfigurador.COLOR + OperacionesConfigurador.PATH_DELIM + OperacionesConfigurador.LCURL + OperacionesConfigurador.PARAM_ID + OperacionesConfigurador.RCURL)
+	@Path(OperacionesConfigurador.PATH_DELIM + OperacionesConfigurador.COLOR
+			+ OperacionesConfigurador.PATH_DELIM
+			+ OperacionesConfigurador.LCURL + OperacionesConfigurador.PARAM_ID
+			+ OperacionesConfigurador.RCURL)
 	public void deleteColor(@PathParam(OperacionesConfigurador.PARAM_ID) Long id) {
-    	service.deleteColor(id);
->>>>>>> branch 'master' of https://juanca0517@github.com/SPL-201620/RCBike.git
+		service.deleteColor(id);
+
 	}
 
 	/***** COLORES ****/
@@ -617,15 +515,10 @@ public class ConfiguradorBiciEndpoint {
 	 * REST: GET,/waypoints, list all Lista todos los recorridos individuales
 	 * 
 	 */
-<<<<<<< HEAD
+
 	@GET
-	@Path(PATH_DELIM + COLORES)
+	@Path(OperacionesConfigurador.PATH_DELIM + OperacionesConfigurador.COLORES)
 	@Produces(MediaType.APPLICATION_JSON)
-=======
-    @GET
-    @Path(OperacionesConfigurador.PATH_DELIM + OperacionesConfigurador.COLORES)
-    @Produces(MediaType.APPLICATION_JSON)
->>>>>>> branch 'master' of https://juanca0517@github.com/SPL-201620/RCBike.git
 	public List<ColorWeb> getColores() {
 		return transformador.toListColorWeb(service.listTodosColores());
 	}
