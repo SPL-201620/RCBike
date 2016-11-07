@@ -47,20 +47,19 @@ public class RutaManager implements Serializable {
     @SuppressWarnings("unchecked")
     @PostConstruct
     public void init() {
-        java.lang.System.out.print(".-----inicio\n");
+        java.lang.System.out.print(".-----inicio Ruta manager\n");
 
         this.email = autenticacionManager.getEmail();
 
         java.lang.System.out.print("El Email:" + this.email);
 
         SnoopServiceClient desplazamientoRest = modulosManager.clienteSnoop(Modulo.desplazamientos);
-
-        rutas = desplazamientoRest.getServiceRoot().path("individual").path("listViajesIndividuales")
+        
+        rutas = desplazamientoRest.getServiceRoot().path("individual").path("rutasIndividuales").path("porEmail")
                 .queryParam("emailCreador", email).request().get(List.class);
-
-        java.lang.System.out.print("\n");
-
+      
         java.lang.System.out.print(rutas.toString());
+        java.lang.System.out.print(".-----fin Ruta manager\n");
     }
 
 }

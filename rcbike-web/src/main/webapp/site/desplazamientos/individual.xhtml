@@ -12,7 +12,7 @@
 			rowsPerPageTemplate="5,10,15">
 			
 			<p:column headerText="Tipo:">
-				<h:outputText value="#{ruta.tipo}" />
+				<h:outputText value="#{ruta.nombre}" />
 			</p:column>
 
 			<p:column headerText="Distancia:">
@@ -38,9 +38,23 @@
 			</p:column>
 
 			<p:column headerText="Frecuente:">
-				<h:outputText value="#{ruta.frecuente?'Si':'No'}" />
+				<h:outputText value="#{ruta.frecuente?'Sí':'No'}" />
 			</p:column>
+			<p:column>
+            	<p:commandLink value="Detalle" update="j_idt32:detail" oncomplete="PF('detail').show()" >
+                	<f:setPropertyActionListener value="#{ruta}" target="#{rutaManager.rutas}" />
+            	</p:commandLink>
+        	</p:column>
 		</p:dataTable>
 	</h:form>
+	
+		<p:dialog id="detail" widgetVar="detail">
+	    <h:form>
+	    	<h:outputText value="Id:" />
+            <h:outputText value="#{ruta.clima}" />
+	        
+	    </h:form>
+		</p:dialog>
+	
 
 </ui:composition>

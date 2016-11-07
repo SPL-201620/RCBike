@@ -1,4 +1,4 @@
-package co.rcbike.desplazamientos.model;
+package co.rcbike.reportes.model;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -76,7 +76,7 @@ public abstract class Ruta {
     private Date fecha;
 
     /* Solo para grupales */
-    @Convert(converter = BooleanSNConverter.class)
+    //@Convert(converter = BooleanSNConverter.class)
     private boolean frecuente;
 
     private String dias;
@@ -208,14 +208,5 @@ public abstract class Ruta {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-
-	@Override
-	public String toString() {
-		return "Ruta [id=" + id + ", emailCreador=" + emailCreador + ", nombre=" + nombre + ", descripcion="
-				+ descripcion + ", tipo=" + tipo + ", latitudInicio=" + latitudInicio + ", longitudInicio="
-				+ longitudInicio + ", latitudFinal=" + latitudFinal + ", longitudFinal=" + longitudFinal
-				+ ", distancia=" + distancia + ", tiempoEstimado=" + tiempoEstimado + ", calorias=" + calorias
-				+ ", clima=" + clima + ", fecha=" + fecha + ", frecuente=" + frecuente + ", dias=" + dias + "]";
-	}
 
 }

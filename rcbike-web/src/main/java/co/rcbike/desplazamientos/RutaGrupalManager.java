@@ -55,7 +55,7 @@ public class RutaGrupalManager implements Serializable {
 		
 		SnoopServiceClient desplazamientoRest = modulosManager.clienteSnoop(Modulo.desplazamientos);
         
-        rutas = desplazamientoRest.getServiceRoot().path("grupal").path("listViajesGrupales").request().get(List.class);
+        rutas = desplazamientoRest.getServiceRoot().path("grupal").path("rutasGrupales").request().get(List.class);
         
         java.lang.System.out.print("\n");
         

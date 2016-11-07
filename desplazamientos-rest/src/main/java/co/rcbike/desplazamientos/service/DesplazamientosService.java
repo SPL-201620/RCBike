@@ -1,8 +1,10 @@
 package co.rcbike.desplazamientos.service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -63,14 +65,9 @@ public class DesplazamientosService {
 		int inicioPais = jsonString.indexOf("\"country\":\"") + 11;
 		int finPais = jsonString.indexOf("\",\"sunrise\"");
 
-		return celsius + " ºC, " + jsonString.substring(inicioDescripcion, finDescripcion) + ", "
+		return String.format("%.2f", celsius) + " ºC, " + jsonString.substring(inicioDescripcion, finDescripcion) + ", "
 				+ jsonString.substring(inicioPais, finPais) + ".";
 	}
-
-	/**
-	 * Velociadad promedio bicicleta m/h
-	 */
-	private static final BigDecimal VEL_PROMEDIO_BICI = new BigDecimal("21430");
 
 	/*
 	 * # delta distance (in meters) 1 0.1000000 11,057.43 2 0.0100000 1,105.74 3
@@ -136,6 +133,21 @@ public class DesplazamientosService {
 			ultimaRutaConsultada = result;
 		}
 		return result;
+	}
+
+	/**
+	 * Lista todas las rutas
+	 * 
+	 * @param emailCreador Email del creador
+	 * @param fechaInicio Fecha de Inicio
+	 * @param fechaFinal Fecha final
+	 */
+	public List<RutaJpa> listRutasFechas(String emailCreador, Date fechaInicio, Date fechaFinal) {
+		TypedQuery<RutaJpa> q = em.createNamedQuery(RutaJpa.SQ_findByCreadorAndFecha, RutaJpa.class);
+		q.setParameter(RutaJpa.SQ_PARAM_EMAIL_CREADOR, emailCreador);
+		q.setParameter(RutaJpa.SQ_PARAM_FECHA_INICIO, fechaInicio);
+		q.setParameter(RutaJpa.SQ_PARAM_FECHA_FINAL, fechaFinal);
+		return q.getResultList();
 	}
 
 	/**

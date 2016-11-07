@@ -16,17 +16,18 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "Ruta")
 @XmlRootElement
 @NamedQueries({
-        @NamedQuery(name = "findByTipoAndCreador", query = "SELECT e FROM Ruta e WHERE e.emailCreador = :emailCreador AND e.tipo = :tipo"),
-        @NamedQuery(name = "findByIdRuta", query = "SELECT e FROM Ruta e WHERE e.id = :id"),
-        @NamedQuery(name = "findByTipo", query = "SELECT e FROM Ruta e WHERE e.tipo = :tipo"),
-        @NamedQuery(name = "findByTipoAndFrecuente", query = "SELECT e FROM Ruta e WHERE e.tipo = :tipo and e.frecuente = :frecuente"),
-        @NamedQuery(name = "findByTipoAndFechaAndFrecuente", query = "SELECT e FROM Ruta e WHERE e.tipo = :tipo and e.fecha >= :fecha and e.frecuente = :frecuente"),
-        @NamedQuery(name = "findByTipoAndFrecuenteAndPunto", query = "SELECT e FROM Ruta e WHERE e.tipo = :tipo and e.frecuente = :frecuente "
-                + "and e.latitudInicio >= :latitudInicio and e.latitudInicio <= :latitudFinal "
-                + "and e.longitudInicio >= :longitudInicio and e.longitudInicio <= :longitudFinal"),
-        @NamedQuery(name = "findByTipoAndFechaAndFrecuenteAndPunto", query = "SELECT e FROM Ruta e WHERE e.tipo = :tipo and e.fecha >= :fecha and e.frecuente = :frecuente "
-                + "and e.latitudInicio >= :latitudInicio and e.latitudInicio <= :latitudFinal "
-                + "and e.longitudInicio >= :longitudInicio and e.longitudInicio <= :longitudFinal")})
+    @NamedQuery(name = "findByCreadorAndFecha", query = "SELECT r FROM Ruta r WHERE r.emailCreador = :emailCreador and r.fecha >= :fechaInicio and r.fecha <= :fechaFinal"),
+        @NamedQuery(name = "findByTipoAndCreador", query = "SELECT r FROM Ruta r WHERE r.emailCreador = :emailCreador AND r.tipo = :tipo"),
+        @NamedQuery(name = "findByIdRuta", query = "SELECT r FROM Ruta r WHERE r.id = :id"),
+        @NamedQuery(name = "findByTipo", query = "SELECT r FROM Ruta r WHERE r.tipo = :tipo"),
+        @NamedQuery(name = "findByTipoAndFrecuente", query = "SELECT r FROM Ruta r WHERE r.tipo = :tipo and r.frecuente = :frecuente"),
+        @NamedQuery(name = "findByTipoAndFechaAndFrecuente", query = "SELECT r FROM Ruta r WHERE r.tipo = :tipo and r.fecha >= :fecha and r.frecuente = :frecuente"),
+        @NamedQuery(name = "findByTipoAndFrecuenteAndPunto", query = "SELECT r FROM Ruta r WHERE r.tipo = :tipo and r.frecuente = :frecuente "
+                + "and r.latitudInicio >= :latitudInicio and r.latitudInicio <= :latitudFinal "
+                + "and r.longitudInicio >= :longitudInicio and r.longitudInicio <= :longitudFinal"),
+        @NamedQuery(name = "findByTipoAndFechaAndFrecuenteAndPunto", query = "SELECT r FROM Ruta r WHERE r.tipo = :tipo and r.fecha >= :fecha and r.frecuente = :frecuente "
+                + "and r.latitudInicio >= :latitudInicio and r.latitudInicio <= :latitudFinal "
+                + "and r.longitudInicio >= :longitudInicio and r.longitudInicio <= :longitudFinal")})
 
 public class RutaJpa extends Ruta implements Serializable {
 
@@ -34,6 +35,7 @@ public class RutaJpa extends Ruta implements Serializable {
 	public static final String SQ_findByTipoAndCreador = "findByTipoAndCreador";
     public static final String SQ_findByTipo = "findByTipo";
     public static final String SQ_findByTipoAndFrecuente = "findByTipoAndFrecuente";
+    public static final String SQ_findByCreadorAndFecha = "findByCreadorAndFecha";
     public static final String SQ_findByTipoAndFechaAndFrecuente = "findByTipoAndFechaAndFrecuente";
     public static final String SQ_findByTipoAndFrecuenteAndPunto = "findByTipoAndFrecuenteAndPunto";
     public static final String SQ_findByTipoAndFechaAndFrecuenteAndPunto = "findByTipoAndFechaAndFrecuenteAndPunto";
@@ -41,6 +43,8 @@ public class RutaJpa extends Ruta implements Serializable {
     public static final String SQ_PARAM_EMAIL_CREADOR = "emailCreador";
     public static final String SQ_PARAM_TIPO = "tipo";
     public static final String SQ_PARAM_FECHA = "fecha";
+    public static final String SQ_PARAM_FECHA_INICIO = "fechaInicio";
+    public static final String SQ_PARAM_FECHA_FINAL = "fechaFinal";
     public static final String SQ_PARAM_FRECUENTE = "frecuente";
     public static final String SQ_PARAM_LATITUD_INICIO = "latitudInicio";
     public static final String SQ_PARAM_LATITUD_FINAL = "latitudFinal";

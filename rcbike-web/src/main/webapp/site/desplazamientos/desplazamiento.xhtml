@@ -31,6 +31,7 @@
 						<h:form prependId="false">
 							<h:inputHidden id="distancia" value="#{crearRutaManager.distancia}" />
 							<h:inputHidden id="tiempo" value="#{crearRutaManager.tiempo}" />
+							<h:inputHidden id="calorias" value="#{crearRutaManager.calorias}" />
 					 		<p:commandButton value="Calcular" id="calcularButton"
 					 			action="#{crearRutaManager.rutaCalculada()}" icon="fa fa-check-circle" process="@form" update="variables"/>
 							<p:button value="Cancelar" icon="fa fa-remove"/>
@@ -232,12 +233,24 @@
 	    		    	  console.log("tiempo "+tiempo)
 	    		    	  document.getElementById("distancia").value = ""+distancia;
 	    		    	  document.getElementById("tiempo").value = ""+tiempo;
+	    		    	  CalculateWFM(tiempo);
 	    		      }
 	    		      
 	    		    });
         }
     }
 
+
+    function CalculateWFM(tiempo) 
+    { 
+        var hr; var kg =85; var cb; 
+        hr = tiempo / 3600;
+        
+        //value="10"Bicicleta 22-25km/h (14-16 mph)
+        cb = Math.round((kg * 10) * hr); 
+        document.getElementById("calorias").value = ""+cb; 
+     }
+    
 </script>
 
 					<br />
