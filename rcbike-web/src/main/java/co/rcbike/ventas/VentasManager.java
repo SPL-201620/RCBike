@@ -151,4 +151,8 @@ public class VentasManager implements Serializable {
 
 	}
 
+	public void actualizaIdConfiguracion(Long idConfig) {
+		idConfiguracion = idConfig;
+	}
+
 }

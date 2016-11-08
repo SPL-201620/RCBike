@@ -6,11 +6,13 @@
 	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
 
 	<ui:define name="subheader">
-        Configirador
+        Configurador
     </ui:define>
 
 	<ui:define name="content">
 		<h:form id="frmVentasBici" prependId="false">
+		<p:messages id="button">
+		</p:messages>
 			<div class="Container100">
 				<div class="ContainerIndent">
 					<div class="Card ShadowEffect">
@@ -28,17 +30,15 @@
 													<h:outputText value="#{configuraciones.descripcion}" />
 													<p:spacer>
 													</p:spacer>
-													<p:commandButton value="PONER A LA VENTA" type="button"
-														onclick="PF('venta').show();">
-														<f:setPropertyActionListener value="#{configuraciones.id}"
-															target="#{ventasManager.idConfiguracion}" />
+													<p:commandButton value="PONER A LA VENTA" process="@this" onclick="#{ventasManager.actualizaIdConfiguracion(configuraciones.id)}"
+														oncomplete="PF('venta').show();" update=":frmVentasBici:button">														
 													</p:commandButton>
 												</f:facet>
 												<p:column>
 													<h:outputText value="#{piezas.tipo}" />
 												</p:column>
 												<p:column>
-													<h:outputText value="#{piezas.descripcion}" />
+												<h:outputText value="#{piezas.descripcion}" />
 												</p:column>
 											</p:subTable>
 										</p:dataTable>
@@ -135,15 +135,13 @@
 				</p:panel>
 			</h:form>
 			<h:form id="formModalVentas">
+				<p:messages id="errores"></p:messages>
 				<p:panel id="pnlVentasBicicletas">
 					<p:panelGrid columns="6" styleClass="Fs18">
-						<h:outputText value="Valor: " />
-
+						<h:outputText value="Valor:"/>
 						<p:inputNumber id="valorVentaBici1" value="#{ventasManager.valor}"
-							required="true">
-							<f:validateLongRange minimum="1" maximum="10" />
+							required="true">							
 						</p:inputNumber>
-
 						<h:outputText value="Poner a la venta: " />
 						<p:selectBooleanButton id="value1"
 							value="#{ventasManager.vendida}" onLabel="true"
@@ -170,7 +168,6 @@
 							<f:selectItem itemLabel="Usado-Mal estado"
 								itemValue="Usado-Mal estado" />
 						</p:selectOneMenu>
-
 						<h:outputText value="Accesorios: " />
 						<p:inputText id="ventaAccesorios"
 							value="#{ventasManager.accesorio}" styleClass="Fs18"
@@ -180,13 +177,12 @@
 							value="#{ventasManager.observaciones}" styleClass="Fs18"
 							autocomplete="off" required="false" />
 						<div class="Container25">
-							<p:commandButton value="Insertar"
-								action="#{ventasManager.insertVenta()}" process="@form" />
+							<p:commandButton value="Insertar" update=":formModalVentas:errores"
+								action="#{ventasManager.insertVenta}" process="@form" />
 						</div>
 					</p:panelGrid>
 				</p:panel>
 			</h:form>
-
 		</p:dialog>
 		<p:dialog header="Gracias por usar nuestro servicio"
 			widgetVar="compraDialog" modal="true">
