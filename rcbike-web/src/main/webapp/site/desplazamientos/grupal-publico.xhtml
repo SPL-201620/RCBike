@@ -1,0 +1,70 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<p>Aquí verá los recorridos disponibles a los cuales se puede unir:</p>
+		
+	<h:form id="formGrupalPublico">
+	<p:growl id="messagesGrupal" showDetail="true" />
+	
+	<h:panelGrid columns="3" style="margin-bottom:10px" cellpadding="5">
+        <p:outputLabel for="address" value="Dirección: Por Ejemplo Carrera 1 #20a-2 a 20a-34, Bogotá" />
+        <p:inputText id="address" />
+        <p:commandButton value="Buscar" icon="ui-icon-search" onclick="geocode()" type="button" />
+    </h:panelGrid>
+		
+		<script>
+		function geocode() {
+	        PF('geoMap').geocode(document.getElementById('j_idt32:formGrupalPublico:address').value);
+	    }
+        </script>
+
+		<p:dataTable var="rutaWeb" value="#{geocodeView.rutas}" rows="10"
+			paginator="true"
+			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			rowsPerPageTemplate="5,10,15">
+
+			<p:column headerText="Participantes:">
+				<h:outputText value="#{rutaWeb.participantes.size()}" />
+			</p:column>
+
+			<p:column headerText="Distancia:">
+				<h:outputText value="#{rutaWeb.distancia} mt." />
+			</p:column>
+
+			<p:column headerText="Tiempo Estimado:">
+				<h:outputText value="#{rutaWeb.tiempoEstimado/60} min." />
+			</p:column>
+
+			<p:column headerText="Calorias:">
+				<h:outputText value="#{rutaWeb.calorias}" />
+			</p:column>
+
+			<p:column headerText="Clima:">
+				<h:outputText value="#{rutaWeb.clima}" />
+			</p:column>
+
+			<p:column headerText="Fecha:">
+				<h:outputText value="#{rutaWeb.fecha}" >
+					<f:convertDateTime pattern="dd-MM-yyyy" />
+				</h:outputText>
+			</p:column>
+
+			<p:column headerText="Frecuente:">
+				<h:outputText value="#{rutaWeb.frecuente}" />
+			</p:column>
+			
+			<p:column headerText="Acción:">
+ 				<p:commandButton value="Unirme" actionListener="#{addMarkersView.unirse(ruta.id)}" oncomplete="alert('Te has unido!');" />
+			</p:column>
+		</p:dataTable>
+		<br />
+
+		<p:gmap id="geoGmap" widgetVar="geoMap" center="#{geocodeView.centerGeoMap}" zoom="13" type="ROADMAP" model="#{geocodeView.geoModel}" style="width:100%;height:400px">
+        	<p:ajax event="geocode" listener="#{geocodeView.onGeocode}" update="@this" />
+    	</p:gmap>
+	</h:form>
+
+</ui:composition>

@@ -176,7 +176,7 @@ public class DesplazamientoGrupalEndpoint {
 	}
 
 	/**
-	 * REST: GET,/orders/{?}, list orders by param
+	 * REST: GET,rutasGrupales/cercanos/{?}, list RutaWeb by param
 	 * Lista todos los recorridos grupales no vencidos
 	 * 
 	 * @param latitud

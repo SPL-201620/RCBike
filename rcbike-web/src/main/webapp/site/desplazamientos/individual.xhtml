@@ -6,55 +6,186 @@
 
 	<p>Aquí verá sus recorridos individuales:</p>
 	<h:form id="formIndividual">
-		<p:dataTable var="ruta" value="#{rutaManager.rutas}" rows="10"
+		<p:dataTable var="rutaWeb" value="#{dtSelectionView.selectedCars}" rows="10"
 			paginator="true"
 			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 			rowsPerPageTemplate="5,10,15">
 			
-			<p:column headerText="Tipo:">
-				<h:outputText value="#{ruta.nombre}" />
+			<p:column headerText="Nombre:">
+				<h:outputText value="#{rutaWeb.nombre}" />
 			</p:column>
 
 			<p:column headerText="Distancia:">
-				<h:outputText value="#{ruta.distancia}" />
+				<h:outputText value="#{rutaWeb.distancia}" />
 			</p:column>
 
 			<p:column headerText="Tiempo Estimado:">
-				<h:outputText value="#{ruta.tiempoEstimado}" />
+				<h:outputText value="#{rutaWeb.tiempoEstimado}" />
 			</p:column>
 
 			<p:column headerText="Calorias:">
-				<h:outputText value="#{ruta.calorias}" />
-			</p:column>
-
-			<p:column headerText="Clima:">
-				<h:outputText value="#{ruta.clima}" />
+				<h:outputText value="#{rutaWeb.calorias}" />
 			</p:column>
 
 			<p:column headerText="Fecha:">
-				<h:outputText value="#{ruta.fecha}" >
+				<h:outputText value="#{rutaWeb.fecha}" >
 					<f:convertDateTime pattern="dd-MM-yyyy" />
 				</h:outputText>
 			</p:column>
 
 			<p:column headerText="Frecuente:">
-				<h:outputText value="#{ruta.frecuente?'Sí':'No'}" />
+				<h:outputText value="#{rutaWeb.frecuente?'Sí':'No'}" />
 			</p:column>
-			<p:column>
-            	<p:commandLink value="Detalle" update="j_idt32:detail" oncomplete="PF('detail').show()" >
-                	<f:setPropertyActionListener value="#{ruta}" target="#{rutaManager.rutas}" />
-            	</p:commandLink>
+			
+			<p:column style="width:38px;text-align: center">
+	            <p:commandButton oncomplete="PF('detail').show()" icon="ui-icon-search" title="Detalle"
+	            onclick="detallejs('#{rutaWeb.nombre}','#{rutaWeb.descripcion}', '#{rutaWeb.tipo}',
+	            	'#{rutaWeb.distancia}','#{rutaWeb.tiempoEstimado}', '#{rutaWeb.calorias}','#{rutaWeb.clima}',
+	            	#{rutaWeb.fecha},'#{rutaWeb.frecuente}', '#{rutaWeb.dias}')" />
+	                
+	            <p:commandButton title="Ver ruta" style="margin-top:2px"
+					 			onclick="routing(#{rutaWeb.latitudInicio},#{rutaWeb.longitudInicio},#{rutaWeb.latitudFinal},#{rutaWeb.longitudFinal})" 
+					 			icon="ui-icon-pin-s"/>
         	</p:column>
+			
 		</p:dataTable>
-	</h:form>
 	
-		<p:dialog id="detail" widgetVar="detail">
-	    <h:form>
-	    	<h:outputText value="Id:" />
-            <h:outputText value="#{ruta.clima}" />
-	        
-	    </h:form>
-		</p:dialog>
-	
+		<p:dialog id="detail" widgetVar="detail" modal="true" showEffect="blind" hideEffect="explode" resizable="false">
+			<p:panelGrid  columns="2"  columnClasses="label,value">
+                <f:facet name="header">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Cycling_(road)_pictogram.svg/1024px-Cycling_(road)_pictogram.svg.png"
+                    style="width:30px;height:30px;"/> 
+                </f:facet> 
+			    <h:outputText value="nombre:"/>
+			    <h:outputText id="nombre"/>
+			
+			    <h:outputText value="descripcion:"/>
+			    <h:outputText id="descripcion"/>
+			
+			    <h:outputText value="tipo:"/>
+			    <h:outputText id="tipo"/>
+			
+			    <h:outputText value="distancia:"/>
+			    <h:outputText id="distancia"/>
+			
+			    <h:outputText value="tiempoEstimado:"/>
+			    <h:outputText id="tiempoEstimado"/>
+			    
+				<h:outputText value="calorias:"/>
+				<h:outputText id="calorias"/>
+			
+			    <h:outputText value="clima:"/>
+			    <h:outputText id="clima"/>
+			
+			    <h:outputText value="fecha:"/>
+				<h:outputText id="fecha" />
+			    
+			    <h:outputText value="frecuente:"/>
+			    <h:outputText id="frecuente"/>
+			    
+				<h:outputText value="dias:"/>
+				<h:outputText id="dias"/>
 
+            </p:panelGrid>	    
+		</p:dialog>
+		
+	</h:form>
+	<br />
+	<p:gmap id="gmap" styleClass="PosRelative SoftGrayBack" center="4.656360,-74.103770" zoom="13" type="ROADMAP"
+			style="width:100%; height:355px; z-index:1;" widgetVar="map" />
+	<script type="text/javascript">
+	function detallejs(nombre,descripcion,tipo, distancia,tiempoestimado,calorias,clima,fecha,frecuente,dias) {
+		
+		document.getElementById("j_idt32:formIndividual:nombre").innerHTML = nombre;
+		document.getElementById("j_idt32:formIndividual:descripcion").innerHTML = descripcion;
+		document.getElementById("j_idt32:formIndividual:tipo").innerHTML = tipo;
+		document.getElementById("j_idt32:formIndividual:distancia").innerHTML = distancia;
+		document.getElementById("j_idt32:formIndividual:tiempoEstimado").innerHTML = tiempoestimado;
+		document.getElementById("j_idt32:formIndividual:calorias").innerHTML = calorias;
+		document.getElementById("j_idt32:formIndividual:clima").innerHTML = clima;
+		document.getElementById("j_idt32:formIndividual:fecha").innerHTML = new Date(fecha).toDateString();
+		document.getElementById("j_idt32:formIndividual:frecuente").innerHTML = frecuente;
+		document.getElementById("j_idt32:formIndividual:dias").innerHTML = dias;
+		}
+	function routing(latInicio, lngInicio, latFin, lngFin) {
+		var markers = [];
+		markers.push({
+            "title": "Inicio",
+            "lat": latInicio,
+            "lng": lngInicio
+    	});
+
+		markers.push({
+            "title": "Fin",
+            "lat": latFin,
+            "lng": lngFin
+    	});
+		
+		var mapOptions = {
+		    center: new google.maps.LatLng(markers[0].lat, markers[0].lng),
+		    zoom: 13,
+		    mapTypeId: google.maps.MapTypeId.ROADMAP
+		};
+		
+		var map = new google.maps.Map(document.getElementById("j_idt32:gmap"), mapOptions);
+		var infoWindow = new google.maps.InfoWindow();
+		var lat_lng = new Array();
+		var latlngbounds = new google.maps.LatLngBounds();
+		
+		//<![CDATA[
+		for (i = 0; i < markers.length; i++) {
+		    var data = markers[i]
+		    var myLatlng = new google.maps.LatLng(data.lat, data.lng);
+		    lat_lng.push(myLatlng);
+		    var marker = new google.maps.Marker({
+		        position: myLatlng,
+		        map: map,
+		        title: data.title
+		    });
+		    latlngbounds.extend(marker.position);
+		    (function (marker, data) {
+		        google.maps.event.addListener(marker, "click", function (e) {
+		            infoWindow.setContent(data.title);
+		            infoWindow.open(map, marker);
+		        });
+		    })(marker, data);
+		}
+		//]]>
+		map.setCenter(latlngbounds.getCenter());
+		map.fitBounds(latlngbounds);
+		
+		//Initialize the Path Array
+		var path = new google.maps.MVCArray();
+		
+		//Initialize the Direction Service
+		var service = new google.maps.DirectionsService();
+		
+		//Set the Path Stroke Color
+		var poly = new google.maps.Polyline({ map: map, strokeColor: '#4986E7' });
+		
+		//Loop and Draw Path Route between the Points on MAP
+
+		//<![CDATA[
+        for (var i = 0; i < lat_lng.length; i++) {
+            if ((i + 1) < lat_lng.length) {
+                var src = lat_lng[i];
+                var des = lat_lng[i + 1];
+                path.push(src);
+                poly.setPath(path);
+                service.route({
+                    origin: src,
+                    destination: des,
+                    travelMode: google.maps.DirectionsTravelMode.DRIVING
+                }, function (result, status) {
+                    if (status == google.maps.DirectionsStatus.OK) {
+                        for (var i = 0, len = result.routes[0].overview_path.length; i < len; i++) {
+                            path.push(result.routes[0].overview_path[i]);
+                        }
+                    }
+                });
+            }
+        }
+       //]]>
+	}
+	</script>
 </ui:composition>

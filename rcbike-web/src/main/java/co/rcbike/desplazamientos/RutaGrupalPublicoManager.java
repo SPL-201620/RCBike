@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
@@ -19,48 +18,46 @@ import lombok.Setter;
 import lombok.extern.jbosslog.JBossLog;
 
 @SuppressWarnings("serial")
+@ManagedBean
 @ViewScoped
 @JBossLog
-@ManagedBean(name = "RutaManager")
-@ApplicationScoped
-public class RutaManager implements Serializable {
-    @Getter
+public class RutaGrupalPublicoManager implements Serializable {
+	@Getter
     @Setter
     private List<RutaWeb> rutas;
-
-    @Getter
+	
+	@Getter
     @Setter
     private String email;
-
-    @Getter
-    @Setter
-    private RutaWeb ruta;
-
-    @Getter
+	
+	@Getter
+	@Setter
+	private RutaWeb ruta;
+	
+	@Getter
     @Setter
     @ManagedProperty(value = "#{modulosManager}")
     private ModulosManager modulosManager;
-
-    @Getter
+	
+	@Getter
     @Setter
     @ManagedProperty(value = "#{autenticacionManager}")
     private AutenticacionManager autenticacionManager;
 
-    @SuppressWarnings("unchecked")
-    @PostConstruct
+	@PostConstruct
     public void init() {
-        java.lang.System.out.println(".-----inicio Ruta manager\n");
+		/*java.lang.System.out.print(".-----inicioGrupales\n");
 
-        this.email = autenticacionManager.getEmail();
-
-        java.lang.System.out.println("El Email:" + this.email);
-
-        SnoopServiceClient desplazamientoRest = modulosManager.clienteSnoop(Modulo.desplazamientos);
+		this.email = autenticacionManager.getEmail();
+		
+		java.lang.System.out.print("El Email:" +this.email);
+		
+		SnoopServiceClient desplazamientoRest = modulosManager.clienteSnoop(Modulo.desplazamientos);
         
-        rutas = desplazamientoRest.getServiceRoot().path("individual").path("rutasIndividuales").path("porEmail")
-                .queryParam("emailCreador", email).request().get(List.class);
+        rutas = desplazamientoRest.getServiceRoot().path("grupal").path("rutasGrupales").request().get(List.class);
         
-        java.lang.System.out.println(rutas.toString());
-        java.lang.System.out.println(".-----fin Ruta manager\n");
+        java.lang.System.out.print("\n");
+        
+        java.lang.System.out.print(rutas.toString());*/
     }
 }

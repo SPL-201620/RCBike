@@ -4,53 +4,144 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-	<p>Aquí verá los recorridos disponibles a los cuales se puede unir:</p>
-	
+	<p>Aquí verá sus recorridos grupales:</p>
 	<h:form id="formGrupal">
-		<p:growl id="messagesGrupal" showDetail="true" />
-		
-		<p:dataTable var="ruta" value="#{rutaGrupalManager.rutas}" rows="10"
+		<p:dataTable var="rutaWeb" value="#{dtSelectionView.rutas}" rows="10"
 			paginator="true"
 			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 			rowsPerPageTemplate="5,10,15">
-			<p:column headerText="Id:">
-				<h:outputText value="#{ruta.id}" />
-			</p:column>
-
-			<p:column headerText="Tipo:">
-				<h:outputText value="#{ruta.tipo}" />
+			
+			<p:column headerText="Nombre:">
+				<h:outputText value="#{rutaWeb.nombre}" />
 			</p:column>
 
 			<p:column headerText="Distancia:">
-				<h:outputText value="#{ruta.distancia} mt." />
+				<h:outputText value="#{rutaWeb.distancia}" />
 			</p:column>
 
 			<p:column headerText="Tiempo Estimado:">
-				<h:outputText value="#{ruta.tiempoEstimado/60} min." />
+				<h:outputText value="#{rutaWeb.tiempoEstimado}" />
 			</p:column>
 
 			<p:column headerText="Calorias:">
-				<h:outputText value="#{ruta.calorias}" />
-			</p:column>
-
-			<p:column headerText="Clima:">
-				<h:outputText value="#{ruta.clima}" />
+				<h:outputText value="#{rutaWeb.calorias}" />
 			</p:column>
 
 			<p:column headerText="Fecha:">
-				<h:outputText value="#{ruta.fecha}" >
+				<h:outputText value="#{rutaWeb.fecha}" >
 					<f:convertDateTime pattern="dd-MM-yyyy" />
 				</h:outputText>
 			</p:column>
 
 			<p:column headerText="Frecuente:">
-				<h:outputText value="#{ruta.frecuente}" />
+				<h:outputText value="#{rutaWeb.frecuente?'Sí':'No'}" />
 			</p:column>
 			
-			<p:column headerText="Acción:">
- 				<p:commandButton value="Unirme" actionListener="#{addMarkersView.unirse(ruta.id)}" oncomplete="alert('Te has unido!');" />
-			</p:column>
+			<p:column style="width:38px;text-align: center">
+	            <p:commandButton update="j_idt32:formIndividual:detail" oncomplete="PF('detail').show()" icon="ui-icon-search" title="Detalle">
+	                <f:setPropertyActionListener value="#{ruta}" target="#{dtSelectionView.selectedCar}" />
+	            </p:commandButton>
+	            
+	            <p:commandButton title="Ver ruta" style="margin-top:2px"
+					 			onclick="routing(#{rutaWeb.latitudInicio},#{rutaWeb.longitudInicio},#{rutaWeb.latitudFinal},#{rutaWeb.longitudFinal})" 
+					 			icon="ui-icon-pin-s"/>
+        	</p:column>
+			
 		</p:dataTable>
-	</h:form>
+	
+		<p:dialog id="detail" widgetVar="detail" modal="true" showEffect="blind" hideEffect="explode" resizable="false">
+	    
+	    	<h:outputText value="Id:" />
+            <h:outputText value="#{dtSelectionView.selectedCar.clima}" />
+            <h:outputText value="#{rutaWeb.clima}" />
 
+		</p:dialog>
+		
+	</h:form>
+	<br />
+	<p:gmap id="gmapGrupal" styleClass="PosRelative SoftGrayBack" center="4.656360,-74.103770" zoom="13" type="ROADMAP"
+			style="width:100%; height:355px; z-index:1;" widgetVar="map" />
+	<script type="text/javascript">
+
+	function routing(latInicio, lngInicio, latFin, lngFin) {
+		var markers = [];
+		markers.push({
+            "title": "Inicio",
+            "lat": latInicio,
+            "lng": lngInicio
+    	});
+
+		markers.push({
+            "title": "Fin",
+            "lat": latFin,
+            "lng": lngFin
+    	});
+		
+		var mapOptions = {
+		    center: new google.maps.LatLng(markers[0].lat, markers[0].lng),
+		    zoom: 13,
+		    mapTypeId: google.maps.MapTypeId.ROADMAP
+		};
+		
+		var map = new google.maps.Map(document.getElementById("j_idt32:gmapGrupal"), mapOptions);
+		var infoWindow = new google.maps.InfoWindow();
+		var lat_lng = new Array();
+		var latlngbounds = new google.maps.LatLngBounds();
+		
+		//<![CDATA[
+		for (i = 0; i < markers.length; i++) {
+		    var data = markers[i]
+		    var myLatlng = new google.maps.LatLng(data.lat, data.lng);
+		    lat_lng.push(myLatlng);
+		    var marker = new google.maps.Marker({
+		        position: myLatlng,
+		        map: map,
+		        title: data.title
+		    });
+		    latlngbounds.extend(marker.position);
+		    (function (marker, data) {
+		        google.maps.event.addListener(marker, "click", function (e) {
+		            infoWindow.setContent(data.title);
+		            infoWindow.open(map, marker);
+		        });
+		    })(marker, data);
+		}
+		//]]>
+		map.setCenter(latlngbounds.getCenter());
+		map.fitBounds(latlngbounds);
+		
+		//Initialize the Path Array
+		var path = new google.maps.MVCArray();
+		
+		//Initialize the Direction Service
+		var service = new google.maps.DirectionsService();
+		
+		//Set the Path Stroke Color
+		var poly = new google.maps.Polyline({ map: map, strokeColor: '#4986E7' });
+		
+		//Loop and Draw Path Route between the Points on MAP
+
+		//<![CDATA[
+        for (var i = 0; i < lat_lng.length; i++) {
+            if ((i + 1) < lat_lng.length) {
+                var src = lat_lng[i];
+                var des = lat_lng[i + 1];
+                path.push(src);
+                poly.setPath(path);
+                service.route({
+                    origin: src,
+                    destination: des,
+                    travelMode: google.maps.DirectionsTravelMode.DRIVING
+                }, function (result, status) {
+                    if (status == google.maps.DirectionsStatus.OK) {
+                        for (var i = 0, len = result.routes[0].overview_path.length; i < len; i++) {
+                            path.push(result.routes[0].overview_path[i]);
+                        }
+                    }
+                });
+            }
+        }
+       //]]>
+	}
+	</script>
 </ui:composition>
