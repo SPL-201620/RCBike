@@ -77,7 +77,7 @@ public class VentasManager implements Serializable {
 
 	@Getter
 	@Setter
-	private String compraSelected = new String("prueba");
+	private String compraSelected = new String();
 
 	@Getter
 	@Setter
@@ -155,4 +155,7 @@ public class VentasManager implements Serializable {
 		idConfiguracion = idConfig;
 	}
 
+	public void actualizaCompraSelected(String emailCreador) {
+		compraSelected = emailCreador;
+	}
 }
