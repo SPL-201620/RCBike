@@ -50,16 +50,21 @@
         			<h:form>
                     <div class="Container60 Responsive">
                     	<div class="EmptyBox10 Wid80"/>
-	                   	<p:inputText placeholder="Correo" name="Correo" value="#{registroManager.email}" 
+	                   	<p:outputLabel for="correo" value="Correo" style="display:none;"/>
+	                   	<p:inputText id="correo" placeholder="Correo" value="#{registroManager.email}" 
 	                   		disabled="#{not empty registroManager.email}" required="true"
 	                   	 	styleClass="Wid80 TexAlCenter Fs18" />
+	                   	 	
                     	<div class="EmptyBox10 Wid80"/>
-						<p:inputText type="password" placeholder="Contraseña" value="#{registroManager.clave}" 
+						<p:outputLabel for="clave" value="Contraseña" style="display:none;"/>
+						<p:inputText type="password" id="clave" placeholder="Contraseña" value="#{registroManager.clave}" 
 	                   		required="true" styleClass="Wid80 TexAlCenter Fs18" rendered="#{registroManager.registroLocal}"/>
+                    	
                     	<div class="EmptyBox10 Wid80"/>
                     	<p:outputLabel for="nombres" value="Nombres" style="display:none;"/>
                     	<p:inputText placeholder="Nombres" id="nombres" value="#{registroManager.nombres}" required="true"
                     	 	styleClass="Wid80 TexAlCenter Fs18" />
+                    	 	
                     	<div class="EmptyBox10 Wid80"/>
                     	<p:outputLabel for="apellidos" value="Apellidos" style="display:none;"/>
                     	<p:inputText placeholder="Apellidos" id="apellidos" value="#{registroManager.apellidos}" required="true"

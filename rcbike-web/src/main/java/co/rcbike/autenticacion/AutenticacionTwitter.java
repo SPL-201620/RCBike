@@ -39,6 +39,7 @@ public class AutenticacionTwitter implements Serializable {
 
     private Twitter twitter;
     private RequestToken requestToken;
+    private AccessToken oAuthAccessToken;
 
     @Getter
     @Setter
@@ -62,8 +63,9 @@ public class AutenticacionTwitter implements Serializable {
     }
 
     public void requestToken() throws TwitterException, IOException {
-        requestToken = twitter
-                .getOAuthRequestToken("http://localhost:8080/rcbike-web/site/pb/login.xhtml?serv=twitter");
+        if (requestToken == null)
+            requestToken = twitter
+                    .getOAuthRequestToken("http://localhost:8080/rcbike-web/site/pb/login.xhtml?serv=twitter");
         FacesContext.getCurrentInstance().getExternalContext().redirect(requestToken.getAuthenticationURL());
     }
 
@@ -71,10 +73,12 @@ public class AutenticacionTwitter implements Serializable {
     public String accessToken() throws Exception {
         // {oauth_token=uIFtzwAAAAAAxxEAAAABWChRegU,
         // =615d4GFhosJkuwCzqmwAFN8nvcdy1ngR}
-        Map<String, String> twitterRedirect = (Map<String, String>) new ObjectMapper().readValue(authContent, Map.class)
-                .get("payload");
-        String verifier = twitterRedirect.get("oauth_verifier");
-        AccessToken oAuthAccessToken = twitter.getOAuthAccessToken(requestToken, verifier);
+        if (oAuthAccessToken == null) {
+            Map<String, String> twitterRedirect = (Map<String, String>) new ObjectMapper()
+                    .readValue(authContent, Map.class).get("payload");
+            String verifier = twitterRedirect.get("oauth_verifier");
+            oAuthAccessToken = twitter.getOAuthAccessToken(requestToken, verifier);
+        }
         User autenticado = twitter.lookupUsers(oAuthAccessToken.getUserId()).get(0);
         String authEmail = autenticado.getId() + "@twitter.com";
         Response usuarioResp = modulosManager.root(Modulo.usuarios).path(OperacionesUsuarios.EP_USUARIOS)
