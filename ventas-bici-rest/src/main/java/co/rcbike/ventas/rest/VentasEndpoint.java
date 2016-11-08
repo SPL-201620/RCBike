@@ -30,97 +30,103 @@ public class VentasEndpoint {
 	@Inject
 	private TransformadorVentas transformador;
 
-    @GET
-    @Path(OperacionesVentas.PATH_DELIM + OperacionesVentas.ALIVE)
-    @Produces(MediaType.APPLICATION_JSON)
-    public String alive() {
-        return "endpoint alive";
-    }
+	@GET
+	@Path(OperacionesVentas.PATH_DELIM + OperacionesVentas.ALIVE)
+	@Produces(MediaType.APPLICATION_JSON)
+	public String alive() {
+		return "endpoint alive";
+	}
 
 	/***** CONFIGURACONES ****/
-	
-    /**
-	 * REST: GET,/venta/{id}
-	 * Lista todos los recorridos  por un id
+
+	/**
+	 * REST: GET,/venta/{id} Lista todos los recorridos por un id
 	 * 
-	 * @param id Identificador de venta
+	 * @param id
+	 *            Identificador de venta
 	 */
-    @GET
-    @Path(OperacionesVentas.PATH_DELIM + OperacionesVentas.VENTA + OperacionesVentas.PATH_DELIM + OperacionesVentas.LCURL + OperacionesVentas.PARAM_ID + OperacionesVentas.RCURL)
-    @Produces(MediaType.APPLICATION_JSON)
+	@GET
+	@Path(OperacionesVentas.PATH_DELIM + OperacionesVentas.VENTA
+			+ OperacionesVentas.PATH_DELIM + OperacionesVentas.LCURL
+			+ OperacionesVentas.PARAM_ID + OperacionesVentas.RCURL)
+	@Produces(MediaType.APPLICATION_JSON)
 	public VentaWeb getVenta(@PathParam(OperacionesVentas.PARAM_ID) Long id) {
-    	return transformador.toVentaWeb(service.getVenta(id));
+		return transformador.toVentaWeb(service.getVenta(id));
 	}
 
 	/**
-	 * REST: POST,/venta, save one
-	 * Permite guardar un recorrido 
+	 * REST: POST,/venta, save one Permite guardar un recorrido
 	 * 
-	 * @param venta Informacion de la venta a crear
+	 * @param venta
+	 *            Informacion de la venta a crear
 	 * @return Identificador de venta creada
 	 */
-    @POST
-    @Path(OperacionesVentas.PATH_DELIM + OperacionesVentas.VENTA)
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
+	@POST
+	@Path(OperacionesVentas.PATH_DELIM + OperacionesVentas.VENTA)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Long postVenta(VentaWeb venta) {
-    	return service.persistVenta(transformador.toVentaJpa(venta));
+		return service.persistVenta(transformador.toVentaJpa(venta));
 	}
 
 	/**
-	 * REST: PUT,/venta, update one
-	 * Permite guardar un recorrido 
+	 * REST: PUT,/venta, update one Permite guardar un recorrido
 	 * 
-	 * @param venta Informacion de la venta a crear
+	 * @param venta
+	 *            Informacion de la venta a crear
 	 * @return Identificador de venta creada
 	 */
-    @PUT
-    @Path(OperacionesVentas.PATH_DELIM + OperacionesVentas.VENTA)
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
+	@PUT
+	@Path(OperacionesVentas.PATH_DELIM + OperacionesVentas.VENTA)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Long putVenta(VentaWeb venta) {
-    	return service.mergeVenta(transformador.toVentaJpa(venta));
+		return service.mergeVenta(transformador.toVentaJpa(venta));
 	}
 
-
-    /**
-	 * REST: DELETE,/venta/{id}, cancel one
-	 * Lista todos los recorridos  por un id
-	 * 
-	 * @param id Identificador de venta
-	 */
-    @DELETE
-    @Path(OperacionesVentas.PATH_DELIM + OperacionesVentas.VENTA + OperacionesVentas.PATH_DELIM + OperacionesVentas.LCURL + OperacionesVentas.PARAM_ID + OperacionesVentas.RCURL)
-	public void deleteVenta(@PathParam(OperacionesVentas.PARAM_ID) Long id) {
-    	service.deleteVenta(id);
-	}
-
-	/***** VENTAS  ****/
-	
 	/**
-	 * REST: GET,/ventas, list all 
-	 * Lista todos los recorridos  
+	 * REST: DELETE,/venta/{id}, cancel one Lista todos los recorridos por un id
 	 * 
+	 * @param id
+	 *            Identificador de venta
 	 */
-    @GET
-    @Path(OperacionesVentas.PATH_DELIM + OperacionesVentas.VENTAS)
-    @Produces(MediaType.APPLICATION_JSON)
-	public List<VentaWeb> getVentas() {
-    	return transformador.toListVentaWeb(service.listTodosVentas());
+	@DELETE
+	@Path(OperacionesVentas.PATH_DELIM + OperacionesVentas.VENTA
+			+ OperacionesVentas.PATH_DELIM + OperacionesVentas.LCURL
+			+ OperacionesVentas.PARAM_ID + OperacionesVentas.RCURL)
+	public void deleteVenta(@PathParam(OperacionesVentas.PARAM_ID) Long id) {
+		service.deleteVenta(id);
 	}
 
-    /**
-	 * REST: GET,/ventas/{email}, list 
-	 * Lista todos los recorridos  realizados por un usuario
+	/***** VENTAS ****/
+
+	/**
+	 * REST: GET,/ventas, list all Lista todos los recorridos
+	 * 
+	 */
+
+	@GET
+	@Path(OperacionesVentas.PATH_DELIM + OperacionesVentas.VENTAS)
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<VentaWeb> getVentas() {
+		return transformador.toListVentaWeb(service.listTodosVentas());
+	}
+
+	/**
+	 * REST: GET,/ventas/{email}, list Lista todos los recorridos realizados por
+	 * un usuario
 	 * 
 	 * @param emailCreador
 	 *            email del usuario
 	 */
-    @GET
-    @Path(OperacionesVentas.PATH_DELIM + OperacionesVentas.VENTAS + OperacionesVentas.PATH_DELIM + OperacionesVentas.POR_EMAIL)
-    @Produces(MediaType.APPLICATION_JSON)
-	public List<VentaWeb> getVentas(@QueryParam(OperacionesVentas.PARAM_EMAIL_CREADOR) String emailCreador) {
-    	return transformador.toListVentaWeb(service.listVentas(emailCreador));
+
+	@GET
+	@Path(OperacionesVentas.PATH_DELIM + OperacionesVentas.VENTAS
+			+ OperacionesVentas.PATH_DELIM + OperacionesVentas.POR_EMAIL)
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<VentaWeb> getVentas(
+			@QueryParam(OperacionesVentas.PARAM_EMAIL_CREADOR) String emailCreador) {
+		return transformador.toListVentaWeb(service.listVentas(emailCreador));
 	}
 
 }

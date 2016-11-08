@@ -8,6 +8,7 @@ import co.rcbike.configurador_bici.model.ColorWeb;
 import co.rcbike.configurador_bici.model.ConfiguracionWeb;
 import co.rcbike.configurador_bici.model.PiezaWeb;
 import co.rcbike.usuarios.model.Usuario;
+import co.rcbike.ventas.model.VentaWeb;
 
 public final class UtilRest {
 
@@ -30,5 +31,7 @@ public final class UtilRest {
 	};
 
 	public static final GenericType<List<ConfiguracionWeb>> TYPE_LIST_CONFIGURACIONES = new GenericType<List<ConfiguracionWeb>>() {
+	};
+	public static final GenericType<List<VentaWeb>> TYPE_LIST_VENTAS = new GenericType<List<VentaWeb>>() {
 	};
 }

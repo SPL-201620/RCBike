@@ -12,6 +12,7 @@ public class OperacionesVentas {
 	public static final String ALIVE = "alive";
 	public static final String VENTA = "venta";
 	public static final String VENTAS = "ventas";
+	public static final String ALLVENTAS = "allventas";
 	// Operaciones
 	public static final String POR_EMAIL = "porEmail";
 	// Parametros

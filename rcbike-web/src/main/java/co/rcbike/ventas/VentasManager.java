@@ -5,8 +5,11 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
@@ -18,10 +21,12 @@ import lombok.Setter;
 
 import org.primefaces.event.FileUploadEvent;
 
+import co.rcbike.autenticacion.AutenticacionManager;
 import co.rcbike.gui.ModulosManager;
 import co.rcbike.gui.ModulosManager.Modulo;
 import co.rcbike.ventas.model.OperacionesVentas;
 import co.rcbike.ventas.model.VentaWeb;
+import co.rcbike.web.util.UtilRest;
 
 import com.google.common.io.Files;
 
@@ -36,15 +41,51 @@ public class VentasManager implements Serializable {
 
 	@Getter
 	@Setter
-	private String valor = new String();
+	private String valor;
 
 	@Getter
 	@Setter
-	private Long idVenta = (-1L);
+	private String marca;
+
+	@Getter
+	@Setter
+	private String ciudad;
+
+	@Getter
+	@Setter
+	private String estado;
+
+	@Getter
+	@Setter
+	private String accesorio;
+
+	@Getter
+	@Setter
+	private Boolean vendida;
+
+	@Getter
+	@Setter
+	private String observaciones;
+
+	@Getter
+	@Setter
+	private Long idVenta;
 
 	@Getter
 	@Setter
 	private VentaWeb venta = new VentaWeb();
+
+	@Getter
+	@Setter
+	private String compraSelected = new String("prueba");
+
+	@Getter
+	@Setter
+	private List<VentaWeb> ventaWebList = new ArrayList<VentaWeb>();
+
+	@Getter
+	@Setter
+	private List<VentaWeb> compraVentaWebList = new ArrayList<VentaWeb>();
 
 	@Getter
 	@Setter
@@ -54,6 +95,12 @@ public class VentasManager implements Serializable {
 	@Setter
 	@ManagedProperty(value = "#{modulosManager}")
 	private ModulosManager modulosManager;
+
+	@PostConstruct
+	public void init() {
+		findVentasByEmail();
+		findComprarByEmail();
+	}
 
 	public void cargarImagen(FileUploadEvent event) throws IOException {
 		String fileExtension = Files.getFileExtension(event.getFile()
@@ -76,9 +123,31 @@ public class VentasManager implements Serializable {
 		venta.setValor(valor);
 		venta.setIdConfiguracion(idConfiguracion);
 		venta.setFoto(foto);
+		venta.setAccesorios(accesorio);
+		venta.setCiudadVenta(ciudad);
+		venta.setEstado(estado);
+		venta.setMarca(marca);
+		venta.setObservaciones(observaciones);
+		venta.setEmailCreador(AutenticacionManager.emailAutenticado());
 		idVenta = modulosManager.root(Modulo.venta)
 				.path(OperacionesVentas.VENTA).path(OperacionesVentas.VENTA)
 				.request().post(Entity.json(venta), Long.class);
+
+	}
+
+	public void findVentasByEmail() {
+		ventaWebList = modulosManager.root(Modulo.venta)
+				.path(OperacionesVentas.VENTA).path(OperacionesVentas.VENTAS)
+				.path(OperacionesVentas.POR_EMAIL)
+				.queryParam(AutenticacionManager.emailAutenticado()).request()
+				.get(UtilRest.TYPE_LIST_VENTAS);
+
+	}
+
+	public void findComprarByEmail() {
+		compraVentaWebList = modulosManager.root(Modulo.venta)
+				.path(OperacionesVentas.VENTA).path(OperacionesVentas.VENTAS)
+				.request().get(UtilRest.TYPE_LIST_VENTAS);
 
 	}
 

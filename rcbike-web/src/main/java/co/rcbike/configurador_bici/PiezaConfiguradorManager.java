@@ -93,4 +93,5 @@ public class PiezaConfiguradorManager implements Serializable {
 				.get(UtilRest.TYPE_LIST_CONFIGURACIONES);
 
 	}
+
 }

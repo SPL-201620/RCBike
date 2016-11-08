@@ -1,3 +1,4 @@
+
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
@@ -16,31 +17,91 @@
 						<div class="ContainerIndent">
 							<h2 class="BigTopic" align="center">Venta Bicicletas RC-BIKE</h2>
 
-							<p:panel id="pnlConfiguracionesUsuario" collapsed="4"
-								header="Configuraciones realizadas" style="margin-bottom:20px">
-								<p:dataTable var="configuraciones"
-									value="#{ventaConfiguradorManager.listConfiguraciones}">
-									<p:subTable var="piezas"
-										value="#{configuraciones.piezasConfiguracion}">
-										<f:facet name="header">
-											<h:outputText value="#{configuraciones.descripcion}" />
-											<p:spacer>
-											</p:spacer>
-											<p:commandButton value="PONER A LA VENTA" type="button"
-												onclick="PF('venta').show();">
-												<f:setPropertyActionListener value="#{configuraciones.id}"
-													target="#{ventasManager.idConfiguracion}" />
+							<p:tabView>
+								<p:tab title="Configuraciones Usuario">
+									<p:panel id="pnlConfiguracionesUsuario">
+										<p:dataTable var="configuraciones"
+											value="#{ventaConfiguradorManager.listConfiguraciones}">
+											<p:subTable var="piezas"
+												value="#{configuraciones.piezasConfiguracion}">
+												<f:facet name="header">
+													<h:outputText value="#{configuraciones.descripcion}" />
+													<p:spacer>
+													</p:spacer>
+													<p:commandButton value="PONER A LA VENTA" type="button"
+														onclick="PF('venta').show();">
+														<f:setPropertyActionListener value="#{configuraciones.id}"
+															target="#{ventasManager.idConfiguracion}" />
+													</p:commandButton>
+												</f:facet>
+												<p:column>
+													<h:outputText value="#{piezas.tipo}" />
+												</p:column>
+												<p:column>
+													<h:outputText value="#{piezas.descripcion}" />
+												</p:column>
+											</p:subTable>
+										</p:dataTable>
+									</p:panel>
+								</p:tab>
+								<p:tab title="Bicicletas puestas a la venta">
+									<p:dataTable id="dtVentaUsuario" var="ventaUsuario"
+										value="#{ventasManager.ventaWebList}">
+										<p:column headerText="Marca:">
+											<h:outputText value="#{ventaUsuario.marca}" />
+										</p:column>
+										<p:column headerText="Ciudad:">
+											<h:outputText value="#{ventaUsuario.ciudadVenta}" />
+										</p:column>
+										<p:column headerText="Estado:">
+											<h:outputText value="#{ventaUsuario.estado}" />
+										</p:column>
+										<p:column headerText="Valor">
+											<h:outputText value="#{ventaUsuario.valor}" />
+										</p:column>
+										<p:column headerText="Accesorios:">
+											<h:outputText value="#{ventaUsuario.accesorios}" />
+										</p:column>
+										<p:column headerText="Vendida?">
+											<h:outputText value="#{ventaUsuario.vendida}" />
+										</p:column>
+										<p:column style="width:32px;text-align: center">
+										</p:column>
+									</p:dataTable>
+								</p:tab>
+								<p:tab title="Bicicletas para comprar">
+									<p:dataTable id="dtCompraUsuario" var="compraUsuario"
+										value="#{ventasManager.compraVentaWebList}">
+										<p:column headerText="Marca:">
+											<h:outputText value="#{compraUsuario.marca}" />
+										</p:column>
+										<p:column headerText="Ciudad:">
+											<h:outputText value="#{compraUsuario.ciudadVenta}" />
+										</p:column>
+										<p:column headerText="Estado:">
+											<h:outputText value="#{compraUsuario.estado}" />
+										</p:column>
+										<p:column headerText="Valor">
+											<h:outputText value="#{compraUsuario.valor}" />
+										</p:column>
+										<p:column headerText="Accesorios:">
+											<h:outputText value="#{compraUsuario.accesorios}" />
+										</p:column>
+										<p:column headerText="Vendida?">
+											<h:outputText value="#{compraUsuario.vendida}" />
+										</p:column>
+										<p:column style="width:32px;text-align: center">
+										</p:column>
+										<p:column>
+											<p:commandButton oncomplete="PF('compraDialog').show()"
+												icon="ui-icon-search" title="View">
+												<f:setPropertyActionListener value="#{compraUsuario.emailCreador}"
+													target="#{ventasManager.compraSelected}" />
 											</p:commandButton>
-										</f:facet>
-										<p:column>
-											<h:outputText value="#{piezas.tipo}" />
 										</p:column>
-										<p:column>
-											<h:outputText value="#{piezas.descripcion}" />
-										</p:column>
-									</p:subTable>
-								</p:dataTable>
-							</p:panel>
+									</p:dataTable>
+								</p:tab>
+							</p:tabView>
 						</div>
 					</div>
 				</div>
@@ -78,25 +139,25 @@
 					<p:panelGrid columns="6" styleClass="Fs18">
 						<h:outputText value="Valor: " />
 
-						<p:inputNumber id="valorVentaBici1"
-							value="#{ventasManager.valor}" required="true">
+						<p:inputNumber id="valorVentaBici1" value="#{ventasManager.valor}"
+							required="true">
 							<f:validateLongRange minimum="1" maximum="10" />
 						</p:inputNumber>
 
 						<h:outputText value="Poner a la venta: " />
 						<p:selectBooleanButton id="value1"
-							value="#{ventasManager.venta.vendida}" onLabel="true"
+							value="#{ventasManager.vendida}" onLabel="true"
 							offLabel="false" style="width:60px" />
 						<h:outputText value="Marca: " />
-						<p:inputText id="ventaMarca" value="#{ventasManager.venta.marca}"
+						<p:inputText id="ventaMarca" value="#{ventasManager.marca}"
 							styleClass="Fs18" autocomplete="off" required="true" />
 						<h:outputText value="Ciudad: " />
 						<p:inputText id="ventaCiudadVenta"
-							value="#{ventasManager.venta.ciudadVenta}" styleClass="Fs18"
+							value="#{ventasManager.ciudad}" styleClass="Fs18"
 							autocomplete="off" required="true" />
 						<h:outputText value="Estado: " />
 						<p:selectOneMenu id="ventaEstado"
-							value="#{ventasManager.venta.estado}" style="width:125px"
+							value="#{ventasManager.estado}" style="width:125px"
 							required="true">
 							<f:selectItem itemLabel="Select One" itemValue="" />
 							<f:selectItem itemLabel="Nuevo" itemValue="Nuevo" />
@@ -112,19 +173,27 @@
 
 						<h:outputText value="Accesorios: " />
 						<p:inputText id="ventaAccesorios"
-							value="#{ventasManager.venta.accesorios}" styleClass="Fs18"
+							value="#{ventasManager.accesorio}" styleClass="Fs18"
 							autocomplete="off" required="true" />
 						<h:outputText value="Observaciones: " />
 						<p:inputText id="ventaObservaciones"
-							value="#{ventasManager.venta.observaciones}" styleClass="Fs18"
+							value="#{ventasManager.observaciones}" styleClass="Fs18"
 							autocomplete="off" required="false" />
 						<div class="Container25">
 							<p:commandButton value="Insertar"
-								action="#{ventasManager.insertVenta()}" process="@this" />
+								action="#{ventasManager.insertVenta()}" process="@form" />
 						</div>
 					</p:panelGrid>
 				</p:panel>
 			</h:form>
+
+		</p:dialog>
+		<p:dialog header="Gracias por usar nuestro servicio"
+			widgetVar="compraDialog" modal="true">
+			<h:outputText
+				value="El contacto del vendedor es:" />
+			<h:outputText
+				value="#{ventasManager.compraSelected}" />
 
 		</p:dialog>
 
