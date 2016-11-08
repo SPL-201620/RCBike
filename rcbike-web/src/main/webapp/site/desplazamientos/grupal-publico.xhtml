@@ -21,40 +21,39 @@
 	    }
         </script>
 
-		<p:dataTable var="ruta" value="#{geocodeView.rutas}" rows="10"
+		<p:dataTable var="rutaWeb" value="#{geocodeView.rutas}" rows="10"
 			paginator="true"
 			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 			rowsPerPageTemplate="5,10,15">
 
-
 			<p:column headerText="Participantes:">
-				<h:outputText value="#{ruta.participantes.size()}" />
+				<h:outputText value="#{rutaWeb.participantes.size()}" />
 			</p:column>
 
 			<p:column headerText="Distancia:">
-				<h:outputText value="#{ruta.distancia} mt." />
+				<h:outputText value="#{rutaWeb.distancia} mt." />
 			</p:column>
 
 			<p:column headerText="Tiempo Estimado:">
-				<h:outputText value="#{ruta.tiempoEstimado/60} min." />
+				<h:outputText value="#{rutaWeb.tiempoEstimado/60} min." />
 			</p:column>
 
 			<p:column headerText="Calorias:">
-				<h:outputText value="#{ruta.calorias}" />
+				<h:outputText value="#{rutaWeb.calorias}" />
 			</p:column>
 
 			<p:column headerText="Clima:">
-				<h:outputText value="#{ruta.clima}" />
+				<h:outputText value="#{rutaWeb.clima}" />
 			</p:column>
 
 			<p:column headerText="Fecha:">
-				<h:outputText value="#{ruta.fecha}" >
+				<h:outputText value="#{rutaWeb.fecha}" >
 					<f:convertDateTime pattern="dd-MM-yyyy" />
 				</h:outputText>
 			</p:column>
 
 			<p:column headerText="Frecuente:">
-				<h:outputText value="#{ruta.frecuente}" />
+				<h:outputText value="#{rutaWeb.frecuente}" />
 			</p:column>
 			
 			<p:column headerText="Acción:">

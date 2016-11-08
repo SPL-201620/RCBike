@@ -65,9 +65,9 @@ public class GeocodeView {
             //}
         }
         ///---
-        String lat = String.format("%8f",results.get(0).getLatLng().getLat()).replace(',', '.');
+        String lat = String.format("%7f",results.get(0).getLatLng().getLat()).replace(',', '.');
         
-        String lng = String.format("%8f",results.get(0).getLatLng().getLng()).replace(',', '.');
+        String lng = String.format("%7f",results.get(0).getLatLng().getLng()).replace(',', '.');
         
         
         java.lang.System.out.println(".-----inicioGrupales\n");
@@ -80,7 +80,7 @@ public class GeocodeView {
 	        .queryParam("latitud", lat)
 	        .queryParam("longitud", lng).request().get(List.class);
         
-        java.lang.System.out.println("\n");
+        java.lang.System.out.println("Rutas:\n");
         
         java.lang.System.out.println(rutas.toString());
     }
