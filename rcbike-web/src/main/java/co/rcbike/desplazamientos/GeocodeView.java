@@ -4,6 +4,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.ViewScoped;
 
 import org.primefaces.event.map.GeocodeEvent;
 import org.primefaces.model.map.DefaultMapModel;
@@ -21,6 +22,7 @@ import lombok.Getter;
 import lombok.Setter;
  
 @ManagedBean
+@ViewScoped
 public class GeocodeView {
      
     private MapModel geoModel;
@@ -63,9 +65,9 @@ public class GeocodeView {
             //}
         }
         ///---
-        String lat = String.format("%8f",results.get(0).getLatLng().getLat());
+        String lat = String.format("%8f",results.get(0).getLatLng().getLat()).replace(',', '.');
         
-        String lng = String.format("%8f",results.get(0).getLatLng().getLng());
+        String lng = String.format("%8f",results.get(0).getLatLng().getLng()).replace(',', '.');
         
         
         java.lang.System.out.println(".-----inicioGrupales\n");

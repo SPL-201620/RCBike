@@ -18,7 +18,7 @@ public class SelectionView implements Serializable {
    
    private RutaWeb selectedCar;
    private List<RutaWeb> selectedCars;
-   private List<RutaWeb> rutas;
+   //private List<RutaWeb> rutas;
    
    @Getter
    @Setter
@@ -27,7 +27,7 @@ public class SelectionView implements Serializable {
     
    @PostConstruct
    public void init() {
-	   rutas = service.getRutas();
+	   selectedCars = service.getRutas();
    }
 
     
@@ -52,14 +52,14 @@ public class SelectionView implements Serializable {
    }
 
 
-	public List<RutaWeb> getRutas() {
+	/*public List<RutaWeb> getRutas() {
 		return rutas;
 	}
 	
 	
 	public void setRutas(List<RutaWeb> rutas) {
 		this.rutas = rutas;
-	}
+	}*/
    
    
     
