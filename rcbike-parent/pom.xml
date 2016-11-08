@@ -37,14 +37,14 @@
 			</activation>
 			<modules>
 <!-- 				<module>../alquiler-bici-rest</module> -->
-			<module>../configurador-bici-rest</module> 
+				<module>../configurador-bici-rest</module>
 				<module>../desplazamientos-rest</module>
 				<module>../mensajeria-rest</module>
 <!-- 				<module>../reportes-rest</module> -->
 <!-- 				<module>../sinc-redes-rest</module> -->
 				<module>../usuarios-rest</module>
 				<module>../rcbike-web</module>
-<!-- 				<module>../ventas-bici-rest</module> -->
+				<module>../ventas-bici-rest</module>
 			</modules>
 			<build>
 				<plugins>

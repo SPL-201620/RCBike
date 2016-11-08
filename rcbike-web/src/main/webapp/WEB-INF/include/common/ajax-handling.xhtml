@@ -1,0 +1,20 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+     <p:ajaxStatus style="width:32px;height:32px;position:fixed;right:7px;bottom:7px" onstart="PF('ajaxModal').show()" onsuccess="PF('ajaxModal').hide()" >
+         <f:facet name="start">
+             <p:graphicImage name="images/preloader.gif" library="modena-layout" style="z-index: 1002;"/>
+         </f:facet>
+
+         <f:facet name="complete">
+             <h:outputText value="" />
+         </f:facet>
+     </p:ajaxStatus>
+     <p:dialog widgetVar="ajaxModal" width="0" height="0" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+     </p:dialog>
+     <p:growl id="growl" showDetail="true"/>
+	
+</ui:composition>

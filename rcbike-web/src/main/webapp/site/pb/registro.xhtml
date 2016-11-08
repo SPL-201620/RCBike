@@ -50,17 +50,19 @@
         			<h:form>
                     <div class="Container60 Responsive">
                     	<div class="EmptyBox10 Wid80"/>
-	                   	<p:inputText placeholder="Correo" value="#{registroManager.email}" 
+	                   	<p:inputText placeholder="Correo" name="Correo" value="#{registroManager.email}" 
 	                   		disabled="#{not empty registroManager.email}" required="true"
 	                   	 	styleClass="Wid80 TexAlCenter Fs18" />
                     	<div class="EmptyBox10 Wid80"/>
 						<p:inputText type="password" placeholder="Contraseña" value="#{registroManager.clave}" 
 	                   		required="true" styleClass="Wid80 TexAlCenter Fs18" rendered="#{registroManager.registroLocal}"/>
                     	<div class="EmptyBox10 Wid80"/>
-                    	<p:inputText placeholder="Nombres" value="#{registroManager.nombres}" required="true"
+                    	<p:outputLabel for="nombres" value="Nombres" style="display:none;"/>
+                    	<p:inputText placeholder="Nombres" id="nombres" value="#{registroManager.nombres}" required="true"
                     	 	styleClass="Wid80 TexAlCenter Fs18" />
                     	<div class="EmptyBox10 Wid80"/>
-                    	<p:inputText placeholder="Apellidos" value="#{registroManager.apellidos}" required="true"
+                    	<p:outputLabel for="apellidos" value="Apellidos" style="display:none;"/>
+                    	<p:inputText placeholder="Apellidos" id="apellidos" value="#{registroManager.apellidos}" required="true"
                     	 	styleClass="Wid80 TexAlCenter Fs18" />
                     </div>
 
@@ -68,7 +70,7 @@
                     <div class="EmptyBox30"/>
                     <div class="Container100">
                     	<p:commandButton value="Registrarme" action="#{registroManager.registrar()}" icon="fa fa-user-plus" 
-                    		styleClass="Wid80 Fs18 White RaisedButton FloatNoneOnMobile"/>
+                    		styleClass="Wid80 Fs18 White RaisedButton FloatNoneOnMobile" update="@form growl"/>
                     </div>
                     <div class="EmptyBox10"/>
                     <div class="Container100">
@@ -85,7 +87,8 @@
             </div>
         </div>
         
-        <h:outputStylesheet name="css/rcbike.min.css" library="modena-layout" />" />
+        <ui:include src="/WEB-INF/include/common/ajax-handling.xhtml"/>
+        <h:outputStylesheet name="css/rcbike.min.css" library="modena-layout" />
     </h:body>
 
 </html>
