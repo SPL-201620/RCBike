@@ -1,0 +1,134 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="subheader">
+        Configirador
+    </ui:define>
+
+	<ui:define name="content">
+		<h:form id="frmVentasBici" prependId="false">
+			<div class="Container100">
+				<div class="ContainerIndent">
+					<div class="Card ShadowEffect">
+						<div class="ContainerIndent">
+							<h2 class="BigTopic" align="center">Venta Bicicletas RC-BIKE</h2>
+
+							<p:panel id="pnlConfiguracionesUsuario" collapsed="4"
+								header="Configuraciones realizadas" style="margin-bottom:20px">
+								<p:dataTable var="configuraciones"
+									value="#{ventaConfiguradorManager.listConfiguraciones}">
+									<p:subTable var="piezas"
+										value="#{configuraciones.piezasConfiguracion}">
+										<f:facet name="header">
+											<h:outputText value="#{configuraciones.descripcion}" />
+											<p:spacer>
+											</p:spacer>
+											<p:commandButton value="PONER A LA VENTA" type="button"
+												onclick="PF('venta').show();">
+												<f:setPropertyActionListener value="#{configuraciones.id}"
+													target="#{ventasManager.idConfiguracion}" />
+											</p:commandButton>
+										</f:facet>
+										<p:column>
+											<h:outputText value="#{piezas.tipo}" />
+										</p:column>
+										<p:column>
+											<h:outputText value="#{piezas.descripcion}" />
+										</p:column>
+									</p:subTable>
+								</p:dataTable>
+							</p:panel>
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+		<p:dialog header="Por favor inserte la informacion de la bicicleta"
+			widgetVar="venta" modal="true">
+			<h:form id="formCargaImagen">
+				<p:panel collapsed="4" header="Venta de bicicleta"
+					style="margin-bottom:20px">
+					<h:panelGroup layout="block" rendered="#{empty ventasManager.foto}">
+						<div class="EmptyBox40 Wid70" />
+						<h:panelGroup layout="block" style="display: block; margin:0 auto"
+							styleClass="icon-face Fs100" />
+						<div class="EmptyBox40 Wid70" />
+					</h:panelGroup>
+					<h:panelGroup layout="block"
+						rendered="#{not empty ventasManager.foto}">
+						<div class="EmptyBox20 Wid70" />
+						<img src="data:image/jpeg;base64,#{ventasManager.foto}"
+							style="display: block; margin: 0 auto" />
+						<div class="EmptyBox10 Wid70" />
+					</h:panelGroup>
+					<div style="display: block; margin: 0 auto">
+						<p:fileUpload id="cargarImagen"
+							fileUploadListener="#{ventasManager.cargarImagen}"
+							mode="advanced" update="formCargaImagen" auto="true"
+							label="Cargar Imagen" sizeLimit="100000"
+							allowTypes="/(\.|\/)(jpe?g|png)$/" />
+					</div>
+				</p:panel>
+			</h:form>
+			<h:form id="formModalVentas">
+				<p:panel id="pnlVentasBicicletas">
+					<p:panelGrid columns="6" styleClass="Fs18">
+						<h:outputText value="Valor: " />
+
+						<p:inputNumber id="valorVentaBici1"
+							value="#{ventasManager.valor}" required="true">
+							<f:validateLongRange minimum="1" maximum="10" />
+						</p:inputNumber>
+
+						<h:outputText value="Poner a la venta: " />
+						<p:selectBooleanButton id="value1"
+							value="#{ventasManager.venta.vendida}" onLabel="true"
+							offLabel="false" style="width:60px" />
+						<h:outputText value="Marca: " />
+						<p:inputText id="ventaMarca" value="#{ventasManager.venta.marca}"
+							styleClass="Fs18" autocomplete="off" required="true" />
+						<h:outputText value="Ciudad: " />
+						<p:inputText id="ventaCiudadVenta"
+							value="#{ventasManager.venta.ciudadVenta}" styleClass="Fs18"
+							autocomplete="off" required="true" />
+						<h:outputText value="Estado: " />
+						<p:selectOneMenu id="ventaEstado"
+							value="#{ventasManager.venta.estado}" style="width:125px"
+							required="true">
+							<f:selectItem itemLabel="Select One" itemValue="" />
+							<f:selectItem itemLabel="Nuevo" itemValue="Nuevo" />
+							<f:selectItem itemLabel="Usado-Excelente estado"
+								itemValue="Usado-Excelente estado" />
+							<f:selectItem itemLabel="Usado-Buen estado"
+								itemValue="Usado-Buen estado" />
+							<f:selectItem itemLabel="Usado-Regular estado"
+								itemValue="Usado-Regular estado" />
+							<f:selectItem itemLabel="Usado-Mal estado"
+								itemValue="Usado-Mal estado" />
+						</p:selectOneMenu>
+
+						<h:outputText value="Accesorios: " />
+						<p:inputText id="ventaAccesorios"
+							value="#{ventasManager.venta.accesorios}" styleClass="Fs18"
+							autocomplete="off" required="true" />
+						<h:outputText value="Observaciones: " />
+						<p:inputText id="ventaObservaciones"
+							value="#{ventasManager.venta.observaciones}" styleClass="Fs18"
+							autocomplete="off" required="false" />
+						<div class="Container25">
+							<p:commandButton value="Insertar"
+								action="#{ventasManager.insertVenta()}" process="@this" />
+						</div>
+					</p:panelGrid>
+				</p:panel>
+			</h:form>
+
+		</p:dialog>
+
+
+	</ui:define>
+
+</ui:composition>
