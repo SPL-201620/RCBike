@@ -2,16 +2,16 @@ package co.rcbike.configurador_bici;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.ws.rs.client.Entity;
 
-import lombok.Getter;
-import lombok.Setter;
 import co.rcbike.autenticacion.AutenticacionManager;
 import co.rcbike.configurador_bici.model.ConfiguracionWeb;
 import co.rcbike.configurador_bici.model.OperacionesConfiguracion;
@@ -20,71 +20,80 @@ import co.rcbike.configurador_bici.model.PiezaWeb;
 import co.rcbike.configurador_bici.model.TipoPiezaBicicleta;
 import co.rcbike.gui.ModulosManager;
 import co.rcbike.gui.ModulosManager.Modulo;
+import co.rcbike.web.util.UtilRest;
+import lombok.Getter;
+import lombok.Setter;
 
 @SuppressWarnings("serial")
 @ManagedBean
 @ViewScoped
 public class ConfiguradorManager implements Serializable {
 
-	@Getter
-	@Setter
-	private Long idConfiguracion;
+    @Getter
+    @Setter
+    private String descripcionConfiguracion;
 
-	@Getter
-	@Setter
-	private ConfiguracionWeb configuracion = new ConfiguracionWeb();
+    @Getter
+    @Setter
+    private String color;
 
-	@Getter
-	@Setter
-	private String descripcionConfiguracion;
+    @Getter
+    @Setter
+    private PiezaWeb pieza;
 
-	@Getter
-	@Setter
-	private String color;
+    @Getter
+    @Setter
+    private Map<TipoPiezaBicicleta, PiezaWeb> piezas = new HashMap<TipoPiezaBicicleta, PiezaWeb>();
 
-	@Getter
-	@Setter
-	public PiezaConfiguracionWeb piezaConfigurada = new PiezaConfiguracionWeb();
+    @Getter
+    @Setter
+    private List<ConfiguracionWeb> listConfiguraciones;
 
-	@Getter
-	@Setter
-	private PiezaWeb pieza = new PiezaWeb();
+    @Getter
+    @Setter
+    @ManagedProperty(value = "#{modulosManager}")
+    private ModulosManager modulosManager;
 
-	@Getter
-	@Setter
-	private Map<TipoPiezaBicicleta, PiezaWeb> piezas = new HashMap<TipoPiezaBicicleta, PiezaWeb>();
+    @PostConstruct
+    public void init() {
+        pieza = null;
+        color = null;
+        descripcionConfiguracion = null;
+        piezas.clear();
+        configuracionesList();
+    }
 
-	private PiezaConfiguradorManager piezaConfiguradorManager = new PiezaConfiguradorManager();
+    public void piezasConfiguradas() {
+        piezas.put(pieza.getTipo(), pieza);
+    }
 
-	@Getter
-	@Setter
-	@ManagedProperty(value = "#{modulosManager}")
-	private ModulosManager modulosManager;
+    public void insertConfiguracion() {
+        ConfiguracionWeb configuracion = new ConfiguracionWeb();
 
-	public void piezasConfiguradas() {
-		piezas.put(pieza.getTipo(), pieza);
-	}
+        configuracion.setDescripcion(descripcionConfiguracion);
+        configuracion.setEmailCreador(AutenticacionManager.emailAutenticado());
+        Long idConfiguracion = modulosManager.root(Modulo.configurador).path(OperacionesConfiguracion.EP_CONFIGURACION)
+                .path(OperacionesConfiguracion.EP_CONFIGURACION).request().post(Entity.json(configuracion), Long.class);
 
-	public void insertConfiguracion() {
-		configuracion.setDescripcion(descripcionConfiguracion);
-		configuracion.setEmailCreador(AutenticacionManager.emailAutenticado());
-		idConfiguracion = modulosManager.root(Modulo.configurador)
-				.path(OperacionesConfiguracion.EP_CONFIGURACION)
-				.path(OperacionesConfiguracion.EP_CONFIGURACION).request()
-				.post(Entity.json(configuracion), Long.class);
+        PiezaConfiguracionWeb piezaConfigurada = new PiezaConfiguracionWeb();
+        for (Entry<TipoPiezaBicicleta, PiezaWeb> pieza : piezas.entrySet()) {
+            piezaConfigurada.setIdConfiguracion(idConfiguracion);
+            piezaConfigurada.setIdPieza(pieza.getValue().getId());
+            piezaConfigurada.setDescripcion(pieza.getValue().getDescripcion());
+            piezaConfigurada.setTipo(pieza.getValue().getTipo());
+            piezaConfigurada.setColor(color);
+            modulosManager.root(Modulo.configurador).path(OperacionesConfiguracion.EP_CONFIGURACION)
+                    .path("piezaConfiguracion").request().put(Entity.json(piezaConfigurada));
 
-		for (Entry<TipoPiezaBicicleta, PiezaWeb> pieza : piezas.entrySet()) {
-			piezaConfigurada.setIdConfiguracion(idConfiguracion);
-			piezaConfigurada.setIdPieza(pieza.getValue().getId());
-			piezaConfigurada.setDescripcion(pieza.getValue().getDescripcion());
-			piezaConfigurada.setTipo(pieza.getValue().getTipo());
-			piezaConfigurada.setColor(color);
-			modulosManager.root(Modulo.configurador)
-					.path(OperacionesConfiguracion.EP_CONFIGURACION)
-					.path("piezaConfiguracion").request()
-					.put(Entity.json(piezaConfigurada));
+        }
+        init();
+    }
 
-		}
-		piezaConfiguradorManager.configuracionesList();
-	}
+    public void configuracionesList() {
+        listConfiguraciones = modulosManager.root(Modulo.configurador).path(OperacionesConfiguracion.EP_CONFIGURACION)
+                .path("configuraciones").path("porEmail")
+                .queryParam("emailCreador", AutenticacionManager.emailAutenticado()).request()
+                .get(UtilRest.TYPE_LIST_CONFIGURACIONES);
+
+    }
 }

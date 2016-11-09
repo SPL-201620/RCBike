@@ -2,7 +2,7 @@
 --Piezas
 insert into Pieza (id,tipo,descripcion) values(-1,'MARCO','Marco hiper resistente');
 insert into Pieza (id,tipo,descripcion) values(-2,'LLANTA_DELANTERA','Llanta con disco');
-insert into Pieza (id,tipo,descripcion) values(-3,'LLANTA_TRASERA','Llanta aleación');
+insert into Pieza (id,tipo,descripcion) values(-3,'LLANTA_TRASERA','Llanta aleacion');
 insert into Pieza (id,tipo,descripcion) values(-4,'FRENOS','Freno convencional');
 insert into Pieza (id,tipo,descripcion) values(-5,'CAMBIOS','18 pinones');
 insert into Pieza (id,tipo,descripcion) values(-10,'MARCO','Marco elastico');

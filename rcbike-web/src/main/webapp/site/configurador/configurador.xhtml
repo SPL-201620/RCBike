@@ -69,7 +69,7 @@
 									<div class="Container25">
 										<p:commandButton value="Insertar"
 											action="#{configuradorManager.insertConfiguracion()}"
-											process="@form" />
+											process="@form" update="@form growl"/>
 									</div>
 								</div>
 							</p:panel>
@@ -78,7 +78,7 @@
 
 
 								<p:dataTable var="configuraciones"
-									value="#{piezaConfiguradorManager.listConfiguraciones}">
+									value="#{configuradorManager.listConfiguraciones}">
 
 									<p:subTable var="piezas"
 										value="#{configuraciones.piezasConfiguracion}">

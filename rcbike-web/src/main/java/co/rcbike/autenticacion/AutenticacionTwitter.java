@@ -37,8 +37,8 @@ import twitter4j.auth.RequestToken;
 @JBossLog
 public class AutenticacionTwitter implements Serializable {
 
-    private Twitter twitter;
-    private RequestToken requestToken;
+    private static Twitter twitter;
+    private static RequestToken requestToken;
     private AccessToken oAuthAccessToken;
 
     @Getter
@@ -57,15 +57,20 @@ public class AutenticacionTwitter implements Serializable {
 
     @PostConstruct
     public void init() {
-        twitter = TwitterFactory.getSingleton();
-        twitter.setOAuthConsumer("pzJH9IW2nAcFLWFB6iw9mtxI2", "zFN0CMS8gPerfifG2VxwEV168LshKv4yzFZgLPEjn5O7Dj7fMy");
-        log.debug("Inicializado " + this.getClass().getName());
+        try {
+            twitter = TwitterFactory.getSingleton();
+            twitter.setOAuthConsumer("pzJH9IW2nAcFLWFB6iw9mtxI2", "zFN0CMS8gPerfifG2VxwEV168LshKv4yzFZgLPEjn5O7Dj7fMy");
+        } catch (Exception e) {
+        } finally {
+            log.debug("Inicializado " + this.getClass().getName());
+        }
     }
 
     public void requestToken() throws TwitterException, IOException {
-        if (requestToken == null)
+        if (requestToken == null) {
             requestToken = twitter
                     .getOAuthRequestToken("http://localhost:8080/rcbike-web/site/pb/login.xhtml?serv=twitter");
+        }
         FacesContext.getCurrentInstance().getExternalContext().redirect(requestToken.getAuthenticationURL());
     }
 
