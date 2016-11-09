@@ -77,7 +77,7 @@ public class VentasManager implements Serializable {
 
 	@Getter
 	@Setter
-	private String compraSelected = new String("prueba");
+	private String compraSelected = new String();
 
 	@Getter
 	@Setter
@@ -133,6 +133,9 @@ public class VentasManager implements Serializable {
 				.path(OperacionesVentas.VENTA).path(OperacionesVentas.VENTA)
 				.request().post(Entity.json(venta), Long.class);
 
+		findComprarByEmail();
+		findVentasByEmail();
+
 	}
 
 	public void findVentasByEmail() {
@@ -155,4 +158,7 @@ public class VentasManager implements Serializable {
 		idConfiguracion = idConfig;
 	}
 
+	public void actualizaCompraSelected(String emailCreador) {
+		compraSelected = emailCreador;
+	}
 }
