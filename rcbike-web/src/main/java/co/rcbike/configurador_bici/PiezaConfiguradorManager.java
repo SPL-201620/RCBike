@@ -18,6 +18,7 @@ import co.rcbike.autenticacion.AutenticacionManager;
 import co.rcbike.configurador_bici.model.ColorWeb;
 import co.rcbike.configurador_bici.model.ConfiguracionWeb;
 import co.rcbike.configurador_bici.model.OperacionesConfiguracion;
+import co.rcbike.configurador_bici.model.OperacionesConfigurador;
 import co.rcbike.configurador_bici.model.PiezaWeb;
 import co.rcbike.configurador_bici.model.TipoPiezaBicicleta;
 import co.rcbike.gui.ModulosManager;
@@ -89,6 +90,7 @@ public class PiezaConfiguradorManager implements Serializable {
 		listConfiguraciones = modulosManager.root(Modulo.configurador)
 				.path(OperacionesConfiguracion.EP_CONFIGURACION)
 				.path("configuraciones")
+				.path(OperacionesConfigurador.POR_EMAIL)
 				.queryParam(AutenticacionManager.emailAutenticado()).request()
 				.get(UtilRest.TYPE_LIST_CONFIGURACIONES);
 

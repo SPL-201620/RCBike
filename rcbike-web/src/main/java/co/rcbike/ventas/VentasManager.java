@@ -133,6 +133,9 @@ public class VentasManager implements Serializable {
 				.path(OperacionesVentas.VENTA).path(OperacionesVentas.VENTA)
 				.request().post(Entity.json(venta), Long.class);
 
+		findComprarByEmail();
+		findVentasByEmail();
+
 	}
 
 	public void findVentasByEmail() {

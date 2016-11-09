@@ -178,7 +178,8 @@
 						<div class="Container25">
 							<p:commandButton value="Insertar"
 								update=":formModalVentas:errores"
-								action="#{ventasManager.insertVenta}" process="@form" />
+								action="#{ventasManager.insertVenta}" process="@form" onclick="venta.close()"
+								/>
 						</div>
 					</p:panelGrid>
 				</p:panel>
