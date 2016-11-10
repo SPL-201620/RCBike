@@ -1,6 +1,5 @@
 package co.rcbike.desplazamientos.model.openweather;
 
-
 public class Wind {
 
     private Double speed;
@@ -8,8 +7,7 @@ public class Wind {
 
     /**
      *
-     * @return
-     * The speed
+     * @return The speed
      */
     public Double getSpeed() {
         return speed;
@@ -18,7 +16,7 @@ public class Wind {
     /**
      *
      * @param speed
-     * The speed
+     *            The speed
      */
     public void setSpeed(Double speed) {
         this.speed = speed;
@@ -26,8 +24,7 @@ public class Wind {
 
     /**
      *
-     * @return
-     * The deg
+     * @return The deg
      */
     public Double getDeg() {
         return deg;
@@ -36,7 +33,7 @@ public class Wind {
     /**
      *
      * @param deg
-     * The deg
+     *            The deg
      */
     public void setDeg(Double deg) {
         this.deg = deg;

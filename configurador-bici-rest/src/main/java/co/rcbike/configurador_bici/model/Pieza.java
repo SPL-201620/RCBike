@@ -13,68 +13,68 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 @MappedSuperclass
 public abstract class Pieza implements Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue
-	private Long id;
+    @Id
+    @GeneratedValue
+    private Long id;
 
-	@NotNull
-	@Enumerated(EnumType.STRING)
-	private TipoPiezaBicicleta tipo;
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private TipoPiezaBicicleta tipo;
 
-	@NotNull
-	@NotEmpty
-	private String descripcion;
+    @NotNull
+    @NotEmpty
+    private String descripcion;
 
-	public Long getId() {
-		return id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public TipoPiezaBicicleta getTipo() {
-		return tipo;
-	}
+    public TipoPiezaBicicleta getTipo() {
+        return tipo;
+    }
 
-	public void setTipo(TipoPiezaBicicleta tipo) {
-		this.tipo = tipo;
-	}
+    public void setTipo(TipoPiezaBicicleta tipo) {
+        this.tipo = tipo;
+    }
 
-	public String getDescripcion() {
-		return descripcion;
-	}
+    public String getDescripcion() {
+        return descripcion;
+    }
 
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
-	}
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
 
-	@Override
-	public int hashCode() {
-		int i;
-		Long hash = 0L;
-		hash += (getId() != null ? getId().hashCode() : 0L);
-		i = hash.intValue();
-		return i;
-	}
+    @Override
+    public int hashCode() {
+        int i;
+        Long hash = 0L;
+        hash += (getId() != null ? getId().hashCode() : 0L);
+        i = hash.intValue();
+        return i;
+    }
 
-	@Override
-	public boolean equals(Object object) {
-		// TODO: Warning - this method won't work in the case the id fields are
-		// not set
-		if (!(object instanceof PiezaWeb)) {
-			return false;
-		}
-		PiezaWeb other = (PiezaWeb) object;
-		if ((this.getId() == null && other.getId() != null)
-				|| (this.getId() != null && !this.id.equals(other.getId()))) {
-			return false;
-		}
-		return true;
-	}
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are
+        // not set
+        if (!(object instanceof PiezaWeb)) {
+            return false;
+        }
+        PiezaWeb other = (PiezaWeb) object;
+        if ((this.getId() == null && other.getId() != null)
+                || (this.getId() != null && !this.id.equals(other.getId()))) {
+            return false;
+        }
+        return true;
+    }
 }

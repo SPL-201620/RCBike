@@ -34,7 +34,7 @@ public class AutorizacionInterceptor implements Filter {
             HttpSession session = httpRq.getSession(true);
             if (!isAutenticado(session) && !isAccesoPublico(httpRq)) {
                 HttpServletResponse httpResponse = (HttpServletResponse) response;
-                httpResponse.sendRedirect(httpRq.getContextPath() +"/site/pb/login.xhtml");
+                httpResponse.sendRedirect(httpRq.getContextPath() + "/site/pb/login.xhtml");
                 return;
             }
         }

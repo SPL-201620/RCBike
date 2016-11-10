@@ -19,7 +19,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 @SuppressWarnings("serial")
 @Entity
 @XmlRootElement
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = "email") )
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 @NamedQueries({
         @NamedQuery(name = "autByEmail", query = "SELECT au FROM AutenticacionUsuario au WHERE au.email = :email")})
 public class AutenticacionUsuario implements Serializable {

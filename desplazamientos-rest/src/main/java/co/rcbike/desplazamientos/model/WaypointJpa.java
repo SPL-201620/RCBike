@@ -15,27 +15,27 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity(name = "Waypoint")
 @Table(name = "Waypoint")
 @XmlRootElement
-@NamedQueries({ @NamedQuery(name = "findByIdWaypoint", query = "SELECT w FROM Waypoint w WHERE w.id = :id"),
-	@NamedQuery(name = "findAllWaypoints", query = "SELECT w FROM Waypoint w"),
-	@NamedQuery(name = "findWaypointsByIdRuta", query = "SELECT w FROM Waypoint w WHERE w.ruta.id = :idRuta") })
+@NamedQueries({@NamedQuery(name = "findByIdWaypoint", query = "SELECT w FROM Waypoint w WHERE w.id = :id"),
+        @NamedQuery(name = "findAllWaypoints", query = "SELECT w FROM Waypoint w"),
+        @NamedQuery(name = "findWaypointsByIdRuta", query = "SELECT w FROM Waypoint w WHERE w.ruta.id = :idRuta")})
 public class WaypointJpa extends Waypoint implements Serializable {
 
-	public static final String SQ_findAllWaypoints = "findAllWaypoints";
-	public static final String SQ_findWaypointsByIdRuta = "findWaypointsByIdRuta";
-	public static final String SQ_findByIdWaypoint = "findByIdWaypoint";
-	public static final String SQ_PARAM_ID = "id";
-	public static final String SQ_PARAM_ID_RUTA = "idRuta";
-	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "idRuta")
-	private RutaJpa ruta;
+    public static final String SQ_findAllWaypoints = "findAllWaypoints";
+    public static final String SQ_findWaypointsByIdRuta = "findWaypointsByIdRuta";
+    public static final String SQ_findByIdWaypoint = "findByIdWaypoint";
+    public static final String SQ_PARAM_ID = "id";
+    public static final String SQ_PARAM_ID_RUTA = "idRuta";
 
-	public RutaJpa getRuta() {
-		return ruta;
-	}
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "idRuta")
+    private RutaJpa ruta;
 
-	public void setRuta(RutaJpa ruta) {
-		this.ruta = ruta;
-	}
-	
+    public RutaJpa getRuta() {
+        return ruta;
+    }
+
+    public void setRuta(RutaJpa ruta) {
+        this.ruta = ruta;
+    }
+
 }

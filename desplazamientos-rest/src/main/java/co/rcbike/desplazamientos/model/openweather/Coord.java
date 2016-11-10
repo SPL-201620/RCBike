@@ -1,6 +1,5 @@
 package co.rcbike.desplazamientos.model.openweather;
 
-
 public class Coord {
 
     private Double lon;
@@ -8,8 +7,7 @@ public class Coord {
 
     /**
      *
-     * @return
-     * The lon
+     * @return The lon
      */
     public Double getLon() {
         return lon;
@@ -18,7 +16,7 @@ public class Coord {
     /**
      *
      * @param lon
-     * The lon
+     *            The lon
      */
     public void setLon(Double lon) {
         this.lon = lon;
@@ -26,8 +24,7 @@ public class Coord {
 
     /**
      *
-     * @return
-     * The lat
+     * @return The lat
      */
     public Double getLat() {
         return lat;
@@ -36,7 +33,7 @@ public class Coord {
     /**
      *
      * @param lat
-     * The lat
+     *            The lat
      */
     public void setLat(Double lat) {
         this.lat = lat;

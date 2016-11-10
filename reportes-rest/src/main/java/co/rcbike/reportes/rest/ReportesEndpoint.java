@@ -19,33 +19,31 @@ import co.rcbike.reportes.service.ReportesService;
 @RequestScoped
 public class ReportesEndpoint {
 
-	
+    @Inject
+    private ReportesService service;
 
-	@Inject
-	private ReportesService service;
+    @GET
+    @Path(OperacionesReportes.PATH_DELIM + OperacionesReportes.ALIVE)
+    @Produces(MediaType.APPLICATION_JSON)
+    public String alive() {
+        return "endpoint alive";
+    }
 
-	@GET
-	@Path(OperacionesReportes.PATH_DELIM + OperacionesReportes.ALIVE)
-	@Produces(MediaType.APPLICATION_JSON)
-	public String alive() {
-		return "endpoint alive";
-	}
-
-	/**
-	 * Permite obtener el clima en una latitud y longitud
-	 * 
-	 * @param latitud
-	 *            latitud geografica de la ruta
-	 * @param longitud
-	 *            longitud geografica de la ruta
-	 */
-	@GET
-	@Path(OperacionesReportes.PATH_DELIM + OperacionesReportes.REPORTE)
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<ResumenWeb> getReporte(@QueryParam("tipo") TipoReporte tipoReporte,
-			@QueryParam("emailCreador") String emailCreador, @QueryParam("fechaInicio") String fechaInicio,
-			@QueryParam("fechaFinal") String fechaFinal) {
-		return service.getReporte(tipoReporte, emailCreador, fechaInicio, fechaFinal);
-	}
+    /**
+     * Permite obtener el clima en una latitud y longitud
+     * 
+     * @param latitud
+     *            latitud geografica de la ruta
+     * @param longitud
+     *            longitud geografica de la ruta
+     */
+    @GET
+    @Path(OperacionesReportes.PATH_DELIM + OperacionesReportes.REPORTE)
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<ResumenWeb> getReporte(@QueryParam("tipo") TipoReporte tipoReporte,
+            @QueryParam("emailCreador") String emailCreador, @QueryParam("fechaInicio") String fechaInicio,
+            @QueryParam("fechaFinal") String fechaFinal) {
+        return service.getReporte(tipoReporte, emailCreador, fechaInicio, fechaFinal);
+    }
 
 }

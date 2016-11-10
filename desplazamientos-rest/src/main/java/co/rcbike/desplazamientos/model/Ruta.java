@@ -40,19 +40,19 @@ public abstract class Ruta {
 
     @NotNull
     @Column(precision = 20, scale = 15)
-	private BigDecimal latitudInicio;
+    private BigDecimal latitudInicio;
 
     @NotNull
     @Column(precision = 20, scale = 15)
-	private BigDecimal longitudInicio;
+    private BigDecimal longitudInicio;
 
     @NotNull
     @Column(precision = 20, scale = 15)
-	private BigDecimal latitudFinal;
+    private BigDecimal latitudFinal;
 
     @NotNull
     @Column(precision = 20, scale = 15)
-	private BigDecimal longitudFinal;
+    private BigDecimal longitudFinal;
 
     @NotNull
     private BigDecimal distancia;
@@ -209,13 +209,13 @@ public abstract class Ruta {
         this.descripcion = descripcion;
     }
 
-	@Override
-	public String toString() {
-		return "Ruta [id=" + id + ", emailCreador=" + emailCreador + ", nombre=" + nombre + ", descripcion="
-				+ descripcion + ", tipo=" + tipo + ", latitudInicio=" + latitudInicio + ", longitudInicio="
-				+ longitudInicio + ", latitudFinal=" + latitudFinal + ", longitudFinal=" + longitudFinal
-				+ ", distancia=" + distancia + ", tiempoEstimado=" + tiempoEstimado + ", calorias=" + calorias
-				+ ", clima=" + clima + ", fecha=" + fecha + ", frecuente=" + frecuente + ", dias=" + dias + "]";
-	}
+    @Override
+    public String toString() {
+        return "Ruta [id=" + id + ", emailCreador=" + emailCreador + ", nombre=" + nombre + ", descripcion="
+                + descripcion + ", tipo=" + tipo + ", latitudInicio=" + latitudInicio + ", longitudInicio="
+                + longitudInicio + ", latitudFinal=" + latitudFinal + ", longitudFinal=" + longitudFinal
+                + ", distancia=" + distancia + ", tiempoEstimado=" + tiempoEstimado + ", calorias=" + calorias
+                + ", clima=" + clima + ", fecha=" + fecha + ", frecuente=" + frecuente + ", dias=" + dias + "]";
+    }
 
 }

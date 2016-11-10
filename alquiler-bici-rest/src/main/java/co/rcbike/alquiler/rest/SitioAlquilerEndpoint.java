@@ -25,124 +25,124 @@ import co.rcbike.alquiler.service.TransformadorAlquiler;
 @RequestScoped
 public class SitioAlquilerEndpoint {
 
-	@Inject
-	private SitioAlquilerService service;
+    @Inject
+    private SitioAlquilerService service;
 
-	@Inject
-	private TransformadorAlquiler transformador;
+    @Inject
+    private TransformadorAlquiler transformador;
 
-	@GET
-	@Path(OperacionesAlquiler.PATH_DELIM + OperacionesAlquiler.ALIVE)
-	@Produces(MediaType.APPLICATION_JSON)
-	public String alive() {
-		return "endpoint alive";
-	}
+    @GET
+    @Path(OperacionesAlquiler.PATH_DELIM + OperacionesAlquiler.ALIVE)
+    @Produces(MediaType.APPLICATION_JSON)
+    public String alive() {
+        return "endpoint alive";
+    }
 
-	/***** CONFIGURACONES ****/
+    /***** CONFIGURACONES ****/
 
-	/**
-	 * REST: GET,/sitioAlquiler/{id} Lista todos los recorridos por un id
-	 * 
-	 * @param id
-	 *            Identificador de sitioAlquiler
-	 */
-	@GET
-	@Path(OperacionesAlquiler.PATH_DELIM + OperacionesAlquiler.SITIO_ALQUILER + OperacionesAlquiler.PATH_DELIM
-			+ OperacionesAlquiler.LCURL + OperacionesAlquiler.PARAM_ID + OperacionesAlquiler.RCURL)
-	@Produces(MediaType.APPLICATION_JSON)
-	public SitioAlquilerWeb getSitioAlquiler(@PathParam(OperacionesAlquiler.PARAM_ID) Long id) {
-		return transformador.toSitioAlquilerWeb(service.getSitioAlquiler(id));
-	}
+    /**
+     * REST: GET,/sitioAlquiler/{id} Lista todos los recorridos por un id
+     * 
+     * @param id
+     *            Identificador de sitioAlquiler
+     */
+    @GET
+    @Path(OperacionesAlquiler.PATH_DELIM + OperacionesAlquiler.SITIO_ALQUILER + OperacionesAlquiler.PATH_DELIM
+            + OperacionesAlquiler.LCURL + OperacionesAlquiler.PARAM_ID + OperacionesAlquiler.RCURL)
+    @Produces(MediaType.APPLICATION_JSON)
+    public SitioAlquilerWeb getSitioAlquiler(@PathParam(OperacionesAlquiler.PARAM_ID) Long id) {
+        return transformador.toSitioAlquilerWeb(service.getSitioAlquiler(id));
+    }
 
-	/**
-	 * REST: POST,/sitioAlquiler, save one Permite guardar un recorrido
-	 * 
-	 * @param sitioAlquiler
-	 *            Informacion de la sitioAlquiler a crear
-	 * @return Identificador de sitioAlquiler creada
-	 */
-	@POST
-	@Path(OperacionesAlquiler.PATH_DELIM + OperacionesAlquiler.SITIO_ALQUILER)
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Long postSitioAlquiler(SitioAlquilerWeb sitioAlquiler) {
-		return service.persistSitioAlquiler(transformador.toSitioAlquilerJpa(sitioAlquiler));
-	}
+    /**
+     * REST: POST,/sitioAlquiler, save one Permite guardar un recorrido
+     * 
+     * @param sitioAlquiler
+     *            Informacion de la sitioAlquiler a crear
+     * @return Identificador de sitioAlquiler creada
+     */
+    @POST
+    @Path(OperacionesAlquiler.PATH_DELIM + OperacionesAlquiler.SITIO_ALQUILER)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Long postSitioAlquiler(SitioAlquilerWeb sitioAlquiler) {
+        return service.persistSitioAlquiler(transformador.toSitioAlquilerJpa(sitioAlquiler));
+    }
 
-	/**
-	 * REST: PUT,/sitioAlquiler, update one Permite guardar un recorrido
-	 * 
-	 * @param sitioAlquiler
-	 *            Informacion de la sitioAlquiler a crear
-	 * @return Identificador de sitioAlquiler creada
-	 */
-	@PUT
-	@Path(OperacionesAlquiler.PATH_DELIM + OperacionesAlquiler.SITIO_ALQUILER)
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Long putSitioAlquiler(SitioAlquilerWeb sitioAlquiler) {
-		return service.mergeSitioAlquiler(transformador.toSitioAlquilerJpa(sitioAlquiler));
-	}
+    /**
+     * REST: PUT,/sitioAlquiler, update one Permite guardar un recorrido
+     * 
+     * @param sitioAlquiler
+     *            Informacion de la sitioAlquiler a crear
+     * @return Identificador de sitioAlquiler creada
+     */
+    @PUT
+    @Path(OperacionesAlquiler.PATH_DELIM + OperacionesAlquiler.SITIO_ALQUILER)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Long putSitioAlquiler(SitioAlquilerWeb sitioAlquiler) {
+        return service.mergeSitioAlquiler(transformador.toSitioAlquilerJpa(sitioAlquiler));
+    }
 
-	/**
-	 * REST: DELETE,/sitioAlquiler/{id}, cancel one Lista todos los recorridos
-	 * por un id
-	 * 
-	 * @param id
-	 *            Identificador de sitioAlquiler
-	 */
-	@DELETE
-	@Path(OperacionesAlquiler.PATH_DELIM + OperacionesAlquiler.SITIO_ALQUILER + OperacionesAlquiler.PATH_DELIM
-			+ OperacionesAlquiler.LCURL + OperacionesAlquiler.PARAM_ID + OperacionesAlquiler.RCURL)
-	public void deleteSitioAlquiler(@PathParam(OperacionesAlquiler.PARAM_ID) Long id) {
-		service.deleteSitioAlquiler(id);
-	}
+    /**
+     * REST: DELETE,/sitioAlquiler/{id}, cancel one Lista todos los recorridos
+     * por un id
+     * 
+     * @param id
+     *            Identificador de sitioAlquiler
+     */
+    @DELETE
+    @Path(OperacionesAlquiler.PATH_DELIM + OperacionesAlquiler.SITIO_ALQUILER + OperacionesAlquiler.PATH_DELIM
+            + OperacionesAlquiler.LCURL + OperacionesAlquiler.PARAM_ID + OperacionesAlquiler.RCURL)
+    public void deleteSitioAlquiler(@PathParam(OperacionesAlquiler.PARAM_ID) Long id) {
+        service.deleteSitioAlquiler(id);
+    }
 
-	/***** SITIOS_ALQUILER ****/
+    /***** SITIOS_ALQUILER ****/
 
-	/**
-	 * REST: GET,/sitiosAlquiler, list all Lista todos los recorridos
-	 * 
-	 */
-	@GET
-	@Path(OperacionesAlquiler.PATH_DELIM + OperacionesAlquiler.SITIOS_ALQUILER)
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<SitioAlquilerWeb> getSitiosAlquiler() {
-		return transformador.toListSitioAlquilerWeb(service.listTodosSitiosAlquiler());
-	}
+    /**
+     * REST: GET,/sitiosAlquiler, list all Lista todos los recorridos
+     * 
+     */
+    @GET
+    @Path(OperacionesAlquiler.PATH_DELIM + OperacionesAlquiler.SITIOS_ALQUILER)
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<SitioAlquilerWeb> getSitiosAlquiler() {
+        return transformador.toListSitioAlquilerWeb(service.listTodosSitiosAlquiler());
+    }
 
-	/**
-	 * REST: GET,/sitiosAlquiler/{email}, list Lista todos los recorridos
-	 * realizados por un usuario
-	 * 
-	 * @param emailCreador
-	 *            email del usuario
-	 */
-	@GET
-	@Path(OperacionesAlquiler.PATH_DELIM + OperacionesAlquiler.SITIOS_ALQUILER + OperacionesAlquiler.PATH_DELIM
-			+ OperacionesAlquiler.POR_EMAIL)
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<SitioAlquilerWeb> getSitiosAlquiler(
-			@QueryParam(OperacionesAlquiler.PARAM_EMAIL_CREADOR) String emailCreador) {
-		return transformador.toListSitioAlquilerWeb(service.listSitiosAlquiler(emailCreador));
-	}
+    /**
+     * REST: GET,/sitiosAlquiler/{email}, list Lista todos los recorridos
+     * realizados por un usuario
+     * 
+     * @param emailCreador
+     *            email del usuario
+     */
+    @GET
+    @Path(OperacionesAlquiler.PATH_DELIM + OperacionesAlquiler.SITIOS_ALQUILER + OperacionesAlquiler.PATH_DELIM
+            + OperacionesAlquiler.POR_EMAIL)
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<SitioAlquilerWeb> getSitiosAlquiler(
+            @QueryParam(OperacionesAlquiler.PARAM_EMAIL_CREADOR) String emailCreador) {
+        return transformador.toListSitioAlquilerWeb(service.listSitiosAlquiler(emailCreador));
+    }
 
-	/**
-	 * Lista todos Sitios de alquiler cercanos a una latitud y longitud
-	 * 
-	 * @param latitud
-	 *            Latitud geografica
-	 * @param longitud
-	 *            Longitud geografica
-	 * 
-	 */
-	@GET
-	@Path(OperacionesAlquiler.PATH_DELIM + OperacionesAlquiler.SITIOS_ALQUILER + OperacionesAlquiler.PATH_DELIM
-			+ OperacionesAlquiler.CERCANOS)
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public List<SitioAlquilerWeb> getSitiosAlquilerCercanos(@QueryParam("latitud") BigDecimal latitud,
-			@QueryParam("longitud") BigDecimal longitud) {
-		return transformador.toListSitioAlquilerWeb(service.listSitiosAlquilerCercanos(latitud, longitud));
-	}
+    /**
+     * Lista todos Sitios de alquiler cercanos a una latitud y longitud
+     * 
+     * @param latitud
+     *            Latitud geografica
+     * @param longitud
+     *            Longitud geografica
+     * 
+     */
+    @GET
+    @Path(OperacionesAlquiler.PATH_DELIM + OperacionesAlquiler.SITIOS_ALQUILER + OperacionesAlquiler.PATH_DELIM
+            + OperacionesAlquiler.CERCANOS)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public List<SitioAlquilerWeb> getSitiosAlquilerCercanos(@QueryParam("latitud") BigDecimal latitud,
+            @QueryParam("longitud") BigDecimal longitud) {
+        return transformador.toListSitioAlquilerWeb(service.listSitiosAlquilerCercanos(latitud, longitud));
+    }
 }

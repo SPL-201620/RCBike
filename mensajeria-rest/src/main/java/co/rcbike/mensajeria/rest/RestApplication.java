@@ -8,5 +8,5 @@ import eu.agilejava.snoop.annotation.EnableSnoopClient;
 @EnableSnoopClient(serviceName = "mensajeria")
 @ApplicationPath("rest")
 public class RestApplication extends Application {
-  /* class body intentionally left blank */
+    /* class body intentionally left blank */
 }

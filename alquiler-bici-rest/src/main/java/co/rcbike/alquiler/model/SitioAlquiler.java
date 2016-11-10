@@ -14,88 +14,88 @@ import org.hibernate.validator.constraints.NotEmpty;
 @MappedSuperclass
 public abstract class SitioAlquiler {
 
-	@Id
-	@GeneratedValue
-	private Long id;
+    @Id
+    @GeneratedValue
+    private Long id;
 
-	@NotNull
-	@NotEmpty
-	@Email
-	private String emailCreador;
+    @NotNull
+    @NotEmpty
+    @Email
+    private String emailCreador;
 
-	@NotNull
-	@Column(precision = 20, scale = 15)
-	private BigDecimal latitud;
+    @NotNull
+    @Column(precision = 20, scale = 15)
+    private BigDecimal latitud;
 
-	@NotNull
-	@Column(precision = 20, scale = 15)
-	private BigDecimal longitud;
+    @NotNull
+    @Column(precision = 20, scale = 15)
+    private BigDecimal longitud;
 
-	@NotNull
-	@NotEmpty
-	private String tarifas;
+    @NotNull
+    @NotEmpty
+    private String tarifas;
 
-	@NotNull
-	@NotEmpty
-	private String limiteRecorridos;
+    @NotNull
+    @NotEmpty
+    private String limiteRecorridos;
 
-	@NotNull
-	@NotEmpty
-	private String estacionesEntrega;
+    @NotNull
+    @NotEmpty
+    private String estacionesEntrega;
 
-	public Long getId() {
-		return id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public String getEmailCreador() {
-		return emailCreador;
-	}
+    public String getEmailCreador() {
+        return emailCreador;
+    }
 
-	public void setEmailCreador(String emailCreador) {
-		this.emailCreador = emailCreador;
-	}
+    public void setEmailCreador(String emailCreador) {
+        this.emailCreador = emailCreador;
+    }
 
-	public BigDecimal getLatitud() {
-		return latitud;
-	}
+    public BigDecimal getLatitud() {
+        return latitud;
+    }
 
-	public void setLatitud(BigDecimal latitud) {
-		this.latitud = latitud;
-	}
+    public void setLatitud(BigDecimal latitud) {
+        this.latitud = latitud;
+    }
 
-	public BigDecimal getLongitud() {
-		return longitud;
-	}
+    public BigDecimal getLongitud() {
+        return longitud;
+    }
 
-	public void setLongitud(BigDecimal longitud) {
-		this.longitud = longitud;
-	}
+    public void setLongitud(BigDecimal longitud) {
+        this.longitud = longitud;
+    }
 
-	public String getTarifas() {
-		return tarifas;
-	}
+    public String getTarifas() {
+        return tarifas;
+    }
 
-	public void setTarifas(String tarifas) {
-		this.tarifas = tarifas;
-	}
+    public void setTarifas(String tarifas) {
+        this.tarifas = tarifas;
+    }
 
-	public String getLimiteRecorridos() {
-		return limiteRecorridos;
-	}
+    public String getLimiteRecorridos() {
+        return limiteRecorridos;
+    }
 
-	public void setLimiteRecorridos(String limiteRecorridos) {
-		this.limiteRecorridos = limiteRecorridos;
-	}
+    public void setLimiteRecorridos(String limiteRecorridos) {
+        this.limiteRecorridos = limiteRecorridos;
+    }
 
-	public String getEstacionesEntrega() {
-		return estacionesEntrega;
-	}
+    public String getEstacionesEntrega() {
+        return estacionesEntrega;
+    }
 
-	public void setEstacionesEntrega(String estacionesEntrega) {
-		this.estacionesEntrega = estacionesEntrega;
-	}
+    public void setEstacionesEntrega(String estacionesEntrega) {
+        this.estacionesEntrega = estacionesEntrega;
+    }
 }

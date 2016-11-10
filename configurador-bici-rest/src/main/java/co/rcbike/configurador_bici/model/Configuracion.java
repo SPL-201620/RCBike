@@ -11,40 +11,40 @@ import org.hibernate.validator.constraints.NotEmpty;
 @MappedSuperclass
 public abstract class Configuracion {
 
-	@Id
-	@GeneratedValue
-	private Long id;
+    @Id
+    @GeneratedValue
+    private Long id;
 
-	@NotNull
-	@NotEmpty
-	@Email
-	private String emailCreador;
+    @NotNull
+    @NotEmpty
+    @Email
+    private String emailCreador;
 
-	@NotNull
-	@NotEmpty
-	private String descripcion;
+    @NotNull
+    @NotEmpty
+    private String descripcion;
 
-	public Long getId() {
-		return id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public String getEmailCreador() {
-		return emailCreador;
-	}
+    public String getEmailCreador() {
+        return emailCreador;
+    }
 
-	public void setEmailCreador(String emailCreador) {
-		this.emailCreador = emailCreador;
-	}
+    public void setEmailCreador(String emailCreador) {
+        this.emailCreador = emailCreador;
+    }
 
-	public String getDescripcion() {
-		return descripcion;
-	}
+    public String getDescripcion() {
+        return descripcion;
+    }
 
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
-	}
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
 }

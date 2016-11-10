@@ -1,6 +1,5 @@
 package co.rcbike.desplazamientos.model.openweather;
 
-
 public class Weather {
 
     private Integer id;
@@ -10,8 +9,7 @@ public class Weather {
 
     /**
      *
-     * @return
-     * The id
+     * @return The id
      */
     public Integer getId() {
         return id;
@@ -20,7 +18,7 @@ public class Weather {
     /**
      *
      * @param id
-     * The id
+     *            The id
      */
     public void setId(Integer id) {
         this.id = id;
@@ -28,8 +26,7 @@ public class Weather {
 
     /**
      *
-     * @return
-     * The main
+     * @return The main
      */
     public String getMain() {
         return main;
@@ -38,7 +35,7 @@ public class Weather {
     /**
      *
      * @param main
-     * The main
+     *            The main
      */
     public void setMain(String main) {
         this.main = main;
@@ -46,8 +43,7 @@ public class Weather {
 
     /**
      *
-     * @return
-     * The description
+     * @return The description
      */
     public String getDescription() {
         return description;
@@ -56,7 +52,7 @@ public class Weather {
     /**
      *
      * @param description
-     * The description
+     *            The description
      */
     public void setDescription(String description) {
         this.description = description;
@@ -64,8 +60,7 @@ public class Weather {
 
     /**
      *
-     * @return
-     * The icon
+     * @return The icon
      */
     public String getIcon() {
         return icon;
@@ -74,7 +69,7 @@ public class Weather {
     /**
      *
      * @param icon
-     * The icon
+     *            The icon
      */
     public void setIcon(String icon) {
         this.icon = icon;

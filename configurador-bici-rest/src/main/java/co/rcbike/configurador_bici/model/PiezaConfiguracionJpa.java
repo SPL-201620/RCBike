@@ -14,40 +14,41 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity(name = "PiezaConfiguracion")
 @Table(name = "PiezaConfiguracion")
 @XmlRootElement
-@NamedQueries({ @NamedQuery(name = "findByIdPiezaConfiguracion", query = "SELECT w FROM PiezaConfiguracion w WHERE w.id = :id"),
-	@NamedQuery(name = "findAllPiezasConfiguracion", query = "SELECT w FROM PiezaConfiguracion w"),
-	@NamedQuery(name = "findPiezasConfiguracionByIdConfiguracion", query = "SELECT w FROM PiezaConfiguracion w WHERE w.configuracion.id = :idConfiguracion") })
+@NamedQueries({
+        @NamedQuery(name = "findByIdPiezaConfiguracion", query = "SELECT w FROM PiezaConfiguracion w WHERE w.id = :id"),
+        @NamedQuery(name = "findAllPiezasConfiguracion", query = "SELECT w FROM PiezaConfiguracion w"),
+        @NamedQuery(name = "findPiezasConfiguracionByIdConfiguracion", query = "SELECT w FROM PiezaConfiguracion w WHERE w.configuracion.id = :idConfiguracion")})
 public class PiezaConfiguracionJpa extends PiezaConfiguracion implements Serializable {
 
-	private static final long serialVersionUID = 888418056823283560L;
-	public static final String SQ_findAllPiezasConfiguracion = "findAllPiezasConfiguracion";
-	public static final String SQ_findPiezasConfiguracionByIdConfiguracion = "findPiezasConfiguracionByIdConfiguracion";
-	public static final String SQ_findByIdPiezaConfiguracion = "findByIdPiezaConfiguracion";
-	public static final String SQ_PARAM_ID = "id";
-	public static final String SQ_PARAM_ID_CONFIGURACION = "idConfiguracion";
-	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "idConfiguracion")
-	private ConfiguracionJpa configuracion;
+    private static final long serialVersionUID = 888418056823283560L;
+    public static final String SQ_findAllPiezasConfiguracion = "findAllPiezasConfiguracion";
+    public static final String SQ_findPiezasConfiguracionByIdConfiguracion = "findPiezasConfiguracionByIdConfiguracion";
+    public static final String SQ_findByIdPiezaConfiguracion = "findByIdPiezaConfiguracion";
+    public static final String SQ_PARAM_ID = "id";
+    public static final String SQ_PARAM_ID_CONFIGURACION = "idConfiguracion";
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "idPieza")
-	private PiezaJpa pieza;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "idConfiguracion")
+    private ConfiguracionJpa configuracion;
 
-	public ConfiguracionJpa getConfiguracion() {
-		return configuracion;
-	}
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "idPieza")
+    private PiezaJpa pieza;
 
-	public void setConfiguracion(ConfiguracionJpa configuracion) {
-		this.configuracion = configuracion;
-	}
+    public ConfiguracionJpa getConfiguracion() {
+        return configuracion;
+    }
 
-	public PiezaJpa getPieza() {
-		return pieza;
-	}
+    public void setConfiguracion(ConfiguracionJpa configuracion) {
+        this.configuracion = configuracion;
+    }
 
-	public void setPieza(PiezaJpa pieza) {
-		this.pieza = pieza;
-	}
-	
+    public PiezaJpa getPieza() {
+        return pieza;
+    }
+
+    public void setPieza(PiezaJpa pieza) {
+        this.pieza = pieza;
+    }
+
 }

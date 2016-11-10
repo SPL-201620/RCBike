@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Column;
-import javax.persistence.Convert;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
@@ -40,19 +39,19 @@ public abstract class Ruta {
 
     @NotNull
     @Column(precision = 20, scale = 15)
-	private BigDecimal latitudInicio;
+    private BigDecimal latitudInicio;
 
     @NotNull
     @Column(precision = 20, scale = 15)
-	private BigDecimal longitudInicio;
+    private BigDecimal longitudInicio;
 
     @NotNull
     @Column(precision = 20, scale = 15)
-	private BigDecimal latitudFinal;
+    private BigDecimal latitudFinal;
 
     @NotNull
     @Column(precision = 20, scale = 15)
-	private BigDecimal longitudFinal;
+    private BigDecimal longitudFinal;
 
     @NotNull
     private BigDecimal distancia;
@@ -76,7 +75,7 @@ public abstract class Ruta {
     private Date fecha;
 
     /* Solo para grupales */
-    //@Convert(converter = BooleanSNConverter.class)
+    // @Convert(converter = BooleanSNConverter.class)
     private boolean frecuente;
 
     private String dias;

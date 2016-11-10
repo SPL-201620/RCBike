@@ -4,15 +4,15 @@ import java.io.Serializable;
 
 public class WaypointWeb extends Waypoint implements Serializable {
 
-	private static final long serialVersionUID = -6476217528204318554L;
-	
-	private Long idRuta;
+    private static final long serialVersionUID = -6476217528204318554L;
 
-	public Long getIdRuta() {
-		return idRuta;
-	}
+    private Long idRuta;
 
-	public void setIdRuta(Long idRuta) {
-		this.idRuta = idRuta;
-	}
+    public Long getIdRuta() {
+        return idRuta;
+    }
+
+    public void setIdRuta(Long idRuta) {
+        this.idRuta = idRuta;
+    }
 }

@@ -1,6 +1,5 @@
 package co.rcbike.desplazamientos.model.openweather;
 
-
 public class Main {
 
     private Double temp;
@@ -14,8 +13,7 @@ public class Main {
 
     /**
      *
-     * @return
-     * The temp
+     * @return The temp
      */
     public Double getTemp() {
         return temp;
@@ -24,7 +22,7 @@ public class Main {
     /**
      *
      * @param temp
-     * The temp
+     *            The temp
      */
     public void setTemp(Double temp) {
         this.temp = temp;
@@ -32,8 +30,7 @@ public class Main {
 
     /**
      *
-     * @return
-     * The tempMin
+     * @return The tempMin
      */
     public Double getTempMin() {
         return tempMin;
@@ -42,7 +39,7 @@ public class Main {
     /**
      *
      * @param tempMin
-     * The temp_min
+     *            The temp_min
      */
     public void setTempMin(Double tempMin) {
         this.tempMin = tempMin;
@@ -50,8 +47,7 @@ public class Main {
 
     /**
      *
-     * @return
-     * The tempMax
+     * @return The tempMax
      */
     public Double getTempMax() {
         return tempMax;
@@ -60,7 +56,7 @@ public class Main {
     /**
      *
      * @param tempMax
-     * The temp_max
+     *            The temp_max
      */
     public void setTempMax(Double tempMax) {
         this.tempMax = tempMax;
@@ -68,8 +64,7 @@ public class Main {
 
     /**
      *
-     * @return
-     * The pressure
+     * @return The pressure
      */
     public Double getPressure() {
         return pressure;
@@ -78,7 +73,7 @@ public class Main {
     /**
      *
      * @param pressure
-     * The pressure
+     *            The pressure
      */
     public void setPressure(Double pressure) {
         this.pressure = pressure;
@@ -86,8 +81,7 @@ public class Main {
 
     /**
      *
-     * @return
-     * The seaLevel
+     * @return The seaLevel
      */
     public Double getSeaLevel() {
         return seaLevel;
@@ -96,7 +90,7 @@ public class Main {
     /**
      *
      * @param seaLevel
-     * The sea_level
+     *            The sea_level
      */
     public void setSeaLevel(Double seaLevel) {
         this.seaLevel = seaLevel;
@@ -104,8 +98,7 @@ public class Main {
 
     /**
      *
-     * @return
-     * The grndLevel
+     * @return The grndLevel
      */
     public Double getGrndLevel() {
         return grndLevel;
@@ -114,7 +107,7 @@ public class Main {
     /**
      *
      * @param grndLevel
-     * The grnd_level
+     *            The grnd_level
      */
     public void setGrndLevel(Double grndLevel) {
         this.grndLevel = grndLevel;
@@ -122,8 +115,7 @@ public class Main {
 
     /**
      *
-     * @return
-     * The humidity
+     * @return The humidity
      */
     public Integer getHumidity() {
         return humidity;
@@ -132,7 +124,7 @@ public class Main {
     /**
      *
      * @param humidity
-     * The humidity
+     *            The humidity
      */
     public void setHumidity(Integer humidity) {
         this.humidity = humidity;
@@ -140,8 +132,7 @@ public class Main {
 
     /**
      *
-     * @return
-     * The tempKf
+     * @return The tempKf
      */
     public Integer getTempKf() {
         return tempKf;
@@ -150,7 +141,7 @@ public class Main {
     /**
      *
      * @param tempKf
-     * The temp_kf
+     *            The temp_kf
      */
     public void setTempKf(Integer tempKf) {
         this.tempKf = tempKf;

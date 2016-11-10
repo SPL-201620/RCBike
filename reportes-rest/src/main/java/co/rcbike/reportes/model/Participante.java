@@ -10,28 +10,28 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 @MappedSuperclass
 public abstract class Participante {
-	@Id
-	@GeneratedValue
-	private Long id;
+    @Id
+    @GeneratedValue
+    private Long id;
 
-	@NotNull
-	@NotEmpty
-	@Email
-	private String email;
+    @NotNull
+    @NotEmpty
+    @Email
+    private String email;
 
-	public Long getId() {
-		return id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }
