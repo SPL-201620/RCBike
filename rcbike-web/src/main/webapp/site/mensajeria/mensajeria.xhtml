@@ -32,8 +32,8 @@
 		</script>
 		
 	</ui:define>
-	<ui:define name="subheader">
-        Mensajeria
+	<ui:define name="title">
+        <h2 class="BigTopic">Mensajes</h2>
     </ui:define>
 
 	<ui:define name="content">
@@ -45,7 +45,6 @@
 						
 						<div class="Container100 fullH" >
 							<div class="Card GrayBack ShadowEffect">
-								
 							     <p:autoComplete id="selectUsuario" minQueryLength="4"
 							     	forceSelection="true" dropdown="true" placeholder="Buscar Usuarios"
 									completeMethod="#{usuariosManager.filtrarUsuarios}"	

@@ -94,14 +94,21 @@
 		<from-view-id>*</from-view-id>
 		<navigation-case>
 			<from-outcome>venta</from-outcome>
-			<to-view-id>/site/ventaBicicletas/ventaBicicletas.xhtml</to-view-id>
+			<to-view-id>/site/ventas/ventaBicicletas.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 	<navigation-rule>
 		<from-view-id>*</from-view-id>
 		<navigation-case>
 			<from-outcome>configurador</from-outcome>
-			<to-view-id>/site/configurador/configurador.xhtml</to-view-id>
+			<to-view-id>/site/configurador_bici/configurador.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>alquiler</from-outcome>
+			<to-view-id>/site/alquiler/alquiler.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 	
