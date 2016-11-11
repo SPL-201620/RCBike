@@ -17,6 +17,27 @@
 	<properties>
 	</properties>
 
+	<build>
+		<finalName>${project.artifactId}</finalName>
+		<plugins>
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
+			</plugin>
+			<!-- To use, run: mvn package wildfly:deploy -->
+			<plugin>
+				<groupId>org.wildfly.plugins</groupId>
+				<artifactId>wildfly-maven-plugin</artifactId>
+				<version>${version.wildfly.maven.plugin}</version>
+				<configuration>
+					<skip>false</skip>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
 
 	<dependencies>
 		<dependency>
@@ -78,6 +99,7 @@
 		<dependency>
 			<groupId>org.jboss.spec.javax.websocket</groupId>
 			<artifactId>jboss-websocket-api_1.1_spec</artifactId>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
@@ -111,56 +133,6 @@
 			<artifactId>snoop-client</artifactId>
 			<version>${snoop.version}</version>
 		</dependency>
-
-		<dependency>
-			<groupId>co.rcbike</groupId>
-			<artifactId>alquiler-bici-rest</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-			<type>jar</type>
-			<classifier>model</classifier>
-		</dependency>
-		<dependency>
-			<groupId>co.rcbike</groupId>
-			<artifactId>configurador-bici-rest</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-			<type>jar</type>
-			<classifier>model</classifier>
-		</dependency>
-		<dependency>
-			<groupId>co.rcbike</groupId>
-			<artifactId>desplazamientos-rest</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-			<type>jar</type>
-			<classifier>model</classifier>
-		</dependency>
-		<dependency>
-			<groupId>co.rcbike</groupId>
-			<artifactId>mensajeria-rest</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-			<type>jar</type>
-			<classifier>model</classifier>
-		</dependency>
-		<dependency>
-			<groupId>co.rcbike</groupId>
-			<artifactId>reportes-rest</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-			<type>jar</type>
-			<classifier>model</classifier>
-		</dependency>
-		<dependency>
-			<groupId>co.rcbike</groupId>
-			<artifactId>usuarios-rest</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-			<type>jar</type>
-			<classifier>model</classifier>
-		</dependency>
-		<dependency>
-			<groupId>co.rcbike</groupId>
-			<artifactId>ventas-bici-rest</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-			<type>jar</type>
-			<classifier>model</classifier>
-		</dependency>
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
@@ -170,53 +142,153 @@
 			<artifactId>jackson-databind</artifactId>
 			<version>2.5.1</version>
 		</dependency>
-		
-<dependency>
-    <groupId>org.twitter4j</groupId>
-    <artifactId>twitter4j-core</artifactId>
-    <version>4.0.5</version>
-</dependency>
+
+		<dependency>
+			<groupId>org.twitter4j</groupId>
+			<artifactId>twitter4j-core</artifactId>
+			<version>4.0.5</version>
+		</dependency>
+
+		<dependency>
+			<groupId>co.rcbike</groupId>
+			<artifactId>usuarios-rest</artifactId>
+			<version>${rcbike-rest.version}</version>
+			<type>jar</type>
+			<classifier>model</classifier>
+		</dependency>
+
+
+		<dependency>
+			<groupId>co.rcbike</groupId>
+			<artifactId>alquiler-bici-rest</artifactId>
+			<version>${rcbike-rest.version}</version>
+			<type>jar</type>
+			<classifier>model</classifier>
+			<optional>${rcbike-derivator}</optional>
+		</dependency>
+		<dependency>
+			<groupId>co.rcbike</groupId>
+			<artifactId>configurador-bici-rest</artifactId>
+			<version>${rcbike-rest.version}</version>
+			<type>jar</type>
+			<classifier>model</classifier>
+			<optional>${rcbike-derivator}</optional>
+		</dependency>
+		<dependency>
+			<groupId>co.rcbike</groupId>
+			<artifactId>desplazamientos-rest</artifactId>
+			<version>${rcbike-rest.version}</version>
+			<type>jar</type>
+			<classifier>model</classifier>
+			<optional>${rcbike-derivator}</optional>
+		</dependency>
+		<dependency>
+			<groupId>co.rcbike</groupId>
+			<artifactId>mensajeria-rest</artifactId>
+			<version>${rcbike-rest.version}</version>
+			<type>jar</type>
+			<classifier>model</classifier>
+			<optional>${rcbike-derivator}</optional>
+		</dependency>
+		<dependency>
+			<groupId>co.rcbike</groupId>
+			<artifactId>reportes-rest</artifactId>
+			<version>${rcbike-rest.version}</version>
+			<type>jar</type>
+			<classifier>model</classifier>
+			<optional>${rcbike-derivator}</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>co.rcbike</groupId>
+			<artifactId>ventas-bici-rest</artifactId>
+			<version>${rcbike-rest.version}</version>
+			<type>jar</type>
+			<classifier>model</classifier>
+			<optional>${rcbike-derivator}</optional>
+		</dependency>
 
 	</dependencies>
 
-	<build>
-		<finalName>${project.artifactId}</finalName>
-		<plugins>
-			<plugin>
-				<artifactId>maven-war-plugin</artifactId>
-				<configuration>
-					<failOnMissingWebXml>false</failOnMissingWebXml>
-				</configuration>
-			</plugin>
-			<!-- To use, run: mvn package wildfly:deploy -->
-			<plugin>
-				<groupId>org.wildfly.plugins</groupId>
-				<artifactId>wildfly-maven-plugin</artifactId>
-				<version>${version.wildfly.maven.plugin}</version>
-				<configuration>
-					<skip>false</skip>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+
 
 	<profiles>
 		<profile>
-			<id>default</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<build>
-				<plugins>
-					<plugin>
-						<artifactId>maven-surefire-plugin</artifactId>
-						<version>${version.surefire.plugin}</version>
-						<configuration>
-							<skip>true</skip>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
+			<id>alquiler</id>
+			<dependencies>
+				<dependency>
+					<groupId>co.rcbike</groupId>
+					<artifactId>alquiler-bici-rest</artifactId>
+					<version>${rcbike-rest.version}</version>
+					<type>jar</type>
+					<classifier>model</classifier>
+				</dependency>
+			</dependencies>
+		</profile>
+		<profile>
+			<id>configurador</id>
+			<dependencies>
+				<dependency>
+					<groupId>co.rcbike</groupId>
+					<artifactId>configurador-bici-rest</artifactId>
+					<version>${rcbike-rest.version}</version>
+					<type>jar</type>
+					<classifier>model</classifier>
+				</dependency>
+			</dependencies>
+		</profile>
+		<profile>
+			<id>desplazamientos</id>
+			<dependencies>
+				<dependency>
+					<groupId>co.rcbike</groupId>
+					<artifactId>desplazamientos-rest</artifactId>
+					<version>${rcbike-rest.version}</version>
+					<type>jar</type>
+					<classifier>model</classifier>
+				</dependency>
+			</dependencies>
+		</profile>
+		<profile>
+			<id>mensajeria</id>
+			<dependencies>
+				<dependency>
+					<groupId>co.rcbike</groupId>
+					<artifactId>mensajeria-rest</artifactId>
+					<version>${rcbike-rest.version}</version>
+					<type>jar</type>
+					<classifier>model</classifier>
+				</dependency>
+			</dependencies>
+		</profile>
+		<profile>
+			<id>reportes</id>
+			<dependencies>
+				<dependency>
+					<groupId>co.rcbike</groupId>
+					<artifactId>reportes-rest</artifactId>
+					<version>${rcbike-rest.version}</version>
+					<type>jar</type>
+					<classifier>model</classifier>
+				</dependency>
+			</dependencies>
+		</profile>
+		<profile>
+			<id>sinc-redes</id>
+			<dependencies>
+			</dependencies>
+		</profile>
+		<profile>
+			<id>ventas</id>
+			<dependencies>
+				<dependency>
+					<groupId>co.rcbike</groupId>
+					<artifactId>ventas-bici-rest</artifactId>
+					<version>${rcbike-rest.version}</version>
+					<type>jar</type>
+					<classifier>model</classifier>
+				</dependency>
+			</dependencies>
 		</profile>
 	</profiles>
 </project>
