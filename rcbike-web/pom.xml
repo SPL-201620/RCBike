@@ -156,8 +156,8 @@
 			<type>jar</type>
 			<classifier>model</classifier>
 		</dependency>
-
-
+		
+		<!-- Dependencias dinamicas que no se incluyen durante la derivacion-->
 		<dependency>
 			<groupId>co.rcbike</groupId>
 			<artifactId>alquiler-bici-rest</artifactId>
@@ -198,7 +198,6 @@
 			<classifier>model</classifier>
 			<optional>${rcbike-derivator}</optional>
 		</dependency>
-
 		<dependency>
 			<groupId>co.rcbike</groupId>
 			<artifactId>ventas-bici-rest</artifactId>
