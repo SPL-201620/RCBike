@@ -34,7 +34,7 @@ public class DesplazamientoIndividualEndpoint {
     private TransformadorDesplazamientos transformadorDesplazamientos;
 
     @GET
-    @Path(OperacionesDesplazamientos.PATH_DELIM + OperacionesDesplazamientos.ALIVE)
+    @Path("/" + OperacionesDesplazamientos.ALIVE)
     @Produces(MediaType.APPLICATION_JSON)
     public String alive() {
         return "endpoint alive";
@@ -49,7 +49,7 @@ public class DesplazamientoIndividualEndpoint {
      *            longitud geografica de la ruta
      */
     @GET
-    @Path(OperacionesDesplazamientos.PATH_DELIM + OperacionesDesplazamientos.CLIMA)
+    @Path("/" + OperacionesDesplazamientos.CLIMA)
     @Produces(MediaType.APPLICATION_JSON)
     public String getClima(@QueryParam("latitud") String latitud, @QueryParam("longitud") String longitud) {
         return service.obtenerClima(latitud, longitud);
@@ -65,9 +65,9 @@ public class DesplazamientoIndividualEndpoint {
      *            Identificador de ruta
      */
     @GET
-    @Path(OperacionesDesplazamientos.PATH_DELIM + OperacionesDesplazamientos.RUTA_INDIVIDUAL
-            + OperacionesDesplazamientos.PATH_DELIM + OperacionesDesplazamientos.LCURL
-            + OperacionesDesplazamientos.PARAM_ID + OperacionesDesplazamientos.RCURL)
+    @Path("/" + OperacionesDesplazamientos.RUTA_INDIVIDUAL
+            + "/" + "{"
+            + OperacionesDesplazamientos.PARAM_ID + "}")
     @Produces(MediaType.APPLICATION_JSON)
     public RutaWeb getRutaIndividual(@PathParam(OperacionesDesplazamientos.PARAM_ID) Long id) {
         return transformadorDesplazamientos.toRutaWeb(service.getRuta(id));
@@ -82,7 +82,7 @@ public class DesplazamientoIndividualEndpoint {
      * @return Identificador de ruta creada
      */
     @POST
-    @Path(OperacionesDesplazamientos.PATH_DELIM + OperacionesDesplazamientos.RUTA_INDIVIDUAL)
+    @Path("/" + OperacionesDesplazamientos.RUTA_INDIVIDUAL)
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Long postRutaIndividual(RutaWeb ruta) {
@@ -99,7 +99,7 @@ public class DesplazamientoIndividualEndpoint {
      * @return Identificador de ruta creada
      */
     @PUT
-    @Path(OperacionesDesplazamientos.PATH_DELIM + OperacionesDesplazamientos.RUTA_INDIVIDUAL)
+    @Path("/" + OperacionesDesplazamientos.RUTA_INDIVIDUAL)
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Long putRutaIndividual(RutaWeb ruta) {
@@ -114,9 +114,9 @@ public class DesplazamientoIndividualEndpoint {
      *            Identificador de ruta
      */
     @DELETE
-    @Path(OperacionesDesplazamientos.PATH_DELIM + OperacionesDesplazamientos.RUTA_INDIVIDUAL
-            + OperacionesDesplazamientos.PATH_DELIM + OperacionesDesplazamientos.LCURL
-            + OperacionesDesplazamientos.PARAM_ID + OperacionesDesplazamientos.RCURL)
+    @Path("/" + OperacionesDesplazamientos.RUTA_INDIVIDUAL
+            + "/" + "{"
+            + OperacionesDesplazamientos.PARAM_ID + "}")
     public void deleteRutaIndividual(@PathParam(OperacionesDesplazamientos.PARAM_ID) Long id) {
         service.deleteRuta(id);
     }
@@ -133,7 +133,7 @@ public class DesplazamientoIndividualEndpoint {
      * 
      */
     @GET
-    @Path(OperacionesDesplazamientos.PATH_DELIM + OperacionesDesplazamientos.RUTAS)
+    @Path("/" + OperacionesDesplazamientos.RUTAS)
     @Produces(MediaType.APPLICATION_JSON)
     public List<RutaWeb> getRutas(@QueryParam("emailCreador") String emailCreador,
             @QueryParam("fechaInicio") String fechaInicio, @QueryParam("fechaFinal") String fechaFinal) {
@@ -158,7 +158,7 @@ public class DesplazamientoIndividualEndpoint {
      * 
      */
     @GET
-    @Path(OperacionesDesplazamientos.PATH_DELIM + OperacionesDesplazamientos.RUTAS_INDIVIDUALES)
+    @Path("/" + OperacionesDesplazamientos.RUTAS_INDIVIDUALES)
     @Produces(MediaType.APPLICATION_JSON)
     public List<RutaWeb> getRutasIndividuales() {
         return transformadorDesplazamientos.toListRutaWeb(service.listTodosRutasIndividuales());
@@ -172,8 +172,8 @@ public class DesplazamientoIndividualEndpoint {
      *            email del usuario
      */
     @GET
-    @Path(OperacionesDesplazamientos.PATH_DELIM + OperacionesDesplazamientos.RUTAS_INDIVIDUALES
-            + OperacionesDesplazamientos.PATH_DELIM + OperacionesDesplazamientos.POR_EMAIL)
+    @Path("/" + OperacionesDesplazamientos.RUTAS_INDIVIDUALES
+            + "/" + OperacionesDesplazamientos.POR_EMAIL)
     @Produces(MediaType.APPLICATION_JSON)
     public List<RutaWeb> getRutasIndividuales(
             @QueryParam(OperacionesDesplazamientos.PARAM_EMAIL_CREADOR) String emailCreador) {
@@ -190,9 +190,9 @@ public class DesplazamientoIndividualEndpoint {
      *            Identificador de waypoint
      */
     @GET
-    @Path(OperacionesDesplazamientos.PATH_DELIM + OperacionesDesplazamientos.WAYPOINT
-            + OperacionesDesplazamientos.PATH_DELIM + OperacionesDesplazamientos.LCURL
-            + OperacionesDesplazamientos.PARAM_ID + OperacionesDesplazamientos.RCURL)
+    @Path("/" + OperacionesDesplazamientos.WAYPOINT
+            + "/" + "{"
+            + OperacionesDesplazamientos.PARAM_ID + "}")
     @Produces(MediaType.APPLICATION_JSON)
     public WaypointWeb getWaypoint(@PathParam(OperacionesDesplazamientos.PARAM_ID) Long id) {
         return transformadorDesplazamientos.toWaypointWeb(service.getWaypoint(id));
@@ -206,7 +206,7 @@ public class DesplazamientoIndividualEndpoint {
      * @return Identificador de waypoint creada
      */
     @POST
-    @Path(OperacionesDesplazamientos.PATH_DELIM + OperacionesDesplazamientos.WAYPOINT)
+    @Path("/" + OperacionesDesplazamientos.WAYPOINT)
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Long postWaypoint(WaypointWeb waypoint) {
@@ -221,7 +221,7 @@ public class DesplazamientoIndividualEndpoint {
      * @return Identificador de waypoint creada
      */
     @PUT
-    @Path(OperacionesDesplazamientos.PATH_DELIM + OperacionesDesplazamientos.WAYPOINT)
+    @Path("/" + OperacionesDesplazamientos.WAYPOINT)
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Long putWaypoint(WaypointWeb waypoint) {
@@ -236,9 +236,9 @@ public class DesplazamientoIndividualEndpoint {
      *            Identificador de waypoint
      */
     @DELETE
-    @Path(OperacionesDesplazamientos.PATH_DELIM + OperacionesDesplazamientos.WAYPOINT
-            + OperacionesDesplazamientos.PATH_DELIM + OperacionesDesplazamientos.LCURL
-            + OperacionesDesplazamientos.PARAM_ID + OperacionesDesplazamientos.RCURL)
+    @Path("/" + OperacionesDesplazamientos.WAYPOINT
+            + "/" + "{"
+            + OperacionesDesplazamientos.PARAM_ID + "}")
     public void deleteWaypoint(@PathParam(OperacionesDesplazamientos.PARAM_ID) Long id) {
         service.deleteWaypoint(id);
     }
@@ -250,7 +250,7 @@ public class DesplazamientoIndividualEndpoint {
      * 
      */
     @GET
-    @Path(OperacionesDesplazamientos.PATH_DELIM + OperacionesDesplazamientos.WAYPOINTS)
+    @Path("/" + OperacionesDesplazamientos.WAYPOINTS)
     @Produces(MediaType.APPLICATION_JSON)
     public List<WaypointWeb> getWaypoints() {
         return transformadorDesplazamientos.toListWaypointWeb(service.listTodosWaypoints());
@@ -264,10 +264,10 @@ public class DesplazamientoIndividualEndpoint {
      *            email del usuario
      */
     @GET
-    @Path(OperacionesDesplazamientos.PATH_DELIM + OperacionesDesplazamientos.RUTA_INDIVIDUAL
-            + OperacionesDesplazamientos.PATH_DELIM + OperacionesDesplazamientos.LCURL
-            + OperacionesDesplazamientos.PARAM_ID + OperacionesDesplazamientos.RCURL
-            + OperacionesDesplazamientos.PATH_DELIM + OperacionesDesplazamientos.WAYPOINTS)
+    @Path("/" + OperacionesDesplazamientos.RUTA_INDIVIDUAL
+            + "/" + "{"
+            + OperacionesDesplazamientos.PARAM_ID + "}"
+            + "/" + OperacionesDesplazamientos.WAYPOINTS)
     @Produces(MediaType.APPLICATION_JSON)
     public List<WaypointWeb> getWaypoints(@PathParam(OperacionesDesplazamientos.PARAM_ID) Long id) {
         return transformadorDesplazamientos.toListWaypointWeb(service.listWaypoints(id));
