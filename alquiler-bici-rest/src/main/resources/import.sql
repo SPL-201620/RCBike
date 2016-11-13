@@ -1,4 +1,13 @@
 -- You can use this file to load seed data into the database using SQL statements
-insert into SitioAlquiler (id,emailCreador,latitud,longitud,tarifas,limiteRecorridos,estacionesEntrega) values(-1,'maria.a@email.com',4.598694,-74.073886,'2.000 pesos colombianos por hora','Carrera 1 Este - Carrera 30, Calle 72 - Calle 6','Transmilenio Las Aguas, Transmilenio Universidades');
-insert into SitioAlquiler (id,emailCreador,latitud,longitud,tarifas,limiteRecorridos,estacionesEntrega) values(-2,'maria.a@email.com',4.698694,-74.173886,'3.000 pesos colombianos por hora','Carrera 1 - Carrera 50, Calle 102 - Calle 6 Sur','Todos los Portales de Transmilenio');
-	
+insert into SitioAlquiler (id,emailCreador,latitud,longitud,tarifas,limiteRecorridos,estacionesEntrega) values(-1, 'alfon.cardozo@mensajeria.com', 4.724413, -74.040406,'13.000 pesos colombianos por hora','Calle 140 13-36', 'Rueda Libre Bogotá');
+insert into SitioAlquiler (id,emailCreador,latitud,longitud,tarifas,limiteRecorridos,estacionesEntrega) values(-2, 'miguel.espitia@messages.co', 4.702342, -74.048023,'5.000 pesos colombianos por hora', 'Calle 116 18-36','Almacen de Bicicletas');
+insert into SitioAlquiler (id,emailCreador,latitud,longitud,tarifas,limiteRecorridos,estacionesEntrega) values(-3, 'ja.velandia@correo.com', 4.700243, -74.062930,'8.000 pesos colombianos por hora','Calle 106 53-56', 'Cyclota Bike Tours');
+insert into SitioAlquiler (id,emailCreador,latitud,longitud,tarifas,limiteRecorridos,estacionesEntrega) values(-4, 'maria.a@email.com', 4.721400, -74.056895,'10.000 pesos colombianos por hora', 'Carrera 51 134-56','Bicicletas DT');
+insert into SitioAlquiler (id,emailCreador,latitud,longitud,tarifas,limiteRecorridos,estacionesEntrega) values(-5, 'alfon.cardozo@mensajeria.com', 4.700539, -74.030516,'8.000 pesos colombianos por hora', 'Carrera 7 121-21','Bicicletas Castillo'); 
+insert into SitioAlquiler (id,emailCreador,latitud,longitud,tarifas,limiteRecorridos,estacionesEntrega) values(-6, 'miguel.espitia@messages.co', 4.677369, -74.060684,'5.000 pesos colombianos por hora', 'Carrera 30 87-29','Lucky Lion');
+insert into SitioAlquiler (id,emailCreador,latitud,longitud,tarifas,limiteRecorridos,estacionesEntrega) values(-7, 'ja.velandia@correo.com', 4.668530, -74.096722,'7.000 pesos colombianos por hora', 'Carrera 68 63-27','El Campeon Bicicletas'); 
+insert into SitioAlquiler (id,emailCreador,latitud,longitud,tarifas,limiteRecorridos,estacionesEntrega) values(-8, 'miguel.espitia@messages.co', 4.659683, -74.076831,'6.000 pesos colombianos por hora', 'Avenida NQS 64A-38','Bicicletas Electricas y Motos Electricas'); 
+insert into SitioAlquiler (id,emailCreador,latitud,longitud,tarifas,limiteRecorridos,estacionesEntrega) values(-9, 'maria.a@email.com', 4.650467, -74.054558,'8.000 pesos colombianos por hora','Carrera 4 69-23','Laika Bikes');
+insert into SitioAlquiler (id,emailCreador,latitud,longitud,tarifas,limiteRecorridos,estacionesEntrega) values(-10, 'ja.velandia@correo.com', 4.642131, -74.103096,'9.000 pesos colombianos por hora', 'Calle 22B 58-21','Biking Bogota'); 
+insert into SitioAlquiler (id,emailCreador,latitud,longitud,tarifas,limiteRecorridos,estacionesEntrega) values(-11, 'alfon.cardozo@mensajeria.com', 4.597533, -74.070857,'9.000 pesos colombianos por hora', 'Carrera 3 12-72','Bogota Bike Tours');
+
