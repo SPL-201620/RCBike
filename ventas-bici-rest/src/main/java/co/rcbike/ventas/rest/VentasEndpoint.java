@@ -31,7 +31,7 @@ public class VentasEndpoint {
     private TransformadorVentas transformador;
 
     @GET
-    @Path(OperacionesVentas.PATH_DELIM + OperacionesVentas.ALIVE)
+    @Path("/" + OperacionesVentas.ALIVE)
     @Produces(MediaType.APPLICATION_JSON)
     public String alive() {
         return "endpoint alive";
@@ -46,8 +46,8 @@ public class VentasEndpoint {
      *            Identificador de venta
      */
     @GET
-    @Path(OperacionesVentas.PATH_DELIM + OperacionesVentas.VENTA + OperacionesVentas.PATH_DELIM
-            + OperacionesVentas.LCURL + OperacionesVentas.PARAM_ID + OperacionesVentas.RCURL)
+    @Path("/" + OperacionesVentas.VENTA + "/"
+            + "{" + OperacionesVentas.PARAM_ID + "}")
     @Produces(MediaType.APPLICATION_JSON)
     public VentaWeb getVenta(@PathParam(OperacionesVentas.PARAM_ID) Long id) {
         return transformador.toVentaWeb(service.getVenta(id));
@@ -61,7 +61,7 @@ public class VentasEndpoint {
      * @return Identificador de venta creada
      */
     @POST
-    @Path(OperacionesVentas.PATH_DELIM + OperacionesVentas.VENTA)
+    @Path("/" + OperacionesVentas.VENTA)
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Long postVenta(VentaWeb venta) {
@@ -76,7 +76,7 @@ public class VentasEndpoint {
      * @return Identificador de venta creada
      */
     @PUT
-    @Path(OperacionesVentas.PATH_DELIM + OperacionesVentas.VENTA)
+    @Path("/" + OperacionesVentas.VENTA)
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Long putVenta(VentaWeb venta) {
@@ -90,8 +90,8 @@ public class VentasEndpoint {
      *            Identificador de venta
      */
     @DELETE
-    @Path(OperacionesVentas.PATH_DELIM + OperacionesVentas.VENTA + OperacionesVentas.PATH_DELIM
-            + OperacionesVentas.LCURL + OperacionesVentas.PARAM_ID + OperacionesVentas.RCURL)
+    @Path("/" + OperacionesVentas.VENTA + "/"
+            + "{" + OperacionesVentas.PARAM_ID + "}")
     public void deleteVenta(@PathParam(OperacionesVentas.PARAM_ID) Long id) {
         service.deleteVenta(id);
     }
@@ -104,7 +104,7 @@ public class VentasEndpoint {
      */
 
     @GET
-    @Path(OperacionesVentas.PATH_DELIM + OperacionesVentas.VENTAS)
+    @Path("/" + OperacionesVentas.VENTAS)
     @Produces(MediaType.APPLICATION_JSON)
     public List<VentaWeb> getVentas() {
         return transformador.toListVentaWeb(service.listTodosVentas());
@@ -119,7 +119,7 @@ public class VentasEndpoint {
      */
 
     @GET
-    @Path(OperacionesVentas.PATH_DELIM + OperacionesVentas.VENTAS + OperacionesVentas.PATH_DELIM
+    @Path("/" + OperacionesVentas.VENTAS + "/"
             + OperacionesVentas.POR_EMAIL)
     @Produces(MediaType.APPLICATION_JSON)
     public List<VentaWeb> getVentas(@QueryParam(OperacionesVentas.PARAM_EMAIL_CREADOR) String emailCreador) {

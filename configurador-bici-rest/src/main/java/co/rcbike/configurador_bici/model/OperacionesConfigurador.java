@@ -2,12 +2,6 @@ package co.rcbike.configurador_bici.model;
 
 public class OperacionesConfigurador {
 
-    /** PARAMETROS REST **/
-
-    // Separadores
-    public static final String PATH_DELIM = "/";
-    public static final String LCURL = "{";
-    public static final String RCURL = "}";
     // Paths
     public static final String ALIVE = "alive";
     public static final String CONFIGURACION = "configuracion";

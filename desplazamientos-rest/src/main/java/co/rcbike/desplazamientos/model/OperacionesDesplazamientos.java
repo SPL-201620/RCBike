@@ -5,12 +5,6 @@ import java.text.SimpleDateFormat;
 
 public class OperacionesDesplazamientos {
 
-    /** PARAMETROS REST **/
-
-    // Separadores
-    public static final String PATH_DELIM = "/";
-    public static final String LCURL = "{";
-    public static final String RCURL = "}";
     // Paths
     public static final String ALIVE = "alive";
     public static final String CLIMA = "clima";

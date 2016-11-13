@@ -2,12 +2,6 @@ package co.rcbike.alquiler.model;
 
 public class OperacionesAlquiler {
 
-	/** PARAMETROS REST **/
-	
-	// Separadores
-	public static final String PATH_DELIM = "/";
-	public static final String LCURL = "{";
-	public static final String RCURL = "}";
 	// Paths
 	public static final String ALIVE = "alive";
 	public static final String SITIO_ALQUILER = "sitioAlquiler";

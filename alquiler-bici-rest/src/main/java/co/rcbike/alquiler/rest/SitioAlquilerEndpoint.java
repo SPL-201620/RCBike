@@ -32,7 +32,7 @@ public class SitioAlquilerEndpoint {
     private TransformadorAlquiler transformador;
 
     @GET
-    @Path(OperacionesAlquiler.PATH_DELIM + OperacionesAlquiler.ALIVE)
+    @Path("/" + OperacionesAlquiler.ALIVE)
     @Produces(MediaType.APPLICATION_JSON)
     public String alive() {
         return "endpoint alive";
@@ -47,8 +47,8 @@ public class SitioAlquilerEndpoint {
      *            Identificador de sitioAlquiler
      */
     @GET
-    @Path(OperacionesAlquiler.PATH_DELIM + OperacionesAlquiler.SITIO_ALQUILER + OperacionesAlquiler.PATH_DELIM
-            + OperacionesAlquiler.LCURL + OperacionesAlquiler.PARAM_ID + OperacionesAlquiler.RCURL)
+    @Path("/" + OperacionesAlquiler.SITIO_ALQUILER + "/"
+            + "{" + OperacionesAlquiler.PARAM_ID + "}")
     @Produces(MediaType.APPLICATION_JSON)
     public SitioAlquilerWeb getSitioAlquiler(@PathParam(OperacionesAlquiler.PARAM_ID) Long id) {
         return transformador.toSitioAlquilerWeb(service.getSitioAlquiler(id));
@@ -62,7 +62,7 @@ public class SitioAlquilerEndpoint {
      * @return Identificador de sitioAlquiler creada
      */
     @POST
-    @Path(OperacionesAlquiler.PATH_DELIM + OperacionesAlquiler.SITIO_ALQUILER)
+    @Path("/" + OperacionesAlquiler.SITIO_ALQUILER)
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Long postSitioAlquiler(SitioAlquilerWeb sitioAlquiler) {
@@ -77,7 +77,7 @@ public class SitioAlquilerEndpoint {
      * @return Identificador de sitioAlquiler creada
      */
     @PUT
-    @Path(OperacionesAlquiler.PATH_DELIM + OperacionesAlquiler.SITIO_ALQUILER)
+    @Path("/" + OperacionesAlquiler.SITIO_ALQUILER)
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Long putSitioAlquiler(SitioAlquilerWeb sitioAlquiler) {
@@ -92,8 +92,8 @@ public class SitioAlquilerEndpoint {
      *            Identificador de sitioAlquiler
      */
     @DELETE
-    @Path(OperacionesAlquiler.PATH_DELIM + OperacionesAlquiler.SITIO_ALQUILER + OperacionesAlquiler.PATH_DELIM
-            + OperacionesAlquiler.LCURL + OperacionesAlquiler.PARAM_ID + OperacionesAlquiler.RCURL)
+    @Path("/" + OperacionesAlquiler.SITIO_ALQUILER + "/"
+            + "{" + OperacionesAlquiler.PARAM_ID + "}")
     public void deleteSitioAlquiler(@PathParam(OperacionesAlquiler.PARAM_ID) Long id) {
         service.deleteSitioAlquiler(id);
     }
@@ -105,7 +105,7 @@ public class SitioAlquilerEndpoint {
      * 
      */
     @GET
-    @Path(OperacionesAlquiler.PATH_DELIM + OperacionesAlquiler.SITIOS_ALQUILER)
+    @Path("/" + OperacionesAlquiler.SITIOS_ALQUILER)
     @Produces(MediaType.APPLICATION_JSON)
     public List<SitioAlquilerWeb> getSitiosAlquiler() {
         return transformador.toListSitioAlquilerWeb(service.listTodosSitiosAlquiler());
@@ -119,7 +119,7 @@ public class SitioAlquilerEndpoint {
      *            email del usuario
      */
     @GET
-    @Path(OperacionesAlquiler.PATH_DELIM + OperacionesAlquiler.SITIOS_ALQUILER + OperacionesAlquiler.PATH_DELIM
+    @Path("/" + OperacionesAlquiler.SITIOS_ALQUILER + "/"
             + OperacionesAlquiler.POR_EMAIL)
     @Produces(MediaType.APPLICATION_JSON)
     public List<SitioAlquilerWeb> getSitiosAlquiler(
@@ -137,7 +137,7 @@ public class SitioAlquilerEndpoint {
      * 
      */
     @GET
-    @Path(OperacionesAlquiler.PATH_DELIM + OperacionesAlquiler.SITIOS_ALQUILER + OperacionesAlquiler.PATH_DELIM
+    @Path("/" + OperacionesAlquiler.SITIOS_ALQUILER + "/"
             + OperacionesAlquiler.CERCANOS)
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)

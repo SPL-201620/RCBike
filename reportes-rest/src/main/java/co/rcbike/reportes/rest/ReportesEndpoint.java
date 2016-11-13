@@ -23,7 +23,7 @@ public class ReportesEndpoint {
     private ReportesService service;
 
     @GET
-    @Path(OperacionesReportes.PATH_DELIM + OperacionesReportes.ALIVE)
+    @Path("/" + OperacionesReportes.ALIVE)
     @Produces(MediaType.APPLICATION_JSON)
     public String alive() {
         return "endpoint alive";
@@ -38,7 +38,7 @@ public class ReportesEndpoint {
      *            longitud geografica de la ruta
      */
     @GET
-    @Path(OperacionesReportes.PATH_DELIM + OperacionesReportes.REPORTE)
+    @Path("/" + OperacionesReportes.REPORTE)
     @Produces(MediaType.APPLICATION_JSON)
     public List<ResumenWeb> getReporte(@QueryParam("tipo") TipoReporte tipoReporte,
             @QueryParam("emailCreador") String emailCreador, @QueryParam("fechaInicio") String fechaInicio,
