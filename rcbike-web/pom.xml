@@ -125,7 +125,7 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<version>1.16.10</version>
-			<scope>provided</scope>
+			<scope>compile</scope>
 		</dependency>
 
 		<dependency>
@@ -156,8 +156,8 @@
 			<type>jar</type>
 			<classifier>model</classifier>
 		</dependency>
-		
-		<!-- Dependencias dinamicas que no se incluyen durante la derivacion-->
+
+		<!-- Dependencias dinamicas que no se incluyen durante la derivacion -->
 		<dependency>
 			<groupId>co.rcbike</groupId>
 			<artifactId>alquiler-bici-rest</artifactId>
@@ -212,6 +212,35 @@
 
 
 	<profiles>
+		<profile>
+			<id>base</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-compiler-plugin</artifactId>
+						<configuration>
+							<excludes>
+								<!-- alquiler -->
+								<exclude>co/rcbike/alquiler/**/*</exclude>
+								<!-- configurador -->
+								<exclude>co/rcbike/configurador_bici/**/*</exclude>
+								<!-- desplazamientos -->
+								<exclude>co/rcbike/desplazamientos/**/*</exclude>
+								<!-- mensajeria -->
+								<exclude>co/rcbike/mensajeria/**/*</exclude>
+								<!-- reportes -->
+								<exclude>co/rcbike/reportes/**/*</exclude>
+								<!-- sinc-redes -->
+								<exclude>co/rcbike/sinc_redes/**/*</exclude>
+								<!-- ventas -->
+								<exclude>co/rcbike/ventas/**/*</exclude>
+							</excludes>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
 		<profile>
 			<id>alquiler</id>
 			<dependencies>
