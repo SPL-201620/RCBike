@@ -39,12 +39,12 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<modules>
-<!-- 				<module>../alquiler-bici-rest</module> -->
+				<module>../alquiler-bici-rest</module>
 				<module>../configurador-bici-rest</module>
 				<module>../desplazamientos-rest</module>
 				<module>../mensajeria-rest</module>
-<!-- 				<module>../reportes-rest</module> -->
-<!-- 				<module>../sinc-redes-rest</module> -->
+				<module>../reportes-rest</module>
+				<module>../sinc-redes-rest</module>
 				<module>../usuarios-rest</module>
 				<module>../rcbike-web</module>
 				<module>../ventas-bici-rest</module>
@@ -62,6 +62,56 @@
 				</plugins>
 			</build>
 		</profile>
+
+		<profile>
+			<id>base</id>
+			<modules>
+				<module>../rcbike-web</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>alquiler</id>
+			<modules>
+				<module>../alquiler-bici-rest</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>configurador</id>
+			<modules>
+				<module>../configurador-bici-rest</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>desplazamientos</id>
+			<modules>
+				<module>../desplazamientos-rest</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>mensajeria</id>
+			<modules>
+				<module>../mensajeria-rest</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>reportes</id>
+			<modules>
+				<module>../reportes-rest</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>sinc-redes</id>
+			<modules>
+				<module>../sinc-redes-rest</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>ventas</id>
+			<modules>
+				<module>../ventas-bici-rest</module>
+			</modules>
+		</profile>
+
 		<profile>
 			<id>deploy-dir</id>
 			<dependencies>
@@ -111,9 +161,9 @@
 				<version>${snoop.version}</version>
 			</dependency>
 			<dependency>
-			    <groupId>com.google.guava</groupId>
-			    <artifactId>guava</artifactId>
-			    <version>20.0-rc1</version>
+				<groupId>com.google.guava</groupId>
+				<artifactId>guava</artifactId>
+				<version>20.0-rc1</version>
 			</dependency>
 			<dependency>
 				<groupId>org.wildfly.bom</groupId>

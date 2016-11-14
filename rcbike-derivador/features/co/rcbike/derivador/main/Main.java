@@ -1,71 +1,55 @@
 package co.rcbike.derivador.main;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
-import org.apache.maven.shared.invoker.DefaultInvocationRequest;
-import org.apache.maven.shared.invoker.DefaultInvoker;
-import org.apache.maven.shared.invoker.InvocationRequest;
-import org.apache.maven.shared.invoker.Invoker;
+import java.util.HashSet;
+import java.util.Set;
+
+
+import co.rcbike.derivador.maven.MavenRunner;
 
 public class Main {
 
 	public static void main(String[] args){
-		List<String> modulos = new ArrayList<>();
-		/*if[PerfilUsuario]*/
-		System.out.print("PerfilUsuario");
-		/*end[PerfilUsuario]*/
+		Set<String> modulos = new HashSet<>();
+		modulos.add("base");
 		
 		/*if[AutenticacionLocal]*/
-		System.out.print("autenticacion-local");
+		modulos.add("autenticacion-local");
 		/*end[AutenticacionLocal]*/
 		/*if[AutenticacionFacebook]*/
-		System.out.print("autenticacion-facebook");
+		modulos.add("autenticacion-facebook");
 		/*end[AutenticacionFacebook]*/
 		/*if[AutenticacionTwitter]*/
-		System.out.print("autenticacion-twitter");
+		modulos.add("autenticacion-twitter");
 		/*end[AutenticacionTwitter]*/
-		
-		
 		/*if[AlquilerBicicleta]*/
-		System.out.print("alquiler");
+		modulos.add("alquiler");
 		/*end[AlquilerBicicleta]*/
-
 		/*if[ConfiguradorBicicleta]*/
-		System.out.print("configurador");
+		modulos.add("configurador");
 		/*end[ConfiguradorBicicleta]*/
-		
 		/*if[Desplazamientos]*/
-		System.out.print("desplazamientos");
+		modulos.add("desplazamientos");
 		/*end[Desplazamientos]*/
-
 		/*if[Mensajeria]*/
-		System.out.print("mensajeria");
+		modulos.add("mensajeria");
 		/*end[Mensajeria]*/
-		
 		/*if[Reportes]*/
-		System.out.print("reportes");
+		modulos.add("reportes");
 		/*end[Reportes]*/
-
 		/*if[VentaBicicleta]*/
-		System.out.print("venta");
+		modulos.add("ventas");
 		/*end[VentaBicicleta]*/
-
-		
 		/*if[CompartirTwitter]*/
-		System.out.print("compartir-twitter");
+		modulos.add("sinc-redes");
+		modulos.add("sinc-twitter");
 		/*end[CompartirTwitter]*/
 		
 		/*if[CompartirFacebook]*/
-		System.out.print("compartir-facebook");
+		modulos.add("sinc-redes");
+		modulos.add("sinc-facebook");
 		/*end[CompartirFacebook]*/
 		
-		InvocationRequest request = new DefaultInvocationRequest();
-		request.setPomFile( new File( "/path/to/pom.xml" ) );
-		request.setGoals( Collections.singletonList( "install" ) );
-
-		Invoker invoker = new DefaultInvoker();
-		//invoker.execute( request );
+		MavenRunner mavenRunner = new MavenRunner();
+		mavenRunner.inkoveRcbikeParent(modulos);
 	}
 }
