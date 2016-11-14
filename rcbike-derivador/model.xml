@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel>
+		<properties/>
+		<struct>
+			<and abstract="true" mandatory="true" name="rcbike">
+				<description>
+					
+				</description>
+				<or abstract="true" mandatory="true" name="Autenticacion">
+					<description>
+						
+					</description>
+					<feature mandatory="true" name="AutenticacionLocal">
+						<description>
+							
+						</description>
+					</feature>
+					<feature mandatory="true" name="AutenticacionFacebook">
+						<description>
+							
+						</description>
+					</feature>
+					<feature mandatory="true" name="AutenticacionTwitter">
+						<description>
+							
+						</description>
+					</feature>
+				</or>
+				<feature mandatory="true" name="PerfilUsuario">
+					<description>
+						
+					</description>
+				</feature>
+				<feature name="Mensajeria">
+					<description>
+						
+					</description>
+				</feature>
+				<feature name="Reportes">
+					<description>
+						
+					</description>
+				</feature>
+				<feature name="Desplazamientos">
+					<description>
+						
+					</description>
+				</feature>
+				<or abstract="true" name="SincronizacionRedes">
+					<description>
+						
+					</description>
+					<feature mandatory="true" name="CompartirTwitter">
+						<description>
+							
+						</description>
+					</feature>
+					<feature mandatory="true" name="CompartirFacebook">
+						<description>
+							
+						</description>
+					</feature>
+				</or>
+				<feature name="VentaBicicleta">
+					<description>
+						
+					</description>
+				</feature>
+				<feature name="ConfiguradorBicicleta">
+					<description>
+						
+					</description>
+				</feature>
+				<feature name="AlquilerBicicleta">
+					<description>
+						
+					</description>
+				</feature>
+			</and>
+		</struct>
+		<constraints>
+			<rule>
+				<imp>
+					<var>VentaBicicleta</var>
+					<var>ConfiguradorBicicleta</var>
+				</imp>
+			</rule>
+			<rule>
+				<imp>
+					<var>SincronizacionRedes</var>
+					<disj>
+						<var>Desplazamientos</var>
+						<var>VentaBicicleta</var>
+					</disj>
+				</imp>
+			</rule>
+		</constraints>
+		<calculations Auto="true" Constraints="true" Features="true" Redundant="true" Tautology="true"/>
+		<comments/>
+		<featureOrder userDefined="false"/>
+	</featureModel>
