@@ -71,42 +71,63 @@
 		</profile>
 		<profile>
 			<id>alquiler</id>
+			<properties>
+				<alquiler>true</alquiler>
+			</properties>
 			<modules>
 				<module>../alquiler-bici-rest</module>
 			</modules>
 		</profile>
 		<profile>
 			<id>configurador</id>
+			<properties>
+				<configurador>true</configurador>
+			</properties>
 			<modules>
 				<module>../configurador-bici-rest</module>
 			</modules>
 		</profile>
 		<profile>
 			<id>desplazamientos</id>
+			<properties>
+				<desplazamientos>true</desplazamientos>
+			</properties>
 			<modules>
 				<module>../desplazamientos-rest</module>
 			</modules>
 		</profile>
 		<profile>
 			<id>mensajeria</id>
+			<properties>
+				<mensajeria>true</mensajeria>
+			</properties>
 			<modules>
 				<module>../mensajeria-rest</module>
 			</modules>
 		</profile>
 		<profile>
 			<id>reportes</id>
+			<properties>
+				<reportes>true</reportes>
+			</properties>
 			<modules>
 				<module>../reportes-rest</module>
 			</modules>
 		</profile>
 		<profile>
 			<id>sinc-redes</id>
+			<properties>
+				<sinc-redes>true</sinc-redes>
+			</properties>
 			<modules>
 				<module>../sinc-redes-rest</module>
 			</modules>
 		</profile>
 		<profile>
 			<id>ventas</id>
+			<properties>
+				<ventas>true</ventas>
+			</properties>
 			<modules>
 				<module>../ventas-bici-rest</module>
 			</modules>
