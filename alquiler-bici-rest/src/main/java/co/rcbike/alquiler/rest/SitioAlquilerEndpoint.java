@@ -31,13 +31,6 @@ public class SitioAlquilerEndpoint {
     @Inject
     private TransformadorAlquiler transformador;
 
-    @GET
-    @Path("/" + OperacionesAlquiler.ALIVE)
-    @Produces(MediaType.APPLICATION_JSON)
-    public String alive() {
-        return "endpoint alive";
-    }
-
     /***** CONFIGURACONES ****/
 
     /**
@@ -47,8 +40,7 @@ public class SitioAlquilerEndpoint {
      *            Identificador de sitioAlquiler
      */
     @GET
-    @Path("/" + OperacionesAlquiler.SITIO_ALQUILER + "/"
-            + "{" + OperacionesAlquiler.PARAM_ID + "}")
+    @Path("/" + OperacionesAlquiler.SITIO_ALQUILER + "/" + "{" + OperacionesAlquiler.PARAM_ID + "}")
     @Produces(MediaType.APPLICATION_JSON)
     public SitioAlquilerWeb getSitioAlquiler(@PathParam(OperacionesAlquiler.PARAM_ID) Long id) {
         return transformador.toSitioAlquilerWeb(service.getSitioAlquiler(id));
@@ -92,8 +84,7 @@ public class SitioAlquilerEndpoint {
      *            Identificador de sitioAlquiler
      */
     @DELETE
-    @Path("/" + OperacionesAlquiler.SITIO_ALQUILER + "/"
-            + "{" + OperacionesAlquiler.PARAM_ID + "}")
+    @Path("/" + OperacionesAlquiler.SITIO_ALQUILER + "/" + "{" + OperacionesAlquiler.PARAM_ID + "}")
     public void deleteSitioAlquiler(@PathParam(OperacionesAlquiler.PARAM_ID) Long id) {
         service.deleteSitioAlquiler(id);
     }
@@ -119,8 +110,7 @@ public class SitioAlquilerEndpoint {
      *            email del usuario
      */
     @GET
-    @Path("/" + OperacionesAlquiler.SITIOS_ALQUILER + "/"
-            + OperacionesAlquiler.POR_EMAIL)
+    @Path("/" + OperacionesAlquiler.SITIOS_ALQUILER + "/" + OperacionesAlquiler.POR_EMAIL)
     @Produces(MediaType.APPLICATION_JSON)
     public List<SitioAlquilerWeb> getSitiosAlquiler(
             @QueryParam(OperacionesAlquiler.PARAM_EMAIL_CREADOR) String emailCreador) {
@@ -137,8 +127,7 @@ public class SitioAlquilerEndpoint {
      * 
      */
     @GET
-    @Path("/" + OperacionesAlquiler.SITIOS_ALQUILER + "/"
-            + OperacionesAlquiler.CERCANOS)
+    @Path("/" + OperacionesAlquiler.SITIOS_ALQUILER + "/" + OperacionesAlquiler.CERCANOS)
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public List<SitioAlquilerWeb> getSitiosAlquilerCercanos(@QueryParam("latitud") BigDecimal latitud,

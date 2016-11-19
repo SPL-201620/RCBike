@@ -22,13 +22,6 @@ public class ReportesEndpoint {
     @Inject
     private ReportesService service;
 
-    @GET
-    @Path("/" + OperacionesReportes.ALIVE)
-    @Produces(MediaType.APPLICATION_JSON)
-    public String alive() {
-        return "endpoint alive";
-    }
-
     /**
      * Permite obtener el clima en una latitud y longitud
      * 

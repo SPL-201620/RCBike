@@ -33,13 +33,6 @@ public class DesplazamientoIndividualEndpoint {
     @Inject
     private TransformadorDesplazamientos transformadorDesplazamientos;
 
-    @GET
-    @Path("/" + OperacionesDesplazamientos.ALIVE)
-    @Produces(MediaType.APPLICATION_JSON)
-    public String alive() {
-        return "endpoint alive";
-    }
-
     /**
      * Permite obtener el clima en una latitud y longitud
      * 
@@ -65,9 +58,7 @@ public class DesplazamientoIndividualEndpoint {
      *            Identificador de ruta
      */
     @GET
-    @Path("/" + OperacionesDesplazamientos.RUTA_INDIVIDUAL
-            + "/" + "{"
-            + OperacionesDesplazamientos.PARAM_ID + "}")
+    @Path("/" + OperacionesDesplazamientos.RUTA_INDIVIDUAL + "/" + "{" + OperacionesDesplazamientos.PARAM_ID + "}")
     @Produces(MediaType.APPLICATION_JSON)
     public RutaWeb getRutaIndividual(@PathParam(OperacionesDesplazamientos.PARAM_ID) Long id) {
         return transformadorDesplazamientos.toRutaWeb(service.getRuta(id));
@@ -114,9 +105,7 @@ public class DesplazamientoIndividualEndpoint {
      *            Identificador de ruta
      */
     @DELETE
-    @Path("/" + OperacionesDesplazamientos.RUTA_INDIVIDUAL
-            + "/" + "{"
-            + OperacionesDesplazamientos.PARAM_ID + "}")
+    @Path("/" + OperacionesDesplazamientos.RUTA_INDIVIDUAL + "/" + "{" + OperacionesDesplazamientos.PARAM_ID + "}")
     public void deleteRutaIndividual(@PathParam(OperacionesDesplazamientos.PARAM_ID) Long id) {
         service.deleteRuta(id);
     }
@@ -172,8 +161,7 @@ public class DesplazamientoIndividualEndpoint {
      *            email del usuario
      */
     @GET
-    @Path("/" + OperacionesDesplazamientos.RUTAS_INDIVIDUALES
-            + "/" + OperacionesDesplazamientos.POR_EMAIL)
+    @Path("/" + OperacionesDesplazamientos.RUTAS_INDIVIDUALES + "/" + OperacionesDesplazamientos.POR_EMAIL)
     @Produces(MediaType.APPLICATION_JSON)
     public List<RutaWeb> getRutasIndividuales(
             @QueryParam(OperacionesDesplazamientos.PARAM_EMAIL_CREADOR) String emailCreador) {
@@ -190,9 +178,7 @@ public class DesplazamientoIndividualEndpoint {
      *            Identificador de waypoint
      */
     @GET
-    @Path("/" + OperacionesDesplazamientos.WAYPOINT
-            + "/" + "{"
-            + OperacionesDesplazamientos.PARAM_ID + "}")
+    @Path("/" + OperacionesDesplazamientos.WAYPOINT + "/" + "{" + OperacionesDesplazamientos.PARAM_ID + "}")
     @Produces(MediaType.APPLICATION_JSON)
     public WaypointWeb getWaypoint(@PathParam(OperacionesDesplazamientos.PARAM_ID) Long id) {
         return transformadorDesplazamientos.toWaypointWeb(service.getWaypoint(id));
@@ -236,9 +222,7 @@ public class DesplazamientoIndividualEndpoint {
      *            Identificador de waypoint
      */
     @DELETE
-    @Path("/" + OperacionesDesplazamientos.WAYPOINT
-            + "/" + "{"
-            + OperacionesDesplazamientos.PARAM_ID + "}")
+    @Path("/" + OperacionesDesplazamientos.WAYPOINT + "/" + "{" + OperacionesDesplazamientos.PARAM_ID + "}")
     public void deleteWaypoint(@PathParam(OperacionesDesplazamientos.PARAM_ID) Long id) {
         service.deleteWaypoint(id);
     }
@@ -264,10 +248,8 @@ public class DesplazamientoIndividualEndpoint {
      *            email del usuario
      */
     @GET
-    @Path("/" + OperacionesDesplazamientos.RUTA_INDIVIDUAL
-            + "/" + "{"
-            + OperacionesDesplazamientos.PARAM_ID + "}"
-            + "/" + OperacionesDesplazamientos.WAYPOINTS)
+    @Path("/" + OperacionesDesplazamientos.RUTA_INDIVIDUAL + "/" + "{" + OperacionesDesplazamientos.PARAM_ID + "}" + "/"
+            + OperacionesDesplazamientos.WAYPOINTS)
     @Produces(MediaType.APPLICATION_JSON)
     public List<WaypointWeb> getWaypoints(@PathParam(OperacionesDesplazamientos.PARAM_ID) Long id) {
         return transformadorDesplazamientos.toListWaypointWeb(service.listWaypoints(id));

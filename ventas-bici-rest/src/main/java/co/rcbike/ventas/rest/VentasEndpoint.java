@@ -46,8 +46,7 @@ public class VentasEndpoint {
      *            Identificador de venta
      */
     @GET
-    @Path("/" + OperacionesVentas.VENTA + "/"
-            + "{" + OperacionesVentas.PARAM_ID + "}")
+    @Path("/" + OperacionesVentas.VENTA + "/" + "{" + OperacionesVentas.PARAM_ID + "}")
     @Produces(MediaType.APPLICATION_JSON)
     public VentaWeb getVenta(@PathParam(OperacionesVentas.PARAM_ID) Long id) {
         return transformador.toVentaWeb(service.getVenta(id));
@@ -90,8 +89,7 @@ public class VentasEndpoint {
      *            Identificador de venta
      */
     @DELETE
-    @Path("/" + OperacionesVentas.VENTA + "/"
-            + "{" + OperacionesVentas.PARAM_ID + "}")
+    @Path("/" + OperacionesVentas.VENTA + "/" + "{" + OperacionesVentas.PARAM_ID + "}")
     public void deleteVenta(@PathParam(OperacionesVentas.PARAM_ID) Long id) {
         service.deleteVenta(id);
     }
@@ -119,8 +117,7 @@ public class VentasEndpoint {
      */
 
     @GET
-    @Path("/" + OperacionesVentas.VENTAS + "/"
-            + OperacionesVentas.POR_EMAIL)
+    @Path("/" + OperacionesVentas.VENTAS + "/" + OperacionesVentas.POR_EMAIL)
     @Produces(MediaType.APPLICATION_JSON)
     public List<VentaWeb> getVentas(@QueryParam(OperacionesVentas.PARAM_EMAIL_CREADOR) String emailCreador) {
         return transformador.toListVentaWeb(service.listVentas(emailCreador));

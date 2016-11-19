@@ -6,7 +6,6 @@ import java.text.SimpleDateFormat;
 public class OperacionesDesplazamientos {
 
     // Paths
-    public static final String ALIVE = "alive";
     public static final String CLIMA = "clima";
     public static final String RUTAS = "rutas";
     public static final String RUTA_INDIVIDUAL = "rutaIndividual";

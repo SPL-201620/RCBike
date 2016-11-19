@@ -35,13 +35,6 @@ public class DesplazamientoGrupalEndpoint {
     @Inject
     private TransformadorDesplazamientos transformadorDesplazamientos;
 
-    @GET
-    @Path("/" + OperacionesDesplazamientos.ALIVE)
-    @Produces(MediaType.APPLICATION_JSON)
-    public String alive() {
-        return "endpoint alive";
-    }
-
     /**
      * Permite obtener el clima en una latitud y longitud
      * 
@@ -66,9 +59,7 @@ public class DesplazamientoGrupalEndpoint {
      *            Identificador de ruta
      */
     @GET
-    @Path("/" + OperacionesDesplazamientos.RUTA_GRUPAL
-            + "/" + "{"
-            + OperacionesDesplazamientos.PARAM_ID + "}")
+    @Path("/" + OperacionesDesplazamientos.RUTA_GRUPAL + "/" + "{" + OperacionesDesplazamientos.PARAM_ID + "}")
     @Produces(MediaType.APPLICATION_JSON)
     public RutaWeb getRutaGrupal(@PathParam(OperacionesDesplazamientos.PARAM_ID) Long id) {
         return transformadorDesplazamientos.toRutaWeb(service.getRuta(id));
@@ -112,9 +103,7 @@ public class DesplazamientoGrupalEndpoint {
      *            Identificador de ruta
      */
     @DELETE
-    @Path("/" + OperacionesDesplazamientos.RUTA_GRUPAL
-            + "/" + "{"
-            + OperacionesDesplazamientos.PARAM_ID + "}")
+    @Path("/" + OperacionesDesplazamientos.RUTA_GRUPAL + "/" + "{" + OperacionesDesplazamientos.PARAM_ID + "}")
     public void deleteRutaGrupal(@PathParam(OperacionesDesplazamientos.PARAM_ID) Long id) {
         service.deleteRuta(id);
     }
@@ -167,8 +156,7 @@ public class DesplazamientoGrupalEndpoint {
      * 
      */
     @GET
-    @Path("/" + OperacionesDesplazamientos.RUTAS_GRUPALES
-            + "/" + OperacionesDesplazamientos.NO_VENCIDOS)
+    @Path("/" + OperacionesDesplazamientos.RUTAS_GRUPALES + "/" + OperacionesDesplazamientos.NO_VENCIDOS)
     @Produces(MediaType.APPLICATION_JSON)
     public List<RutaWeb> listRutasGrupalesNoVencidos() {
         return transformadorDesplazamientos.toListRutaWeb(service.listRutasGrupalesNoVencidos());
@@ -183,8 +171,7 @@ public class DesplazamientoGrupalEndpoint {
      * 
      */
     @GET
-    @Path("/" + OperacionesDesplazamientos.RUTAS_GRUPALES
-            + "/" + OperacionesDesplazamientos.CERCANOS)
+    @Path("/" + OperacionesDesplazamientos.RUTAS_GRUPALES + "/" + OperacionesDesplazamientos.CERCANOS)
     @Produces(MediaType.APPLICATION_JSON)
     public List<RutaWeb> listRutasGrupalesCercanos(@QueryParam("latitud") BigDecimal latitud,
             @QueryParam("longitud") BigDecimal longitud) {
@@ -200,9 +187,7 @@ public class DesplazamientoGrupalEndpoint {
      *            Identificador de waypoint
      */
     @GET
-    @Path("/" + OperacionesDesplazamientos.WAYPOINT
-            + "/" + "{"
-            + OperacionesDesplazamientos.PARAM_ID + "}")
+    @Path("/" + OperacionesDesplazamientos.WAYPOINT + "/" + "{" + OperacionesDesplazamientos.PARAM_ID + "}")
     @Produces(MediaType.APPLICATION_JSON)
     public WaypointWeb getWaypoint(@PathParam(OperacionesDesplazamientos.PARAM_ID) Long id) {
         return transformadorDesplazamientos.toWaypointWeb(service.getWaypoint(id));
@@ -246,9 +231,7 @@ public class DesplazamientoGrupalEndpoint {
      *            Identificador de waypoint
      */
     @DELETE
-    @Path("/" + OperacionesDesplazamientos.WAYPOINT
-            + "/" + "{"
-            + OperacionesDesplazamientos.PARAM_ID + "}")
+    @Path("/" + OperacionesDesplazamientos.WAYPOINT + "/" + "{" + OperacionesDesplazamientos.PARAM_ID + "}")
     public void deleteWaypoint(@PathParam(OperacionesDesplazamientos.PARAM_ID) Long id) {
         service.deleteWaypoint(id);
     }
@@ -274,10 +257,8 @@ public class DesplazamientoGrupalEndpoint {
      *            email del usuario
      */
     @GET
-    @Path("/" + OperacionesDesplazamientos.RUTA_GRUPAL
-            + "/" + "{"
-            + OperacionesDesplazamientos.PARAM_ID + "}"
-            + "/" + OperacionesDesplazamientos.WAYPOINTS)
+    @Path("/" + OperacionesDesplazamientos.RUTA_GRUPAL + "/" + "{" + OperacionesDesplazamientos.PARAM_ID + "}" + "/"
+            + OperacionesDesplazamientos.WAYPOINTS)
     @Produces(MediaType.APPLICATION_JSON)
     public List<WaypointWeb> getWaypoints(@PathParam(OperacionesDesplazamientos.PARAM_ID) Long id) {
         return transformadorDesplazamientos.toListWaypointWeb(service.listWaypoints(id));
@@ -293,9 +274,7 @@ public class DesplazamientoGrupalEndpoint {
      *            Identificador de participante
      */
     @GET
-    @Path("/" + OperacionesDesplazamientos.PARTICIPANTE
-            + "/" + "{"
-            + OperacionesDesplazamientos.PARAM_ID + "}")
+    @Path("/" + OperacionesDesplazamientos.PARTICIPANTE + "/" + "{" + OperacionesDesplazamientos.PARAM_ID + "}")
     @Produces(MediaType.APPLICATION_JSON)
     public ParticipanteWeb getParticipante(@PathParam(OperacionesDesplazamientos.PARAM_ID) Long id) {
         return transformadorDesplazamientos.toParticipanteWeb(service.getParticipante(id));
@@ -339,9 +318,7 @@ public class DesplazamientoGrupalEndpoint {
      *            Identificador de participante
      */
     @DELETE
-    @Path("/" + OperacionesDesplazamientos.PARTICIPANTE
-            + "/" + "{"
-            + OperacionesDesplazamientos.PARAM_ID + "}")
+    @Path("/" + OperacionesDesplazamientos.PARTICIPANTE + "/" + "{" + OperacionesDesplazamientos.PARAM_ID + "}")
     public void deleteParticipante(@PathParam(OperacionesDesplazamientos.PARAM_ID) Long id) {
         service.deleteParticipante(id);
     }
@@ -367,10 +344,8 @@ public class DesplazamientoGrupalEndpoint {
      *            email del usuario
      */
     @GET
-    @Path("/" + OperacionesDesplazamientos.RUTA_GRUPAL
-            + "/" + "{"
-            + OperacionesDesplazamientos.PARAM_ID + "}"
-            + "/" + OperacionesDesplazamientos.PARTICIPANTES)
+    @Path("/" + OperacionesDesplazamientos.RUTA_GRUPAL + "/" + "{" + OperacionesDesplazamientos.PARAM_ID + "}" + "/"
+            + OperacionesDesplazamientos.PARTICIPANTES)
     @Produces(MediaType.APPLICATION_JSON)
     public List<ParticipanteWeb> getParticipantes(@PathParam(OperacionesDesplazamientos.PARAM_ID) Long id) {
         return transformadorDesplazamientos.toListParticipanteWeb(service.listParticipantes(id));
