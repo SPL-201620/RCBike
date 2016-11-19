@@ -12,8 +12,10 @@ import javax.ws.rs.client.WebTarget;
 
 import org.primefaces.model.menu.MenuModel;
 
+import co.rcbike.alquiler.model.OperacionesAlquiler;
 import co.rcbike.mensajeria.model.OperacionesMensajeria;
 import co.rcbike.usuarios.model.OperacionesUsuarios;
+import co.rcbike.ventas.model.OperacionesVentas;
 import eu.agilejava.snoop.annotation.Snoop;
 import eu.agilejava.snoop.client.SnoopServiceClient;
 import lombok.Getter;
@@ -61,22 +63,17 @@ public class ModulosManager implements Serializable {
 
     @Getter
     @Inject
-    @Snoop(serviceName = "autenticacion")
-    private SnoopServiceClient autenticacionService;
-
-    @Getter
-    @Inject
     @Snoop(serviceName = OperacionesUsuarios.EP_USUARIOS)
     private SnoopServiceClient usuariosService;
 
     @Getter
     @Inject
-    @Snoop(serviceName = "venta")
+    @Snoop(serviceName = OperacionesVentas.EP_VENTA)
     private SnoopServiceClient ventaService;
 
     @Getter
     @Inject
-    @Snoop(serviceName = "alquiler")
+    @Snoop(serviceName = OperacionesAlquiler.EP_ALQUILER)
     private SnoopServiceClient alquilerService;
 
     @Getter

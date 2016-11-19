@@ -3,8 +3,7 @@ package co.rcbike.ventas.model;
 public class OperacionesVentas {
 
     // Paths
-    public static final String ALIVE = "alive";
-    public static final String VENTA = "venta";
+    public static final String EP_VENTA = "venta";
     public static final String VENTAS = "ventas";
     public static final String ALLVENTAS = "allventas";
     // Operaciones

@@ -17,7 +17,7 @@ import javax.ws.rs.core.MediaType;
 
 import co.rcbike.configurador_bici.model.ColorWeb;
 import co.rcbike.configurador_bici.model.ConfiguracionWeb;
-import co.rcbike.configurador_bici.model.OperacionesConfigurador;
+import co.rcbike.configurador_bici.model.OperacionesConfiguracion;
 import co.rcbike.configurador_bici.model.PiezaConfiguracionWeb;
 import co.rcbike.configurador_bici.model.PiezaWeb;
 import co.rcbike.configurador_bici.model.TipoPiezaBicicleta;
@@ -25,7 +25,7 @@ import co.rcbike.configurador_bici.model.ValidacionConfiguracion;
 import co.rcbike.configurador_bici.service.ConfiguradorService;
 import co.rcbike.configurador_bici.service.TransformadorConfigurador;
 
-@Path("configuracion")
+@Path(OperacionesConfiguracion.EP_CONFIGURACION)
 @RequestScoped
 public class ConfiguradorBiciEndpoint {
 
@@ -34,13 +34,6 @@ public class ConfiguradorBiciEndpoint {
 
     @Inject
     private TransformadorConfigurador transformador;
-
-    @GET
-    @Path("/" + OperacionesConfigurador.ALIVE)
-    @Produces(MediaType.APPLICATION_JSON)
-    public String alive() {
-        return "endpoint alive";
-    }
 
     /***** CONFIGURACONES ****/
 
@@ -52,9 +45,9 @@ public class ConfiguradorBiciEndpoint {
      */
 
     @GET
-    @Path("/" + OperacionesConfigurador.CONFIGURACION + "/" + "{" + OperacionesConfigurador.PARAM_ID + "}")
+    @Path(OperacionesConfiguracion.EP_CONFIGURACION + "/" + OperacionesConfiguracion.PATH_PRM_ID)
     @Produces(MediaType.APPLICATION_JSON)
-    public ConfiguracionWeb getConfiguracion(@PathParam(OperacionesConfigurador.PARAM_ID) Long id) {
+    public ConfiguracionWeb getConfiguracion(@PathParam(OperacionesConfiguracion.PRM_ID) Long id) {
         return transformador.toConfiguracionWeb(service.getConfiguracion(id));
 
     }
@@ -68,7 +61,7 @@ public class ConfiguradorBiciEndpoint {
      */
 
     @POST
-    @Path("/" + OperacionesConfigurador.CONFIGURACION)
+    @Path(OperacionesConfiguracion.EP_CONFIGURACION)
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Long postConfiguracion(ConfiguracionWeb configuracion) {
@@ -84,7 +77,7 @@ public class ConfiguradorBiciEndpoint {
      */
 
     @PUT
-    @Path("/" + OperacionesConfigurador.CONFIGURACION)
+    @Path(OperacionesConfiguracion.EP_CONFIGURACION)
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Long putConfiguracion(ConfiguracionWeb configuracion) {
@@ -100,8 +93,8 @@ public class ConfiguradorBiciEndpoint {
      */
 
     @DELETE
-    @Path("/" + OperacionesConfigurador.CONFIGURACION + "/" + "{" + OperacionesConfigurador.PARAM_ID + "}")
-    public void deleteConfiguracion(@PathParam(OperacionesConfigurador.PARAM_ID) Long id) {
+    @Path(OperacionesConfiguracion.EP_CONFIGURACION + "/" + OperacionesConfiguracion.PATH_PRM_ID)
+    public void deleteConfiguracion(@PathParam(OperacionesConfiguracion.PRM_ID) Long id) {
         service.deleteConfiguracion(id);
     }
 
@@ -112,7 +105,7 @@ public class ConfiguradorBiciEndpoint {
      *            configuracion de una bicicleta
      */
     @POST
-    @Path("/" + OperacionesConfigurador.CONFIGURACION + "/" + OperacionesConfigurador.VALIDAR)
+    @Path(OperacionesConfiguracion.EP_CONFIGURACION + "/" + OperacionesConfiguracion.OP_VALIDAR)
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public ValidacionConfiguracion validarConfiguracion(ConfiguracionWeb configuracion) {
@@ -126,11 +119,11 @@ public class ConfiguradorBiciEndpoint {
      *            configuracion de una bicicleta
      */
     @GET
-    @Path("/" + OperacionesConfigurador.CONFIGURACION + "/" + "{" + OperacionesConfigurador.PARAM_ID + "}" + "/"
-            + OperacionesConfigurador.VALIDAR)
+    @Path(OperacionesConfiguracion.EP_CONFIGURACION + "/" + OperacionesConfiguracion.PATH_PRM_ID + "/"
+            + OperacionesConfiguracion.OP_VALIDAR)
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public ValidacionConfiguracion validarConfiguracion(@PathParam(OperacionesConfigurador.PARAM_ID) Long id) {
+    public ValidacionConfiguracion validarConfiguracion(@PathParam(OperacionesConfiguracion.PRM_ID) Long id) {
         return service.validarConfiguracion(id);
     }
 
@@ -142,7 +135,7 @@ public class ConfiguradorBiciEndpoint {
      */
 
     @GET
-    @Path("/" + OperacionesConfigurador.CONFIGURACIONES)
+    @Path(OperacionesConfiguracion.OP_CONFIGURACIONES)
     @Produces(MediaType.APPLICATION_JSON)
     public List<ConfiguracionWeb> getConfiguraciones() {
         return transformador.toListConfiguracionWeb(service.listTodosConfiguraciones());
@@ -157,10 +150,10 @@ public class ConfiguradorBiciEndpoint {
      */
 
     @GET
-    @Path("/" + OperacionesConfigurador.CONFIGURACIONES + "/" + OperacionesConfigurador.POR_EMAIL)
+    @Path(OperacionesConfiguracion.OP_CONFIGURACIONES + "/" + OperacionesConfiguracion.OP_BY_EMAIL)
     @Produces(MediaType.APPLICATION_JSON)
     public List<ConfiguracionWeb> getConfiguraciones(
-            @QueryParam(OperacionesConfigurador.PARAM_EMAIL_CREADOR) String emailCreador) {
+            @QueryParam(OperacionesConfiguracion.PARAM_EMAIL_CREADOR) String emailCreador) {
         return transformador.toListConfiguracionWeb(service.listConfiguraciones(emailCreador));
 
     }
@@ -175,9 +168,9 @@ public class ConfiguradorBiciEndpoint {
      */
 
     @GET
-    @Path("/" + OperacionesConfigurador.PIEZA_CONFIGURACION + "/" + "{" + OperacionesConfigurador.PARAM_ID + "}")
+    @Path(OperacionesConfiguracion.OP_PIEZA_CONFIGURACION + "/" + OperacionesConfiguracion.PATH_PRM_ID)
     @Produces(MediaType.APPLICATION_JSON)
-    public PiezaConfiguracionWeb getPiezaConfiguracion(@PathParam(OperacionesConfigurador.PARAM_ID) Long id) {
+    public PiezaConfiguracionWeb getPiezaConfiguracion(@PathParam(OperacionesConfiguracion.PRM_ID) Long id) {
         return transformador.toPiezaConfiguracionWeb(service.getPiezaConfiguracion(id));
 
     }
@@ -191,7 +184,7 @@ public class ConfiguradorBiciEndpoint {
      */
 
     @POST
-    @Path("/" + OperacionesConfigurador.PIEZA_CONFIGURACION)
+    @Path(OperacionesConfiguracion.OP_PIEZA_CONFIGURACION)
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Long postPiezaConfiguracion(PiezaConfiguracionWeb piezaConfiguracion) {
@@ -207,7 +200,7 @@ public class ConfiguradorBiciEndpoint {
      */
 
     @PUT
-    @Path("/" + OperacionesConfigurador.PIEZA_CONFIGURACION)
+    @Path(OperacionesConfiguracion.OP_PIEZA_CONFIGURACION)
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Long putPiezaConfiguracion(PiezaConfiguracionWeb piezaConfiguracion) {
@@ -222,8 +215,8 @@ public class ConfiguradorBiciEndpoint {
      *            Identificador de piezaConfiguracion
      */
     @DELETE
-    @Path("/" + OperacionesConfigurador.PIEZA_CONFIGURACION + "/" + "{" + OperacionesConfigurador.PARAM_ID + "}")
-    public void deletePiezaConfiguracion(@PathParam(OperacionesConfigurador.PARAM_ID) Long id) {
+    @Path(OperacionesConfiguracion.OP_PIEZA_CONFIGURACION + "/" + OperacionesConfiguracion.PATH_PRM_ID)
+    public void deletePiezaConfiguracion(@PathParam(OperacionesConfiguracion.PRM_ID) Long id) {
         service.deletePiezaConfiguracion(id);
     }
 
@@ -235,7 +228,7 @@ public class ConfiguradorBiciEndpoint {
      */
 
     @GET
-    @Path("/" + OperacionesConfigurador.PIEZAS_CONFIGURACION)
+    @Path(OperacionesConfiguracion.OP_PIEZAS_CONFIGURACION)
     @Produces(MediaType.APPLICATION_JSON)
     public List<PiezaConfiguracionWeb> getPiezasConfiguracion() {
         return transformador.toListPiezaConfiguracionWeb(service.listTodosPiezasConfiguracion());
@@ -250,10 +243,10 @@ public class ConfiguradorBiciEndpoint {
      */
 
     @GET
-    @Path("/" + OperacionesConfigurador.CONFIGURACION + "/" + "{" + OperacionesConfigurador.PARAM_ID + "}" + "/"
-            + OperacionesConfigurador.PIEZAS_CONFIGURACION)
+    @Path(OperacionesConfiguracion.EP_CONFIGURACION + "/" + OperacionesConfiguracion.PATH_PRM_ID + "/"
+            + OperacionesConfiguracion.OP_PIEZAS_CONFIGURACION)
     @Produces(MediaType.APPLICATION_JSON)
-    public List<PiezaConfiguracionWeb> getPiezasConfiguracion(@PathParam(OperacionesConfigurador.PARAM_ID) Long id) {
+    public List<PiezaConfiguracionWeb> getPiezasConfiguracion(@PathParam(OperacionesConfiguracion.PRM_ID) Long id) {
         return transformador.toListPiezaConfiguracionWeb(service.listPiezasConfiguracion(id));
     }
 
@@ -268,9 +261,9 @@ public class ConfiguradorBiciEndpoint {
      */
 
     @GET
-    @Path("/" + OperacionesConfigurador.PIEZA + "/" + "{" + OperacionesConfigurador.PARAM_ID + "}")
+    @Path(OperacionesConfiguracion.OP_PIEZA + "/" + OperacionesConfiguracion.PATH_PRM_ID)
     @Produces(MediaType.APPLICATION_JSON)
-    public PiezaWeb getPieza(@PathParam(OperacionesConfigurador.PARAM_ID) Long id) {
+    public PiezaWeb getPieza(@PathParam(OperacionesConfiguracion.PRM_ID) Long id) {
         return transformador.toPiezaWeb(service.getPieza(id));
     }
 
@@ -283,7 +276,7 @@ public class ConfiguradorBiciEndpoint {
      */
 
     @POST
-    @Path("/" + OperacionesConfigurador.PIEZA)
+    @Path(OperacionesConfiguracion.OP_PIEZA)
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Long postPieza(PiezaWeb waypoint) {
@@ -298,7 +291,7 @@ public class ConfiguradorBiciEndpoint {
      * @return Identificador de waypoint creada
      */
     @PUT
-    @Path("/" + OperacionesConfigurador.PIEZA)
+    @Path(OperacionesConfiguracion.OP_PIEZA)
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Long putPieza(PiezaWeb waypoint) {
@@ -313,8 +306,8 @@ public class ConfiguradorBiciEndpoint {
      *            Identificador de waypoint
      */
     @DELETE
-    @Path("/" + OperacionesConfigurador.PIEZA + "/" + "{" + OperacionesConfigurador.PARAM_ID + "}")
-    public void deletePieza(@PathParam(OperacionesConfigurador.PARAM_ID) Long id) {
+    @Path(OperacionesConfiguracion.OP_PIEZA + "/" + OperacionesConfiguracion.PATH_PRM_ID)
+    public void deletePieza(@PathParam(OperacionesConfiguracion.PRM_ID) Long id) {
         service.deletePieza(id);
     }
 
@@ -326,7 +319,7 @@ public class ConfiguradorBiciEndpoint {
      */
 
     @GET
-    @Path("/" + OperacionesConfigurador.PIEZAS)
+    @Path(OperacionesConfiguracion.OP_PIEZAS)
     @Produces(MediaType.APPLICATION_JSON)
     public List<PiezaWeb> getPiezas() {
         return transformador.toListPiezaWeb(service.listTodasPiezas());
@@ -341,9 +334,9 @@ public class ConfiguradorBiciEndpoint {
      */
 
     @GET
-    @Path("/" + OperacionesConfigurador.PIEZAS + "/" + OperacionesConfigurador.POR_TIPO)
+    @Path(OperacionesConfiguracion.OP_PIEZAS + "/" + OperacionesConfiguracion.OP_PIEZAS_BY_TIPO)
     @Produces(MediaType.APPLICATION_JSON)
-    public List<PiezaWeb> getPiezas(@QueryParam(OperacionesConfigurador.PARAM_TIPO) TipoPiezaBicicleta tipo) {
+    public List<PiezaWeb> getPiezas(@QueryParam(OperacionesConfiguracion.PATH_PRM_TIPO) TipoPiezaBicicleta tipo) {
         return transformador.toListPiezaWeb(service.listPiezas(tipo));
     }
 
@@ -358,9 +351,9 @@ public class ConfiguradorBiciEndpoint {
      */
 
     @GET
-    @Path("/" + OperacionesConfigurador.COLOR + "/" + "{" + OperacionesConfigurador.PARAM_ID + "}")
+    @Path(OperacionesConfiguracion.OP_COLOR + "/" + OperacionesConfiguracion.PATH_PRM_ID)
     @Produces(MediaType.APPLICATION_JSON)
-    public ColorWeb getColor(@PathParam(OperacionesConfigurador.PARAM_ID) Long id) {
+    public ColorWeb getColor(@PathParam(OperacionesConfiguracion.PRM_ID) Long id) {
         return transformador.toColorWeb(service.getColor(id));
     }
 
@@ -373,7 +366,7 @@ public class ConfiguradorBiciEndpoint {
      */
 
     @POST
-    @Path("/" + OperacionesConfigurador.COLOR)
+    @Path(OperacionesConfiguracion.OP_COLOR)
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Long postColor(ColorWeb waypoint) {
@@ -389,7 +382,7 @@ public class ConfiguradorBiciEndpoint {
      */
 
     @PUT
-    @Path("/" + OperacionesConfigurador.COLOR)
+    @Path(OperacionesConfiguracion.OP_COLOR)
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Long putColor(ColorWeb waypoint) {
@@ -404,8 +397,8 @@ public class ConfiguradorBiciEndpoint {
      *            Identificador de waypoint
      */
     @DELETE
-    @Path("/" + OperacionesConfigurador.COLOR + "/" + "{" + OperacionesConfigurador.PARAM_ID + "}")
-    public void deleteColor(@PathParam(OperacionesConfigurador.PARAM_ID) Long id) {
+    @Path(OperacionesConfiguracion.OP_COLOR + "/" + OperacionesConfiguracion.PATH_PRM_ID)
+    public void deleteColor(@PathParam(OperacionesConfiguracion.PRM_ID) Long id) {
         service.deleteColor(id);
 
     }
@@ -418,7 +411,7 @@ public class ConfiguradorBiciEndpoint {
      */
 
     @GET
-    @Path("/" + OperacionesConfigurador.COLORES)
+    @Path(OperacionesConfiguracion.OP_COLORES)
     @Produces(MediaType.APPLICATION_JSON)
     public List<ColorWeb> getColores() {
         return transformador.toListColorWeb(service.listTodosColores());

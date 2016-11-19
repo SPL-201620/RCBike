@@ -126,7 +126,7 @@ public class VentasManager implements Serializable {
         venta.setMarca(marca);
         venta.setObservaciones(observaciones);
         venta.setEmailCreador(AutenticacionManager.emailAutenticado());
-        idVenta = modulosManager.root(Modulo.venta).path(OperacionesVentas.VENTA).path(OperacionesVentas.VENTA)
+        idVenta = modulosManager.root(Modulo.venta).path(OperacionesVentas.EP_VENTA).path(OperacionesVentas.EP_VENTA)
                 .request().post(Entity.json(venta), Long.class);
 
         findComprarByEmail();
@@ -135,14 +135,14 @@ public class VentasManager implements Serializable {
     }
 
     public void findVentasByEmail() {
-        ventaWebList = modulosManager.root(Modulo.venta).path(OperacionesVentas.VENTA).path(OperacionesVentas.VENTAS)
+        ventaWebList = modulosManager.root(Modulo.venta).path(OperacionesVentas.EP_VENTA).path(OperacionesVentas.VENTAS)
                 .path(OperacionesVentas.POR_EMAIL).queryParam("emailCreador", AutenticacionManager.emailAutenticado())
                 .request().get(UtilRest.TYPE_LIST_VENTAS);
 
     }
 
     public void findComprarByEmail() {
-        compraVentaWebList = modulosManager.root(Modulo.venta).path(OperacionesVentas.VENTA)
+        compraVentaWebList = modulosManager.root(Modulo.venta).path(OperacionesVentas.EP_VENTA)
                 .path(OperacionesVentas.VENTAS).request().get(UtilRest.TYPE_LIST_VENTAS);
 
     }

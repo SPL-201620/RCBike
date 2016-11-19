@@ -21,7 +21,7 @@ import co.rcbike.alquiler.model.SitioAlquilerWeb;
 import co.rcbike.alquiler.service.SitioAlquilerService;
 import co.rcbike.alquiler.service.TransformadorAlquiler;
 
-@Path("/alquiler")
+@Path(OperacionesAlquiler.EP_ALQUILER)
 @RequestScoped
 public class SitioAlquilerEndpoint {
 
@@ -40,7 +40,7 @@ public class SitioAlquilerEndpoint {
      *            Identificador de sitioAlquiler
      */
     @GET
-    @Path("/" + OperacionesAlquiler.SITIO_ALQUILER + "/" + "{" + OperacionesAlquiler.PARAM_ID + "}")
+    @Path(OperacionesAlquiler.SITIO_ALQUILER + "/" + "{" + OperacionesAlquiler.PARAM_ID + "}")
     @Produces(MediaType.APPLICATION_JSON)
     public SitioAlquilerWeb getSitioAlquiler(@PathParam(OperacionesAlquiler.PARAM_ID) Long id) {
         return transformador.toSitioAlquilerWeb(service.getSitioAlquiler(id));
@@ -54,7 +54,7 @@ public class SitioAlquilerEndpoint {
      * @return Identificador de sitioAlquiler creada
      */
     @POST
-    @Path("/" + OperacionesAlquiler.SITIO_ALQUILER)
+    @Path(OperacionesAlquiler.SITIO_ALQUILER)
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Long postSitioAlquiler(SitioAlquilerWeb sitioAlquiler) {
@@ -69,7 +69,7 @@ public class SitioAlquilerEndpoint {
      * @return Identificador de sitioAlquiler creada
      */
     @PUT
-    @Path("/" + OperacionesAlquiler.SITIO_ALQUILER)
+    @Path(OperacionesAlquiler.SITIO_ALQUILER)
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Long putSitioAlquiler(SitioAlquilerWeb sitioAlquiler) {
@@ -84,7 +84,7 @@ public class SitioAlquilerEndpoint {
      *            Identificador de sitioAlquiler
      */
     @DELETE
-    @Path("/" + OperacionesAlquiler.SITIO_ALQUILER + "/" + "{" + OperacionesAlquiler.PARAM_ID + "}")
+    @Path(OperacionesAlquiler.SITIO_ALQUILER + "/" + "{" + OperacionesAlquiler.PARAM_ID + "}")
     public void deleteSitioAlquiler(@PathParam(OperacionesAlquiler.PARAM_ID) Long id) {
         service.deleteSitioAlquiler(id);
     }
@@ -96,7 +96,7 @@ public class SitioAlquilerEndpoint {
      * 
      */
     @GET
-    @Path("/" + OperacionesAlquiler.SITIOS_ALQUILER)
+    @Path(OperacionesAlquiler.SITIOS_ALQUILER)
     @Produces(MediaType.APPLICATION_JSON)
     public List<SitioAlquilerWeb> getSitiosAlquiler() {
         return transformador.toListSitioAlquilerWeb(service.listTodosSitiosAlquiler());
@@ -110,7 +110,7 @@ public class SitioAlquilerEndpoint {
      *            email del usuario
      */
     @GET
-    @Path("/" + OperacionesAlquiler.SITIOS_ALQUILER + "/" + OperacionesAlquiler.POR_EMAIL)
+    @Path(OperacionesAlquiler.SITIOS_ALQUILER + "/" + OperacionesAlquiler.POR_EMAIL)
     @Produces(MediaType.APPLICATION_JSON)
     public List<SitioAlquilerWeb> getSitiosAlquiler(
             @QueryParam(OperacionesAlquiler.PARAM_EMAIL_CREADOR) String emailCreador) {
@@ -127,7 +127,7 @@ public class SitioAlquilerEndpoint {
      * 
      */
     @GET
-    @Path("/" + OperacionesAlquiler.SITIOS_ALQUILER + "/" + OperacionesAlquiler.CERCANOS)
+    @Path(OperacionesAlquiler.SITIOS_ALQUILER + "/" + OperacionesAlquiler.CERCANOS)
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public List<SitioAlquilerWeb> getSitiosAlquilerCercanos(@QueryParam("latitud") BigDecimal latitud,

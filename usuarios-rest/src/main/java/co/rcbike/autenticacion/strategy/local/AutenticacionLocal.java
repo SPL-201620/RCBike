@@ -1,4 +1,4 @@
-package co.rcbike.autenticacion.strategy;
+package co.rcbike.autenticacion.strategy.local;
 
 import java.util.Map;
 
@@ -11,6 +11,7 @@ import javax.persistence.TypedQuery;
 import co.rcbike.autenticacion.model.AutenticacionUsuario;
 import co.rcbike.autenticacion.model.ResultadoAutenticacion;
 import co.rcbike.autenticacion.model.ResultadoAutenticacion.EstadoAutenticacion;
+import co.rcbike.autenticacion.strategy.AutenticacionStrategy;
 
 @Stateless
 public class AutenticacionLocal extends AutenticacionStrategy {

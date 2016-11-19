@@ -2,6 +2,8 @@ package co.rcbike.alquiler.model;
 
 public class OperacionesAlquiler {
 
+    public static final String EP_ALQUILER = "alquiler";
+
     // Paths
     public static final String SITIO_ALQUILER = "sitioAlquiler";
     public static final String SITIOS_ALQUILER = "sitiosAlquiler";
