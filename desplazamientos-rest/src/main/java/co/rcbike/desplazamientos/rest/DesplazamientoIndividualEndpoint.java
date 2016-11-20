@@ -33,21 +33,6 @@ public class DesplazamientoIndividualEndpoint {
     @Inject
     private TransformadorDesplazamientos transformadorDesplazamientos;
 
-    /**
-     * Permite obtener el clima en una latitud y longitud
-     * 
-     * @param latitud
-     *            latitud geografica de la ruta
-     * @param longitud
-     *            longitud geografica de la ruta
-     */
-    @GET
-    @Path("/" + OperacionesDesplazamientos.CLIMA)
-    @Produces(MediaType.APPLICATION_JSON)
-    public String getClima(@QueryParam("latitud") String latitud, @QueryParam("longitud") String longitud) {
-        return service.obtenerClima(latitud, longitud);
-    }
-
     /***** RUTA INDIVIDUAL ****/
 
     /**
