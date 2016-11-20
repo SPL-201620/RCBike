@@ -5,14 +5,11 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.inject.Inject;
 
 import co.rcbike.autenticacion.AutenticacionManager;
 import co.rcbike.desplazamientos.model.RutaWeb;
-import co.rcbike.gui.ModulosManager;
-import co.rcbike.gui.ModulosManager.Modulo;
-import eu.agilejava.snoop.client.SnoopServiceClient;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.jbosslog.JBossLog;
@@ -34,26 +31,12 @@ public class RutaGrupalManager implements Serializable {
     @Setter
     private RutaWeb ruta;
 
-    @Getter
-    @Setter
-    @ManagedProperty(value = "#{modulosManager}")
-    private ModulosManager modulosManager;
+    @Inject
+    private DesplazamientosGateway gateway;
 
-    @SuppressWarnings("unchecked")
     @PostConstruct
     public void init() {
-        java.lang.System.out.print(".-----inicioGrupales\n");
-
         this.email = AutenticacionManager.emailAutenticado();
-
-        java.lang.System.out.print("El Email:" + this.email);
-
-        SnoopServiceClient desplazamientoRest = modulosManager.clienteSnoop(Modulo.desplazamientos);
-
-        rutas = desplazamientoRest.getServiceRoot().path("grupal").path("listViajesGrupales").request().get(List.class);
-
-        java.lang.System.out.print("\n");
-
-        java.lang.System.out.print(rutas.toString());
+        rutas = gateway.listGrupales();
     }
 }

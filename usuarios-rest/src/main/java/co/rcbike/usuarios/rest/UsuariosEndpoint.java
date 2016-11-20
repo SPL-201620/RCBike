@@ -97,6 +97,7 @@ public class UsuariosEndpoint {
 
     @POST
     @Path(OperacionesUsuarios.OP_REMOVER_AMIGO)
+    @Consumes({MediaType.APPLICATION_JSON})
     public Response removerAmigo(List<String> emails) {
         service.removerAmigo(emails.get(0), emails.get(1));
         return Response.ok().build();

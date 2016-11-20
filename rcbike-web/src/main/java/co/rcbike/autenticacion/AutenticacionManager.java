@@ -10,20 +10,15 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.WebTarget;
+import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import co.rcbike.autenticacion.model.OperacionesAutenticacion;
 import co.rcbike.autenticacion.model.ResultadoAutenticacion;
-import co.rcbike.gui.ModulosManager;
-import co.rcbike.gui.ModulosManager.Modulo;
 import co.rcbike.web.util.Navegacion;
 import lombok.Getter;
 import lombok.Setter;
@@ -52,10 +47,8 @@ public class AutenticacionManager implements Serializable {
     @Setter
     private String authContent;
 
-    @Getter
-    @Setter
-    @ManagedProperty(value = "#{modulosManager}")
-    private ModulosManager modulos;
+    @Inject
+    private AutenticacionGateway gateway;
 
     public static final String emailAutenticado() {
         return (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
@@ -69,9 +62,8 @@ public class AutenticacionManager implements Serializable {
     }
 
     public String autenticar() throws IOException {
-        WebTarget serviceRoot = modulos.clienteSnoop(Modulo.autenticacion).getServiceRoot();
-        Response response = serviceRoot.path(OperacionesAutenticacion.EP_AUTENTICACION).request()
-                .post(Entity.json(authContent));
+
+        Response response = gateway.autenticar(authContent);
 
         Status status = Response.Status.fromStatusCode(response.getStatus());
 
@@ -101,7 +93,7 @@ public class AutenticacionManager implements Serializable {
         resAutenticacion = objectMapper.readValue(writeValueAsString, ResultadoAutenticacion.class);
     }
 
-    public boolean autenticado() {
+    public static boolean autenticado() {
         return (boolean) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
                 .getOrDefault(AUTENTICADO_ATTR, false);
     }

@@ -1,6 +1,5 @@
 package co.rcbike.configurador_bici;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
@@ -13,12 +12,12 @@ import co.rcbike.configurador_bici.model.ConfiguracionWeb;
 import co.rcbike.configurador_bici.model.OperacionesConfiguracion;
 import co.rcbike.configurador_bici.model.PiezaConfiguracionWeb;
 import co.rcbike.configurador_bici.model.PiezaWeb;
+import co.rcbike.web.util.RcbikeRestGateway;
 import eu.agilejava.snoop.annotation.Snoop;
 import eu.agilejava.snoop.client.SnoopServiceClient;
 
-@SuppressWarnings("serial")
 @RequestScoped
-public class ConfiguradorGateway implements Serializable {
+public class ConfiguradorGateway extends RcbikeRestGateway {
 
     public static final GenericType<List<ConfiguracionWeb>> TYPE_LIST_CONFIGURACIONES = new GenericType<List<ConfiguracionWeb>>() {
     };
@@ -31,32 +30,36 @@ public class ConfiguradorGateway implements Serializable {
 
     @Inject
     @Snoop(serviceName = "configurador")
-    private SnoopServiceClient configuradorService;
+    private SnoopServiceClient service;
+
+    @Override
+    protected SnoopServiceClient client() {
+        return service;
+    }
 
     public Long crearConfiguracion(ConfiguracionWeb configuracion) {
-        return configuradorService.getServiceRoot().path(OperacionesConfiguracion.EP_CONFIGURACION)
+        return webTarget().path(OperacionesConfiguracion.EP_CONFIGURACION)
                 .path(OperacionesConfiguracion.EP_CONFIGURACION).request().post(Entity.json(configuracion), Long.class);
     }
 
     public void agregarParteConfiguracion(PiezaConfiguracionWeb piezaConfigurada) {
-        configuradorService.getServiceRoot().path(OperacionesConfiguracion.EP_CONFIGURACION).path("piezaConfiguracion")
-                .request().put(Entity.json(piezaConfigurada));
+        webTarget().path(OperacionesConfiguracion.EP_CONFIGURACION).path("piezaConfiguracion").request()
+                .put(Entity.json(piezaConfigurada));
     }
 
     public List<ConfiguracionWeb> listConfiguracionesByEmail(String email) {
-        return configuradorService.getServiceRoot().path(OperacionesConfiguracion.EP_CONFIGURACION)
-                .path("configuraciones").path("porEmail").queryParam("emailCreador", email).request()
-                .get(TYPE_LIST_CONFIGURACIONES);
+        return webTarget().path(OperacionesConfiguracion.EP_CONFIGURACION).path("configuraciones").path("porEmail")
+                .queryParam("emailCreador", email).request().get(TYPE_LIST_CONFIGURACIONES);
     }
 
     public List<PiezaWeb> listPiezasByTipo(String tipoPieza) {
-        return configuradorService.getServiceRoot().path(OperacionesConfiguracion.EP_CONFIGURACION)
-                .path(OperacionesConfiguracion.OP_PIEZAS).path(OperacionesConfiguracion.OP_PIEZAS_BY_TIPO)
-                .queryParam("tipo", tipoPieza).request().get(TYPE_LIST_PIEZAS);
+        return webTarget().path(OperacionesConfiguracion.EP_CONFIGURACION).path(OperacionesConfiguracion.OP_PIEZAS)
+                .path(OperacionesConfiguracion.OP_PIEZAS_BY_TIPO).queryParam("tipo", tipoPieza).request()
+                .get(TYPE_LIST_PIEZAS);
     }
 
     public List<ColorWeb> listColor() {
-        return configuradorService.getServiceRoot().path(OperacionesConfiguracion.EP_CONFIGURACION).path("colores")
-                .request().get(TYPE_LIST_COLOR);
+        return webTarget().path(OperacionesConfiguracion.EP_CONFIGURACION).path("colores").request()
+                .get(TYPE_LIST_COLOR);
     }
 }

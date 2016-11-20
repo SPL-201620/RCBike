@@ -1,17 +1,20 @@
 package co.rcbike.reportes;
 
-import java.io.Serializable;
-
-import javax.enterprise.context.SessionScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
+import co.rcbike.web.util.RcbikeRestGateway;
 import eu.agilejava.snoop.annotation.Snoop;
 import eu.agilejava.snoop.client.SnoopServiceClient;
 
-@SuppressWarnings("serial")
-@SessionScoped
-public class ReportesGateway implements Serializable {
+@RequestScoped
+public class ReportesGateway extends RcbikeRestGateway {
     @Inject
     @Snoop(serviceName = "reportes")
-    private SnoopServiceClient reportesService;
+    private SnoopServiceClient service;
+
+    @Override
+    protected SnoopServiceClient client() {
+        return service;
+    }
 }

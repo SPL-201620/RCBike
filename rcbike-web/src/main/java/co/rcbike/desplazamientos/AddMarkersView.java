@@ -9,6 +9,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.LatLng;
@@ -16,8 +17,6 @@ import org.primefaces.model.map.MapModel;
 import org.primefaces.model.map.Marker;
 
 import co.rcbike.autenticacion.AutenticacionManager;
-import co.rcbike.gui.ModulosManager;
-import co.rcbike.gui.ModulosManager.Modulo;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -44,16 +43,14 @@ public class AddMarkersView implements Serializable {
 
     @Getter
     @Setter
-    @ManagedProperty(value = "#{modulosManager}")
-    private ModulosManager modulosManager;
-
-    @Getter
-    @Setter
     @ManagedProperty(value = "#{mapaManager}")
     private MapaManager mapaManager;
 
     @Getter
     private List<Marker> puntosRuta = new ArrayList<>();
+
+    @Inject
+    private DesplazamientosGateway gateway;
 
     @PostConstruct
     public void init() {
@@ -78,8 +75,6 @@ public class AddMarkersView implements Serializable {
     }
 
     public void unirse(long id) {
-        String email = AutenticacionManager.emailAutenticado();
-        modulosManager.root(Modulo.desplazamientos).path("grupal").path("guardarParticipante").queryParam("idRuta", id)
-                .queryParam("email", email).request().get();
+        gateway.guardarParticipante(id, AutenticacionManager.emailAutenticado());
     }
 }

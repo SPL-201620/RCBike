@@ -7,16 +7,11 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.ws.rs.client.Entity;
+import javax.inject.Inject;
 
 import co.rcbike.autenticacion.AutenticacionManager;
-import co.rcbike.gui.ModulosManager;
-import co.rcbike.gui.ModulosManager.Modulo;
-import co.rcbike.usuarios.model.OperacionesUsuarios;
 import co.rcbike.usuarios.model.Usuario;
-import co.rcbike.web.util.UtilRest;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -41,10 +36,8 @@ public class AmigosManager implements Serializable {
     @Setter
     private boolean mostrarNoAmigos;
 
-    @Getter
-    @Setter
-    @ManagedProperty(value = "#{modulosManager}")
-    private ModulosManager modulosManager;
+    @Inject
+    private UsuariosGateway gateway;
 
     @PostConstruct
     public void init() {
@@ -52,9 +45,7 @@ public class AmigosManager implements Serializable {
     }
 
     public void removerAmigo(String emailAmigo) {
-        modulosManager.root(Modulo.usuarios).path(OperacionesUsuarios.EP_USUARIOS)
-                .path(OperacionesUsuarios.OP_REMOVER_AMIGO).request()
-                .post(Entity.json(Arrays.asList(AutenticacionManager.emailAutenticado(), emailAmigo)));
+        gateway.removerAmigo(Arrays.asList(AutenticacionManager.emailAutenticado(), emailAmigo));
 
         amigos.stream().filter(amigo -> amigo.getEmail().equals(emailAmigo)).findFirst()
                 .ifPresent(amigo -> amigos.remove(amigo));
@@ -63,23 +54,18 @@ public class AmigosManager implements Serializable {
     }
 
     public void agregarAmigo(Usuario nuevoAmigo) {
-        modulosManager.root(Modulo.usuarios).path(OperacionesUsuarios.EP_USUARIOS)
-                .path(OperacionesUsuarios.OP_AGREGAR_AMIGO).request()
-                .post(Entity.json(Arrays.asList(AutenticacionManager.emailAutenticado(), nuevoAmigo.getEmail())));
+        gateway.agregarAmigo(Arrays.asList(AutenticacionManager.emailAutenticado(), nuevoAmigo.getEmail()));
+
         noAmigos.remove(nuevoAmigo);
         amigos.add(nuevoAmigo);
     }
 
     public void listAmigos() {
-        amigos = modulosManager.root(Modulo.usuarios).path(OperacionesUsuarios.EP_USUARIOS)
-                .path(OperacionesUsuarios.OP_AMIGOS).path(AutenticacionManager.emailAutenticado()).request()
-                .get(UtilRest.TYPE_LIST_USUARIO);
+        amigos = gateway.listAmigos(AutenticacionManager.emailAutenticado());
     }
 
     public void listNoAmigos() {
-        noAmigos = modulosManager.root(Modulo.usuarios).path(OperacionesUsuarios.EP_USUARIOS)
-                .path(OperacionesUsuarios.OP_NOAMIGOS).path(AutenticacionManager.emailAutenticado())
-                .queryParam("filtro", filtroNoAmigo).request().get(UtilRest.TYPE_LIST_USUARIO);
+        noAmigos = gateway.listNoAmigos(AutenticacionManager.emailAutenticado(), filtroNoAmigo);
     }
 
     public void cambiarEstadoCandidatos() {

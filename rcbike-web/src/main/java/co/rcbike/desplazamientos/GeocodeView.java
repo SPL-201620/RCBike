@@ -4,8 +4,8 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.inject.Inject;
 
 import org.primefaces.event.map.GeocodeEvent;
 import org.primefaces.model.map.DefaultMapModel;
@@ -14,11 +14,7 @@ import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
 import org.primefaces.model.map.Marker;
 
-import co.rcbike.autenticacion.AutenticacionManager;
 import co.rcbike.desplazamientos.model.RutaWeb;
-import co.rcbike.gui.ModulosManager;
-import co.rcbike.gui.ModulosManager.Modulo;
-import eu.agilejava.snoop.client.SnoopServiceClient;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -37,22 +33,14 @@ public class GeocodeView {
     @Setter
     private RutaWeb ruta;
 
-    @Getter
-    @Setter
-    @ManagedProperty(value = "#{modulosManager}")
-    private ModulosManager modulosManager;
-
-    @Getter
-    @Setter
-    @ManagedProperty(value = "#{autenticacionManager}")
-    private AutenticacionManager autenticacionManager;
+    @Inject
+    private DesplazamientosGateway gateway;
 
     @PostConstruct
     public void init() {
         geoModel = new DefaultMapModel();
     }
 
-    @SuppressWarnings("unchecked")
     public void onGeocode(GeocodeEvent event) {
         List<GeocodeResult> results = event.getResults();
 
@@ -73,10 +61,7 @@ public class GeocodeView {
         java.lang.System.out.println(".-----inicioGrupales\n");
         java.lang.System.out.println(lat + "--:--" + lng);
 
-        SnoopServiceClient desplazamientoRest = modulosManager.clienteSnoop(Modulo.desplazamientos);
-
-        rutas = desplazamientoRest.getServiceRoot().path("grupal").path("rutasGrupales").path("cercanos")
-                .queryParam("latitud", lat).queryParam("longitud", lng).request().get(List.class);
+        rutas = gateway.listGruposCercanos(lat, lng);
 
         java.lang.System.out.println("Rutas:\n");
 

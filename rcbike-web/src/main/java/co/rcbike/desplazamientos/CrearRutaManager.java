@@ -11,15 +11,12 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.ws.rs.client.Entity;
+import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 
 import co.rcbike.autenticacion.AutenticacionManager;
 import co.rcbike.desplazamientos.model.RutaWeb;
 import co.rcbike.desplazamientos.model.Tipo;
-import co.rcbike.gui.ModulosManager;
-import co.rcbike.gui.ModulosManager.Modulo;
-import eu.agilejava.snoop.client.SnoopServiceClient;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.jbosslog.JBossLog;
@@ -66,10 +63,8 @@ public class CrearRutaManager implements Serializable {
     @Getter
     private List<Integer> dias = new ArrayList<>();
 
-    @Getter
-    @Setter
-    @ManagedProperty(value = "#{modulosManager}")
-    private ModulosManager modulosManager;
+    @Inject
+    private DesplazamientosGateway gateway;
 
     @Getter
     @Setter
@@ -86,9 +81,6 @@ public class CrearRutaManager implements Serializable {
     }
 
     public String crearRuta() {
-        // WebTarget root = modulosManager.root(Modulo.desplazamientos);
-        SnoopServiceClient desplazamientoRest = modulosManager.clienteSnoop(Modulo.desplazamientos);
-
         RutaWeb ruta = new RutaWeb();
         if (grupal) {
             // desplazamientoRest.getServiceRoot().path("individual").path("grupal");
@@ -134,26 +126,17 @@ public class CrearRutaManager implements Serializable {
         Response response;
 
         if (grupal) {
-            response = desplazamientoRest.getServiceRoot().path("grupal").path("rutaGrupal").request()
-                    .post(Entity.json(ruta));
+            gateway.crearRutaGrupal(ruta);
         } else {
-            response = desplazamientoRest.getServiceRoot().path("individual").path("rutaIndividual").request()
-                    .post(Entity.json(ruta));
+            gateway.crearRutaIndividual(ruta);
         }
 
-        log.debug(response);
-        java.lang.System.out.print("----Respuesta Servicio:[" + response.readEntity(String.class) + "]");
         return "recorrido";
     }
 
     public void rutaCalculada() {
-        SnoopServiceClient desplazamientoRest = modulosManager.clienteSnoop(Modulo.desplazamientos);
-
-        String response = desplazamientoRest.getServiceRoot().path("individual").path("clima")
-                .queryParam("latitud", mapaManager.getOrigen().getLatlng().getLat())
-                .queryParam("longitud", mapaManager.getOrigen().getLatlng().getLng()).request().get(String.class);
-
-        this.clima = response;
+        this.clima = gateway.clima(mapaManager.getOrigen().getLatlng().getLat(),
+                mapaManager.getOrigen().getLatlng().getLng());
     }
 
 }

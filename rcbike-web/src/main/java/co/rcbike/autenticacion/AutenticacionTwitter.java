@@ -12,14 +12,13 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import co.rcbike.autenticacion.model.ResultadoAutenticacion;
-import co.rcbike.gui.ModulosManager;
-import co.rcbike.gui.ModulosManager.Modulo;
-import co.rcbike.usuarios.model.OperacionesUsuarios;
+import co.rcbike.usuarios.UsuariosGateway;
 import co.rcbike.web.util.Navegacion;
 import lombok.Getter;
 import lombok.Setter;
@@ -47,13 +46,11 @@ public class AutenticacionTwitter implements Serializable {
 
     @Getter
     @Setter
-    @ManagedProperty(value = "#{modulosManager}")
-    private ModulosManager modulosManager;
-
-    @Getter
-    @Setter
     @ManagedProperty(value = "#{autenticacionManager}")
     private AutenticacionManager autenticacionManager;
+
+    @Inject
+    private UsuariosGateway gateway;
 
     @PostConstruct
     public void init() {
@@ -86,8 +83,7 @@ public class AutenticacionTwitter implements Serializable {
         }
         User autenticado = twitter.lookupUsers(oAuthAccessToken.getUserId()).get(0);
         String authEmail = autenticado.getId() + "@twitter.com";
-        Response usuarioResp = modulosManager.root(Modulo.usuarios).path(OperacionesUsuarios.EP_USUARIOS)
-                .path(OperacionesUsuarios.OP_USUARIO).path(authEmail).request().get();
+        Response usuarioResp = gateway.requestUsuario(authEmail);
 
         ResultadoAutenticacion resultadoAutenticacion = new ResultadoAutenticacion();
         resultadoAutenticacion.setEmail(authEmail);

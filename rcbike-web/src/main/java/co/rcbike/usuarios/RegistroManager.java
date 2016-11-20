@@ -14,8 +14,8 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.imageio.ImageIO;
+import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
-import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Response;
 
 import org.primefaces.event.FileUploadEvent;
@@ -23,9 +23,6 @@ import org.primefaces.event.FileUploadEvent;
 import com.google.common.io.Files;
 
 import co.rcbike.autenticacion.AutenticacionManager;
-import co.rcbike.gui.ModulosManager;
-import co.rcbike.gui.ModulosManager.Modulo;
-import co.rcbike.usuarios.model.OperacionesUsuarios;
 import co.rcbike.usuarios.model.RegistroUsuario;
 import co.rcbike.web.util.Navegacion;
 import co.rcbike.web.util.Navegacion.Views;
@@ -71,10 +68,8 @@ public class RegistroManager implements Serializable {
     @ManagedProperty(value = "#{autenticacionManager}")
     private AutenticacionManager autenticacionManager;
 
-    @Getter
-    @Setter
-    @ManagedProperty(value = "#{modulosManager}")
-    private ModulosManager modulosManager;
+    @Inject
+    private UsuariosGateway gateway;
 
     @PostConstruct
     public void init() {
@@ -95,8 +90,7 @@ public class RegistroManager implements Serializable {
         regUsuario.setClave(clave);
         regUsuario.setFoto(foto);
 
-        Response response = modulosManager.root(Modulo.usuarios).path(OperacionesUsuarios.EP_USUARIOS).request()
-                .post(Entity.json(regUsuario));
+        Response response = gateway.crearUsuario(regUsuario);
         log.debug(response);
         FacesContext.getCurrentInstance().addMessage(null,
                 new FacesMessage("Usuario Creado", "Por favor ingrese nuevamente."));
