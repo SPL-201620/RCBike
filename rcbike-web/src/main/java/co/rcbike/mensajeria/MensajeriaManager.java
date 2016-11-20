@@ -10,8 +10,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.GenericType;
 
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
@@ -19,15 +17,10 @@ import org.primefaces.event.SelectEvent;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import co.rcbike.autenticacion.AutenticacionManager;
-import co.rcbike.gui.ModulosManager;
-import co.rcbike.gui.ModulosManager.ModMensajeria;
-import co.rcbike.gui.ModulosManager.Modulo;
 import co.rcbike.mensajeria.model.Mensaje;
-import co.rcbike.mensajeria.model.OperacionesMensajeria;
 import co.rcbike.usuarios.UsuariosManager;
 import co.rcbike.usuarios.model.Usuario;
 import co.rcbike.web.socket.NotifyWebSocketClient;
-import co.rcbike.web.util.UtilRest;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -54,19 +47,14 @@ public class MensajeriaManager implements Serializable {
 
     @Getter
     @Setter
-    @ManagedProperty(value = "#{modulosManager}")
-    private ModulosManager modulosManager;
-
-    @Getter
-    @Setter
     @ManagedProperty(value = "#{usuariosManager}")
     private UsuariosManager usuariosManager;
 
     @Inject
     private NotifyWebSocketClient websocketNotifier;
 
-    private GenericType<List<Mensaje>> gTListMensaje = new GenericType<List<Mensaje>>() {
-    };
+    @Inject
+    private MensajeriaGateway gateway;
 
     @PostConstruct
     public void init() {
@@ -74,18 +62,14 @@ public class MensajeriaManager implements Serializable {
     }
 
     public void listConversaciones() {
-        List<String> emailReceptores = modulosManager.root(Modulo.mensajeria).path(OperacionesMensajeria.EP_MENSAJERIA)
-                .path(OperacionesMensajeria.OP_CONVERSACIONES).path(AutenticacionManager.emailAutenticado()).request()
-                .get(UtilRest.TYPE_LIST_STRING);
+        List<String> emailReceptores = gateway.listConversaciones();
         conversaciones = usuariosManager.buscarUsuariosByEmail(emailReceptores);
     }
 
     public void seleccionarConversacion(Usuario conversacionSeleccionada) {
         this.conversacionSeleccionada = conversacionSeleccionada;
-        mensajesConversacion = modulosManager.root(Modulo.mensajeria).path(OperacionesMensajeria.EP_MENSAJERIA)
-                .path(OperacionesMensajeria.OP_MENSAJE).path(AutenticacionManager.emailAutenticado())
-                .path(conversacionSeleccionada.getEmail()).request().get(gTListMensaje);
-
+        mensajesConversacion = gateway.listMensajes(AutenticacionManager.emailAutenticado(),
+                this.conversacionSeleccionada.getEmail());
     }
 
     public void actualizarConversacionActual() {
@@ -111,8 +95,7 @@ public class MensajeriaManager implements Serializable {
         nuevoMensaje.setEmailReceptor(receptor);
         nuevoMensaje.setContenido(mensaje);
         nuevoMensaje.setFechaHora(new Date());
-        modulosManager.root(Modulo.mensajeria).path(ModMensajeria.ENDPNT_MENSAJERIA).request()
-                .post(Entity.json(nuevoMensaje));
+        gateway.crearMensaje(nuevoMensaje);
         mensajesConversacion.add(nuevoMensaje);
         mensaje = "";
         websocketNotifier.notifyClient(receptor,

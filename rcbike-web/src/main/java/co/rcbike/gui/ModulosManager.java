@@ -12,10 +12,7 @@ import javax.ws.rs.client.WebTarget;
 
 import org.primefaces.model.menu.MenuModel;
 
-import co.rcbike.alquiler.model.OperacionesAlquiler;
-import co.rcbike.mensajeria.model.OperacionesMensajeria;
 import co.rcbike.usuarios.model.OperacionesUsuarios;
-import co.rcbike.ventas.model.OperacionesVentas;
 import eu.agilejava.snoop.annotation.Snoop;
 import eu.agilejava.snoop.client.SnoopServiceClient;
 import lombok.Getter;
@@ -67,41 +64,6 @@ public class ModulosManager implements Serializable {
     private SnoopServiceClient usuariosService;
 
     @Getter
-    @Inject
-    @Snoop(serviceName = OperacionesVentas.EP_VENTA)
-    private SnoopServiceClient ventaService;
-
-    @Getter
-    @Inject
-    @Snoop(serviceName = OperacionesAlquiler.EP_ALQUILER)
-    private SnoopServiceClient alquilerService;
-
-    @Getter
-    @Inject
-    @Snoop(serviceName = "configurador")
-    private SnoopServiceClient configuradorService;
-
-    @Getter
-    @Inject
-    @Snoop(serviceName = "reportes")
-    private SnoopServiceClient reportesService;
-
-    @Getter
-    @Inject
-    @Snoop(serviceName = OperacionesMensajeria.EP_MENSAJERIA)
-    private SnoopServiceClient mensajeriaService;
-
-    @Getter
-    @Inject
-    @Snoop(serviceName = "desplazamientos")
-    private SnoopServiceClient desplazamientosService;
-
-    @Getter
-    @Inject
-    @Snoop(serviceName = "sinc_redes")
-    private SnoopServiceClient sincRedesService;
-
-    @Getter
     @Setter
     private MenuModel model;
 
@@ -110,13 +72,13 @@ public class ModulosManager implements Serializable {
         log.debug("Inicializado " + this.getClass().getName());
         clientesRest.put(Modulo.autenticacion, usuariosService);
         clientesRest.put(Modulo.usuarios, usuariosService);
-        clientesRest.put(Modulo.venta, ventaService);
-        clientesRest.put(Modulo.alquiler, alquilerService);
-        clientesRest.put(Modulo.configurador, configuradorService);
-        clientesRest.put(Modulo.reportes, reportesService);
-        clientesRest.put(Modulo.mensajeria, mensajeriaService);
-        clientesRest.put(Modulo.desplazamientos, desplazamientosService);
-        clientesRest.put(Modulo.sinc_redes, sincRedesService);
+        // clientesRest.put(Modulo.venta, ventaService);
+        // clientesRest.put(Modulo.alquiler, alquilerService);
+        // clientesRest.put(Modulo.configurador, configuradorService);
+        // clientesRest.put(Modulo.reportes, reportesService);
+        // clientesRest.put(Modulo.mensajeria, mensajeriaService);
+        // clientesRest.put(Modulo.desplazamientos, desplazamientosService);
+        // clientesRest.put(Modulo.sinc_redes, sincRedesService);
     }
 
     public SnoopServiceClient clienteSnoop(Modulo modulo) {
