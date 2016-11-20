@@ -9,16 +9,12 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.inject.Inject;
 
 import co.rcbike.configurador_bici.model.ColorWeb;
-import co.rcbike.configurador_bici.model.OperacionesConfiguracion;
 import co.rcbike.configurador_bici.model.PiezaWeb;
 import co.rcbike.configurador_bici.model.TipoPiezaBicicleta;
-import co.rcbike.gui.ModulosManager;
-import co.rcbike.gui.ModulosManager.Modulo;
-import co.rcbike.web.util.UtilRest;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -33,10 +29,8 @@ public class PiezaConfiguradorManager implements Serializable {
     @Setter
     private List<ColorWeb> listColor = new ArrayList<ColorWeb>();
 
-    @Getter
-    @Setter
-    @ManagedProperty(value = "#{modulosManager}")
-    private ModulosManager modulosManager;
+    @Inject
+    private ConfiguradorGateway gateway;
 
     @PostConstruct
     public void init() {
@@ -45,17 +39,11 @@ public class PiezaConfiguradorManager implements Serializable {
     }
 
     public void cargarPiezas() {
-
         for (TipoPiezaBicicleta tipoPieza : TipoPiezaBicicleta.values()) {
             List<PiezaWeb> listaPiezas = new ArrayList<PiezaWeb>();
-            listaPiezas = modulosManager.root(Modulo.configurador).path(OperacionesConfiguracion.EP_CONFIGURACION)
-                    .path(OperacionesConfiguracion.OP_PIEZAS).path(OperacionesConfiguracion.OP_PIEZAS_BY_TIPO)
-                    .queryParam("tipo", tipoPieza.toString()).request().get(UtilRest.TYPE_LIST_PIEZAS);
-
+            listaPiezas = gateway.listPiezasByTipo(tipoPieza.toString());
             piezas.put(tipoPieza, listaPiezas);
-
         }
-
     }
 
     public List<PiezaWeb> piezaPorTipo(TipoPiezaBicicleta tipo) {
@@ -69,9 +57,7 @@ public class PiezaConfiguradorManager implements Serializable {
     }
 
     public void color() {
-        listColor = modulosManager.root(Modulo.configurador).path(OperacionesConfiguracion.EP_CONFIGURACION)
-                .path("colores").request().get(UtilRest.TYPE_LIST_COLOR);
-
+        listColor = gateway.listColor();
     }
 
 }

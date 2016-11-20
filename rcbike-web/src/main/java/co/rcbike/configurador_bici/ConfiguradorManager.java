@@ -8,19 +8,14 @@ import java.util.Map.Entry;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.ws.rs.client.Entity;
+import javax.inject.Inject;
 
 import co.rcbike.autenticacion.AutenticacionManager;
 import co.rcbike.configurador_bici.model.ConfiguracionWeb;
-import co.rcbike.configurador_bici.model.OperacionesConfiguracion;
 import co.rcbike.configurador_bici.model.PiezaConfiguracionWeb;
 import co.rcbike.configurador_bici.model.PiezaWeb;
 import co.rcbike.configurador_bici.model.TipoPiezaBicicleta;
-import co.rcbike.gui.ModulosManager;
-import co.rcbike.gui.ModulosManager.Modulo;
-import co.rcbike.web.util.UtilRest;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -49,10 +44,8 @@ public class ConfiguradorManager implements Serializable {
     @Setter
     private List<ConfiguracionWeb> listConfiguraciones;
 
-    @Getter
-    @Setter
-    @ManagedProperty(value = "#{modulosManager}")
-    private ModulosManager modulosManager;
+    @Inject
+    private ConfiguradorGateway gateway;
 
     @PostConstruct
     public void init() {
@@ -72,8 +65,7 @@ public class ConfiguradorManager implements Serializable {
 
         configuracion.setDescripcion(descripcionConfiguracion);
         configuracion.setEmailCreador(AutenticacionManager.emailAutenticado());
-        Long idConfiguracion = modulosManager.root(Modulo.configurador).path(OperacionesConfiguracion.EP_CONFIGURACION)
-                .path(OperacionesConfiguracion.EP_CONFIGURACION).request().post(Entity.json(configuracion), Long.class);
+        Long idConfiguracion = gateway.crearConfiguracion(configuracion);
 
         PiezaConfiguracionWeb piezaConfigurada = new PiezaConfiguracionWeb();
         for (Entry<TipoPiezaBicicleta, PiezaWeb> pieza : piezas.entrySet()) {
@@ -82,18 +74,13 @@ public class ConfiguradorManager implements Serializable {
             piezaConfigurada.setDescripcion(pieza.getValue().getDescripcion());
             piezaConfigurada.setTipo(pieza.getValue().getTipo());
             piezaConfigurada.setColor(color);
-            modulosManager.root(Modulo.configurador).path(OperacionesConfiguracion.EP_CONFIGURACION)
-                    .path("piezaConfiguracion").request().put(Entity.json(piezaConfigurada));
-
+            gateway.agregarParteConfiguracion(piezaConfigurada);
         }
         init();
     }
 
     public void configuracionesList() {
-        listConfiguraciones = modulosManager.root(Modulo.configurador).path(OperacionesConfiguracion.EP_CONFIGURACION)
-                .path("configuraciones").path("porEmail")
-                .queryParam("emailCreador", AutenticacionManager.emailAutenticado()).request()
-                .get(UtilRest.TYPE_LIST_CONFIGURACIONES);
+        listConfiguraciones = gateway.listConfiguracionesByEmail(AutenticacionManager.emailAutenticado());
 
     }
 }
