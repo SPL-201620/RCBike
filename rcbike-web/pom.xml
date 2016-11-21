@@ -81,15 +81,10 @@
 					<target>1.8</target>
 					<source>1.8</source>
 					<complianceLevel>1.8</complianceLevel>
-					<sources>
-						<source>
-							<basedir>src/main/java</basedir>
-							<includes>
-								<include>**/RestNotFoundAspect.java</include>
-								<include>co/rcbike/*/*Gateway.java</include>
-							</includes>
-						</source>
-					</sources>
+					<includes>
+						<include>**/RestNotFoundAspect.java</include>
+						<include>co/rcbike/*/*Gateway.java</include>
+					</includes>
 					<showWeaveInfo>true</showWeaveInfo>
 					<verbose>true</verbose>
 				</configuration>
