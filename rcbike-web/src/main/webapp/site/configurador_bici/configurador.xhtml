@@ -5,7 +5,7 @@
 	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
 
 	<ui:define name="title">
-        <h2 class="BigTopic">Configurador de Bicicletas</h2>
+        <h2 class="BigTopic" align="center">Configurador de Bicicletas</h2>
     </ui:define>
 
 	<ui:define name="content">
@@ -75,8 +75,8 @@
 								header="Configuraciones realizadas" style="margin-bottom:20px">
 
 
-								<p:dataTable var="configuraciones"
-									value="#{configuradorManager.listConfiguraciones}">
+								<p:dataTable var="configuraciones" scrollable="true" scrollHeight="350"
+									value="#{configuradorManager.listConfiguraciones}" >
 
 									<p:subTable var="piezas"
 										value="#{configuraciones.piezasConfiguracion}">

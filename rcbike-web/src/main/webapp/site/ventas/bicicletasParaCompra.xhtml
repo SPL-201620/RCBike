@@ -1,0 +1,75 @@
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="title">
+		<h2 class="BigTopic" align="center">Bicicletas Para la Compra</h2>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form id="frmVentasBici" prependId="false">
+			<p:messages id="button">
+			</p:messages>
+			<div class="Container100">
+				<div class="ContainerIndent">
+					<div class="Card ShadowEffect">
+						<div class="ContainerIndent">
+							<p:dataTable id="dtCompraUsuario" var="compraUsuario"
+								scrollable="true" scrollHeight="350"
+								value="#{ventasManager.compraVentaWebList}">
+								<p:column headerText="Marca:" sortBy="#{compraUsuario.marca}"
+									filterBy="#{compraUsuario.marca}">
+									<h:outputText value="#{compraUsuario.marca}" />
+								</p:column>
+								<p:column headerText="Ciudad:"
+									sortBy="#{compraUsuario.ciudadVenta}"
+									filterBy="#{compraUsuario.ciudadVenta}">
+									<h:outputText value="#{compraUsuario.ciudadVenta}" />
+								</p:column>
+								<p:column headerText="Estado:" sortBy="#{compraUsuario.estado}"
+									filterBy="#{compraUsuario.estado}">
+									<h:outputText value="#{compraUsuario.estado}" />
+								</p:column>
+								<p:column headerText="Valor" sortBy="#{compraUsuario.valor}">
+									<h:outputText value="#{compraUsuario.valor}" />
+								</p:column>
+								<p:column headerText="Accesorios">
+									<h:outputText value="#{compraUsuario.accesorios}" />
+								</p:column>
+								<p:column headerText="Vendida?">
+									<h:outputText value="#{compraUsuario.vendida}" />
+								</p:column>
+								<p:column headerText="Foto" colspan="2">
+									<img
+										style="display:#{empty compraUsuario.foto ? 'none': 'block'}; margin:0 auto"
+										src="data:image/jpeg;base64,#{compraUsuario.foto}" />
+									<i class="icon-account_circle Fs100"
+										style="display:#{empty compraUsuario.foto ? 'block': 'none'}; margin:0 auto"></i>
+								</p:column>
+								<p:column headerText="Contacto">
+									<p:commandButton oncomplete="PF('compraDialog').show()"
+										process="@this"
+										onclick="#{ventasManager.actualizaCompraSelected(compraUsuario.emailCreador)}"
+										icon="ui-icon-search" title="View">
+									</p:commandButton>
+								</p:column>
+							</p:dataTable>
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+		<p:dialog header="Gracias por usar nuestro servicio"
+			widgetVar="compraDialog" modal="true">
+			<h:outputText value="El contacto del vendedor es:" />
+			<h:outputText value="#{ventasManager.compraSelected}" />
+
+		</p:dialog>
+
+
+	</ui:define>
+
+</ui:composition>
