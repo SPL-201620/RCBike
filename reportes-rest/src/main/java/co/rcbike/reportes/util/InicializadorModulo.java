@@ -1,4 +1,4 @@
-package co.rcbike.alquiler.util;
+package co.rcbike.reportes.util;
 
 import java.io.IOException;
 import java.net.URI;
@@ -22,7 +22,7 @@ import javax.websocket.WebSocketContainer;
 @Singleton
 public class InicializadorModulo {
 
-    public static final String MODULO = "alquiler";
+    public static final String MODULO = "reportes";
 
     public static int intentos = 6;
 

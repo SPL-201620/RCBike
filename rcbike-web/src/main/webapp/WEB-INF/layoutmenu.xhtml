@@ -9,16 +9,20 @@
     <div class="Animated05" id="layout-menu-cover">
         <h:form id="menuform">
             <pm:menu>
-      			<p:submenu id="m_viajes" label="Desplazamiento" icon="icon-directions_bike">
+      			<p:submenu id="m_viajes" label="Desplazamiento" icon="icon-directions_bike" rendered="#{modulosManager.desplazamientos()}">
                     <p:menuitem id="mi_viajes_crear" value="Nuevo viaje" icon="icon-map2" outcome="desplazamiento-mapa" />
                     <p:menuitem id="mi_viajes_unirse" value="Recorridos" icon="icon-nature_people" outcome="recorrido" />
   				</p:submenu>
-                <p:menuitem id="mi_mensajeria" value="Mensajería" icon="icon-forum" outcome="mensajeria" />
-                <p:menuitem id="mi_venta" value="Vender Bicicletas" icon="icon-add_shopping_cart" outcome="venta" />
-                <p:menuitem id="mi_bici_venta" value="Mis Bicicletas en Venta" icon="icon-add_shopping_cart" outcome="enVenta" />
-                <p:menuitem id="mi_bici_compra" value="Compra de Bicicletas" icon="icon-add_shopping_cart" outcome="paraCompra" />                
-                <p:menuitem id="mi_config_bici" value="Configurador de Bicicleta" icon="icon-build" outcome="configurador" />
-                <p:menuitem id="mi_alquiler" value="Alquiler" icon="icon-local_offer" outcome="alquiler" />                
+                <p:menuitem id="mi_mensajeria" value="Mensajería" icon="icon-forum" outcome="mensajeria" rendered="#{modulosManager.mensajeria()}"/>
+                
+				<p:submenu id="m_venta" label="Clasificados" icon="icon-shopping_cart" rendered="#{modulosManager.ventas()}">
+					<p:menuitem id="mi_venta" value="Vender Bicicletas" icon="icon-marquee-plus" outcome="venta" />
+	                <p:menuitem id="mi_bici_venta" value="Mis Bicicletas en Venta" icon="icon-layers" outcome="enVenta" />
+	                <p:menuitem id="mi_bici_compra" value="Compra de Bicicletas" icon="icon-add_shopping_cart" outcome="paraCompra" />
+                 </p:submenu>
+                                
+                <p:menuitem id="mi_config_bici" value="Configurador de Bicicleta" icon="icon-build" outcome="configurador" rendered="#{modulosManager.configurador()}" />
+                <p:menuitem id="mi_alquiler" value="Alquiler" icon="icon-local_offer" outcome="alquiler" rendered="#{modulosManager.alquiler()}" />                
             </pm:menu>
         </h:form>
     </div>

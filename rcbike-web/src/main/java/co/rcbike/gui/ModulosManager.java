@@ -7,16 +7,18 @@ import java.util.Map;
 import java.util.Properties;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ApplicationScoped;
-import javax.faces.bean.ManagedBean;
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Named;
 
+import org.omnifaces.cdi.Eager;
 import org.primefaces.model.menu.MenuModel;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @SuppressWarnings("serial")
-@ManagedBean(eager = true)
+@Named
+@Eager
 @ApplicationScoped
 public class ModulosManager implements Serializable {
 
@@ -39,8 +41,8 @@ public class ModulosManager implements Serializable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        modulosEmpaquetados.entrySet().stream().forEach(entry -> modulosDesplegados.put(entry.getKey().toString(),
-                Boolean.valueOf(entry.getValue().toString())));
+        modulosEmpaquetados.entrySet().stream()
+                .forEach(entry -> modulosDesplegados.put(entry.getKey().toString(), false));
     }
 
     public boolean alquiler() {
