@@ -1,0 +1,55 @@
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="title">
+		<h2 class="BigTopic" align="center">Mis Bicicletas Para la Venta</h2>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form id="frmVentasBici" prependId="false">
+			<p:messages id="button">
+			</p:messages>
+			<div class="Container100">
+				<div class="ContainerIndent">
+					<div class="Card ShadowEffect">
+						<div class="ContainerIndent">
+							<p:dataTable id="dtVentaUsuario" var="ventaUsuario"
+								scrollable="true" scrollHeight="350"
+								value="#{ventasManager.ventaWebList}">
+								<p:column headerText="Marca:">
+									<h:outputText value="#{ventaUsuario.marca}" />
+								</p:column>
+								<p:column headerText="Ciudad:">
+									<h:outputText value="#{ventaUsuario.ciudadVenta}" />
+								</p:column>
+								<p:column headerText="Estado:">
+									<h:outputText value="#{ventaUsuario.estado}" />
+								</p:column>
+								<p:column headerText="Valor">
+									<h:outputText value="#{ventaUsuario.valor}" />
+								</p:column>
+								<p:column headerText="Accesorios:">
+									<h:outputText value="#{ventaUsuario.accesorios}" />
+								</p:column>
+								<p:column headerText="Vendida?">
+									<h:outputText value="#{ventaUsuario.vendida}" />
+								</p:column>
+								<p:column headerText="Foto" colspan="2">
+									<img
+										style="display:#{empty ventaUsuario.foto ? 'none': 'block'}; margin:0 auto"
+										src="data:image/jpeg;base64,#{ventaUsuario.foto}" />
+									<i class="icon-account_circle Fs100"
+										style="display:#{empty ventaUsuario.foto ? 'block': 'none'}; margin:0 auto"></i>
+								</p:column>
+							</p:dataTable>
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

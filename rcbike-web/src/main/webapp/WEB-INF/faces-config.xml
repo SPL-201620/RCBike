@@ -111,5 +111,19 @@
 			<to-view-id>/site/alquiler/alquiler.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>enVenta</from-outcome>
+			<to-view-id>/site/ventas/bicicletasParaVenta.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>paraCompra</from-outcome>
+			<to-view-id>/site/ventas/bicicletasParaCompra.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
 	
 </faces-config>

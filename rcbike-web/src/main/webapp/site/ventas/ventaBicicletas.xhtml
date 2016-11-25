@@ -6,8 +6,8 @@
 	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
 
 	<ui:define name="title">
-       <h2 class="BigTopic">Venta Bicicletas</h2>
-    </ui:define>
+		<h2 class="BigTopic" align="center">Venta Bicicletas</h2>
+	</ui:define>
 
 	<ui:define name="content">
 		<h:form id="frmVentasBici" prependId="false">
@@ -17,90 +17,30 @@
 				<div class="ContainerIndent">
 					<div class="Card ShadowEffect">
 						<div class="ContainerIndent">
-							<p:tabView>
-								<p:tab title="Configuraciones Usuario">
-									<p:panel id="pnlConfiguracionesUsuario">
-										<p:dataTable var="configuraciones"
-											value="#{ventaConfiguradorManager.listConfiguraciones}">
-											<p:subTable var="piezas"
-												value="#{configuraciones.piezasConfiguracion}">
-												<f:facet name="header">
-													<h:outputText value="#{configuraciones.descripcion}" />
-													<p:spacer>
-													</p:spacer>
-													<p:commandButton value="PONER A LA VENTA" process="@this"
-														onclick="#{ventasManager.actualizaIdConfiguracion(configuraciones.id)}"
-														oncomplete="PF('venta').show();"
-														update=":frmVentasBici:button">
-													</p:commandButton>
-												</f:facet>
-												<p:column>
-													<h:outputText value="#{piezas.tipo}" />
-												</p:column>
-												<p:column>
-													<h:outputText value="#{piezas.descripcion}" />
-												</p:column>
-											</p:subTable>
-										</p:dataTable>
-									</p:panel>
-								</p:tab>
-								<p:tab title="Bicicletas puestas a la venta">
-									<p:dataTable id="dtVentaUsuario" var="ventaUsuario"
-										value="#{ventasManager.ventaWebList}">
-										<p:column headerText="Marca:">
-											<h:outputText value="#{ventaUsuario.marca}" />
-										</p:column>
-										<p:column headerText="Ciudad:">
-											<h:outputText value="#{ventaUsuario.ciudadVenta}" />
-										</p:column>
-										<p:column headerText="Estado:">
-											<h:outputText value="#{ventaUsuario.estado}" />
-										</p:column>
-										<p:column headerText="Valor">
-											<h:outputText value="#{ventaUsuario.valor}" />
-										</p:column>
-										<p:column headerText="Accesorios:">
-											<h:outputText value="#{ventaUsuario.accesorios}" />
-										</p:column>
-										<p:column headerText="Vendida?">
-											<h:outputText value="#{ventaUsuario.vendida}" />
-										</p:column>
-										<p:column style="width:32px;text-align: center">
-										</p:column>
-									</p:dataTable>
-								</p:tab>
-								<p:tab title="Bicicletas para comprar">
-									<p:dataTable id="dtCompraUsuario" var="compraUsuario"
-										value="#{ventasManager.compraVentaWebList}">
-										<p:column headerText="Marca:">
-											<h:outputText value="#{compraUsuario.marca}" />
-										</p:column>
-										<p:column headerText="Ciudad:">
-											<h:outputText value="#{compraUsuario.ciudadVenta}" />
-										</p:column>
-										<p:column headerText="Estado:">
-											<h:outputText value="#{compraUsuario.estado}" />
-										</p:column>
-										<p:column headerText="Valor">
-											<h:outputText value="#{compraUsuario.valor}" />
-										</p:column>
-										<p:column headerText="Accesorios:">
-											<h:outputText value="#{compraUsuario.accesorios}" />
-										</p:column>
-										<p:column headerText="Vendida?">
-											<h:outputText value="#{compraUsuario.vendida}" />
-										</p:column>
-										<p:column style="width:32px;text-align: center">
+							<p:panel id="pnlConfiguracionesUsuario">
+								<p:dataTable var="configuraciones" scrollable="true" scrollHeight="370"
+									value="#{ventaConfiguradorManager.listConfiguraciones}">
+									<p:subTable var="piezas"
+										value="#{configuraciones.piezasConfiguracion}">
+										<f:facet name="header">
+											<h:outputText value="#{configuraciones.descripcion}" />
+											<p:spacer>
+											</p:spacer>
+											<p:commandButton value="PONER A LA VENTA" process="@this"
+												onclick="#{ventasManager.actualizaIdConfiguracion(configuraciones.id)}"
+												oncomplete="PF('venta').show();"
+												update=":frmVentasBici:button">
+											</p:commandButton>
+										</f:facet>
+										<p:column>
+											<h:outputText value="#{piezas.tipo}" />
 										</p:column>
 										<p:column>
-											<p:commandButton oncomplete="PF('compraDialog').show()" process="@this"
-												onclick="#{ventasManager.actualizaCompraSelected(compraUsuario.emailCreador)}"
-												icon="ui-icon-search" title="View">
-											</p:commandButton>
+											<h:outputText value="#{piezas.descripcion}" />
 										</p:column>
-									</p:dataTable>
-								</p:tab>
-							</p:tabView>
+									</p:subTable>
+								</p:dataTable>
+							</p:panel>
 						</div>
 					</div>
 				</div>
@@ -154,7 +94,7 @@
 						<h:outputText value="Estado: " />
 						<p:selectOneMenu id="ventaEstado" value="#{ventasManager.estado}"
 							style="width:125px" required="true">
-							<f:selectItem itemLabel="Select One" itemValue="" />
+							<f:selectItem itemLabel="Seleccione un estado" itemValue="" />
 							<f:selectItem itemLabel="Nuevo" itemValue="Nuevo" />
 							<f:selectItem itemLabel="Usado-Excelente estado"
 								itemValue="Usado-Excelente estado" />
@@ -176,8 +116,8 @@
 						<div class="Container25">
 							<p:commandButton value="Insertar"
 								update=":formModalVentas:errores"
-								action="#{ventasManager.insertVenta}" process="@form" onclick="venta.close()"
-								/>
+								action="#{ventasManager.insertVenta}" process="@form"
+								onclick="venta.close()" />
 						</div>
 					</p:panelGrid>
 				</p:panel>
