@@ -38,6 +38,15 @@
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>
+			<properties>
+				<alquiler>true</alquiler>
+				<configurador>true</configurador>
+				<desplazamientos>true</desplazamientos>
+				<mensajeria>true</mensajeria>
+				<reportes>true</reportes>
+				<sinc-redes>true</sinc-redes>
+				<ventas>true</ventas>
+			</properties>
 			<modules>
 				<module>../alquiler-bici-rest</module>
 				<module>../configurador-bici-rest</module>
