@@ -45,7 +45,7 @@
 										<p:panelGrid columns="2" layout="grid"
 											styleClass="ui-panelgrid-blank">
 
-											<p:outputLabel value="Seleccione #{tipoPieza}" />
+											<p:outputLabel value="Seleccione #{utilEL.capitalize(tipoPieza.toString())}" />
 
 											<p:selectOneMenu required="true" converter="genericConverter"
 												value="#{configuradorManager.pieza}">
