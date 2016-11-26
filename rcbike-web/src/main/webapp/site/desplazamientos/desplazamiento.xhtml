@@ -13,67 +13,66 @@
 	<ui:define name="content">
 
 		<div class="Container100">
-			<div class="ContainerIndent">
-				<div class="Card ShadowEffect">
-					<h2 class="CardTopic TexAlCenter Fs30">Planear Viajes</h2>
-					
-					<div class="ContainerIndent">
-						<h3>Paso 1</h3>
-						<p>Haga clic en el mapa para colocar un marcador, ese será su punto de partida, luego seleccione su punto de Destino en el mapa.</p>
-						<h3>Paso 2</h3>
-						<p>Una vez seleccionado los 2 puntos de su ruta seleccione el botón Calcular.</p>
-						<p:growl id="messages" showDetail="true" />
-									
-						<p:gmap id="gmap" styleClass="PosRelative SoftGrayBack" center="4.656360,-74.103770" zoom="13" type="ROADMAP"
-								style="width:100%; height:355px; z-index:1;" model="#{addMarkersView.emptyModel}"
-								onPointClick="handlePointClick(event);" widgetVar="map" />
-						<br/>
-						<h:form prependId="false">
-							<h:inputHidden id="distancia" value="#{crearRutaManager.distancia}" />
-							<h:inputHidden id="tiempo" value="#{crearRutaManager.tiempo}" />
-							<h:inputHidden id="calorias" value="#{crearRutaManager.calorias}" />
-					 		<p:commandButton value="Calcular" id="calcularButton"
-					 			action="#{crearRutaManager.rutaCalculada()}" icon="fa fa-check-circle" process="@form" update="variables"/>
-							<p:button value="Cancelar" icon="fa fa-remove"/>
-						</h:form>
-					</div>
-					
-					<h:panelGroup id="variables" styleClass="ContainerIndent">
-						<div class="Card ShadowEffect ui-fluid">
-							<div class="Container25 Responsive50">
-								<h2>Clima: </h2>#{crearRutaManager.clima}
-							</div>
-							<div class="Container25 Responsive50">
-								<h2>Distancia: </h2>#{crearRutaManager.distancia} mt.
-							</div>
-							<div class="Container25 Responsive50">
-								<h2>Tiempo: </h2>#{crearRutaManager.tiempo/60} min.
-							</div>
-							<div class="Container25 Responsive50">
-								<h2>Calorias: </h2>#{crearRutaManager.calorias}
-							</div>
+			<div class="Card ShadowEffect">
+				<h2 class="CardTopic TexAlCenter Fs30">Planear Viajes</h2>
+				
+				<div class="ContainerIndent">
+					<h3>Paso 1</h3>
+					<p>Haga clic en el mapa para colocar un marcador, ese será su punto de partida, luego seleccione su punto de Destino en el mapa.</p>
+					<h3>Paso 2</h3>
+					<p>Una vez seleccionado los 2 puntos de su ruta seleccione el botón Calcular.</p>
+					<p:growl id="messages" showDetail="true" />
+								
+					<p:gmap id="gmap" styleClass="PosRelative SoftGrayBack" center="4.656360,-74.103770" zoom="13" type="ROADMAP"
+							style="width:100%; height:355px; z-index:1;" model="#{addMarkersView.emptyModel}"
+							onPointClick="handlePointClick(event);" widgetVar="map" />
+					<br/>
+					<h:form prependId="false">
+						<h:inputHidden id="distancia" value="#{crearRutaManager.distancia}" />
+						<h:inputHidden id="tiempo" value="#{crearRutaManager.tiempo}" />
+						<h:inputHidden id="calorias" value="#{crearRutaManager.calorias}" />
+				 		<p:commandButton value="Calcular" id="calcularButton"
+				 			action="#{crearRutaManager.rutaCalculada()}" icon="fa fa-check-circle" process="@form" update="variables"/>
+						<p:button value="Cancelar" icon="fa fa-remove"/>
+					</h:form>
+				</div>
+				
+				<h:panelGroup id="variables" styleClass="ContainerIndent">
+					<div class="Card ShadowEffect ui-fluid">
+						<div class="Container25 Responsive50">
+							<h2>Clima: </h2>#{crearRutaManager.clima}
 						</div>
-					</h:panelGroup>
-					
-					<ui:include src="crear-desplazamiento.xhtml" />
-					
-					<p:dialog widgetVar="dlg" showEffect="fade" showHeader="false">
-					    <h:form prependId="false" >
-					        <h:panelGrid columns="2">
-					            <h:outputLabel for="titleMarked" value="Titulo:" />
-					            <p:inputText id="titleMarked" value="#{addMarkersView.title}" />
-					 
-					            <f:facet name="footer">
-					                <p:commandButton value="Agregar" actionListener="#{addMarkersView.addMarker}" 
-					                	update=":messages" oncomplete="markerAddComplete(markers.length)" />
-					                <p:commandButton value="Cancelar" onclick="return cancel()" />
-					            </f:facet>
-					        </h:panelGrid>
-					 
-					        <h:inputHidden id="lat" value="#{addMarkersView.lat}" />
-					        <h:inputHidden id="lng" value="#{addMarkersView.lng}" />
-					    </h:form>
-					</p:dialog>
+						<div class="Container25 Responsive50">
+							<h2>Distancia: </h2>#{crearRutaManager.distancia} mt.
+						</div>
+						<div class="Container25 Responsive50">
+							<h2>Tiempo: </h2>#{crearRutaManager.tiempo/60} min.
+						</div>
+						<div class="Container25 Responsive50">
+							<h2>Calorias: </h2>#{crearRutaManager.calorias}
+						</div>
+					</div>
+				</h:panelGroup>
+				
+				<ui:include src="crear-desplazamiento.xhtml" />
+				
+				<p:dialog widgetVar="dlg" showEffect="fade" showHeader="false">
+				    <h:form prependId="false" >
+				        <h:panelGrid columns="2">
+				            <h:outputLabel for="titleMarked" value="Titulo:" />
+				            <p:inputText id="titleMarked" value="#{addMarkersView.title}" />
+				 
+				            <f:facet name="footer">
+				                <p:commandButton value="Agregar" actionListener="#{addMarkersView.addMarker}" 
+				                	update=":messages" oncomplete="markerAddComplete(markers.length)" />
+				                <p:commandButton value="Cancelar" onclick="return cancel()" />
+				            </f:facet>
+				        </h:panelGrid>
+				 
+				        <h:inputHidden id="lat" value="#{addMarkersView.lat}" />
+				        <h:inputHidden id="lng" value="#{addMarkersView.lng}" />
+				    </h:form>
+				</p:dialog>
 
 
 
@@ -253,8 +252,7 @@
     
 </script>
 
-					<br />
-				</div>
+				<br />
 			</div>
 		</div>
 
