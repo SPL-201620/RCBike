@@ -1,18 +1,19 @@
 -- You can use this file to load seed data into the database using SQL statements
 --Piezas
-insert into Pieza (id,tipo,descripcion) values(-1,'MARCO','Marco hiper resistente');
-insert into Pieza (id,tipo,descripcion) values(-2,'LLANTA_DELANTERA','Llanta con disco');
-insert into Pieza (id,tipo,descripcion) values(-3,'LLANTA_TRASERA','Llanta aleacion');
-insert into Pieza (id,tipo,descripcion) values(-4,'FRENOS','Freno convencional');
-insert into Pieza (id,tipo,descripcion) values(-5,'CAMBIOS','18 pinones');
-insert into Pieza (id,tipo,descripcion) values(-10,'MARCO','Marco elastico');
-insert into Pieza (id,tipo,descripcion) values(-11,'LLANTA_DELANTERA','Llanta subliminal');
-insert into Pieza (id,tipo,descripcion) values(-12,'FRENOS','Freno disco');
-insert into Pieza (id,tipo,descripcion) values(-13,'CAMBIOS','9 pinones');
-insert into Pieza (id,tipo,descripcion) values(-14,'LUZ','LED');
-insert into Pieza (id,tipo,descripcion) values(-15,'LUZ','Encandecente');
-insert into Pieza (id,tipo,descripcion) values(-16,'PITO','Tipo moto');
-insert into Pieza (id,tipo,descripcion) values(-17,'PITO','Bocina');
+insert into Pieza (id,tipo,descripcion) values(-1,'MARCO','Montaña');
+insert into Pieza (id,tipo,descripcion) values(-2,'MARCO','BMX');
+insert into Pieza (id,tipo,descripcion) values(-3,'LLANTA_DELANTERA','Clicher');
+insert into Pieza (id,tipo,descripcion) values(-4,'LLANTA_DELANTERA','Tubular');
+insert into Pieza (id,tipo,descripcion) values(-5,'LLANTA_TRASERA','Sprint');
+insert into Pieza (id,tipo,descripcion) values(-6,'LLANTA_TRASERA','Endrick');
+insert into Pieza (id,tipo,descripcion) values(-7,'FRENOS','Tiro Central');
+insert into Pieza (id,tipo,descripcion) values(-8,'FRENOS','Disco');
+insert into Pieza (id,tipo,descripcion) values(-9,'CAMBIOS','Externos');
+insert into Pieza (id,tipo,descripcion) values(-10,'CAMBIOS','Internos');
+insert into Pieza (id,tipo,descripcion) values(-11,'LUZ','LED');
+insert into Pieza (id,tipo,descripcion) values(-12,'LUZ','Candela');
+insert into Pieza (id,tipo,descripcion) values(-13,'PITO','Tipo moto');
+insert into Pieza (id,tipo,descripcion) values(-14,'PITO','Bocina');
 
 --Colores
 insert into Color (id,descripcion) values(-1,'NO APLICA');

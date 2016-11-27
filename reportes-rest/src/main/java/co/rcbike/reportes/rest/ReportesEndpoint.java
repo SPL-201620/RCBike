@@ -15,28 +15,31 @@ import co.rcbike.reportes.model.ResumenWeb;
 import co.rcbike.reportes.model.TipoReporte;
 import co.rcbike.reportes.service.ReportesService;
 
-@Path("/reportes")
+@Path(OperacionesReportes.REPORTES)
 @RequestScoped
 public class ReportesEndpoint {
 
-    @Inject
-    private ReportesService service;
+	@Inject
+	private ReportesService service;
 
-    /**
-     * Permite obtener el clima en una latitud y longitud
-     * 
-     * @param latitud
-     *            latitud geografica de la ruta
-     * @param longitud
-     *            longitud geografica de la ruta
-     */
-    @GET
-    @Path("/" + OperacionesReportes.REPORTE)
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<ResumenWeb> getReporte(@QueryParam("tipo") TipoReporte tipoReporte,
-            @QueryParam("emailCreador") String emailCreador, @QueryParam("fechaInicio") String fechaInicio,
-            @QueryParam("fechaFinal") String fechaFinal) {
-        return service.getReporte(tipoReporte, emailCreador, fechaInicio, fechaFinal);
-    }
+	/**
+	 * Permite obtener el clima en una latitud y longitud
+	 * 
+	 * @param latitud
+	 *            latitud geografica de la ruta
+	 * @param longitud
+	 *            longitud geografica de la ruta
+	 */
+	@GET
+	@Path(OperacionesReportes.REPORTE)
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<ResumenWeb> getReporte(
+			@QueryParam("tipo") TipoReporte tipoReporte,
+			@QueryParam("emailCreador") String emailCreador,
+			@QueryParam("fechaInicio") String fechaInicio,
+			@QueryParam("fechaFinal") String fechaFinal) {
+		return service.getReporte(tipoReporte, emailCreador, fechaInicio,
+				fechaFinal);
+	}
 
 }

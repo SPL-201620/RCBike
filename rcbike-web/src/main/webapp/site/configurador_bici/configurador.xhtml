@@ -5,33 +5,34 @@
 	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
 
 	<ui:define name="title">
-        <h2 class="BigTopic">Configurador de Bicicletas</h2>
-    </ui:define>
+		<h2 class="BigTopic">Configurador de Bicicletas</h2>
+	</ui:define>
 
 	<ui:define name="content">
 		<h:form id="frmConfigurador" prependId="false">
 			<div class="Container100 ui-fluid">
-			<div class="ContainerIndent">
-				<div class="Card ShadowEffect">
-					<h2 class="BigTopic">Crear nueva configuración</h2>
+				<div class="ContainerIndent">
+					<div class="Card ShadowEffect">
+						<h2 class="BigTopic">Crear nueva configuración</h2>
 
 						<div class="ContainerIndent">
 							<div class="Card ShadowEffect ui-fluid">
 								<h2 class="BigTopic">Detalle</h2>
 								<div class="Container50 Responsive100">
 									<p:panelGrid columns="2" layout="grid"
-												styleClass="ui-panelgrid-blank">
+										styleClass="ui-panelgrid-blank">
 										<p:outputLabel value="Descripcion" />
-										<p:inputText id="descConfiguracion" value="#{configuradorManager.descripcionConfiguracion}"
-														autocomplete="off" required="true" />
+										<p:inputText id="descConfiguracion"
+											value="#{configuradorManager.descripcionConfiguracion}"
+											autocomplete="off" required="true" />
 										<p:outputLabel value="Color" />
-										<p:selectOneMenu required="true" 
-													value="#{configuradorManager.color}">
+										<p:selectOneMenu required="true"
+											value="#{configuradorManager.color}">
 											<f:selectItem noSelectionOption="true" />
 											<f:selectItems value="#{piezaConfiguradorManager.listColor}"
 												var="color" itemLabel="#{color.descripcion}"
 												itemValue="#{color.descripcion}" />
-										</p:selectOneMenu>	
+										</p:selectOneMenu>
 									</p:panelGrid>
 								</div>
 							</div>
@@ -45,7 +46,8 @@
 										<p:panelGrid columns="2" layout="grid"
 											styleClass="ui-panelgrid-blank">
 
-											<p:outputLabel value="Seleccione #{utilEL.capitalize(tipoPieza.toString())}" />
+											<p:outputLabel
+												value="Seleccione #{utilEL.capitalize(tipoPieza.toString())}" />
 
 											<p:selectOneMenu required="true" converter="genericConverter"
 												value="#{configuradorManager.pieza}">
@@ -63,42 +65,49 @@
 								</div>
 							</div>
 						</div>
-						
+
 						<div class="ContainerIndent">
-						<div class="Fright Wid25">
-							<p:commandButton value="Guardar Configuración"
-								action="#{configuradorManager.insertConfiguracion()}"
-								process="@form" update="@form growl"/>
+							<div class="Fright Wid25">
+								<p:commandButton value="Guardar Configuración"
+									action="#{configuradorManager.insertConfiguracion()}"
+									process="@form" update="@form growl" />
+							</div>
 						</div>
-						</div>
+					</div>
 				</div>
 			</div>
+
+			<div class="Container100 ui-fluid">
+				<div class="ContainerIndent">
+					<div class="Card ShadowEffect">
+						<h2 class="BigTopic">Mis Configuraciones</h2>
+						<p:dataTable var="configuraciones" reflow="true"
+							value="#{configuradorManager.listConfiguraciones}"
+							emptyMessage="No tienes configuraciones de bicicleta">
+							<p:subTable var="piezas"
+								value="#{configuraciones.piezasConfiguracion}">
+								<f:facet name="header">
+									<h:outputText value="#{configuraciones.descripcion}" />
+									<p:spacer>
+									</p:spacer>
+									<p:commandButton value="ELIMINAR" 
+									process="@this" styleClass="BlueTextButton RaisedButton"
+									onclick="#{configuradorManager.eliminarConfiguracion(configuraciones.id)}"									
+									update=":frmConfigurador">									
+								</p:commandButton>									
+								</f:facet>
+								<p:column>
+									<h:outputText value="#{piezas.tipo}" />
+								</p:column>
+								<p:column>
+									<h:outputText value="#{piezas.descripcion}" />
+								</p:column>
+
+							</p:subTable>
+						</p:dataTable>
+					</div>
+				</div>
 			</div>
-			
-	        <div class="Container100 ui-fluid">
-	        <div class="ContainerIndent">
-				<div class="Card ShadowEffect">
-					<h2 class="BigTopic">Mis Configuraciones</h2>
-					<p:dataTable var="configuraciones" reflow="true"
-								value="#{configuradorManager.listConfiguraciones}"
-								emptyMessage="No tienes configuraciones de bicicleta" >
-					
-						<p:subTable var="piezas" 
-							value="#{configuraciones.piezasConfiguracion}">
-							<f:facet name="header">
-								<h:outputText value="#{configuraciones.descripcion}" />
-							</f:facet>										
-							<p:column>
-								<h:outputText value="#{piezas.tipo}" />
-							</p:column>
-							<p:column>
-								<h:outputText value="#{piezas.descripcion}" />
-							</p:column>
-						</p:subTable>
-					</p:dataTable>
-	           </div>
-	        </div>
-	        </div>
 		</h:form>
 
 	</ui:define>

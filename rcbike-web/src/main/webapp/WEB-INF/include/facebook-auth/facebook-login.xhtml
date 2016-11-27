@@ -9,9 +9,8 @@
 		FB.login(function(response) {
 			console.log(response);
 			if (response.status === 'connected') {
-				// Logged into your app and Facebook.
-				console.log("status connected")
-				$("#formAuthExterna\\:#{autenticacionManager.getPARAM_AUTH_SERVICE()}").val(JSON.stringify({"authStrategy":"Facebook", "payload":response }));
+				$("#formAuth\\:#{autenticacionManager.getPARAM_AUTH_SERVICE()}").val("Facebook");
+				$("#formAuth\\:#{autenticacionManager.getPARAM_AUTH_CONTENT()}").val(JSON.stringify({"payload":response }));
 				autenticarRCBike();
 				         
 			} else if (response.status === 'not_authorized') {
@@ -28,5 +27,13 @@
 
 	}
 	</script>
-	
+	<h:form id="formAuthFacebook">
+    	<h:inputHidden id="#{autenticacionManager.getPARAM_AUTH_SERVICE()}" 
+			value="#{autenticacionManager.servicioAutenticacion}" required="true"/>
+			
+		<h:inputHidden id="#{autenticacionManager.getPARAM_AUTH_CONTENT()}"
+			value="#{autenticacionManager.contenidoAutenticacion}" required="true"/>
+			
+		<p:remoteCommand name="autenticarFacebook" action="#{autenticacionManager.login()}" update="growl"/>
+	</h:form>
 </ui:composition>

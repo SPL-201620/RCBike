@@ -1,10 +1,9 @@
-package co.rcbike.autenticacion;
+package co.rcbike.autenticacion.strategy.local;
 
 import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 
@@ -30,8 +29,9 @@ public class AutenticacionGateway extends RcbikeRestGateway {
         return service;
     }
 
-    public Response autenticar(String authContent) {
-        return webTarget().path(OperacionesAutenticacion.EP_AUTENTICACION).request().post(Entity.json(authContent));
+    public Response autenticar(String email, String clave) {
+        return webTarget().path(OperacionesAutenticacion.EP_AUTENTICACION).queryParam("email", email)
+                .queryParam("clave", clave).request().get();
     }
 
 }

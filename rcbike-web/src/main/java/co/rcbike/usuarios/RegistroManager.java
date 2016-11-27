@@ -8,24 +8,23 @@ import java.io.Serializable;
 import java.util.Base64;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 import javax.imageio.ImageIO;
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
+import org.omnifaces.util.Faces;
+import org.omnifaces.util.Messages;
 import org.primefaces.event.FileUploadEvent;
 
 import com.google.common.io.Files;
 
 import co.rcbike.autenticacion.AutenticacionManager;
 import co.rcbike.usuarios.model.RegistroUsuario;
-import co.rcbike.web.util.Navegacion;
-import co.rcbike.web.util.Navegacion.Views;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.jbosslog.JBossLog;
@@ -61,7 +60,8 @@ public class RegistroManager implements Serializable {
     private String foto;
 
     @Getter
-    private boolean registroLocal;
+    @Setter
+    private String servicio;
 
     @Getter
     @Setter
@@ -73,16 +73,13 @@ public class RegistroManager implements Serializable {
 
     @PostConstruct
     public void init() {
-        this.email = autenticacionManager.getResAutenticacion().getEmail();
-        this.clave = autenticacionManager.getResAutenticacion().getClave();
-
-        this.registroLocal = autenticacionManager.getResAutenticacion().isRequiereClave();
-
-        this.nombres = autenticacionManager.getResAutenticacion().getNombresExternos();
-        this.apellidos = autenticacionManager.getResAutenticacion().getApellidosExternos();
+        this.servicio = autenticacionManager.getServicioAutenticacion().toLowerCase();
+        this.email = autenticacionManager.getDatosAut().getEmail();
+        this.nombres = autenticacionManager.getDatosAut().getNombres();
+        this.apellidos = autenticacionManager.getDatosAut().getApellidos();
     }
 
-    public String registrar() throws IOException {
+    public void registrar() throws IOException {
         RegistroUsuario regUsuario = new RegistroUsuario();
         regUsuario.setEmail(email);
         regUsuario.setNombres(nombres);
@@ -92,9 +89,12 @@ public class RegistroManager implements Serializable {
 
         Response response = gateway.crearUsuario(regUsuario);
         log.debug(response);
-        FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage("Usuario Creado", "Por favor ingrese nuevamente."));
-        return Navegacion.redirectView(Views.login);
+        if (response.getStatus() == Status.OK.getStatusCode()) {
+            autenticacionManager.darIngreso(email);
+            Faces.redirect("site/usuarios/dashboard.xhtml");
+        } else if (response.getStatus() == Status.BAD_REQUEST.getStatusCode()) {
+            Messages.create(response.getEntity().toString()).error().add();
+        }
     }
 
     public void cargarImagen(FileUploadEvent event) throws IOException {
