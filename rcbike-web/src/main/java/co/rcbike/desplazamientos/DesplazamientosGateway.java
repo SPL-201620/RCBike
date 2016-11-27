@@ -17,7 +17,8 @@ public class DesplazamientosGateway extends RcbikeRestGateway {
 
     public static final GenericType<List<RutaWeb>> TYPE_LIST_RUTA = new GenericType<List<RutaWeb>>() {
     };
-
+    public static final RutaWeb RUTA = new RutaWeb();
+    
     @Inject
     @Snoop(serviceName = "desplazamientos")
     private SnoopServiceClient service;
@@ -57,5 +58,9 @@ public class DesplazamientosGateway extends RcbikeRestGateway {
     public List<RutaWeb> listIndividualesByEmail(String email) {
         return webTarget().path("individual").path("rutasIndividuales").path("porEmail")
                 .queryParam("emailCreador", email).request().get(TYPE_LIST_RUTA);
+    }
+    
+    public RutaWeb getIndividual(long idRuta) {
+        return webTarget().path("individual").path("rutaIndividual").path(idRuta+"").request().get(RUTA.getClass());
     }
 }

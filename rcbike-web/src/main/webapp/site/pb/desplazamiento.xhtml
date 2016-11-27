@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <f:facet name="first">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+            <meta name="apple-mobile-web-app-capable" content="yes" />
+            <script
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfB1qF1ZdhXSYI_zBqrhRh03xy05pQfKs&amp;signed_in=true&amp;libraries=places"></script>
+        </f:facet>
+        <title>RC Bike - Desplazamiento</title>
+        <ui:insert name="head" />
+        <style>
+			.ui-fileupload-content { display: none;}
+        </style>
+    </h:head>
+    
+    <h:body styleClass="GrayModena Geometry" style="height:auto;">
+        <div class="Wid90 DispBlock MarAuto MarTopPerc5 TexAlCenter">
+            <div class="Wid60 MarAuto WidAutoOnMobile">
+                <div class="EmptyBox30"></div>
+                <div class="Card ShadowEffect">
+                
+                <p>Aquí verá su recorrido individual:</p>
+				<h:form id="formPublico">
+					<p:panelGrid  columns="2"  columnClasses="label,value" var="ruta" value="#{rutaGrupalPublicoManager.ruta}">
+			                <f:facet name="header">
+			                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Cycling_(road)_pictogram.svg/1024px-Cycling_(road)_pictogram.svg.png"
+			                    style="width:30px;height:30px;"/> 
+			                </f:facet> 
+						    <h:outputText value="Nombre:"/>
+						    <h:outputText value="#{rutaGrupalPublicoManager.ruta.nombre}"/>
+						
+						    <h:outputText value="Descripcion:"/>
+						    <h:outputText value="#{rutaGrupalPublicoManager.ruta.descripcion}"/>
+						
+						    <h:outputText value="Tipo:"/>
+						    <h:outputText value="#{rutaGrupalPublicoManager.ruta.tipo}"/>
+						
+						    <h:outputText value="Distancia:"/>
+						    <h:outputText  value="#{rutaGrupalPublicoManager.ruta.distancia}"/>
+						
+						    <h:outputText value="Tiempo Estimado:"/>
+						    <h:outputText value="#{rutaGrupalPublicoManager.ruta.tiempoEstimado}"/>
+						    
+							<h:outputText value="Calorias:"/>
+							<h:outputText value="#{rutaGrupalPublicoManager.ruta.calorias}"/>
+						
+						    <h:outputText value="Clima:"/>
+						    <h:outputText value="#{rutaGrupalPublicoManager.ruta.clima}"/>
+						
+						    <h:outputText value="Fecha:"/>
+						    <h:outputText value="#{rutaGrupalPublicoManager.ruta.fecha}" >
+								<f:convertDateTime pattern="dd-MM-yyyy" />
+							</h:outputText>
+						    
+						    <h:outputText value="Frecuente:"/>
+						    <h:outputText value="#{rutaGrupalPublicoManager.ruta.frecuente}"/>
+						    
+							<h:outputText value="Dias:"/>
+							<h:outputText value="#{rutaGrupalPublicoManager.ruta.dias}"/>
+			
+			            </p:panelGrid>
+						<br />
+						
+					<p:commandButton value="Ver ruta" style="margin-top:2px"
+								 			onclick="routing(#{rutaGrupalPublicoManager.ruta.latitudInicio},#{rutaGrupalPublicoManager.ruta.longitudInicio},#{rutaGrupalPublicoManager.ruta.latitudFinal},#{rutaGrupalPublicoManager.ruta.longitudFinal})" 
+								 			icon="ui-icon-pin-s"/>
+					<p:commandButton value="Compartir" id="withIcon" icon="ui-icon-link" />
+				
+				<br />
+				<br />
+				<p:gmap id="gmap" styleClass="PosRelative SoftGrayBack" center="4.656360,-74.103770" zoom="13" type="ROADMAP"
+						style="width:100%; height:355px; z-index:1;" widgetVar="map" />
+				</h:form>
+	
+				<script type="text/javascript">	
+				function routing(latInicio, lngInicio, latFin, lngFin) {
+					var markers = [];
+					markers.push({
+			            "title": "Inicio",
+			            "lat": latInicio,
+			            "lng": lngInicio
+			    	});
+			
+					markers.push({
+			            "title": "Fin",
+			            "lat": latFin,
+			            "lng": lngFin
+			    	});
+					
+					var mapOptions = {
+					    center: new google.maps.LatLng(markers[0].lat, markers[0].lng),
+					    zoom: 13,
+					    mapTypeId: google.maps.MapTypeId.ROADMAP
+					};
+					
+					var map = new google.maps.Map(document.getElementById("formPublico:gmap"), mapOptions);
+					var infoWindow = new google.maps.InfoWindow();
+					var lat_lng = new Array();
+					var latlngbounds = new google.maps.LatLngBounds();
+					
+					//<![CDATA[
+					for (i = 0; i < markers.length; i++) {
+					    var data = markers[i]
+					    var myLatlng = new google.maps.LatLng(data.lat, data.lng);
+					    lat_lng.push(myLatlng);
+					    var marker = new google.maps.Marker({
+					        position: myLatlng,
+					        map: map,
+					        title: data.title
+					    });
+					    latlngbounds.extend(marker.position);
+					    (function (marker, data) {
+					        google.maps.event.addListener(marker, "click", function (e) {
+					            infoWindow.setContent(data.title);
+					            infoWindow.open(map, marker);
+					        });
+					    })(marker, data);
+					}
+					//]]>
+					map.setCenter(latlngbounds.getCenter());
+					map.fitBounds(latlngbounds);
+					
+					//Initialize the Path Array
+					var path = new google.maps.MVCArray();
+					
+					//Initialize the Direction Service
+					var service = new google.maps.DirectionsService();
+					
+					//Set the Path Stroke Color
+					var poly = new google.maps.Polyline({ map: map, strokeColor: '#4986E7' });
+					
+					//Loop and Draw Path Route between the Points on MAP
+			
+					//<![CDATA[
+			        for (var i = 0; i < lat_lng.length; i++) {
+			            if ((i + 1) < lat_lng.length) {
+			                var src = lat_lng[i];
+			                var des = lat_lng[i + 1];
+			                path.push(src);
+			                poly.setPath(path);
+			                service.route({
+			                    origin: src,
+			                    destination: des,
+			                    travelMode: google.maps.DirectionsTravelMode.DRIVING
+			                }, function (result, status) {
+			                    if (status == google.maps.DirectionsStatus.OK) {
+			                        for (var i = 0, len = result.routes[0].overview_path.length; i < len; i++) {
+			                            path.push(result.routes[0].overview_path[i]);
+			                        }
+			                    }
+			                });
+			            }
+			        }
+			       //]]>
+				}
+				</script>
+                      
+               
+                </div>
+                <div class="Wid100 TexAlCenter MarTop20 Fs14 FontRobotoRegular Gray">
+        	        <i class="fa fa-copyright"></i>  Los 4 Fantasticos <br/> All rights reserved.
+                </div>
+            </div>
+        </div>
+        
+        <ui:include src="/WEB-INF/include/common/ajax-handling.xhtml"/>
+        <h:outputStylesheet name="css/rcbike.min.css" library="modena-layout" />
+        <style type="text/css">
+			.color-facebook {
+			    color:#3b5998;
+			}
+			.color-twitter {
+			    color:#1da1f2;
+			}
+		</style>
+    </h:body>
+
+</html>

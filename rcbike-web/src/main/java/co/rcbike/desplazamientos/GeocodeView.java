@@ -1,8 +1,11 @@
 package co.rcbike.desplazamientos;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
@@ -18,9 +21,11 @@ import co.rcbike.desplazamientos.model.RutaWeb;
 import lombok.Getter;
 import lombok.Setter;
 
-@ManagedBean
+@SuppressWarnings("serial")
 @ViewScoped
-public class GeocodeView {
+@ManagedBean
+@ApplicationScoped
+public class GeocodeView implements Serializable{
 
     private MapModel geoModel;
     private String centerGeoMap = "4.656360,-74.103770";
@@ -39,6 +44,7 @@ public class GeocodeView {
     @PostConstruct
     public void init() {
         geoModel = new DefaultMapModel();
+        rutas = new ArrayList<RutaWeb>();
     }
 
     public void onGeocode(GeocodeEvent event) {
@@ -48,24 +54,18 @@ public class GeocodeView {
             LatLng center = results.get(0).getLatLng();
             centerGeoMap = center.getLat() + "," + center.getLng();
 
-            // for (int i = 0; i < results.size(); i++) {
             GeocodeResult result = results.get(0);
             geoModel.addOverlay(new Marker(result.getLatLng(), result.getAddress()));
-            // }
         }
-        /// ---
-        String lat = String.format("%7f", results.get(0).getLatLng().getLat()).replace(',', '.');
 
+        String lat = String.format("%7f", results.get(0).getLatLng().getLat()).replace(',', '.');
         String lng = String.format("%7f", results.get(0).getLatLng().getLng()).replace(',', '.');
 
-        java.lang.System.out.println(".-----inicioGrupales\n");
-        java.lang.System.out.println(lat + "--:--" + lng);
+        java.lang.System.out.println(".-----inicioGrupales\n" + lat + "--:--" + lng);
 
         rutas = gateway.listGruposCercanos(lat, lng);
 
-        java.lang.System.out.println("Rutas:\n");
-
-        java.lang.System.out.println(rutas.toString());
+        java.lang.System.out.println("Rutas:\n" + rutas.toString());
     }
 
     public MapModel getGeoModel() {
