@@ -1,0 +1,25 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:button id="tw-sh-fe" icon="fa fa-twitter fa-lg" rendered="#{autenticacionManager.servicioAutenticacion ne 'Twitter'}"
+	    		styleClass="Fs12 White RaisedButton FloatNoneOnMobile RaisedButton color-twitter"
+	           	href="https://twitter.com/intent/tweet" target="_blank" />
+	<p:tooltip for="tw-sh-fe" value="Compartir en Twitter" 
+		rendered="#{autenticacionManager.servicioAutenticacion ne 'Twitter'}" position="left"/>
+    
+    <p:commandButton id="tw-sh-be" icon="fa fa-twitter fa-lg"
+    	rendered="#{autenticacionManager.servicioAutenticacion eq 'Twitter'}"
+		styleClass="Fs12 White RaisedButton FloatNoneOnMobile RaisedButton color-twitter"
+		action="#{redesManager.twitter()}" />
+	<p:tooltip for="tw-sh-be" value="Compartir en Twitter"
+		rendered="#{autenticacionManager.servicioAutenticacion eq 'Twitter'}" position="left"/>
+
+	<style type="text/css">
+		.color-twitter {
+		    background-color:#1da1f2;
+		}
+	</style>
+</ui:composition>

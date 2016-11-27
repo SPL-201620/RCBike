@@ -14,10 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import co.rcbike.autenticacion.AutenticacionManager;
-import lombok.extern.jbosslog.JBossLog;
 
 @WebFilter("/site/*")
-@JBossLog
+// @JBossLog
 public class AutorizacionInterceptor implements Filter {
 
     @Override
@@ -28,7 +27,7 @@ public class AutorizacionInterceptor implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws ServletException, IOException {
-        log.info(request.toString());
+        // log.info(request.toString());
         if (request instanceof HttpServletRequest) {
             HttpServletRequest httpRq = (HttpServletRequest) request;
             HttpSession session = httpRq.getSession(true);

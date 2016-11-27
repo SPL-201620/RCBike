@@ -3,6 +3,8 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:include src="/WEB-INF/include/facebook-auth/facebook-sdk.xhtml"/>
 
 	<script>
 	function loginFacebook() {
@@ -27,13 +29,11 @@
 
 	}
 	</script>
-	<h:form id="formAuthFacebook">
-    	<h:inputHidden id="#{autenticacionManager.getPARAM_AUTH_SERVICE()}" 
-			value="#{autenticacionManager.servicioAutenticacion}" required="true"/>
-			
-		<h:inputHidden id="#{autenticacionManager.getPARAM_AUTH_CONTENT()}"
-			value="#{autenticacionManager.contenidoAutenticacion}" required="true"/>
-			
-		<p:remoteCommand name="autenticarFacebook" action="#{autenticacionManager.login()}" update="growl"/>
-	</h:form>
+	
+    <style type="text/css">
+		.color-facebook {
+		    background-color:#3b5998;
+		}
+	</style>
+	
 </ui:composition>
