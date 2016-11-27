@@ -28,8 +28,9 @@
                 <div class="Card ShadowEffect">
                 
                 <p>Aquí verá su recorrido individual:</p>
-				<h:form id="formPublico">
-					<p:panelGrid  columns="2"  columnClasses="label,value" var="ruta" value="#{rutaGrupalPublicoManager.ruta}">
+				<h:form id="formPublico" rendered="#{rutaGrupalPublicoManager.ruta != null}">
+				
+					<p:panelGrid  columns="2"  columnClasses="label,value" style="display: inline-block; text-align: center;">
 			                <f:facet name="header">
 			                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Cycling_(road)_pictogram.svg/1024px-Cycling_(road)_pictogram.svg.png"
 			                    style="width:30px;height:30px;"/> 

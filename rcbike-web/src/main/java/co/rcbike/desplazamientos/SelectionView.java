@@ -24,7 +24,7 @@ public class SelectionView implements Serializable {
     @Setter
     @ManagedProperty(value = "#{RutaManager}")
     private RutaManager service;
-
+        
     @PostConstruct
     public void init() {
         selectedCars = service.getRutas();
@@ -50,20 +50,7 @@ public class SelectionView implements Serializable {
         this.selectedCars = selectedCars;
     }
 
-    /*
-     * public List<RutaWeb> getRutas() { return rutas; }
-     * 
-     * 
-     * public void setRutas(List<RutaWeb> rutas) { this.rutas = rutas; }
-     */
-
-    /*
-     * public void onRowSelect(SelectEvent event) { FacesMessage msg = new
-     * FacesMessage("Car Selected", ((RutaWeb) event.getObject()).getId());
-     * FacesContext.getCurrentInstance().addMessage(null, msg); }
-     * 
-     * public void onRowUnselect(UnselectEvent event) { FacesMessage msg = new
-     * FacesMessage("Car Unselected", ((RutaWeb) event.getObject()).getId());
-     * FacesContext.getCurrentInstance().addMessage(null, msg); }
-     */
+    public String submit(String id) {
+        return "/site/pb/desplazamiento.xhtml?faces-redirect=true&id=" + id;
+    }
 }

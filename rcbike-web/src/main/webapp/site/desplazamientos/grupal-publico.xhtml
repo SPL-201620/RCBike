@@ -58,13 +58,117 @@
 			
 			<p:column headerText="Acción:">
  				<p:commandButton value="Unirme" actionListener="#{addMarkersView.unirse(ruta.id)}" oncomplete="alert('Te has unido!');" />
+ 				
+ 				<p:commandButton oncomplete="PF('detail').show()" icon="ui-icon-search" title="Detalle"
+	            onclick="detallejs('#{rutaWeb.nombre}','#{rutaWeb.descripcion}','#{rutaWeb.tipo}','#{rutaWeb.distancia}','#{rutaWeb.tiempoEstimado}', '#{rutaWeb.calorias}','#{rutaWeb.clima}','#{rutaWeb.fecha.toLocaleString()}','#{rutaWeb.frecuente}','#{rutaWeb.dias}' )" />
+ 				
 			</p:column>
 		</p:dataTable>
+		
 		<br />
-
+		
+		<ui:include src="detalle-desplazamiento.xhtml" />
+		
 		<p:gmap id="geoGmap" widgetVar="geoMap" center="#{geocodeView.centerGeoMap}" zoom="13" type="ROADMAP" model="#{geocodeView.geoModel}" style="width:100%;height:400px">
         	<p:ajax event="geocode" listener="#{geocodeView.onGeocode}" update="@this" />
     	</p:gmap>
+    	
 	</h:form>
+ 	<script type="text/javascript">
+	function detallejs(nombre,descripcion,tipo, distancia,tiempoestimado,calorias,clima,fecha,frecuente,dias) {
+		
+ 		document.getElementById("j_idt32:formIndividual:nombre").innerHTML = nombre;
+ 		document.getElementById("j_idt32:formIndividual:descripcion").innerHTML = descripcion;
+ 		document.getElementById("j_idt32:formIndividual:tipo").innerHTML = tipo;
+ 		document.getElementById("j_idt32:formIndividual:distancia").innerHTML = distancia;
+ 		document.getElementById("j_idt32:formIndividual:tiempoEstimado").innerHTML = tiempoestimado;
+ 		document.getElementById("j_idt32:formIndividual:calorias").innerHTML = calorias;
+ 		document.getElementById("j_idt32:formIndividual:clima").innerHTML = clima;
+ 		document.getElementById("j_idt32:formIndividual:fecha").innerHTML = fecha;
+ 		document.getElementById("j_idt32:formIndividual:frecuente").innerHTML = frecuente;
+ 		document.getElementById("j_idt32:formIndividual:dias").innerHTML = dias;
+		
+ 		}
+	
+ 	function routing(latInicio, lngInicio, latFin, lngFin) {
+ 		var markers = [];
+ 		markers.push({
+             "title": "Inicio",
+             "lat": latInicio,
+             "lng": lngInicio
+     	});
 
+ 		markers.push({
+             "title": "Fin",
+             "lat": latFin,
+             "lng": lngFin
+     	});
+		
+ 		var mapOptions = {
+ 		    center: new google.maps.LatLng(markers[0].lat, markers[0].lng),
+ 		    zoom: 13,
+ 		    mapTypeId: google.maps.MapTypeId.ROADMAP
+ 		};
+		
+ 		var map = new google.maps.Map(document.getElementById("j_idt32:gmap"), mapOptions);
+ 		var infoWindow = new google.maps.InfoWindow();
+ 		var lat_lng = new Array();
+ 		var latlngbounds = new google.maps.LatLngBounds();
+		
+ 		//<![CDATA[
+ 		for (i = 0; i < markers.length; i++) {
+ 		    var data = markers[i]
+ 		    var myLatlng = new google.maps.LatLng(data.lat, data.lng);
+ 		    lat_lng.push(myLatlng);
+ 		    var marker = new google.maps.Marker({
+ 		        position: myLatlng,
+ 		        map: map,
+ 		        title: data.title
+ 		    });
+ 		    latlngbounds.extend(marker.position);
+ 		    (function (marker, data) {
+ 		        google.maps.event.addListener(marker, "click", function (e) {
+ 		            infoWindow.setContent(data.title);
+ 		            infoWindow.open(map, marker);
+ 		        });
+ 		    })(marker, data);
+ 		}
+ 		//]]>
+ 		map.setCenter(latlngbounds.getCenter());
+ 		map.fitBounds(latlngbounds);
+		
+ 		
+ 		var path = new google.maps.MVCArray();
+		
+ 		
+ 		var service = new google.maps.DirectionsService();
+		
+ 		
+ 		var poly = new google.maps.Polyline({ map: map, strokeColor: '#4986E7' });
+		
+ 		//Loop and Draw Path Route between the Points on MAP
+
+ 		//<![CDATA[
+         for (var i = 0; i < lat_lng.length; i++) {
+             if ((i + 1) < lat_lng.length) {
+                 var src = lat_lng[i];
+                 var des = lat_lng[i + 1];
+                 path.push(src);
+                 poly.setPath(path);
+                 service.route({
+                     origin: src,
+                     destination: des,
+                     travelMode: google.maps.DirectionsTravelMode.DRIVING
+                 }, function (result, status) {
+                     if (status == google.maps.DirectionsStatus.OK) {
+                         for (var i = 0, len = result.routes[0].overview_path.length; i < len; i++) {
+                             path.push(result.routes[0].overview_path[i]);
+                         }
+                     }
+                 });
+             }
+         }
+        //]]>
+ 	}
+ 	</script>
 </ui:composition>

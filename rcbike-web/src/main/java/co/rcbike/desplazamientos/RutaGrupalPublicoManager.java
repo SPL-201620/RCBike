@@ -33,12 +33,19 @@ public class RutaGrupalPublicoManager implements Serializable {
     	String id = request.getParameter("id");
     	java.lang.System.out.print(".-----RutaGrupalPublicoManager\n" + "id : " + id);
     	
-    	Long idFinal = Long.valueOf(id).longValue();
-    	ruta = gateway.getIndividual(idFinal);
-
-    	java.lang.System.out.print("\n");
-
-    	java.lang.System.out.print(ruta.toString());
-         
+    	if(!id.isEmpty())
+    	{
+	    	try
+	    	{
+	    		Long idFinal = Long.valueOf(id).longValue();
+	    		ruta = gateway.getIndividual(idFinal);
+	    		java.lang.System.out.print("\n" + ruta.toString());
+	    	}
+	    	catch(NumberFormatException ex)
+	    	{
+	    		ruta = null;
+	    		java.lang.System.out.print(ex.getMessage());
+	    	}
+    	}
     }
 }
