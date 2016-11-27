@@ -1,0 +1,81 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="title">
+		<h2 class="BigTopic">Reportes</h2>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form id="frmConfigurador" prependId="false">			
+			<div class="Container100 ui-fluid">
+				<div class="Card ShadowEffect">
+					<div class="ContainerIndent">
+						<p:panel id="pnlReportes" header="Ingrese la informacion"
+							style="margin-bottom:20px" collapsed="4">
+							<p:panelGrid columns="6">
+								<p:outputLabel for="fechaInicio" value="Fecha Inicio" />
+								<p:calendar id="fechaInicio" value="#{reportesManager.fech}">
+									<p:ajax event="dateSelect"
+										listener="#{reportesManager.onDateSelectInicio}"/>
+								</p:calendar>
+								<p:outputLabel for="fechaFin" value="Fecha Fin" />
+								<p:calendar id="fechaFin" value="#{reportesManager.fech}">
+									<p:ajax event="dateSelect"
+										listener="#{reportesManager.onDateSelectFin}"/>
+								</p:calendar>
+								<h:selectOneMenu required="true" style="width:125px"
+									value="#{reportesManager.tipo}">
+									<f:selectItem noSelectionOption="true" />
+									<f:selectItems value="#{reportesManager.tiposReporte}" />
+								</h:selectOneMenu>
+								<p:commandButton value="Buscar"
+									action="#{reportesManager.findRecorridos()}" process="@form"
+									update="@form" />
+							</p:panelGrid>
+							<p:separator>
+							</p:separator>
+
+							<p:dataTable var="reporte" scrollable="true" scrollHeight="350"
+								value="#{reportesManager.recorridos}">
+
+								<p:column headerText="Fecha de Inicio">
+									<h:outputText value="#{reporte.fechaInicio}" />
+								</p:column>
+
+								<p:column headerText="Fecha de Final">
+									<h:outputText value="#{reporte.fechaFinal}" />
+								</p:column>
+
+								<p:column headerText="Kilometros Recorridos">
+									<h:outputText value="#{reporte.kilometrosRecorridos}" />
+								</p:column>
+
+								<p:column headerText="Calorias Quemadas">
+									<h:outputText value="#{reporte.caloriasQuemadas}" />
+								</p:column>
+
+								<p:column headerText="Velocidad Promedio">
+									<h:outputText value="#{reporte.velocidadPromedio}" />
+								</p:column>
+
+								<p:column headerText="Grupal">
+									<h:outputText value="#{reporte.viajesGrupales}" />
+								</p:column>
+
+								<p:column headerText="Individual">
+									<h:outputText value="#{reporte.viajesIndividuales}" />
+								</p:column>
+
+							</p:dataTable>
+						</p:panel>
+					</div>
+				</div>
+			</div>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>
