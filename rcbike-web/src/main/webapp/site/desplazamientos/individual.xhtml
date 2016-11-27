@@ -39,9 +39,7 @@
 			
 			<p:column style="width:38px;text-align: center">
 	            <p:commandButton oncomplete="PF('detail').show()" icon="ui-icon-search" title="Detalle"
-	            onclick="detallejs('#{rutaWeb.nombre}','#{rutaWeb.descripcion}', '#{rutaWeb.tipo}',
-	            	'#{rutaWeb.distancia}','#{rutaWeb.tiempoEstimado}', '#{rutaWeb.calorias}','#{rutaWeb.clima}',
-	            	#{rutaWeb.fecha},'#{rutaWeb.frecuente}', '#{rutaWeb.dias}')" />
+	            onclick="detallejs('#{rutaWeb.nombre}','#{rutaWeb.descripcion}','#{rutaWeb.tipo}','#{rutaWeb.distancia}','#{rutaWeb.tiempoEstimado}', '#{rutaWeb.calorias}','#{rutaWeb.clima}','#{rutaWeb.fecha.toLocaleString()}','#{rutaWeb.frecuente}','#{rutaWeb.dias}' )" /> 
 	                
 	            <p:commandButton title="Ver ruta" style="margin-top:2px"
 					 			onclick="routing(#{rutaWeb.latitudInicio},#{rutaWeb.longitudInicio},#{rutaWeb.latitudFinal},#{rutaWeb.longitudFinal})" 
@@ -50,49 +48,13 @@
 			
 		</p:dataTable>
 	
-		<p:dialog id="detail" widgetVar="detail" modal="true" showEffect="blind" hideEffect="explode" resizable="false">
-			<p:panelGrid  columns="2"  columnClasses="label,value">
-                <f:facet name="header">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Cycling_(road)_pictogram.svg/1024px-Cycling_(road)_pictogram.svg.png"
-                    style="width:30px;height:30px;"/> 
-                </f:facet> 
-			    <h:outputText value="nombre:"/>
-			    <h:outputText id="nombre"/>
-			
-			    <h:outputText value="descripcion:"/>
-			    <h:outputText id="descripcion"/>
-			
-			    <h:outputText value="tipo:"/>
-			    <h:outputText id="tipo"/>
-			
-			    <h:outputText value="distancia:"/>
-			    <h:outputText id="distancia"/>
-			
-			    <h:outputText value="tiempoEstimado:"/>
-			    <h:outputText id="tiempoEstimado"/>
-			    
-				<h:outputText value="calorias:"/>
-				<h:outputText id="calorias"/>
-			
-			    <h:outputText value="clima:"/>
-			    <h:outputText id="clima"/>
-			
-			    <h:outputText value="fecha:"/>
-				<h:outputText id="fecha" />
-			    
-			    <h:outputText value="frecuente:"/>
-			    <h:outputText id="frecuente"/>
-			    
-				<h:outputText value="dias:"/>
-				<h:outputText id="dias"/>
-
-            </p:panelGrid>	    
-		</p:dialog>
+		<ui:include src="detalle-desplazamiento.xhtml" />
 		
 	</h:form>
 	<br />
 	<p:gmap id="gmap" styleClass="PosRelative SoftGrayBack" center="4.656360,-74.103770" zoom="13" type="ROADMAP"
 			style="width:100%; height:355px; z-index:1;" widgetVar="map" />
+	
 	<script type="text/javascript">
 	function detallejs(nombre,descripcion,tipo, distancia,tiempoestimado,calorias,clima,fecha,frecuente,dias) {
 		
@@ -103,10 +65,12 @@
 		document.getElementById("j_idt32:formIndividual:tiempoEstimado").innerHTML = tiempoestimado;
 		document.getElementById("j_idt32:formIndividual:calorias").innerHTML = calorias;
 		document.getElementById("j_idt32:formIndividual:clima").innerHTML = clima;
-		document.getElementById("j_idt32:formIndividual:fecha").innerHTML = new Date(fecha).toDateString();
+		document.getElementById("j_idt32:formIndividual:fecha").innerHTML = fecha;
 		document.getElementById("j_idt32:formIndividual:frecuente").innerHTML = frecuente;
 		document.getElementById("j_idt32:formIndividual:dias").innerHTML = dias;
+		
 		}
+	
 	function routing(latInicio, lngInicio, latFin, lngFin) {
 		var markers = [];
 		markers.push({
