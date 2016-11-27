@@ -60,11 +60,15 @@ public class Usuario implements Serializable {
     @NotNull
     @NotEmpty
     @Email
+    @Column(unique = true)
     private String email;
+
     @NotNull
     private String nombres;
+
     @NotNull
     private String apellidos;
+
     /**
      * Representacion Base 64 de la imagen
      */

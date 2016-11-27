@@ -16,6 +16,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 import co.rcbike.usuarios.model.OperacionesUsuarios;
 import co.rcbike.usuarios.model.RegistroUsuario;
@@ -81,8 +82,7 @@ public class UsuariosEndpoint {
         try {
             service.crearUsuario(registroUsuario);
         } catch (Exception e) {
-            // TODO manejo correcto de excepcion
-            e.printStackTrace();
+            Response.status(Status.BAD_REQUEST).entity("El usuario ya existe en el sistema");
         }
         return Response.ok().build();
     }

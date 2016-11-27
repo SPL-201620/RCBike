@@ -25,8 +25,9 @@
 	
 	function loginTwitter(){
 		var payload = { "oauth_token":$.getUrlVar('oauth_token'),"oauth_verifier":$.getUrlVar('oauth_verifier') };
-		$("#formAuthTwitter\\:#{autenticacionManager.getPARAM_AUTH_SERVICE()}").val(JSON.stringify({"authStrategy":"Twitter", "payload":payload }));
-		autenticarTwitter();
+		$("#formAuth\\:#{autenticacionManager.getPARAM_AUTH_SERVICE()}").val("Twitter");
+		$("#formAuth\\:#{autenticacionManager.getPARAM_AUTH_CONTENT()}").val(JSON.stringify({"payload":payload }));
+		autenticarRCBike();
 	}
 	
 	if($.getUrlVar('serv')=='twitter'){
@@ -36,10 +37,6 @@
 	}
 	//]]>
 	</script>
-	
-	<h:form id="formAuthTwitter">
-		<h:inputHidden id="#{autenticacionManager.getPARAM_AUTH_SERVICE()}" value="#{autenticacionTwitter.authContent}" required="true"/>
-		<p:remoteCommand name="autenticarTwitter" action="#{autenticacionTwitter.accessToken}" update="growl"/>
-	</h:form>
-	
+
+
 </ui:composition>
