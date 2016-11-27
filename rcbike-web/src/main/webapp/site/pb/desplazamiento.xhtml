@@ -28,7 +28,7 @@
                 <div class="Card ShadowEffect">
                 
                 <p>Aquí verá su recorrido individual:</p>
-				<h:form id="formPublico" rendered="#{rutaGrupalPublicoManager.ruta != null}">
+				<h:form id="formPublico" rendered="#{desplazamientoPublicoManager.ruta != null}">
 				
 					<p:panelGrid  columns="2"  columnClasses="label,value" style="display: inline-block; text-align: center;">
 			                <f:facet name="header">
@@ -36,42 +36,42 @@
 			                    style="width:30px;height:30px;"/> 
 			                </f:facet> 
 						    <h:outputText value="Nombre:"/>
-						    <h:outputText value="#{rutaGrupalPublicoManager.ruta.nombre}"/>
+						    <h:outputText value="#{desplazamientoPublicoManager.ruta.nombre}"/>
 						
 						    <h:outputText value="Descripcion:"/>
-						    <h:outputText value="#{rutaGrupalPublicoManager.ruta.descripcion}"/>
+						    <h:outputText value="#{desplazamientoPublicoManager.ruta.descripcion}"/>
 						
 						    <h:outputText value="Tipo:"/>
-						    <h:outputText value="#{rutaGrupalPublicoManager.ruta.tipo}"/>
+						    <h:outputText value="#{desplazamientoPublicoManager.ruta.tipo}"/>
 						
 						    <h:outputText value="Distancia:"/>
-						    <h:outputText  value="#{rutaGrupalPublicoManager.ruta.distancia}"/>
+						    <h:outputText  value="#{desplazamientoPublicoManager.ruta.distancia}"/>
 						
 						    <h:outputText value="Tiempo Estimado:"/>
-						    <h:outputText value="#{rutaGrupalPublicoManager.ruta.tiempoEstimado}"/>
+						    <h:outputText value="#{desplazamientoPublicoManager.ruta.tiempoEstimado}"/>
 						    
 							<h:outputText value="Calorias:"/>
-							<h:outputText value="#{rutaGrupalPublicoManager.ruta.calorias}"/>
+							<h:outputText value="#{desplazamientoPublicoManager.ruta.calorias}"/>
 						
 						    <h:outputText value="Clima:"/>
-						    <h:outputText value="#{rutaGrupalPublicoManager.ruta.clima}"/>
+						    <h:outputText value="#{desplazamientoPublicoManager.ruta.clima}"/>
 						
 						    <h:outputText value="Fecha:"/>
-						    <h:outputText value="#{rutaGrupalPublicoManager.ruta.fecha}" >
+						    <h:outputText value="#{desplazamientoPublicoManager.ruta.fecha}" >
 								<f:convertDateTime pattern="dd-MM-yyyy" />
 							</h:outputText>
 						    
 						    <h:outputText value="Frecuente:"/>
-						    <h:outputText value="#{rutaGrupalPublicoManager.ruta.frecuente}"/>
+						    <h:outputText value="#{desplazamientoPublicoManager.ruta.frecuente}"/>
 						    
-							<h:outputText value="Dias:"/>
-							<h:outputText value="#{rutaGrupalPublicoManager.ruta.dias}"/>
+							<h:outputText value="Días:"/>
+							<h:outputText value="#{desplazamientoPublicoManager.ruta.dias}"/>
 			
 			            </p:panelGrid>
 						<br />
 						
 					<p:commandButton value="Ver ruta" style="margin-top:2px"
-								 			onclick="routing(#{rutaGrupalPublicoManager.ruta.latitudInicio},#{rutaGrupalPublicoManager.ruta.longitudInicio},#{rutaGrupalPublicoManager.ruta.latitudFinal},#{rutaGrupalPublicoManager.ruta.longitudFinal})" 
+								 			onclick="routing(#{desplazamientoPublicoManager.ruta.latitudInicio},#{desplazamientoPublicoManager.ruta.longitudInicio},#{desplazamientoPublicoManager.ruta.latitudFinal},#{desplazamientoPublicoManager.ruta.longitudFinal})" 
 								 			icon="ui-icon-pin-s"/>
 					<p:commandButton value="Compartir" id="withIcon" icon="ui-icon-link" />
 				

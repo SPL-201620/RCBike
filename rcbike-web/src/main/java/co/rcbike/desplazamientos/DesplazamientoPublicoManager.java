@@ -16,7 +16,7 @@ import lombok.Setter;
 @SuppressWarnings("serial")
 @ManagedBean(eager = true)
 @ViewScoped
-public class RutaGrupalPublicoManager implements Serializable {
+public class DesplazamientoPublicoManager implements Serializable {
 
     @Getter
     @Setter
@@ -31,7 +31,7 @@ public class RutaGrupalPublicoManager implements Serializable {
     	        .getRequest();
 
     	String id = request.getParameter("id");
-    	java.lang.System.out.print(".-----RutaGrupalPublicoManager\n" + "id : " + id);
+    	java.lang.System.out.print(".-----DesplazamientoPublicoManager\n" + "id : " + id);
     	
     	if(!id.isEmpty())
     	{
