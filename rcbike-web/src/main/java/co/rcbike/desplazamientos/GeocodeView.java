@@ -24,18 +24,12 @@ import lombok.Setter;
 @SuppressWarnings("serial")
 @ViewScoped
 @ManagedBean
-@ApplicationScoped
 public class GeocodeView implements Serializable{
 
     private MapModel geoModel;
     private String centerGeoMap = "4.656360,-74.103770";
 
-    @Getter
-    @Setter
     private List<RutaWeb> rutas;
-
-    @Getter
-    @Setter
     private RutaWeb ruta;
 
     @Inject
@@ -44,7 +38,7 @@ public class GeocodeView implements Serializable{
     @PostConstruct
     public void init() {
         geoModel = new DefaultMapModel();
-        rutas = new ArrayList<RutaWeb>();
+        //rutas = new ArrayList<RutaWeb>();
     }
 
     public void onGeocode(GeocodeEvent event) {
@@ -74,5 +68,25 @@ public class GeocodeView implements Serializable{
 
     public String getCenterGeoMap() {
         return centerGeoMap;
+    }
+
+	public List<RutaWeb> getRutas() {
+		return rutas;
+	}
+
+	public void setRutas(List<RutaWeb> rutas) {
+		this.rutas = rutas;
+	}
+
+	public RutaWeb getRuta() {
+		return ruta;
+	}
+
+	public void setRuta(RutaWeb ruta) {
+		this.ruta = ruta;
+	}
+	
+	public String submit(String id) {
+        return "/site/pb/desplazamiento.xhtml?faces-redirect=true&id=" + id;
     }
 }
