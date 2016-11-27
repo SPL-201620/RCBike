@@ -90,6 +90,7 @@ public class AutenticacionManager implements Serializable {
 
     private void initEmailAutenticacion(String email) {
         Faces.getSession().setAttribute(EMAIL_ATTR, email);
+        datosAut = null;
     }
 
     public void cerrarSesion() {

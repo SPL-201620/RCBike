@@ -18,4 +18,12 @@ public class RedesGateway extends RcbikeRestGateway {
     protected SnoopServiceClient client() {
         return service;
     }
+
+    public void compartirFacebook(String contenido) {
+
+    }
+
+    public void compartirTwitter(String contenido) {
+
+    }
 }
