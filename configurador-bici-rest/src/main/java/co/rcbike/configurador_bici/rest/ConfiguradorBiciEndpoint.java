@@ -21,7 +21,6 @@ import co.rcbike.configurador_bici.model.OperacionesConfiguracion;
 import co.rcbike.configurador_bici.model.PiezaConfiguracionWeb;
 import co.rcbike.configurador_bici.model.PiezaWeb;
 import co.rcbike.configurador_bici.model.TipoPiezaBicicleta;
-import co.rcbike.configurador_bici.model.ValidacionConfiguracion;
 import co.rcbike.configurador_bici.service.ConfiguradorService;
 import co.rcbike.configurador_bici.service.TransformadorConfigurador;
 
@@ -104,39 +103,19 @@ public class ConfiguradorBiciEndpoint {
 		service.deleteConfiguracion(id);
 	}
 
-	/**
-	 * Valida una configuracion de bicicleta
-	 * 
+    /**
+     * Valida una configuracion de bicicleta
+     * 
 	 * @param configuracion
-	 *            configuracion de una bicicleta
-	 */
-	@POST
-	@Path(OperacionesConfiguracion.EP_CONFIGURACION + "/"
-			+ OperacionesConfiguracion.OP_VALIDAR)
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public ValidacionConfiguracion validarConfiguracion(
-			ConfiguracionWeb configuracion) {
-		return service.validarConfiguracion(transformador
-				.toConfiguracionJpa(configuracion));
-	}
-
-	/**
-	 * Valida una configuracion de bicicleta
-	 * 
-	 * @param configuracion
-	 *            configuracion de una bicicleta
-	 */
-	@GET
-	@Path(OperacionesConfiguracion.EP_CONFIGURACION + "/"
-			+ OperacionesConfiguracion.PATH_PRM_ID + "/"
-			+ OperacionesConfiguracion.OP_VALIDAR)
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public ValidacionConfiguracion validarConfiguracion(
-			@PathParam(OperacionesConfiguracion.PRM_ID) Long id) {
-		return service.validarConfiguracion(id);
-	}
+	 *            Es una cadena de caracteres con nombres de caracteristicas
+	 *            separadas por comas
+     */
+    @GET
+    @Path(OperacionesConfiguracion.EP_CONFIGURACION + "/" + OperacionesConfiguracion.OP_VALIDAR)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Boolean validarConfiguracion(@QueryParam(OperacionesConfiguracion.PARAM_CONFIGURACION) String configuracion) {
+        return service.validarConfiguracion(configuracion);
+    }
 
 	/***** CONFIGURACIONES ****/
 
