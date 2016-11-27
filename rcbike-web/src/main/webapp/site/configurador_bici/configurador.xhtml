@@ -11,89 +11,94 @@
 	<ui:define name="content">
 		<h:form id="frmConfigurador" prependId="false">
 			<div class="Container100 ui-fluid">
+			<div class="ContainerIndent">
 				<div class="Card ShadowEffect">
-					<div class="ContainerIndent">
-						<p:panel id="pnlConfiguracion" header="Realice su configuracion"
-							style="margin-bottom:20px" collapsed="4">
+					<h2 class="BigTopic">Crear nueva configuración</h2>
 
-							<p:repeat var="tipoPieza"
-								value="#{piezaConfiguradorManager.tiposPiezasBiclicleta()}">
-								<div class="Container">
-									<div class="Container25">
-										<p:outputLabel value="Seleccione #{tipoPieza}" />
-									</div>
-									<div class="Container25">
-										<p:selectOneMenu required="true" style="width:125px"
-											converter="genericConverter"
-											value="#{configuradorManager.pieza}">
-											<p:ajax
-												listener="#{configuradorManager.piezasConfiguradas()}" />
+						<div class="ContainerIndent">
+							<div class="Card ShadowEffect ui-fluid">
+								<h2 class="BigTopic">Detalle</h2>
+								<div class="Container50 Responsive100">
+									<p:panelGrid columns="2" layout="grid"
+												styleClass="ui-panelgrid-blank">
+										<p:outputLabel value="Descripcion" />
+										<p:inputText id="descConfiguracion" value="#{configuradorManager.descripcionConfiguracion}"
+														autocomplete="off" required="true" />
+										<p:outputLabel value="Color" />
+										<p:selectOneMenu required="true" 
+													value="#{configuradorManager.color}">
 											<f:selectItem noSelectionOption="true" />
-											<f:selectItems
-												value="#{piezaConfiguradorManager.piezaPorTipo(tipoPieza)}"
-												var="pieza" itemLabel="#{pieza.descripcion}"
-												itemValue="#{pieza}" />
-										</p:selectOneMenu>
-									</div>
-								</div>
-							</p:repeat>
-						</p:panel>
-						<p:panel id="pnlConfiguracionGeneral"
-							header="Termine su configuracion" style="margin-bottom:20px">
-							<div class="Container">
-								<div class="Container25">
-									<p:outputLabel value="Seleccione el color:" />
-								</div>
-								<div class="Container25">
-
-									<p:selectOneMenu required="true" style="width:125px"
-										value="#{configuradorManager.color}">
-										<f:selectItem noSelectionOption="true" />
-										<f:selectItems value="#{piezaConfiguradorManager.listColor}"
-											var="color" itemLabel="#{color.descripcion}"
-											itemValue="#{color.descripcion}" />
-									</p:selectOneMenu>
-								</div>
-								<div class="Container25">
-									<p:outputLabel
-										value="Inserte la descripcion para esta configuracion:" />
-								</div>
-								<div class="Container25">
-									<p:inputText id="descConfiguracion"
-										value="#{configuradorManager.descripcionConfiguracion}"
-										styleClass="Fs18" autocomplete="off" required="true" />
-								</div>
-								<div class="Container25">
-									<p:commandButton value="Insertar"
-										action="#{configuradorManager.insertConfiguracion()}"
-										process="@form" update="@form growl"/>
+											<f:selectItems value="#{piezaConfiguradorManager.listColor}"
+												var="color" itemLabel="#{color.descripcion}"
+												itemValue="#{color.descripcion}" />
+										</p:selectOneMenu>	
+									</p:panelGrid>
 								</div>
 							</div>
-						</p:panel>
-						<p:panel id="pnlConfiguracionesUsuario"
-							header="Configuraciones realizadas" style="margin-bottom:20px">
+						</div>
+						<div class="ContainerIndent">
+							<div class="Card ShadowEffect ui-fluid">
+								<h2 class="BigTopic">Partes</h2>
+								<div class="Container50 Responsive100">
+									<p:repeat var="tipoPieza"
+										value="#{piezaConfiguradorManager.tiposPiezasBiclicleta()}">
+										<p:panelGrid columns="2" layout="grid"
+											styleClass="ui-panelgrid-blank">
 
+											<p:outputLabel value="Seleccione #{utilEL.capitalize(tipoPieza.toString())}" />
 
-							<p:dataTable var="configuraciones" scrollable="true" scrollHeight="350"
-								value="#{configuradorManager.listConfiguraciones}" >
+											<p:selectOneMenu required="true" converter="genericConverter"
+												value="#{configuradorManager.pieza}">
+												<p:ajax
+													listener="#{configuradorManager.piezasConfiguradas()}" />
+												<f:selectItem noSelectionOption="true" />
+												<f:selectItems
+													value="#{piezaConfiguradorManager.piezaPorTipo(tipoPieza)}"
+													var="pieza" itemLabel="#{pieza.descripcion}"
+													itemValue="#{pieza}" />
+											</p:selectOneMenu>
 
-								<p:subTable var="piezas"
-									value="#{configuraciones.piezasConfiguracion}">
-									<f:facet name="header">
-										<h:outputText value="#{configuraciones.descripcion}" />
-									</f:facet>										
-									<p:column>
-										<h:outputText value="#{piezas.tipo}" />
-									</p:column>
-									<p:column>
-										<h:outputText value="#{piezas.descripcion}" />
-									</p:column>
-								</p:subTable>
-							</p:dataTable>
-						</p:panel>
-					</div>
+										</p:panelGrid>
+									</p:repeat>
+								</div>
+							</div>
+						</div>
+						
+						<div class="ContainerIndent">
+						<div class="Fright Wid25">
+							<p:commandButton value="Guardar Configuración"
+								action="#{configuradorManager.insertConfiguracion()}"
+								process="@form" update="@form growl"/>
+						</div>
+						</div>
 				</div>
 			</div>
+			</div>
+			
+	        <div class="Container100 ui-fluid">
+	        <div class="ContainerIndent">
+				<div class="Card ShadowEffect">
+					<h2 class="BigTopic">Mis Configuraciones</h2>
+					<p:dataTable var="configuraciones" reflow="true"
+								value="#{configuradorManager.listConfiguraciones}"
+								emptyMessage="No tienes configuraciones de bicicleta" >
+					
+						<p:subTable var="piezas" 
+							value="#{configuraciones.piezasConfiguracion}">
+							<f:facet name="header">
+								<h:outputText value="#{configuraciones.descripcion}" />
+							</f:facet>										
+							<p:column>
+								<h:outputText value="#{piezas.tipo}" />
+							</p:column>
+							<p:column>
+								<h:outputText value="#{piezas.descripcion}" />
+							</p:column>
+						</p:subTable>
+					</p:dataTable>
+	           </div>
+	        </div>
+	        </div>
 		</h:form>
 
 	</ui:define>

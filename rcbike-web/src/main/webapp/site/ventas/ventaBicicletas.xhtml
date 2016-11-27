@@ -6,46 +6,46 @@
 	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
 
 	<ui:define name="title">
-		<h2 class="BigTopic" align="center">Venta Bicicletas</h2>
+		<h2 class="BigTopic">Venta Bicicletas</h2>
 	</ui:define>
 
 	<ui:define name="content">
 		<h:form id="frmVentasBici" prependId="false">
 			<p:messages id="button">
 			</p:messages>
-			<div class="Container100">
-				<div class="ContainerIndent">
-					<div class="Card ShadowEffect">
-						<div class="ContainerIndent">
-							<p:panel id="pnlConfiguracionesUsuario">
-								<p:dataTable var="configuraciones" scrollable="true" scrollHeight="370"
-									value="#{ventaConfiguradorManager.listConfiguraciones}">
-									<p:subTable var="piezas"
-										value="#{configuraciones.piezasConfiguracion}">
-										<f:facet name="header">
-											<h:outputText value="#{configuraciones.descripcion}" />
-											<p:spacer>
-											</p:spacer>
-											<p:commandButton value="PONER A LA VENTA" process="@this"
-												onclick="#{ventasManager.actualizaIdConfiguracion(configuraciones.id)}"
-												oncomplete="PF('venta').show();"
-												update=":frmVentasBici:button">
-											</p:commandButton>
-										</f:facet>
-										<p:column>
-											<h:outputText value="#{piezas.tipo}" />
-										</p:column>
-										<p:column>
-											<h:outputText value="#{piezas.descripcion}" />
-										</p:column>
-									</p:subTable>
-								</p:dataTable>
-							</p:panel>
-						</div>
-					</div>
+			<div class="Container100 ui-fluid">
+			<div class="ContainerIndent">
+				<div class="Card ShadowEffect">
+					<h3>Crear una publicación</h3>
+					<p>Para crear una publicación de venta, debes primero crear una configuración de bicicleta</p>
+					<p:dataTable var="configuraciones"
+						value="#{ventaConfiguradorManager.listConfiguraciones}"
+						emptyMessage="No tienes configuraciones de bicicleta para crear una publicación">
+						<p:subTable var="piezas"
+							value="#{configuraciones.piezasConfiguracion}">
+							<f:facet name="header">
+								<h:outputText value="#{configuraciones.descripcion}" />
+								<p:spacer>
+								</p:spacer>
+								<p:commandButton value="PONER A LA VENTA" process="@this" styleClass="BlueTextButton RaisedButton"
+									onclick="#{ventasManager.actualizaIdConfiguracion(configuraciones.id)}"
+									oncomplete="PF('venta').show();"
+									update=":frmVentasBici:button">
+								</p:commandButton>
+							</f:facet>
+							<p:column>
+								<h:outputText value="#{piezas.tipo}" />
+							</p:column>
+							<p:column>
+								<h:outputText value="#{piezas.descripcion}" />
+							</p:column>
+						</p:subTable>
+					</p:dataTable>
 				</div>
 			</div>
+			</div>
 		</h:form>
+		
 		<p:dialog header="Por favor inserte la informacion de la bicicleta"
 			widgetVar="venta" modal="true">
 			<h:form id="formCargaImagen">

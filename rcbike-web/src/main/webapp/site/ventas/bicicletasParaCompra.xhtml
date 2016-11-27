@@ -6,70 +6,68 @@
 	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
 
 	<ui:define name="title">
-		<h2 class="BigTopic" align="center">Bicicletas Para la Compra</h2>
+		<h2 class="BigTopic">Compra de Bicicletas</h2>
 	</ui:define>
 
 	<ui:define name="content">
 		<h:form id="frmVentasBici" prependId="false">
 			<p:messages id="button">
 			</p:messages>
-			<div class="Container100">
-				<div class="ContainerIndent">
-					<div class="Card ShadowEffect">
-						<div class="ContainerIndent">
-							<p:dataTable id="dtCompraUsuario" var="compraUsuario"
-								scrollable="true" scrollHeight="350"
-								value="#{ventasManager.compraVentaWebList}">
-								<p:column headerText="Marca:" sortBy="#{compraUsuario.marca}"
-									filterBy="#{compraUsuario.marca}">
-									<h:outputText value="#{compraUsuario.marca}" />
-								</p:column>
-								<p:column headerText="Ciudad:"
-									sortBy="#{compraUsuario.ciudadVenta}"
-									filterBy="#{compraUsuario.ciudadVenta}">
-									<h:outputText value="#{compraUsuario.ciudadVenta}" />
-								</p:column>
-								<p:column headerText="Estado:" sortBy="#{compraUsuario.estado}"
-									filterBy="#{compraUsuario.estado}">
-									<h:outputText value="#{compraUsuario.estado}" />
-								</p:column>
-								<p:column headerText="Valor" sortBy="#{compraUsuario.valor}">
-									<h:outputText value="#{compraUsuario.valor}" />
-								</p:column>
-								<p:column headerText="Accesorios">
-									<h:outputText value="#{compraUsuario.accesorios}" />
-								</p:column>
-								<p:column headerText="Vendida?">
-									<h:outputText value="#{compraUsuario.vendida}" />
-								</p:column>
-								<p:column headerText="Foto" colspan="2">
-									<img
-										style="display:#{empty compraUsuario.foto ? 'none': 'block'}; margin:0 auto"
-										src="data:image/jpeg;base64,#{compraUsuario.foto}" />
-									<i class="icon-account_circle Fs100"
-										style="display:#{empty compraUsuario.foto ? 'block': 'none'}; margin:0 auto"></i>
-								</p:column>
-								<p:column headerText="Contacto">
-									<p:commandButton oncomplete="PF('compraDialog').show()"
-										process="@this"
-										onclick="#{ventasManager.actualizaCompraSelected(compraUsuario.emailCreador)}"
-										icon="ui-icon-search" title="View">
-									</p:commandButton>
-								</p:column>
-							</p:dataTable>
-						</div>
-					</div>
+			<div class="Container100 ui-fluid">
+			<div class="ContainerIndent">
+				<div class="Card ShadowEffect">
+					<p:dataTable id="dtCompraUsuario" var="compraUsuario" reflow="true"
+						value="#{ventasManager.compraVentaWebList}"
+						emptyMessage="No existen publicaciones para mostrar">
+						
+						<p:column headerText="Marca" sortBy="#{compraUsuario.marca}"
+							filterBy="#{compraUsuario.marca}">
+							<h:outputText value="#{compraUsuario.marca}" />
+						</p:column>
+						<p:column headerText="Ciudad"
+							sortBy="#{compraUsuario.ciudadVenta}"
+							filterBy="#{compraUsuario.ciudadVenta}">
+							<h:outputText value="#{compraUsuario.ciudadVenta}" />
+						</p:column>
+						<p:column headerText="Estado" sortBy="#{compraUsuario.estado}"
+							filterBy="#{compraUsuario.estado}">
+							<h:outputText value="#{compraUsuario.estado}" />
+						</p:column>
+						<p:column headerText="Valor" sortBy="#{compraUsuario.valor}">
+							<h:outputText value="#{compraUsuario.valor}" />
+						</p:column>
+						<p:column headerText="Accesorios">
+							<h:outputText value="#{compraUsuario.accesorios}" />
+						</p:column>
+						<p:column headerText="Vendida?">
+							<h:outputText value="#{utilEL.parseBoolean(compraUsuario.vendida)}" />
+						</p:column>
+						<p:column headerText="Foto" colspan="2">
+							<img class="MarAuto"
+								style="display:#{empty compraUsuario.foto ? 'none': 'block'}"
+								src="data:image/jpeg;base64,#{compraUsuario.foto}" />
+								
+							<i class="fa fa-bicycle Fs100 TexAlCenter"
+								style="display:#{empty compraUsuario.foto ? 'block': 'none'}"></i>
+						</p:column>
+						<p:column headerText="Contacto">
+							<p:commandButton oncomplete="PF('compraDialog').show()" styleClass="RaisedButton DispBlock MarAuto"
+								process="@this"
+								onclick="#{ventasManager.actualizaCompraSelected(compraUsuario.emailCreador)}"
+								icon="icon-contact_phone" title="View">
+							</p:commandButton>
+						</p:column>
+					</p:dataTable>
 				</div>
 			</div>
+			</div>
 		</h:form>
+		
 		<p:dialog header="Gracias por usar nuestro servicio"
 			widgetVar="compraDialog" modal="true">
-			<h:outputText value="El contacto del vendedor es:" />
+			<h:outputText value="El contacto del vendedor es: " />
 			<h:outputText value="#{ventasManager.compraSelected}" />
-
 		</p:dialog>
 
-
 	</ui:define>
-
 </ui:composition>
