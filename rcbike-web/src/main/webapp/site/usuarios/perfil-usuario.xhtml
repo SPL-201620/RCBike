@@ -5,16 +5,18 @@
                 xmlns:p="http://primefaces.org/ui"
                 template="/WEB-INF/template.xhtml">
 
-    <ui:define name="title">
-        <h2 class="BigTopic">Mi Perfil</h2>
-    </ui:define>
-    
+	<ui:define name="head">
+		<title>rcbike - Mi Perfil</title>
+	</ui:define>
+
     <ui:define name="content">
         
         <div class="Container100 ui-fluid">
             <div class="ContainerIndent">
                 <div class="Card ShadowEffect">
-                    <h2 class="BigTopic">Información Personal</h2>
+                	<h2 class="CardTopic">Perfil - Información Personal</h2>
+					<div class="SeparatorFull"/>
+                    
                     <div class="Container20 Responsive" style="height:150px">
 						<img style="display:#{empty perfilUsuarioManager.usuario.foto ? 'none': 'block'}; margin:0 auto" src="data:image/jpeg;base64,#{perfilUsuarioManager.usuario.foto}"/>
 						<i class="icon-account_circle Fs100" style="display:#{empty perfilUsuarioManager.usuario.foto ? 'block': 'none'}; margin:0 auto"></i>							
@@ -31,16 +33,14 @@
             <div class="ContainerIndent">
                 <div class="Card ShadowEffect">
                 	<h:form id="formNoAmigos">
-                    <h2 class="BigTopic" style="padding-bottom: 20px; padding-right: 20px;">Amigos
-                    	<div class="Fright">
-	                    	<div class="DispInlBlock">
-		                    	<p:commandButton id="agrAmigos" icon="fa fa-users"  
-		                    		styleClass="RaisedButton #{amigosManager.mostrarNoAmigos ? 'RedButton':'GreenButton'}" 
-		                    		value="#{amigosManager.mostrarNoAmigos ? 'Ocultar Nuevos Amigos':'Buscar Nuevos Amigos'}"
-		                    		update="@this :formNoAmigos:noAmigosCard" action="#{amigosManager.cambiarEstadoCandidatos()}" />
-	                    	</div>
-                    	</div>
-                    </h2>
+                	<h2 class="CardTopic DispInlBlock">Amigos</h2>
+                   	<div class="DispInlBlock Fright">
+                    	<p:commandButton id="agrAmigos" icon="fa fa-users"  
+                    		styleClass="RaisedButton #{amigosManager.mostrarNoAmigos ? 'RedButton':'GreenButton'}" 
+                    		value="#{amigosManager.mostrarNoAmigos ? 'Ocultar Nuevos Amigos':'Buscar Nuevos Amigos'}"
+                    		update="@this :formNoAmigos:noAmigosCard" action="#{amigosManager.cambiarEstadoCandidatos()}" />
+                   	</div>
+					<div class="SeparatorFull"/>
                     
                     <p:outputPanel id="noAmigosCard" layout="block">
 	                    <p:outputPanel layout="block" styleClass="Card ShadowEffect WhiteBlueBack" rendered="#{amigosManager.mostrarNoAmigos}">
