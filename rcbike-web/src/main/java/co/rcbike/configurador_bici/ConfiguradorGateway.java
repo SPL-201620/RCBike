@@ -19,47 +19,58 @@ import eu.agilejava.snoop.client.SnoopServiceClient;
 @RequestScoped
 public class ConfiguradorGateway extends RcbikeRestGateway {
 
-    public static final GenericType<List<ConfiguracionWeb>> TYPE_LIST_CONFIGURACIONES = new GenericType<List<ConfiguracionWeb>>() {
-    };
+	public static final GenericType<List<ConfiguracionWeb>> TYPE_LIST_CONFIGURACIONES = new GenericType<List<ConfiguracionWeb>>() {
+	};
 
-    public static final GenericType<List<PiezaWeb>> TYPE_LIST_PIEZAS = new GenericType<List<PiezaWeb>>() {
-    };
+	public static final GenericType<List<PiezaWeb>> TYPE_LIST_PIEZAS = new GenericType<List<PiezaWeb>>() {
+	};
 
-    public static final GenericType<List<ColorWeb>> TYPE_LIST_COLOR = new GenericType<List<ColorWeb>>() {
-    };
+	public static final GenericType<List<ColorWeb>> TYPE_LIST_COLOR = new GenericType<List<ColorWeb>>() {
+	};
 
-    @Inject
-    @Snoop(serviceName = "configurador")
-    private SnoopServiceClient service;
+	@Inject
+	@Snoop(serviceName = "configurador")
+	private SnoopServiceClient service;
 
-    @Override
-    protected SnoopServiceClient client() {
-        return service;
-    }
+	@Override
+	protected SnoopServiceClient client() {
+		return service;
+	}
 
-    public Long crearConfiguracion(ConfiguracionWeb configuracion) {
-        return webTarget().path(OperacionesConfiguracion.EP_CONFIGURACION)
-                .path(OperacionesConfiguracion.EP_CONFIGURACION).request().post(Entity.json(configuracion), Long.class);
-    }
+	public Long crearConfiguracion(ConfiguracionWeb configuracion) {
+		return webTarget().path(OperacionesConfiguracion.EP_CONFIGURACION)
+				.path(OperacionesConfiguracion.EP_CONFIGURACION).request()
+				.post(Entity.json(configuracion), Long.class);
+	}
 
-    public void agregarParteConfiguracion(PiezaConfiguracionWeb piezaConfigurada) {
-        webTarget().path(OperacionesConfiguracion.EP_CONFIGURACION).path("piezaConfiguracion").request()
-                .put(Entity.json(piezaConfigurada));
-    }
+	public void agregarParteConfiguracion(PiezaConfiguracionWeb piezaConfigurada) {
+		webTarget().path(OperacionesConfiguracion.EP_CONFIGURACION)
+				.path("piezaConfiguracion").request()
+				.put(Entity.json(piezaConfigurada));
+	}
 
-    public List<ConfiguracionWeb> listConfiguracionesByEmail(String email) {
-        return webTarget().path(OperacionesConfiguracion.EP_CONFIGURACION).path("configuraciones").path("porEmail")
-                .queryParam("emailCreador", email).request().get(TYPE_LIST_CONFIGURACIONES);
-    }
+	public List<ConfiguracionWeb> listConfiguracionesByEmail(String email) {
+		return webTarget().path(OperacionesConfiguracion.EP_CONFIGURACION)
+				.path("configuraciones").path("porEmail")
+				.queryParam("emailCreador", email).request()
+				.get(TYPE_LIST_CONFIGURACIONES);
+	}
 
-    public List<PiezaWeb> listPiezasByTipo(String tipoPieza) {
-        return webTarget().path(OperacionesConfiguracion.EP_CONFIGURACION).path(OperacionesConfiguracion.OP_PIEZAS)
-                .path(OperacionesConfiguracion.OP_PIEZAS_BY_TIPO).queryParam("tipo", tipoPieza).request()
-                .get(TYPE_LIST_PIEZAS);
-    }
+	public List<PiezaWeb> listPiezasByTipo(String tipoPieza) {
+		return webTarget().path(OperacionesConfiguracion.EP_CONFIGURACION)
+				.path(OperacionesConfiguracion.OP_PIEZAS)
+				.path(OperacionesConfiguracion.OP_PIEZAS_BY_TIPO)
+				.queryParam("tipo", tipoPieza).request().get(TYPE_LIST_PIEZAS);
+	}
 
-    public List<ColorWeb> listColor() {
-        return webTarget().path(OperacionesConfiguracion.EP_CONFIGURACION).path("colores").request()
-                .get(TYPE_LIST_COLOR);
-    }
+	public List<ColorWeb> listColor() {
+		return webTarget().path(OperacionesConfiguracion.EP_CONFIGURACION)
+				.path("colores").request().get(TYPE_LIST_COLOR);
+	}
+
+	public void eliminarConfiguracion(Long id) {
+		webTarget().path(OperacionesConfiguracion.EP_CONFIGURACION)
+				.path(OperacionesConfiguracion.PATH_PRM_ID).path(id.toString())
+				.request();
+	}
 }

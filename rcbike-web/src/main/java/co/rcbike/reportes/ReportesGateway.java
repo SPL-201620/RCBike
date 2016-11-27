@@ -32,8 +32,8 @@ public class ReportesGateway extends RcbikeRestGateway {
 			TipoReporte tipo, String emailCreador) {
 		return webTarget().path(OperacionesReportes.REPORTES)
 				.path(OperacionesReportes.REPORTE).queryParam("tipo", tipo)
-				.queryParam("fechiInicio", fechaInicio)
-				.queryParam("fechaFin", fechaFin)
+				.queryParam("fechaInicio", fechaInicio)
+				.queryParam("fechaFinal", fechaFin)
 				.queryParam("emailCreador", emailCreador).request()
 				.get(TYPE_LIST_RESUMEN_WEB);
 	}
