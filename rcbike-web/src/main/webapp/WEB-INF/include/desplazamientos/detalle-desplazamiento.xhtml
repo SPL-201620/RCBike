@@ -6,41 +6,41 @@
 
 	<script	src="https://maps.googleapis.com/maps/api/js?key=#{utilEL.getGMAP_KEY()}&amp;signed_in=false&amp;libraries=places"/>
 
-	<h:form id="formPublico" rendered="#{rutaGrupalPublicoManager.ruta != null}">
+	<h:form id="formPublico" rendered="#{desplazamientoPublicoManager.ruta != null}">
 		<div class="Container50 Responsive100">
 			<p:panelGrid  columns="2" layout="grid" styleClass="ui-panelgrid-blank">
 
 			    <h:outputText value="Nombre:"/>
-			    <h:outputText value="#{rutaGrupalPublicoManager.ruta.nombre}"/>
+			    <h:outputText value="#{desplazamientoPublicoManager.ruta.nombre}"/>
 			
 			    <h:outputText value="Descripcion:"/>
-			    <h:outputText value="#{rutaGrupalPublicoManager.ruta.descripcion}"/>
+			    <h:outputText value="#{desplazamientoPublicoManager.ruta.descripcion}"/>
 			
 			    <h:outputText value="Tipo:"/>
-			    <h:outputText value="#{utilEL.capitalize(rutaGrupalPublicoManager.ruta.tipo)}"/>
+			    <h:outputText value="#{utilEL.capitalize(desplazamientoPublicoManager.ruta.tipo)}"/>
 			
 			    <h:outputText value="Distancia:"/>
-			    <h:outputText  value="#{rutaGrupalPublicoManager.ruta.distancia}"/>
+			    <h:outputText  value="#{desplazamientoPublicoManager.ruta.distancia}"/>
 			
 			    <h:outputText value="Tiempo Estimado:"/>
-			    <h:outputText value="#{rutaGrupalPublicoManager.ruta.tiempoEstimado}"/>
+			    <h:outputText value="#{desplazamientoPublicoManager.ruta.tiempoEstimado}"/>
 			    
 				<h:outputText value="Calorias:"/>
-				<h:outputText value="#{rutaGrupalPublicoManager.ruta.calorias}"/>
+				<h:outputText value="#{desplazamientoPublicoManager.ruta.calorias}"/>
 			
 			    <h:outputText value="Clima:"/>
-			    <h:outputText value="#{rutaGrupalPublicoManager.ruta.clima}"/>
+			    <h:outputText value="#{desplazamientoPublicoManager.ruta.clima}"/>
 			
 			    <h:outputText value="Fecha:"/>
-			    <h:outputText value="#{rutaGrupalPublicoManager.ruta.fecha}" >
+			    <h:outputText value="#{desplazamientoPublicoManager.ruta.fecha}" >
 					<f:convertDateTime pattern="dd-MM-yyyy" />
 				</h:outputText>
 			    
 			    <h:outputText value="Frecuente:"/>
-			    <h:outputText value="#{utilEL.parseBoolean(rutaGrupalPublicoManager.ruta.frecuente)}"/>
+			    <h:outputText value="#{utilEL.parseBoolean(desplazamientoPublicoManager.ruta.frecuente)}"/>
 			    
 				<h:outputText value="Dias:"/>
-				<h:outputText value="#{rutaGrupalPublicoManager.ruta.dias}"/>
+				<h:outputText value="#{desplazamientoPublicoManager.ruta.dias}"/>
 
             </p:panelGrid>
             <div class="EmptyBox20"/>
@@ -60,10 +60,10 @@
 	<script type="text/javascript">
 	
 	function callRouting(){
-		routing(#{rutaGrupalPublicoManager.ruta.latitudInicio},
-				#{rutaGrupalPublicoManager.ruta.longitudInicio},
-				#{rutaGrupalPublicoManager.ruta.latitudFinal},
-				#{rutaGrupalPublicoManager.ruta.longitudFinal});
+		routing(#{desplazamientoPublicoManager.ruta.latitudInicio},
+				#{desplazamientoPublicoManager.ruta.longitudInicio},
+				#{desplazamientoPublicoManager.ruta.latitudFinal},
+				#{desplazamientoPublicoManager.ruta.longitudFinal});
 	}
 	
 	$().ready(function(){
