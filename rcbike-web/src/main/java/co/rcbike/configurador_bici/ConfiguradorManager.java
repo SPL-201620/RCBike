@@ -11,76 +11,88 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
 
+import lombok.Getter;
+import lombok.Setter;
 import co.rcbike.autenticacion.AutenticacionManager;
 import co.rcbike.configurador_bici.model.ConfiguracionWeb;
 import co.rcbike.configurador_bici.model.PiezaConfiguracionWeb;
 import co.rcbike.configurador_bici.model.PiezaWeb;
 import co.rcbike.configurador_bici.model.TipoPiezaBicicleta;
-import lombok.Getter;
-import lombok.Setter;
 
 @SuppressWarnings("serial")
 @ManagedBean
 @ViewScoped
 public class ConfiguradorManager implements Serializable {
 
-    @Getter
-    @Setter
-    private String descripcionConfiguracion;
+	@Getter
+	@Setter
+	private String descripcionConfiguracion;
 
-    @Getter
-    @Setter
-    private String color;
+	@Getter
+	@Setter
+	private String color;
 
-    @Getter
-    @Setter
-    private PiezaWeb pieza;
+	@Getter
+	@Setter
+	private PiezaWeb pieza;
 
-    @Getter
-    @Setter
-    private Map<TipoPiezaBicicleta, PiezaWeb> piezas = new HashMap<TipoPiezaBicicleta, PiezaWeb>();
+	@Getter
+	@Setter
+	private Map<TipoPiezaBicicleta, PiezaWeb> piezas = new HashMap<TipoPiezaBicicleta, PiezaWeb>();
 
-    @Getter
-    @Setter
-    private List<ConfiguracionWeb> listConfiguraciones;
+	@Getter
+	@Setter
+	private List<ConfiguracionWeb> listConfiguraciones;
 
-    @Inject
-    private ConfiguradorGateway gateway;
+	@Getter
+	@Setter
+	private Long identificador;
 
-    @PostConstruct
-    public void init() {
-        pieza = null;
-        color = null;
-        descripcionConfiguracion = null;
-        piezas.clear();
-        configuracionesList();
-    }
+	@Inject
+	private ConfiguradorGateway gateway;
 
-    public void piezasConfiguradas() {
-        piezas.put(pieza.getTipo(), pieza);
-    }
+	@PostConstruct
+	public void init() {
+		pieza = null;
+		color = null;
+		descripcionConfiguracion = null;
+		piezas.clear();
+		configuracionesList();
+	}
 
-    public void insertConfiguracion() {
-        ConfiguracionWeb configuracion = new ConfiguracionWeb();
+	public void piezasConfiguradas() {
+		piezas.put(pieza.getTipo(), pieza);
+	}
 
-        configuracion.setDescripcion(descripcionConfiguracion);
-        configuracion.setEmailCreador(AutenticacionManager.emailAutenticado());
-        Long idConfiguracion = gateway.crearConfiguracion(configuracion);
+	public void insertConfiguracion() {
+		ConfiguracionWeb configuracion = new ConfiguracionWeb();
 
-        PiezaConfiguracionWeb piezaConfigurada = new PiezaConfiguracionWeb();
-        for (Entry<TipoPiezaBicicleta, PiezaWeb> pieza : piezas.entrySet()) {
-            piezaConfigurada.setIdConfiguracion(idConfiguracion);
-            piezaConfigurada.setIdPieza(pieza.getValue().getId());
-            piezaConfigurada.setDescripcion(pieza.getValue().getDescripcion());
-            piezaConfigurada.setTipo(pieza.getValue().getTipo());
-            piezaConfigurada.setColor(color);
-            gateway.agregarParteConfiguracion(piezaConfigurada);
-        }
-        init();
-    }
+		configuracion.setDescripcion(descripcionConfiguracion);
+		configuracion.setEmailCreador(AutenticacionManager.emailAutenticado());
+		Long idConfiguracion = gateway.crearConfiguracion(configuracion);
 
-    public void configuracionesList() {
-        listConfiguraciones = gateway.listConfiguracionesByEmail(AutenticacionManager.emailAutenticado());
+		PiezaConfiguracionWeb piezaConfigurada = new PiezaConfiguracionWeb();
+		for (Entry<TipoPiezaBicicleta, PiezaWeb> pieza : piezas.entrySet()) {
+			piezaConfigurada.setIdConfiguracion(idConfiguracion);
+			piezaConfigurada.setIdPieza(pieza.getValue().getId());
+			piezaConfigurada.setDescripcion(pieza.getValue().getDescripcion());
+			piezaConfigurada.setTipo(pieza.getValue().getTipo());
+			piezaConfigurada.setColor(color);
+			gateway.agregarParteConfiguracion(piezaConfigurada);
+		}
+		init();
+	}
 
-    }
+	public void configuracionesList() {
+		listConfiguraciones = gateway
+				.listConfiguracionesByEmail(AutenticacionManager
+						.emailAutenticado());
+
+	}
+
+	public void eliminarConfiguracion(Long id) {
+		gateway.eliminarConfiguracion(id);
+		configuracionesList();
+
+	}
 }

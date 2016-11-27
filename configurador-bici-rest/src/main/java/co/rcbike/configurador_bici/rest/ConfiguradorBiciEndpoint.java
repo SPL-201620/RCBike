@@ -29,392 +29,423 @@ import co.rcbike.configurador_bici.service.TransformadorConfigurador;
 @RequestScoped
 public class ConfiguradorBiciEndpoint {
 
-    @Inject
-    private ConfiguradorService service;
+	@Inject
+	private ConfiguradorService service;
 
-    @Inject
-    private TransformadorConfigurador transformador;
+	@Inject
+	private TransformadorConfigurador transformador;
 
-    /***** CONFIGURACONES ****/
+	/***** CONFIGURACONES ****/
 
-    /**
-     * REST: GET,/configuracion/{id} Lista todos los recorridos por un id
-     * 
-     * @param id
-     *            Identificador de configuracion
-     */
+	/**
+	 * REST: GET,/configuracion/{id} Lista todos los recorridos por un id
+	 * 
+	 * @param id
+	 *            Identificador de configuracion
+	 */
 
-    @GET
-    @Path(OperacionesConfiguracion.EP_CONFIGURACION + "/" + OperacionesConfiguracion.PATH_PRM_ID)
-    @Produces(MediaType.APPLICATION_JSON)
-    public ConfiguracionWeb getConfiguracion(@PathParam(OperacionesConfiguracion.PRM_ID) Long id) {
-        return transformador.toConfiguracionWeb(service.getConfiguracion(id));
+	@GET
+	@Path(OperacionesConfiguracion.EP_CONFIGURACION + "/"
+			+ OperacionesConfiguracion.PATH_PRM_ID)
+	@Produces(MediaType.APPLICATION_JSON)
+	public ConfiguracionWeb getConfiguracion(
+			@PathParam(OperacionesConfiguracion.PRM_ID) Long id) {
+		return transformador.toConfiguracionWeb(service.getConfiguracion(id));
 
-    }
+	}
 
-    /**
-     * REST: POST,/configuracion, save one Permite guardar un recorrido
-     * 
-     * @param configuracion
-     *            Informacion de la configuracion a crear
-     * @return Identificador de configuracion creada
-     */
+	/**
+	 * REST: POST,/configuracion, save one Permite guardar un recorrido
+	 * 
+	 * @param configuracion
+	 *            Informacion de la configuracion a crear
+	 * @return Identificador de configuracion creada
+	 */
 
-    @POST
-    @Path(OperacionesConfiguracion.EP_CONFIGURACION)
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Long postConfiguracion(ConfiguracionWeb configuracion) {
-        return service.persistConfiguracion(transformador.toConfiguracionJpa(configuracion));
-    }
+	@POST
+	@Path(OperacionesConfiguracion.EP_CONFIGURACION)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Long postConfiguracion(ConfiguracionWeb configuracion) {
+		return service.persistConfiguracion(transformador
+				.toConfiguracionJpa(configuracion));
+	}
 
-    /**
-     * REST: PUT,/configuracion, update one Permite guardar un recorrido
-     * 
-     * @param configuracion
-     *            Informacion de la configuracion a crear
-     * @return Identificador de configuracion creada
-     */
+	/**
+	 * REST: PUT,/configuracion, update one Permite guardar un recorrido
+	 * 
+	 * @param configuracion
+	 *            Informacion de la configuracion a crear
+	 * @return Identificador de configuracion creada
+	 */
 
-    @PUT
-    @Path(OperacionesConfiguracion.EP_CONFIGURACION)
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Long putConfiguracion(ConfiguracionWeb configuracion) {
-        return service.mergeConfiguracion(transformador.toConfiguracionJpa(configuracion));
-    }
+	@PUT
+	@Path(OperacionesConfiguracion.EP_CONFIGURACION)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Long putConfiguracion(ConfiguracionWeb configuracion) {
+		return service.mergeConfiguracion(transformador
+				.toConfiguracionJpa(configuracion));
+	}
 
-    /**
-     * REST: DELETE,/configuracion/{id}, cancel one Lista todos los recorridos
-     * por un id
-     * 
-     * @param id
-     *            Identificador de configuracion
-     */
+	/**
+	 * REST: DELETE,/configuracion/{id}, cancel one Lista todos los recorridos
+	 * por un id
+	 * 
+	 * @param id
+	 *            Identificador de configuracion
+	 */
 
-    @DELETE
-    @Path(OperacionesConfiguracion.EP_CONFIGURACION + "/" + OperacionesConfiguracion.PATH_PRM_ID)
-    public void deleteConfiguracion(@PathParam(OperacionesConfiguracion.PRM_ID) Long id) {
-        service.deleteConfiguracion(id);
-    }
+	@DELETE
+	@Path(OperacionesConfiguracion.EP_CONFIGURACION + "/"
+			+ OperacionesConfiguracion.PATH_PRM_ID)
+	public void deleteConfiguracion(
+			@PathParam(OperacionesConfiguracion.PRM_ID) Long id) {
+		service.deleteConfiguracion(id);
+	}
 
-    /**
-     * Valida una configuracion de bicicleta
-     * 
-     * @param configuracion
-     *            configuracion de una bicicleta
-     */
-    @POST
-    @Path(OperacionesConfiguracion.EP_CONFIGURACION + "/" + OperacionesConfiguracion.OP_VALIDAR)
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public ValidacionConfiguracion validarConfiguracion(ConfiguracionWeb configuracion) {
-        return service.validarConfiguracion(transformador.toConfiguracionJpa(configuracion));
-    }
+	/**
+	 * Valida una configuracion de bicicleta
+	 * 
+	 * @param configuracion
+	 *            configuracion de una bicicleta
+	 */
+	@POST
+	@Path(OperacionesConfiguracion.EP_CONFIGURACION + "/"
+			+ OperacionesConfiguracion.OP_VALIDAR)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public ValidacionConfiguracion validarConfiguracion(
+			ConfiguracionWeb configuracion) {
+		return service.validarConfiguracion(transformador
+				.toConfiguracionJpa(configuracion));
+	}
 
-    /**
-     * Valida una configuracion de bicicleta
-     * 
-     * @param configuracion
-     *            configuracion de una bicicleta
-     */
-    @GET
-    @Path(OperacionesConfiguracion.EP_CONFIGURACION + "/" + OperacionesConfiguracion.PATH_PRM_ID + "/"
-            + OperacionesConfiguracion.OP_VALIDAR)
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public ValidacionConfiguracion validarConfiguracion(@PathParam(OperacionesConfiguracion.PRM_ID) Long id) {
-        return service.validarConfiguracion(id);
-    }
+	/**
+	 * Valida una configuracion de bicicleta
+	 * 
+	 * @param configuracion
+	 *            configuracion de una bicicleta
+	 */
+	@GET
+	@Path(OperacionesConfiguracion.EP_CONFIGURACION + "/"
+			+ OperacionesConfiguracion.PATH_PRM_ID + "/"
+			+ OperacionesConfiguracion.OP_VALIDAR)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public ValidacionConfiguracion validarConfiguracion(
+			@PathParam(OperacionesConfiguracion.PRM_ID) Long id) {
+		return service.validarConfiguracion(id);
+	}
 
-    /***** CONFIGURACIONES ****/
+	/***** CONFIGURACIONES ****/
 
-    /**
-     * REST: GET,/configuraciones, list all Lista todos los recorridos
-     * 
-     */
+	/**
+	 * REST: GET,/configuraciones, list all Lista todos los recorridos
+	 * 
+	 */
 
-    @GET
-    @Path(OperacionesConfiguracion.OP_CONFIGURACIONES)
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<ConfiguracionWeb> getConfiguraciones() {
-        return transformador.toListConfiguracionWeb(service.listTodosConfiguraciones());
-    }
+	@GET
+	@Path(OperacionesConfiguracion.OP_CONFIGURACIONES)
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<ConfiguracionWeb> getConfiguraciones() {
+		return transformador.toListConfiguracionWeb(service
+				.listTodosConfiguraciones());
+	}
 
-    /**
-     * REST: GET,/configuraciones/{email}, list Lista todos los recorridos
-     * realizados por un usuario
-     * 
-     * @param emailCreador
-     *            email del usuario
-     */
+	/**
+	 * REST: GET,/configuraciones/{email}, list Lista todos los recorridos
+	 * realizados por un usuario
+	 * 
+	 * @param emailCreador
+	 *            email del usuario
+	 */
 
-    @GET
-    @Path(OperacionesConfiguracion.OP_CONFIGURACIONES + "/" + OperacionesConfiguracion.OP_BY_EMAIL)
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<ConfiguracionWeb> getConfiguraciones(
-            @QueryParam(OperacionesConfiguracion.PARAM_EMAIL_CREADOR) String emailCreador) {
-        return transformador.toListConfiguracionWeb(service.listConfiguraciones(emailCreador));
+	@GET
+	@Path(OperacionesConfiguracion.OP_CONFIGURACIONES + "/"
+			+ OperacionesConfiguracion.OP_BY_EMAIL)
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<ConfiguracionWeb> getConfiguraciones(
+			@QueryParam(OperacionesConfiguracion.PARAM_EMAIL_CREADOR) String emailCreador) {
+		return transformador.toListConfiguracionWeb(service
+				.listConfiguraciones(emailCreador));
 
-    }
+	}
 
-    /***** PIEZA CONFIGURACION *****/
+	/***** PIEZA CONFIGURACION *****/
 
-    /**
-     * REST: GET,/piezaConfiguracion/{id} Lista todos los recorridos por un id
-     * 
-     * @param id
-     *            Identificador de piezaConfiguracion
-     */
+	/**
+	 * REST: GET,/piezaConfiguracion/{id} Lista todos los recorridos por un id
+	 * 
+	 * @param id
+	 *            Identificador de piezaConfiguracion
+	 */
 
-    @GET
-    @Path(OperacionesConfiguracion.OP_PIEZA_CONFIGURACION + "/" + OperacionesConfiguracion.PATH_PRM_ID)
-    @Produces(MediaType.APPLICATION_JSON)
-    public PiezaConfiguracionWeb getPiezaConfiguracion(@PathParam(OperacionesConfiguracion.PRM_ID) Long id) {
-        return transformador.toPiezaConfiguracionWeb(service.getPiezaConfiguracion(id));
+	@GET
+	@Path(OperacionesConfiguracion.OP_PIEZA_CONFIGURACION + "/"
+			+ OperacionesConfiguracion.PATH_PRM_ID)
+	@Produces(MediaType.APPLICATION_JSON)
+	public PiezaConfiguracionWeb getPiezaConfiguracion(
+			@PathParam(OperacionesConfiguracion.PRM_ID) Long id) {
+		return transformador.toPiezaConfiguracionWeb(service
+				.getPiezaConfiguracion(id));
 
-    }
+	}
 
-    /**
-     * REST: POST,/piezaConfiguracion, save one Permite guardar un recorrido
-     * 
-     * @param piezaConfiguracion
-     *            Informacion de la piezaConfiguracion a crear
-     * @return Identificador de piezaConfiguracion creada
-     */
+	/**
+	 * REST: POST,/piezaConfiguracion, save one Permite guardar un recorrido
+	 * 
+	 * @param piezaConfiguracion
+	 *            Informacion de la piezaConfiguracion a crear
+	 * @return Identificador de piezaConfiguracion creada
+	 */
 
-    @POST
-    @Path(OperacionesConfiguracion.OP_PIEZA_CONFIGURACION)
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Long postPiezaConfiguracion(PiezaConfiguracionWeb piezaConfiguracion) {
-        return service.persistPiezaConfiguracion(transformador.toPiezaConfiguracionJpa(piezaConfiguracion));
-    }
+	@POST
+	@Path(OperacionesConfiguracion.OP_PIEZA_CONFIGURACION)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Long postPiezaConfiguracion(PiezaConfiguracionWeb piezaConfiguracion) {
+		return service.persistPiezaConfiguracion(transformador
+				.toPiezaConfiguracionJpa(piezaConfiguracion));
+	}
 
-    /**
-     * REST: PUT,/piezaConfiguracion, update one Permite guardar un recorrido
-     * 
-     * @param piezaConfiguracion
-     *            Informacion de la piezaConfiguracion a crear
-     * @return Identificador de piezaConfiguracion creada
-     */
+	/**
+	 * REST: PUT,/piezaConfiguracion, update one Permite guardar un recorrido
+	 * 
+	 * @param piezaConfiguracion
+	 *            Informacion de la piezaConfiguracion a crear
+	 * @return Identificador de piezaConfiguracion creada
+	 */
 
-    @PUT
-    @Path(OperacionesConfiguracion.OP_PIEZA_CONFIGURACION)
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Long putPiezaConfiguracion(PiezaConfiguracionWeb piezaConfiguracion) {
-        return service.mergePiezaConfiguracion(transformador.toPiezaConfiguracionJpa(piezaConfiguracion));
-    }
+	@PUT
+	@Path(OperacionesConfiguracion.OP_PIEZA_CONFIGURACION)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Long putPiezaConfiguracion(PiezaConfiguracionWeb piezaConfiguracion) {
+		return service.mergePiezaConfiguracion(transformador
+				.toPiezaConfiguracionJpa(piezaConfiguracion));
+	}
 
-    /**
-     * REST: DELETE,/piezaConfiguracion/{id}, cancel one Lista todos los
-     * recorridos por un id
-     * 
-     * @param id
-     *            Identificador de piezaConfiguracion
-     */
-    @DELETE
-    @Path(OperacionesConfiguracion.OP_PIEZA_CONFIGURACION + "/" + OperacionesConfiguracion.PATH_PRM_ID)
-    public void deletePiezaConfiguracion(@PathParam(OperacionesConfiguracion.PRM_ID) Long id) {
-        service.deletePiezaConfiguracion(id);
-    }
+	/**
+	 * REST: DELETE,/piezaConfiguracion/{id}, cancel one Lista todos los
+	 * recorridos por un id
+	 * 
+	 * @param id
+	 *            Identificador de piezaConfiguracion
+	 */
+	@DELETE
+	@Path(OperacionesConfiguracion.OP_PIEZA_CONFIGURACION + "/"
+			+ OperacionesConfiguracion.PATH_PRM_ID)
+	public void deletePiezaConfiguracion(
+			@PathParam(OperacionesConfiguracion.PRM_ID) Long id) {
+		service.deletePiezaConfiguracion(id);
+	}
 
-    /***** PIEZAS CONFIGURACION ****/
+	/***** PIEZAS CONFIGURACION ****/
 
-    /**
-     * REST: GET,/piezasConfiguracion, list all Lista todos los recorridos
-     * 
-     */
+	/**
+	 * REST: GET,/piezasConfiguracion, list all Lista todos los recorridos
+	 * 
+	 */
 
-    @GET
-    @Path(OperacionesConfiguracion.OP_PIEZAS_CONFIGURACION)
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<PiezaConfiguracionWeb> getPiezasConfiguracion() {
-        return transformador.toListPiezaConfiguracionWeb(service.listTodosPiezasConfiguracion());
-    }
+	@GET
+	@Path(OperacionesConfiguracion.OP_PIEZAS_CONFIGURACION)
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<PiezaConfiguracionWeb> getPiezasConfiguracion() {
+		return transformador.toListPiezaConfiguracionWeb(service
+				.listTodosPiezasConfiguracion());
+	}
 
-    /**
-     * REST: GET,/configuracion/{id}/piezasConfiguracion, list Lista todos los
-     * recorridos realizados por un usuario
-     * 
-     * @param emailCreador
-     *            email del usuario
-     */
+	/**
+	 * REST: GET,/configuracion/{id}/piezasConfiguracion, list Lista todos los
+	 * recorridos realizados por un usuario
+	 * 
+	 * @param emailCreador
+	 *            email del usuario
+	 */
 
-    @GET
-    @Path(OperacionesConfiguracion.EP_CONFIGURACION + "/" + OperacionesConfiguracion.PATH_PRM_ID + "/"
-            + OperacionesConfiguracion.OP_PIEZAS_CONFIGURACION)
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<PiezaConfiguracionWeb> getPiezasConfiguracion(@PathParam(OperacionesConfiguracion.PRM_ID) Long id) {
-        return transformador.toListPiezaConfiguracionWeb(service.listPiezasConfiguracion(id));
-    }
+	@GET
+	@Path(OperacionesConfiguracion.EP_CONFIGURACION + "/"
+			+ OperacionesConfiguracion.PATH_PRM_ID + "/"
+			+ OperacionesConfiguracion.OP_PIEZAS_CONFIGURACION)
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<PiezaConfiguracionWeb> getPiezasConfiguracion(
+			@PathParam(OperacionesConfiguracion.PRM_ID) Long id) {
+		return transformador.toListPiezaConfiguracionWeb(service
+				.listPiezasConfiguracion(id));
+	}
 
-    /***** PIEZA *****/
+	/***** PIEZA *****/
 
-    /**
-     * REST: GET,/waypoint/{id} Lista todos los recorridos individuales por un
-     * id
-     * 
-     * @param id
-     *            Identificador de waypoint
-     */
+	/**
+	 * REST: GET,/waypoint/{id} Lista todos los recorridos individuales por un
+	 * id
+	 * 
+	 * @param id
+	 *            Identificador de waypoint
+	 */
 
-    @GET
-    @Path(OperacionesConfiguracion.OP_PIEZA + "/" + OperacionesConfiguracion.PATH_PRM_ID)
-    @Produces(MediaType.APPLICATION_JSON)
-    public PiezaWeb getPieza(@PathParam(OperacionesConfiguracion.PRM_ID) Long id) {
-        return transformador.toPiezaWeb(service.getPieza(id));
-    }
+	@GET
+	@Path(OperacionesConfiguracion.OP_PIEZA + "/"
+			+ OperacionesConfiguracion.PATH_PRM_ID)
+	@Produces(MediaType.APPLICATION_JSON)
+	public PiezaWeb getPieza(@PathParam(OperacionesConfiguracion.PRM_ID) Long id) {
+		return transformador.toPiezaWeb(service.getPieza(id));
+	}
 
-    /**
-     * REST: POST,/waypoint, save one Permite guardar un recorrido individual
-     * 
-     * @param waypoint
-     *            Informacion de la waypoint a crear
-     * @return Identificador de waypoint creada
-     */
+	/**
+	 * REST: POST,/waypoint, save one Permite guardar un recorrido individual
+	 * 
+	 * @param waypoint
+	 *            Informacion de la waypoint a crear
+	 * @return Identificador de waypoint creada
+	 */
 
-    @POST
-    @Path(OperacionesConfiguracion.OP_PIEZA)
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Long postPieza(PiezaWeb waypoint) {
-        return service.persistPieza(transformador.toPiezaJpa(waypoint));
-    }
+	@POST
+	@Path(OperacionesConfiguracion.OP_PIEZA)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Long postPieza(PiezaWeb waypoint) {
+		return service.persistPieza(transformador.toPiezaJpa(waypoint));
+	}
 
-    /**
-     * REST: PUT,/waypoint, update one Permite guardar un recorrido individual
-     * 
-     * @param waypoint
-     *            Informacion de la waypoint a crear
-     * @return Identificador de waypoint creada
-     */
-    @PUT
-    @Path(OperacionesConfiguracion.OP_PIEZA)
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Long putPieza(PiezaWeb waypoint) {
-        return service.mergePieza(transformador.toPiezaJpa(waypoint));
-    }
+	/**
+	 * REST: PUT,/waypoint, update one Permite guardar un recorrido individual
+	 * 
+	 * @param waypoint
+	 *            Informacion de la waypoint a crear
+	 * @return Identificador de waypoint creada
+	 */
+	@PUT
+	@Path(OperacionesConfiguracion.OP_PIEZA)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Long putPieza(PiezaWeb waypoint) {
+		return service.mergePieza(transformador.toPiezaJpa(waypoint));
+	}
 
-    /**
-     * REST: DELETE,/waypoint/{id}, cancel one Lista todos los recorridos
-     * individuales por un id
-     * 
-     * @param id
-     *            Identificador de waypoint
-     */
-    @DELETE
-    @Path(OperacionesConfiguracion.OP_PIEZA + "/" + OperacionesConfiguracion.PATH_PRM_ID)
-    public void deletePieza(@PathParam(OperacionesConfiguracion.PRM_ID) Long id) {
-        service.deletePieza(id);
-    }
+	/**
+	 * REST: DELETE,/waypoint/{id}, cancel one Lista todos los recorridos
+	 * individuales por un id
+	 * 
+	 * @param id
+	 *            Identificador de waypoint
+	 */
+	@DELETE
+	@Path(OperacionesConfiguracion.OP_PIEZA + "/"
+			+ OperacionesConfiguracion.PATH_PRM_ID)
+	public void deletePieza(@PathParam(OperacionesConfiguracion.PRM_ID) Long id) {
+		service.deletePieza(id);
+	}
 
-    /***** PIEZAS ****/
+	/***** PIEZAS ****/
 
-    /**
-     * REST: GET,/piezas, list all Lista todos los recorridos individuales
-     * 
-     */
+	/**
+	 * REST: GET,/piezas, list all Lista todos los recorridos individuales
+	 * 
+	 */
 
-    @GET
-    @Path(OperacionesConfiguracion.OP_PIEZAS)
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<PiezaWeb> getPiezas() {
-        return transformador.toListPiezaWeb(service.listTodasPiezas());
-    }
+	@GET
+	@Path(OperacionesConfiguracion.OP_PIEZAS)
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<PiezaWeb> getPiezas() {
+		return transformador.toListPiezaWeb(service.listTodasPiezas());
+	}
 
-    /**
-     * REST: GET,/piezas/porTipo?tipo=?, list Lista todos los recorridos
-     * realizados por un usuario
-     * 
-     * @param emailCreador
-     *            email del usuario
-     */
+	/**
+	 * REST: GET,/piezas/porTipo?tipo=?, list Lista todos los recorridos
+	 * realizados por un usuario
+	 * 
+	 * @param emailCreador
+	 *            email del usuario
+	 */
 
-    @GET
-    @Path(OperacionesConfiguracion.OP_PIEZAS + "/" + OperacionesConfiguracion.OP_PIEZAS_BY_TIPO)
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<PiezaWeb> getPiezas(@QueryParam(OperacionesConfiguracion.PATH_PRM_TIPO) TipoPiezaBicicleta tipo) {
-        return transformador.toListPiezaWeb(service.listPiezas(tipo));
-    }
+	@GET
+	@Path(OperacionesConfiguracion.OP_PIEZAS + "/"
+			+ OperacionesConfiguracion.OP_PIEZAS_BY_TIPO)
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<PiezaWeb> getPiezas(
+			@QueryParam(OperacionesConfiguracion.PATH_PRM_TIPO) TipoPiezaBicicleta tipo) {
+		return transformador.toListPiezaWeb(service.listPiezas(tipo));
+	}
 
-    /***** COLOR *****/
+	/***** COLOR *****/
 
-    /**
-     * REST: GET,/waypoint/{id} Lista todos los recorridos individuales por un
-     * id
-     * 
-     * @param id
-     *            Identificador de waypoint
-     */
+	/**
+	 * REST: GET,/waypoint/{id} Lista todos los recorridos individuales por un
+	 * id
+	 * 
+	 * @param id
+	 *            Identificador de waypoint
+	 */
 
-    @GET
-    @Path(OperacionesConfiguracion.OP_COLOR + "/" + OperacionesConfiguracion.PATH_PRM_ID)
-    @Produces(MediaType.APPLICATION_JSON)
-    public ColorWeb getColor(@PathParam(OperacionesConfiguracion.PRM_ID) Long id) {
-        return transformador.toColorWeb(service.getColor(id));
-    }
+	@GET
+	@Path(OperacionesConfiguracion.OP_COLOR + "/"
+			+ OperacionesConfiguracion.PATH_PRM_ID)
+	@Produces(MediaType.APPLICATION_JSON)
+	public ColorWeb getColor(@PathParam(OperacionesConfiguracion.PRM_ID) Long id) {
+		return transformador.toColorWeb(service.getColor(id));
+	}
 
-    /**
-     * REST: POST,/waypoint, save one Permite guardar un recorrido individual
-     * 
-     * @param waypoint
-     *            Informacion de la waypoint a crear
-     * @return Identificador de waypoint creada
-     */
+	/**
+	 * REST: POST,/waypoint, save one Permite guardar un recorrido individual
+	 * 
+	 * @param waypoint
+	 *            Informacion de la waypoint a crear
+	 * @return Identificador de waypoint creada
+	 */
 
-    @POST
-    @Path(OperacionesConfiguracion.OP_COLOR)
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Long postColor(ColorWeb waypoint) {
-        return service.persistColor(transformador.toColorJpa(waypoint));
-    }
+	@POST
+	@Path(OperacionesConfiguracion.OP_COLOR)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Long postColor(ColorWeb waypoint) {
+		return service.persistColor(transformador.toColorJpa(waypoint));
+	}
 
-    /**
-     * REST: PUT,/waypoint, update one Permite guardar un recorrido individual
-     * 
-     * @param waypoint
-     *            Informacion de la waypoint a crear
-     * @return Identificador de waypoint creada
-     */
+	/**
+	 * REST: PUT,/waypoint, update one Permite guardar un recorrido individual
+	 * 
+	 * @param waypoint
+	 *            Informacion de la waypoint a crear
+	 * @return Identificador de waypoint creada
+	 */
 
-    @PUT
-    @Path(OperacionesConfiguracion.OP_COLOR)
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Long putColor(ColorWeb waypoint) {
-        return service.mergeColor(transformador.toColorJpa(waypoint));
-    }
+	@PUT
+	@Path(OperacionesConfiguracion.OP_COLOR)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Long putColor(ColorWeb waypoint) {
+		return service.mergeColor(transformador.toColorJpa(waypoint));
+	}
 
-    /**
-     * REST: DELETE,/waypoint/{id}, cancel one Lista todos los recorridos
-     * individuales por un id
-     * 
-     * @param id
-     *            Identificador de waypoint
-     */
-    @DELETE
-    @Path(OperacionesConfiguracion.OP_COLOR + "/" + OperacionesConfiguracion.PATH_PRM_ID)
-    public void deleteColor(@PathParam(OperacionesConfiguracion.PRM_ID) Long id) {
-        service.deleteColor(id);
+	/**
+	 * REST: DELETE,/waypoint/{id}, cancel one Lista todos los recorridos
+	 * individuales por un id
+	 * 
+	 * @param id
+	 *            Identificador de waypoint
+	 */
+	@DELETE
+	@Path(OperacionesConfiguracion.OP_COLOR + "/"
+			+ OperacionesConfiguracion.PATH_PRM_ID)
+	public void deleteColor(@PathParam(OperacionesConfiguracion.PRM_ID) Long id) {
+		service.deleteColor(id);
 
-    }
+	}
 
-    /***** COLORES ****/
+	/***** COLORES ****/
 
-    /**
-     * REST: GET,/waypoints, list all Lista todos los recorridos individuales
-     * 
-     */
+	/**
+	 * REST: GET,/waypoints, list all Lista todos los recorridos individuales
+	 * 
+	 */
 
-    @GET
-    @Path(OperacionesConfiguracion.OP_COLORES)
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<ColorWeb> getColores() {
-        return transformador.toListColorWeb(service.listTodosColores());
-    }
+	@GET
+	@Path(OperacionesConfiguracion.OP_COLORES)
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<ColorWeb> getColores() {
+		return transformador.toListColorWeb(service.listTodosColores());
+	}
 
 }
