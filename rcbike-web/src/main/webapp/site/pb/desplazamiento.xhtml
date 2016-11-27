@@ -5,22 +5,34 @@
 	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
 	
 		
+    <ui:define name="head">
+    	<meta property="og:title" content="RCBike - TU COMUNIDAD DE CICLISTAS" />
+    	<meta property="og:description" content="Mira mi recorrido en bicicleta!" />
+    	<script>
+    		var externalText = "Mira mi recorrido en bicicleta!";
+		</script>
+    </ui:define>
+    
     <ui:define name="content">
 		<div class="Container100 ui-fluid" >
 		<div class="ContainerIndent">
 			<div class="Card ShadowEffect">
-				<h2 class="CardTopic DispInlBlock" >Detalle del Recorrido</h2>
+				<h2 class="CardTopic DispInlBlock">Detalle del Recorrido</h2>
+				
 				<div class="DispInlBlock Fright">
 					<h:form id="formShareTwitter">
 			    		<ui:include src="/WEB-INF/include/twitter-sinc/twitter-sinc.xhtml"/>
 			    	</h:form>
 				</div>
+				
 				<div class="DispInlBlock Fright">
 			    	<h:form id="formShareFacebook">
 			    		<ui:include src="/WEB-INF/include/facebook-sinc/facebook-sinc.xhtml"/>
 			    	</h:form>
 				</div>
-                <div class="SeparatorFull"></div>
+                
+                <div class="SeparatorFull"/>
+                
 				<ui:include src="/WEB-INF/include/desplazamientos/detalle-desplazamiento.xhtml" />				 
 			</div>
 		</div>
