@@ -5,10 +5,10 @@
 	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
 
 	<ui:define name="head">
-		<script>
-		</script>
-		
+		<script
+			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfB1qF1ZdhXSYI_zBqrhRh03xy05pQfKs&amp;signed_in=true"></script>
 	</ui:define>
+	
 	<ui:define name="title">
         <h2 class="BigTopic">Alquiler de Bicicletas</h2>
     </ui:define>
@@ -16,7 +16,25 @@
 	<ui:define name="content">
 		<div class="Container100 ui-fluid" >
 			<div class="Card ShadowEffect">
-				
+				<h3>Paso 1</h3>
+				<p>Haga clic en un marcador para saber el punto de alquiler y sus detalles. Las zonas de desplazamiento son de 200 metros.</p>
+				<h:form>
+					<p:gmap id="gmap" styleClass="PosRelative SoftGrayBack" center="4.656360,-74.103770" zoom="13" type="ROADMAP"
+								style="width:100%; height:355px; z-index:1;" model="#{markersView.simpleModel}" >
+								
+								<p:ajax event="overlaySelect" listener="#{markersView.onMarkerSelect}" />
+								
+								<p:gmapInfoWindow id="infoWindow">
+						            <p:outputPanel style="text-align: center; display: block; margin: auto">
+						 					<p:graphicImage url="https://bikehouston.org/wp-content/uploads/2015/06/bike.png" height="25" width="25"/>
+						                    <br />
+						                    <h:outputText value="#{markersView.marker.title}" />
+						                    <br />
+						                    <h:outputText value="#{markersView.marker.data}" escape="false"/>
+						            </p:outputPanel>
+						        </p:gmapInfoWindow>
+					</p:gmap>
+				</h:form>
 			</div>
 		</div>
 	</ui:define>
