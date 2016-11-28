@@ -6,7 +6,7 @@
 				<description>
 					
 				</description>
-				<or abstract="true" mandatory="true" name="Autenticacion">
+				<and abstract="true" mandatory="true" name="Autenticacion">
 					<description>
 						
 					</description>
@@ -15,23 +15,28 @@
 							
 						</description>
 					</feature>
-					<feature mandatory="true" name="AutenticacionFacebook">
+					<or abstract="true" name="AutenticacionExterna">
 						<description>
 							
 						</description>
-					</feature>
-					<feature mandatory="true" name="AutenticacionTwitter">
-						<description>
-							
-						</description>
-					</feature>
-				</or>
+						<feature mandatory="true" name="AutenticacionFacebook">
+							<description>
+								
+							</description>
+						</feature>
+						<feature mandatory="true" name="AutenticacionTwitter">
+							<description>
+								
+							</description>
+						</feature>
+					</or>
+				</and>
 				<feature mandatory="true" name="PerfilUsuario">
 					<description>
 						
 					</description>
 				</feature>
-				<feature name="Mensajeria">
+				<feature mandatory="true" name="Mensajeria">
 					<description>
 						
 					</description>
@@ -41,7 +46,7 @@
 						
 					</description>
 				</feature>
-				<feature name="Desplazamientos">
+				<feature mandatory="true" name="Desplazamientos">
 					<description>
 						
 					</description>
@@ -50,16 +55,36 @@
 					<description>
 						
 					</description>
-					<feature mandatory="true" name="CompartirTwitter">
+					<or abstract="true" mandatory="true" name="CompartirTwitter">
 						<description>
 							
 						</description>
-					</feature>
-					<feature mandatory="true" name="CompartirFacebook">
+						<feature mandatory="true" name="TwitterRest">
+							<description>
+								
+							</description>
+						</feature>
+						<feature mandatory="true" name="TwitterWeb">
+							<description>
+								
+							</description>
+						</feature>
+					</or>
+					<or abstract="true" mandatory="true" name="CompartirFacebook">
 						<description>
 							
 						</description>
-					</feature>
+						<feature mandatory="true" name="FacebookRest">
+							<description>
+								
+							</description>
+						</feature>
+						<feature mandatory="true" name="FacebookWeb">
+							<description>
+								
+							</description>
+						</feature>
+					</or>
 				</or>
 				<feature name="VentaBicicleta">
 					<description>
@@ -92,6 +117,18 @@
 						<var>Desplazamientos</var>
 						<var>VentaBicicleta</var>
 					</disj>
+				</imp>
+			</rule>
+			<rule>
+				<imp>
+					<var>TwitterRest</var>
+					<var>AutenticacionTwitter</var>
+				</imp>
+			</rule>
+			<rule>
+				<imp>
+					<var>FacebookRest</var>
+					<var>AutenticacionFacebook</var>
 				</imp>
 			</rule>
 		</constraints>
