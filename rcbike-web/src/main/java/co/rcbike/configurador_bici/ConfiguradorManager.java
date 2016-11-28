@@ -53,10 +53,6 @@ public class ConfiguradorManager implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		pieza = null;
-		color = null;
-		descripcionConfiguracion = null;
-		piezas.clear();
 		configuracionesList();
 	}
 
@@ -80,7 +76,11 @@ public class ConfiguradorManager implements Serializable {
 			piezaConfigurada.setColor(color);
 			gateway.agregarParteConfiguracion(piezaConfigurada);
 		}
-		init();
+		pieza = null;
+		color = null;
+		descripcionConfiguracion = null;
+		piezas.clear();
+		configuracionesList();
 	}
 
 	public void configuracionesList() {
@@ -90,8 +90,8 @@ public class ConfiguradorManager implements Serializable {
 
 	}
 
-	public void eliminarConfiguracion(Long id) {
-		gateway.eliminarConfiguracion(id);
+	public void deleteConfiguracion(Long id) {
+		gateway.deleteConfiguracion(id);
 		configuracionesList();
 
 	}

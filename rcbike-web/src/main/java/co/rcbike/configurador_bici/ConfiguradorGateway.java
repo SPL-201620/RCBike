@@ -68,9 +68,9 @@ public class ConfiguradorGateway extends RcbikeRestGateway {
 				.path("colores").request().get(TYPE_LIST_COLOR);
 	}
 
-	public void eliminarConfiguracion(Long id) {
+	public void deleteConfiguracion(Long id) {
 		webTarget().path(OperacionesConfiguracion.EP_CONFIGURACION)
-				.path(OperacionesConfiguracion.PATH_PRM_ID).path(id.toString())
-				.request();
+				.path(OperacionesConfiguracion.EP_CONFIGURACION).path(id + "")
+				.request().delete();
 	}
 }
