@@ -72,13 +72,14 @@
 							<div class="Fright Wid25">
 								<p:commandButton value="Guardar Configuración"
 									action="#{configuradorManager.insertConfiguracion()}"
-									process="@form" update="@form growl" />
+									process="@form" update=":frmConfigurador :frmConfiguraciones" />
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-
+</h:form>
+<h:form id="frmConfiguraciones" prependId="false">
 			<div class="Container100 ui-fluid">
 				<div class="ContainerIndent">
 					<div class="Card ShadowEffect">
@@ -92,11 +93,11 @@
 									<h:outputText value="#{configuraciones.descripcion}" />
 									<p:spacer>
 									</p:spacer>
-									<p:commandButton value="ELIMINAR" 
-									process="@this" styleClass="BlueTextButton RaisedButton"
-									onclick="#{configuradorManager.eliminarConfiguracion(configuraciones.id)}"									
-									update=":frmConfigurador">									
-								</p:commandButton>									
+								<p:commandButton value="ELIMINAR" 
+									process="@form" styleClass="BlueTextButton RaisedButton" 
+									action="#{configuradorManager.deleteConfiguracion(configuraciones.id)}"									
+									update=":frmConfiguraciones">									
+								</p:commandButton>								
 								</f:facet>
 								<p:column>
 									<h:outputText value="#{piezas.tipo}" />
@@ -104,7 +105,6 @@
 								<p:column>
 									<h:outputText value="#{piezas.descripcion}" />
 								</p:column>
-
 							</p:subTable>
 						</p:dataTable>
 					</div>

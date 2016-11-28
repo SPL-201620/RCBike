@@ -80,21 +80,21 @@
 				<p:panel id="pnlVentasBicicletas">
 					<p:panelGrid columns="6" styleClass="Fs18">
 						<h:outputText value="Valor:" />
-						<p:inputNumber id="valorVentaBici1" value="#{ventasManager.valor}"
+						<p:inputNumber id="valorVentaBici1" value="#{ventasManager.venta.valor}"
 							required="true">
 						</p:inputNumber>
 						<h:outputText value="Poner a la venta: " />
 						<p:selectBooleanButton id="value1"
-							value="#{ventasManager.vendida}" onLabel="true" offLabel="false"
+							value="#{ventasManager.venta.vendida}" onLabel="true" offLabel="false"
 							style="width:60px" />
 						<h:outputText value="Marca: " />
-						<p:inputText id="ventaMarca" value="#{ventasManager.marca}"
+						<p:inputText id="ventaMarca" value="#{ventasManager.venta.marca}"
 							styleClass="Fs18" autocomplete="off" required="true" />
 						<h:outputText value="Ciudad: " />
-						<p:inputText id="ventaCiudadVenta" value="#{ventasManager.ciudad}"
+						<p:inputText id="ventaCiudadVenta" value="#{ventasManager.venta.ciudadVenta}"
 							styleClass="Fs18" autocomplete="off" required="true" />
 						<h:outputText value="Estado: " />
-						<p:selectOneMenu id="ventaEstado" value="#{ventasManager.estado}"
+						<p:selectOneMenu id="ventaEstado" value="#{ventasManager.venta.estado}"
 							style="width:125px" required="true">
 							<f:selectItem itemLabel="Seleccione un estado" itemValue="" />
 							<f:selectItem itemLabel="Nuevo" itemValue="Nuevo" />
@@ -109,11 +109,11 @@
 						</p:selectOneMenu>
 						<h:outputText value="Accesorios: " />
 						<p:inputText id="ventaAccesorios"
-							value="#{ventasManager.accesorio}" styleClass="Fs18"
+							value="#{ventasManager.venta.accesorios}" styleClass="Fs18"
 							autocomplete="off" required="true" />
 						<h:outputText value="Observaciones: " />
 						<p:inputText id="ventaObservaciones"
-							value="#{ventasManager.observaciones}" styleClass="Fs18"
+							value="#{ventasManager.venta.observaciones}" styleClass="Fs18"
 							autocomplete="off" required="false" />
 						<div class="Container25">
 							<p:commandButton value="Insertar"

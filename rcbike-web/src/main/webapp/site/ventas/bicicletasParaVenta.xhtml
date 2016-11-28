@@ -48,6 +48,11 @@
 							<i class="fa fa-bicycle Fs100 TexAlCenter"
 								style="display:#{empty ventaUsuario.foto ? 'block': 'none'}"></i>
 						</p:column>
+						<p:column headerText="Eliminar">
+						<p:commandButton value="ELIMINAR"
+									action="#{ventasManager.deleteVentas(ventaUsuario.id)}"
+									process="@form" update=":frmVentasBici"/>
+						</p:column>
 					</p:dataTable>
 				</div>
 			</div>
