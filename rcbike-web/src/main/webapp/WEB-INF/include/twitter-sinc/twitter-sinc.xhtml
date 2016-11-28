@@ -1,0 +1,47 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<script>
+	//<![CDATA[
+		function shareTwitterWeb() {
+			var intent = "https://twitter.com/intent/tweet";
+			var text = $("#share-msg").html();
+			var url=window.location.href;
+			var tweet = intent+"?url="+encodeURIComponent(url)+"&text="+encodeURIComponent(text);	
+			window.open(tweet,"_blank");
+		}
+		function shareTwitterRest() {
+			$("#tw-url-rest").val(window.location.href);
+			$("#tw-msg-rest").val($("#share-msg").html());
+		}
+	//]]>
+	</script>
+
+    <h:form id="formShareTwitter" prependId="false">
+		<p:button id="tw-sh-fe" icon="fa fa-twitter fa-2x" rendered="#{autenticacionManager.servicioAutenticacion ne 'Twitter'}"
+		    		styleClass="Fs14 White RaisedButton FloatNoneOnMobile RaisedButton color-twitter"
+		           	onclick="shareTwitterWeb(); return false;"/>
+		<p:tooltip for="tw-sh-fe" value="Compartir en Twitter" 
+			rendered="#{autenticacionManager.servicioAutenticacion ne 'Twitter'}" position="left"/>
+		   
+		<h:inputHidden id="tw-url-rest" value="#{redesManager.url}" required="true"/>
+		<h:inputHidden id="tw-msg-rest" value="#{redesManager.mensaje}" required="true"/>
+		   
+		<p:commandButton id="tw-sh-be" icon="fa fa-twitter fa-2x"
+		   	rendered="#{autenticacionManager.servicioAutenticacion eq 'Twitter'}"
+			styleClass="Fs14 White RaisedButton FloatNoneOnMobile RaisedButton color-twitter"
+			onclick="shareTwitterRest()"
+			action="#{redesManager.twitter()}" update="growl" />
+		<p:tooltip for="tw-sh-be" value="Compartir en Twitter"
+			rendered="#{autenticacionManager.servicioAutenticacion eq 'Twitter'}" position="left"/>
+	</h:form>
+	
+	<style type="text/css">
+		.color-twitter {
+		    background-color:#1da1f2;
+		}
+	</style>
+</ui:composition>

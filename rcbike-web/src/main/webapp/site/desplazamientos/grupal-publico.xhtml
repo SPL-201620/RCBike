@@ -7,26 +7,28 @@
 	<p>Aquí verá los recorridos disponibles a los cuales se puede unir:</p>
 		
 	<h:form id="formGrupalPublico">
-	<p:growl id="messagesGrupal" showDetail="true" />
-	
-	<h:panelGrid columns="3" style="margin-bottom:10px" cellpadding="5">
-        <p:outputLabel for="address" value="Dirección: Por Ejemplo Carrera 1 #20a-2 a 20a-34, Bogotá" />
-        <p:inputText id="address" />
-        <p:commandButton value="Buscar" icon="ui-icon-search" onclick="geocode()" type="button" />
-    </h:panelGrid>
+		<p:growl id="messagesGrupal" showDetail="true" />
 		
-		<script>
+		<h:panelGrid columns="3" style="margin-bottom:10px" cellpadding="5">
+	        <p:outputLabel for="address" value="Dirección: Por Ejemplo Carrera 1 #20a-2 a 20a-34, Bogotá" />
+	        <p:inputText id="address" />
+	        
+	        <p:commandButton update="j_idt32:formGrupalPublico:dataTableId" value="Buscar" icon="ui-icon-search" 
+	        	onclick="geocode()" type="button" />
+	    </h:panelGrid>
+		
+		<script type="text/javascript">
 		function geocode() {
 	        PF('geoMap').geocode(document.getElementById('j_idt32:formGrupalPublico:address').value);
 	    }
         </script>
 
-		<p:dataTable var="rutaWeb" value="#{geocodeView.rutas}" rows="10"
+		<p:dataTable id="dataTableId" var="rutaWeb" value="#{geocodeView.rutas}" rows="10"
 			paginator="true"
 			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 			rowsPerPageTemplate="5,10,15">
 
-			<p:column headerText="Participantes:">
+			<p:column headerText="# de participantes:">
 				<h:outputText value="#{rutaWeb.participantes.size()}" />
 			</p:column>
 
@@ -53,18 +55,22 @@
 			</p:column>
 
 			<p:column headerText="Frecuente:">
-				<h:outputText value="#{rutaWeb.frecuente}" />
+				<h:outputText value="#{rutaWeb.frecuente?'Sí':'No'}" />
 			</p:column>
 			
 			<p:column headerText="Acción:">
- 				<p:commandButton value="Unirme" actionListener="#{addMarkersView.unirse(ruta.id)}" oncomplete="alert('Te has unido!');" />
+ 				<p:commandButton title="Unirme" actionListener="#{addMarkersView.unirse(ruta.id)}" oncomplete="alert('Te has unido!');" icon="ui-icon-plusthick" />
+ 				
+ 				<p:commandButton action="#{dtSelectionView.submit(rutaWeb.id)}" icon="ui-icon-search" title="Detalle" style="margin-top:5px" />
 			</p:column>
 		</p:dataTable>
+		
 		<br />
-
+				
 		<p:gmap id="geoGmap" widgetVar="geoMap" center="#{geocodeView.centerGeoMap}" zoom="13" type="ROADMAP" model="#{geocodeView.geoModel}" style="width:100%;height:400px">
-        	<p:ajax event="geocode" listener="#{geocodeView.onGeocode}" update="@this" />
+        	<p:ajax event="geocode" listener="#{geocodeView.onGeocode}" update="@this dataTableId" />
     	</p:gmap>
+    	
 	</h:form>
-
+ 	
 </ui:composition>

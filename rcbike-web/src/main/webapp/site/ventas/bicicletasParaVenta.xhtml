@@ -5,8 +5,8 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
 
-	<ui:define name="title">
-		<h2 class="BigTopic">Mis Bicicletas en Venta</h2>
+	<ui:define name="head">
+		<title>rcbike - Mis Bicicletas en Venta</title>
 	</ui:define>
 
 	<ui:define name="content">
@@ -16,6 +16,9 @@
 			<div class="Container100 ui-fluid">
 			<div class="ContainerIndent">
 				<div class="Card ShadowEffect">
+				    <h2 class="CardTopic">Mis Bicicletas en Venta</h2>
+					<div class="SeparatorFull"/>
+					
 					<p:dataTable id="dtVentaUsuario" var="ventaUsuario"
 						value="#{ventasManager.ventaWebList}"
 						emptyMessage="No tienes bicicletas a la venta"

@@ -37,6 +37,7 @@ public class RutaGrupalManager implements Serializable {
     @PostConstruct
     public void init() {
         this.email = AutenticacionManager.emailAutenticado();
+        java.lang.System.out.print("-RutaGrupalManager---Email:" + email.toString());
         rutas = gateway.listGrupales();
     }
 }

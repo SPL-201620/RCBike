@@ -14,6 +14,7 @@ import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
 import org.primefaces.model.map.Marker;
+import org.primefaces.model.map.Overlay;
 
 import co.rcbike.alquiler.model.SitioAlquilerWeb;
  
@@ -36,14 +37,15 @@ public class MarkersView implements Serializable {
         for(int i=0; i< lista.size(); i++)
         {
         	LatLng coord1 = new LatLng(lista.get(i).getLatitud().doubleValue(), lista.get(i).getLongitud().doubleValue());
-        	simpleModel.addOverlay(new Marker(coord1, lista.get(i).getEstacionesEntrega(), "<span style='font-weight:bold'>Dirección: </span>" + lista.get(i).getLimiteRecorridos()
-        			+ "<br/>" + "<span style='font-weight:bold'>Precio: </span>" + lista.get(i).getTarifas()
-        			+ "<br/>" + "<span style='font-weight:bold'>Email de contacto: </span>" + lista.get(i).getEmailCreador()));
         	
         	Circle circle1 = new Circle(coord1, 200);
             circle1.setStrokeColor(getRandomColor());
             circle1.setFillColor(getRandomColor());
             circle1.setFillOpacity(0.5);
+            
+            simpleModel.addOverlay(new Marker(coord1, lista.get(i).getEstacionesEntrega(), "<span style='font-weight:bold'>Dirección: </span>" + lista.get(i).getLimiteRecorridos()
+        			+ "<br/>" + "<span style='font-weight:bold'>Precio: </span>" + lista.get(i).getTarifas()
+        			+ "<br/>" + "<span style='font-weight:bold'>Email de contacto: </span>" + lista.get(i).getEmailCreador()));
             simpleModel.addOverlay(circle1);
         }
     }
@@ -53,7 +55,13 @@ public class MarkersView implements Serializable {
     }
     
     public void onMarkerSelect(OverlaySelectEvent event) {
-        marker = (Marker) event.getOverlay();
+    	try
+    	{
+    			marker = (Marker) event.getOverlay();
+    	}
+    	catch(Exception ex){
+    		marker = null;
+    	}
     }
       
     public Marker getMarker() {

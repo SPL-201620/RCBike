@@ -73,36 +73,36 @@
 				</configuration>
 			</plugin>
 
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>aspectj-maven-plugin</artifactId>
-				<version>1.8</version>
-				<configuration>
-					<target>1.8</target>
-					<source>1.8</source>
-					<complianceLevel>1.8</complianceLevel>
-					<includes>
-						<include>**/RestNotFoundAspect.java</include>
-						<include>co/rcbike/*/*Gateway.java</include>
-					</includes>
-					<showWeaveInfo>true</showWeaveInfo>
-					<verbose>true</verbose>
-				</configuration>
-				<dependencies>
-					<dependency>
-						<groupId>org.aspectj</groupId>
-						<artifactId>aspectjrt</artifactId>
-						<version>1.8.9</version>
-					</dependency>
-				</dependencies>
-				<executions>
-					<execution>
-						<goals>
-							<goal>compile</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+<!-- 			<plugin> -->
+<!-- 				<groupId>org.codehaus.mojo</groupId> -->
+<!-- 				<artifactId>aspectj-maven-plugin</artifactId> -->
+<!-- 				<version>1.8</version> -->
+<!-- 				<configuration> -->
+<!-- 					<target>1.8</target> -->
+<!-- 					<source>1.8</source> -->
+<!-- 					<complianceLevel>1.8</complianceLevel> -->
+<!-- 					<includes> -->
+<!-- 						<include>**/RestNotFoundAspect.java</include> -->
+<!-- 						<include>co/rcbike/*/*Gateway.java</include> -->
+<!-- 					</includes> -->
+<!-- 					<showWeaveInfo>true</showWeaveInfo> -->
+<!-- 					<verbose>true</verbose> -->
+<!-- 				</configuration> -->
+<!-- 				<dependencies> -->
+<!-- 					<dependency> -->
+<!-- 						<groupId>org.aspectj</groupId> -->
+<!-- 						<artifactId>aspectjrt</artifactId> -->
+<!-- 						<version>1.8.9</version> -->
+<!-- 					</dependency> -->
+<!-- 				</dependencies> -->
+<!-- 				<executions> -->
+<!-- 					<execution> -->
+<!-- 						<goals> -->
+<!-- 							<goal>compile</goal> -->
+<!-- 						</goals> -->
+<!-- 					</execution> -->
+<!-- 				</executions> -->
+<!-- 			</plugin> -->
 		</plugins>
 	</build>
 
@@ -277,6 +277,14 @@
 		<dependency>
 			<groupId>co.rcbike</groupId>
 			<artifactId>reportes-rest</artifactId>
+			<version>${rcbike-rest.version}</version>
+			<type>jar</type>
+			<classifier>model</classifier>
+			<optional>${rcbike-derivator}</optional>
+		</dependency>
+		<dependency>
+			<groupId>co.rcbike</groupId>
+			<artifactId>sinc-redes-rest</artifactId>
 			<version>${rcbike-rest.version}</version>
 			<type>jar</type>
 			<classifier>model</classifier>

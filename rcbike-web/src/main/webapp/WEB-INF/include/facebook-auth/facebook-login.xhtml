@@ -3,15 +3,16 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:include src="/WEB-INF/include/facebook-auth/facebook-sdk.xhtml"/>
 
 	<script>
 	function loginFacebook() {
 		FB.login(function(response) {
 			console.log(response);
 			if (response.status === 'connected') {
-				// Logged into your app and Facebook.
-				console.log("status connected")
-				$("#formAuthExterna\\:#{autenticacionManager.getPARAM_AUTH_SERVICE()}").val(JSON.stringify({"authStrategy":"Facebook", "payload":response }));
+				$("#formAuth\\:#{autenticacionManager.getPARAM_AUTH_SERVICE()}").val("Facebook");
+				$("#formAuth\\:#{autenticacionManager.getPARAM_AUTH_CONTENT()}").val(JSON.stringify({"payload":response }));
 				autenticarRCBike();
 				         
 			} else if (response.status === 'not_authorized') {
@@ -28,5 +29,11 @@
 
 	}
 	</script>
+	
+    <style type="text/css">
+		.color-facebook {
+		    background-color:#3b5998;
+		}
+	</style>
 	
 </ui:composition>

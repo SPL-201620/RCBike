@@ -4,23 +4,25 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
 	<ui:define name="head">
+		<title>rcbike - Planear Viaje</title>
 		<script
-			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfB1qF1ZdhXSYI_zBqrhRh03xy05pQfKs&amp;signed_in=true"></script>
+			src="https://maps.googleapis.com/maps/api/js?key=#{utilEL.getGMAP_KEY()}"></script>
 	</ui:define>
-	<ui:define name="subheader">
-	</ui:define>
+
 
 	<ui:define name="content">
 
 		<div class="Container100">
+		<div class="ContainerIndent">
 			<div class="Card ShadowEffect">
-				<h2 class="CardTopic TexAlCenter Fs30">Planear Viajes</h2>
-				
-				<div class="ContainerIndent">
-					<h3>Paso 1</h3>
-					<p>Haga clic en el mapa para colocar un marcador, ese será su punto de partida, luego seleccione su punto de Destino en el mapa.</p>
-					<h3>Paso 2</h3>
-					<p>Una vez seleccionado los 2 puntos de su ruta seleccione el botón Calcular.</p>
+			    <h2 class="CardTopic">Planear Viaje</h2>
+				<div class="SeparatorFull"/>
+								
+					<ol>
+						<li>1. Haga clic en el mapa para colocar un marcador, ese será su punto de partida, luego seleccione su punto de Destino en el mapa.</li>
+						<li>2. Una vez seleccionado los 2 puntos de su ruta seleccione el botón Calcular.</li>
+					</ol>
+					
 					<p:growl id="messages" showDetail="true" />
 								
 					<p:gmap id="gmap" styleClass="PosRelative SoftGrayBack" center="4.656360,-74.103770" zoom="13" type="ROADMAP"
@@ -35,9 +37,11 @@
 				 			action="#{crearRutaManager.rutaCalculada()}" icon="fa fa-check-circle" process="@form" update="variables"/>
 						<p:button value="Cancelar" icon="fa fa-remove"/>
 					</h:form>
-				</div>
+					
+				<div class="EmptyBox10"/>
+				<div class="EmptyBox5"/>
 				
-				<h:panelGroup id="variables" styleClass="ContainerIndent">
+				<h:panelGroup id="variables" styleClass="Container">
 					<div class="Card ShadowEffect ui-fluid">
 						<div class="Container25 Responsive50">
 							<h2>Clima: </h2>#{crearRutaManager.clima}
@@ -53,6 +57,9 @@
 						</div>
 					</div>
 				</h:panelGroup>
+				
+				<div class="EmptyBox10"/>
+				<div class="EmptyBox5"/>
 				
 				<ui:include src="crear-desplazamiento.xhtml" />
 				
@@ -254,6 +261,7 @@
 
 				<br />
 			</div>
+		</div>
 		</div>
 
 	</ui:define>

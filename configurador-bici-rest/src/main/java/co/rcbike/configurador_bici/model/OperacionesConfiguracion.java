@@ -28,5 +28,6 @@ public class OperacionesConfiguracion {
     public static final String PRM_ID = "id";
     public static final String PATH_PRM_TIPO = "tipo";
     public static final String PARAM_EMAIL_CREADOR = "emailCreador";
+    public static final String PARAM_CONFIGURACION = "configuracion";
 
 }

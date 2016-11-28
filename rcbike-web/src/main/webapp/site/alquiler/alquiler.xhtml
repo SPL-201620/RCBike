@@ -6,17 +6,17 @@
 
 	<ui:define name="head">
 		<script
-			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfB1qF1ZdhXSYI_zBqrhRh03xy05pQfKs&amp;signed_in=true"></script>
+			src="https://maps.googleapis.com/maps/api/js?key=#{utilEL.getGMAP_KEY()}"></script>
+		<title>rcbike - Alquiler de Bicicletas</title>
 	</ui:define>
-	
-	<ui:define name="title">
-        <h2 class="BigTopic">Alquiler de Bicicletas</h2>
-    </ui:define>
 
 	<ui:define name="content">
 		<div class="Container100 ui-fluid" >
+		<div class="ContainerIndent">
 			<div class="Card ShadowEffect">
-				<h3>Paso 1</h3>
+				<h2 class="CardTopic">Alquiler de Bicicletas</h2>
+				<div class="SeparatorFull"/>
+				
 				<p>Haga clic en un marcador para saber el punto de alquiler y sus detalles. Las zonas de desplazamiento son de 200 metros.</p>
 				<h:form>
 					<p:gmap id="gmap" styleClass="PosRelative SoftGrayBack" center="4.656360,-74.103770" zoom="13" type="ROADMAP"
@@ -24,7 +24,7 @@
 								
 								<p:ajax event="overlaySelect" listener="#{markersView.onMarkerSelect}" />
 								
-								<p:gmapInfoWindow id="infoWindow">
+								<p:gmapInfoWindow id="infoWindow" rendered="#{markersView.marker != null}">
 						            <p:outputPanel style="text-align: center; display: block; margin: auto">
 						 					<p:graphicImage url="https://bikehouston.org/wp-content/uploads/2015/06/bike.png" height="25" width="25"/>
 						                    <br />
@@ -36,6 +36,7 @@
 					</p:gmap>
 				</h:form>
 			</div>
+		</div>
 		</div>
 	</ui:define>
 

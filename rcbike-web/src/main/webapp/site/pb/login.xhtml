@@ -12,16 +12,22 @@
             <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
             <meta name="apple-mobile-web-app-capable" content="yes" />
         </f:facet>
-        <title>RC Bike - Ingreso</title>
+        <title>rcbike - Ingreso</title>
         <ui:insert name="head" />
     </h:head>
 
+	<f:event listener="#{autenticacionManager.checkLogin()}" type="preRenderView" />
+
     <h:body styleClass="GrayModena Geometry" style="height:auto;">
     	
-    	
-	    <h:form id="formAuthExterna">
-	    	<h:inputHidden id="#{autenticacionManager.getPARAM_AUTH_SERVICE()}" value="#{autenticacionManager.authContent}" required="true"/>
-			<p:remoteCommand name="autenticarRCBike" action="#{autenticacionManager.autenticar}" update="growl"/>
+    	<h:form id="formAuth">
+			<h:inputHidden id="#{autenticacionManager.getPARAM_AUTH_SERVICE()}" 
+				value="#{autenticacionManager.servicioAutenticacion}" required="true"/>
+				
+			<h:inputHidden id="#{autenticacionManager.getPARAM_AUTH_CONTENT()}"
+				value="#{autenticacionManager.contenidoAutenticacion}" required="true"/>
+				
+			<p:remoteCommand name="autenticarRCBike" action="#{autenticacionManager.login()}" update="growl"/>
 		</h:form>
     	
         <div class="Wid90 DispBlock MarAuto MarTopPerc5 TexAlCenter">
@@ -33,46 +39,44 @@
                     	<i class="icon-security Fs60 DispBlock"/> Ingreso / Registro
                     </div>
 	                <div class="EmptyBox10" />
-                    <p:outputPanel layout="block" styleClass="Wid100">
-	                    	<p:button value="Facebook" icon="fa fa-facebook"
-	                    	styleClass="Wid80 Fs18 White RaisedButton FloatNoneOnMobile" style="background-color: #3b5998;"
+	                
+	                <!-- Facebook -->
+                    <p:outputPanel layout="block" styleClass="Wid100" rendered="#{funcionManager.autFacebook()}">
+	                    <p:button value="Facebook" icon="fa fa-facebook fa-lg"
+	                    	styleClass="Wid80 Fs18 White RaisedButton FloatNoneOnMobile color-facebook"
 	                    	onclick="loginFacebook(); return false;"/>
+	                	<div class="EmptyBox10" />
                     </p:outputPanel>
 	                    
-	                <div class="EmptyBox10" />
 					
-					<h:form>
-                    <p:outputPanel layout="block" styleClass="Wid100">
-                    	<p:commandButton value="Twitter" icon="fa fa-twitter" 
-                    	styleClass="Wid80 Fs18 White RaisedButton FloatNoneOnMobile" style="background-color: #1da1f2;"
-                    	action="#{autenticacionTwitter.requestToken()}"/>
+					<!-- Twitter -->
+                    <p:outputPanel layout="block" styleClass="Wid100" rendered="#{funcionManager.autTwitter()}">
+						<h:form>
+		                   	<p:commandButton value="Twitter" icon="fa fa-twitter fa-lg" 
+		                   		styleClass="Wid80 Fs18 White RaisedButton FloatNoneOnMobile color-twitter"
+		                   		action="#{autenticacionTwitter.sendToTwitter()}"/>
+		    			</h:form>
+		                <div class="EmptyBox10"/>
 					</p:outputPanel>
-	    			</h:form>
 	    			                
-                    <div class="EmptyBox10"/>
+                    
                     <div class="Separator"/>
                     
-                    <h:form id="formAuthLocal">
-                    <div class="Wid100">
-                    	<p:inputText id="login-email" placeholder="Correo" styleClass="Wid70 TexAlCenter Fs18" required="true"/>
-                    </div>
-                    <div class="EmptyBox10"/>
-                    <div class="Wid100">
-                    	<p:inputText id="login-clave" type="password" placeholder="Contraseña" styleClass="Wid70 TexAlCenter Fs18" required="true"/>
-                    	<h:inputHidden id="#{autenticacionManager.getPARAM_AUTH_SERVICE()}" value="#{autenticacionManager.authContent}" required="true"/>
-                    </div>
-                    <div class="EmptyBox20"/>
-                    <div class="Wid100">
-                    	<p:commandButton id="login-continue" value="Ingresar / Registrarme" onclick="loginLocal();"
-                    	icon="fa fa-sign-in" styleClass="Wid80 Fs18 White RaisedButton FloatNoneOnMobile GreenButton" update="growl"
-						action="#{autenticacionManager.autenticar}"/>
-                    </div>
-                    <div class="Separator" style="display:none"/>
-                    <div class="Wid100" style="display:none">
-                    	<p:button value="Olvide mi contraseña" icon="fa fa-lock" 
-                    	styleClass="Wid80 RedButton Fs18 White RaisedButton FloatNoneOnMobile"/>
-                    	</div>
-                    <div class="EmptyBox20"/>
+                    <h:form id="formAuthLocal" >
+	                    <div class="Wid100">
+	                    	<p:inputText id="login-email" placeholder="Correo" styleClass="Wid70 TexAlCenter Fs18" required="true"/>
+	                    </div>
+	                    <div class="EmptyBox10"/>
+	                    <div class="Wid100">
+	                    	<p:inputText id="login-clave" type="password" placeholder="Contraseña" styleClass="Wid70 TexAlCenter Fs18" required="true"/>
+	                                      </div>
+	                    <div class="EmptyBox20"/>
+	                    <div class="Wid100">
+	                    	<p:commandButton id="login-continue" value="Ingresar / Registrarme" onclick="loginLocal(); return false;"
+	                    	icon="fa fa-sign-in" styleClass="Wid80 Fs18 White RaisedButton FloatNoneOnMobile GreenButton"/>
+	                    </div>
+	                  
+	                    <div class="EmptyBox20"/>
                     </h:form>
                     
                 </div>
@@ -85,16 +89,16 @@
 		<ui:include src="/WEB-INF/include/common/ajax-handling.xhtml"/>
         
         <h:outputStylesheet name="css/rcbike.min.css" library="modena-layout" />
-    	<p:outputPanel>
-    		<ui:include src="/WEB-INF/include/facebook-auth/facebook-sdk.xhtml"/>
-    		<ui:include src="/WEB-INF/include/facebook-auth/facebook-login.xhtml"/>
-		</p:outputPanel>
-		
+        
 		<p:outputPanel>
     		<ui:include src="/WEB-INF/include/local-auth/local-login.xhtml"/>
 		</p:outputPanel>
 
-		<p:outputPanel>
+    	<p:outputPanel rendered="#{funcionManager.autFacebook()}">
+    		<ui:include src="/WEB-INF/include/facebook-auth/facebook-login.xhtml"/>
+		</p:outputPanel>
+
+		<p:outputPanel rendered="#{funcionManager.autTwitter()}" >
     		<ui:include src="/WEB-INF/include/twitter-auth/twitter-login.xhtml"/>
 		</p:outputPanel>
     </h:body>

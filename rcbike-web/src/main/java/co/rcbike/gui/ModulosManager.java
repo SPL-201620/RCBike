@@ -11,10 +11,6 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 
 import org.omnifaces.cdi.Eager;
-import org.primefaces.model.menu.MenuModel;
-
-import lombok.Getter;
-import lombok.Setter;
 
 @SuppressWarnings("serial")
 @Named
@@ -23,10 +19,6 @@ import lombok.Setter;
 public class ModulosManager implements Serializable {
 
     public static final Boolean DEFAULT_MODULES = true;
-
-    @Getter
-    @Setter
-    private MenuModel model;
 
     private Properties modulosEmpaquetados;
 
@@ -74,7 +66,7 @@ public class ModulosManager implements Serializable {
     }
 
     private boolean fueEmpaquetado(String modulo) {
-        return Boolean.valueOf(modulosEmpaquetados.getOrDefault(modulo, "false").toString());
+        return Boolean.TRUE;
     }
 
     private boolean estadoModulo(String modulo) {
