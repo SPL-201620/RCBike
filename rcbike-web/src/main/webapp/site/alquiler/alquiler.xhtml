@@ -24,7 +24,7 @@
 								
 								<p:ajax event="overlaySelect" listener="#{markersView.onMarkerSelect}" />
 								
-								<p:gmapInfoWindow id="infoWindow">
+								<p:gmapInfoWindow id="infoWindow" rendered="#{markersView.marker != null}">
 						            <p:outputPanel style="text-align: center; display: block; margin: auto">
 						 					<p:graphicImage url="https://bikehouston.org/wp-content/uploads/2015/06/bike.png" height="25" width="25"/>
 						                    <br />
