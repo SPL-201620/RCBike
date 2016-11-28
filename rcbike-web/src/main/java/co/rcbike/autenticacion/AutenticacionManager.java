@@ -61,8 +61,17 @@ public class AutenticacionManager implements Serializable {
         cambiarEstadoAutenticacion(false);
     }
 
+    public void checkLogin() throws IOException {
+        if (autenticado()) {
+            Faces.redirect("site/usuarios/dashboard.xhtml");
+        }
+    }
+
     @SuppressWarnings("el-syntax")
     public String login() throws IOException {
+        if (autenticado()) {
+
+        }
         AutenticacionStrategy estrategia = Faces.evaluateExpressionGet("#{autenticacion" + servicioAutenticacion + "}");
         DatosAutenticacion respAutenticacion = estrategia.autenticar(contenidoAutenticacion);
         this.datosAut = respAutenticacion;
