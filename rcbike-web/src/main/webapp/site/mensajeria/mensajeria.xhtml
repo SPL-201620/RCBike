@@ -30,16 +30,15 @@
 				
 			}
 		</script>
-		
+		<title>rcbike - Chat</title>
 	</ui:define>
-	<ui:define name="title">
-        <h2 class="BigTopic">Mensajes</h2>
-    </ui:define>
 
 	<ui:define name="content">
 		<div class="Container100 ui-fluid" >
 		<div class="ContainerIndent">
 			<div class="Card ShadowEffect OvAuto OvXHidden chat-container ">
+				<h2 class="CardTopic">Chat</h2>
+				<div class="SeparatorFull"/>
 				<h:form id="frmSelectUsuario" prependId="false">
 					<p:outputPanel id="chatsList" layout="block" 
 						styleClass="Container30 Responsive100 OvAuto OvXHidden fullH SoftGrayBack" >
@@ -83,7 +82,7 @@
 			    height: 70vh;
 			}
 			.fullH {
-				height: 100%;
+				height: 90%;
 			}
 			.msgsCol {
 				position: relative;

@@ -4,9 +4,9 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
-
-	<ui:define name="title">
-		<h2 class="BigTopic">Venta Bicicletas</h2>
+	
+	<ui:define name="head">
+		<title>rcbike - Vender Bicicletas</title>
 	</ui:define>
 
 	<ui:define name="content">
@@ -16,7 +16,9 @@
 			<div class="Container100 ui-fluid">
 			<div class="ContainerIndent">
 				<div class="Card ShadowEffect">
-					<h3>Crear una publicación</h3>
+				    <h2 class="CardTopic">Publicar Bicicleta</h2>
+					<div class="SeparatorFull"/>
+					
 					<p>Para crear una publicación de venta, debes primero crear una configuración de bicicleta</p>
 					<p:dataTable var="configuraciones"
 						value="#{ventaConfiguradorManager.listConfiguraciones}"

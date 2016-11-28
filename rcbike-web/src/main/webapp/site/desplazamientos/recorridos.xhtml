@@ -5,13 +5,20 @@
 	xmlns:p="http://primefaces.org/ui" 
 	template="/WEB-INF/template.xhtml">
 
+	<ui:define name="head">
+		<title>rcbike - Recorridos</title>
+		<script
+		src="https://maps.googleapis.com/maps/api/js?key=#{utilEL.getGMAP_KEY()}&amp;libraries=places"></script>
+	</ui:define>
+
 	<ui:define name="content">
 		<div class="Container100">
 			<div class="ContainerIndent">
 				<div class="Card ShadowEffect">
-					<h2 class="CardTopic TexAlCenter Fs30">Recorridos</h2>
-					<script
-		src="https://maps.googleapis.com/maps/api/js?key=#{utilEL.getGMAP_KEY()}&amp;signed_in=true&amp;libraries=places"></script>
+					<h2 class="CardTopic">Recorridos</h2>
+					<div class="SeparatorFull"/>
+					
+					
 					<p:tabView orientation="top">
 						<p:tab title="Mis recorridos individuales">
 							<ui:include src="individual.xhtml" />

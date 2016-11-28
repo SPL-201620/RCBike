@@ -4,15 +4,29 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-	<p:button id="tw-sh-fe" icon="fa fa-twitter fa-lg" rendered="#{autenticacionManager.servicioAutenticacion ne 'Twitter'}"
-	    		styleClass="Fs12 White RaisedButton FloatNoneOnMobile RaisedButton color-twitter"
-	           	href="https://twitter.com/intent/tweet" target="_blank" />
+	<script>
+	//<![CDATA[
+		function shareTwitter() {
+			var intent = "https://twitter.com/intent/tweet";
+			var text = externalText;
+			var url=window.location.href;
+			var tweet = intent+"?url="+encodeURIComponent(url)+"&text="+encodeURIComponent(text);	
+			window.open(tweet,"_blank");
+		}
+	//]]>
+	</script>
+
+
+
+	<p:button id="tw-sh-fe" icon="fa fa-twitter fa-2x" rendered="#{autenticacionManager.servicioAutenticacion ne 'Twitter'}"
+	    		styleClass="Fs14 White RaisedButton FloatNoneOnMobile RaisedButton color-twitter"
+	           	onclick="shareTwitter();return false;"/>
 	<p:tooltip for="tw-sh-fe" value="Compartir en Twitter" 
 		rendered="#{autenticacionManager.servicioAutenticacion ne 'Twitter'}" position="left"/>
     
-    <p:commandButton id="tw-sh-be" icon="fa fa-twitter fa-lg"
+    <p:commandButton id="tw-sh-be" icon="fa fa-twitter fa-2x"
     	rendered="#{autenticacionManager.servicioAutenticacion eq 'Twitter'}"
-		styleClass="Fs12 White RaisedButton FloatNoneOnMobile RaisedButton color-twitter"
+		styleClass="Fs14 White RaisedButton FloatNoneOnMobile RaisedButton color-twitter"
 		action="#{redesManager.twitter()}" />
 	<p:tooltip for="tw-sh-be" value="Compartir en Twitter"
 		rendered="#{autenticacionManager.servicioAutenticacion eq 'Twitter'}" position="left"/>
