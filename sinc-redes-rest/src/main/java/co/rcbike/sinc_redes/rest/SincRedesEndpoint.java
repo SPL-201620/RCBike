@@ -4,15 +4,18 @@ import java.util.Map;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import co.rcbike.sinc_redes.model.CompartirTwitter;
 import co.rcbike.sinc_redes.model.OperacionesSincronizacion;
 import co.rcbike.sinc_redes.service.SincRedesService;
 import twitter4j.Status;
+import twitter4j.TwitterException;
 
 @Path(OperacionesSincronizacion.EP_SINCRONIZACION)
 @RequestScoped
@@ -49,34 +52,15 @@ public class SincRedesEndpoint {
         }
     }
 
-    /**
-     * REST:
-     * POST,/sincronizacion/publicarEnTwitter/userId=userId,accessToken=accessToken,message=message
-     * 
-     * @param consumerKey
-     *            consumerKeyStr
-     * @param consumerSecret
-     *            consumerSecretStr
-     * @param accessToken
-     *            accessTokenStr
-     * @param accessTokenSecret
-     *            accessTokenSecretStr
-     * @param message
-     *            Mensaje para colocar en el feed
-     */
     @POST
     @Path(OperacionesSincronizacion.OP_PUBLICAR_EN_TWITTER)
-    public Response publicarEnTwitter(@QueryParam(OperacionesSincronizacion.PARAM_CONSUMER_KEY_STR) String consumerKey,
-            @QueryParam(OperacionesSincronizacion.PARAM_CONSUMER_SECRET_STR) String consumerSecret,
-            @QueryParam(OperacionesSincronizacion.PARAM_ACCESS_TOKEN_STR) String accessToken,
-            @QueryParam(OperacionesSincronizacion.PARAM_ACCESS_TOKEN_SECRET_STR) String accessTokenSecret,
-            @QueryParam(OperacionesSincronizacion.PARAM_MESSAGE) String message) {
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response publicarEnTwitter(CompartirTwitter compartir) {
         try {
-            Status status = service.postOnTwitter(consumerKey, consumerSecret, accessToken, accessTokenSecret, message);
+            Status status = service.postOnTwitter(compartir);
             return Response.ok(status, MediaType.APPLICATION_JSON).build();
-        } catch (Exception e) {
-            return Response.serverError()
-                    .entity("Se produjo un error al intentar publicar en Twitter. " + e.getMessage()).build();
+        } catch (TwitterException e) {
+            return Response.serverError().entity(e.getErrorCode() + " - " + e.getErrorMessage()).build();
         }
     }
 

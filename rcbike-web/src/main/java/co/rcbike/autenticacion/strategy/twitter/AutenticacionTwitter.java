@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
@@ -14,6 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import co.rcbike.autenticacion.DatosAutenticacion;
 import co.rcbike.autenticacion.DatosAutenticacion.EstadoAutenticacion;
 import co.rcbike.autenticacion.strategy.AutenticacionStrategy;
+import lombok.Getter;
 import lombok.extern.jbosslog.JBossLog;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -28,12 +30,30 @@ import twitter4j.auth.RequestToken;
 @JBossLog
 public class AutenticacionTwitter extends AutenticacionStrategy implements Serializable {
 
+    private static final String CONSUMER_KEY = "pzJH9IW2nAcFLWFB6iw9mtxI2";
+    private static final String CONSUMER_SECRET = "zFN0CMS8gPerfifG2VxwEV168LshKv4yzFZgLPEjn5O7Dj7fMy";
+
+    @Getter
+    private String consumerKey;
+    @Getter
+    private String consumerSecret;
+    @Getter
+    private String token;
+    @Getter
+    private String tokenSecret;
+
     private Twitter twitter;
     private RequestToken requestToken;
 
+    @PostConstruct
+    public void init() {
+        consumerKey = CONSUMER_KEY;
+        consumerSecret = CONSUMER_SECRET;
+    }
+
     public void sendToTwitter() throws TwitterException, IOException {
         twitter = new TwitterFactory().getInstance();
-        twitter.setOAuthConsumer("pzJH9IW2nAcFLWFB6iw9mtxI2", "zFN0CMS8gPerfifG2VxwEV168LshKv4yzFZgLPEjn5O7Dj7fMy");
+        twitter.setOAuthConsumer(CONSUMER_KEY, CONSUMER_SECRET);
         requestToken = twitter
                 .getOAuthRequestToken("http://localhost:8080/rcbike-web/site/pb/login.xhtml?serv=twitter");
         log.info("Redireccionando a Twitter");
@@ -78,6 +98,8 @@ public class AutenticacionTwitter extends AutenticacionStrategy implements Seria
                 .readValue(contenidoAutenticacion, Map.class).get(ATTR_PAYLOAD);
         String verifier = twitterRedirect.get("oauth_verifier");
         AccessToken oAuthAccessToken = twitter.getOAuthAccessToken(requestToken, verifier);
+        token = oAuthAccessToken.getToken();
+        tokenSecret = oAuthAccessToken.getTokenSecret();
         User autenticado = twitter.lookupUsers(oAuthAccessToken.getUserId()).get(0);
         return autenticado;
     }
