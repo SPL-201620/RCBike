@@ -42,30 +42,34 @@
 								value="#{reportesManager.recorridos}">
 
 								<p:column headerText="Fecha de Inicio">
-									<h:outputText value="#{reporte.fechaInicio}" />
+									<h:outputText value="#{reporte.fechaInicio}" >
+										<f:convertDateTime pattern="dd-MM-yyyy" />
+									</h:outputText>
 								</p:column>
 
 								<p:column headerText="Fecha de Final">
-									<h:outputText value="#{reporte.fechaFinal}" />
+									<h:outputText value="#{reporte.fechaFinal}" >
+										<f:convertDateTime pattern="dd-MM-yyyy" />
+									</h:outputText>
 								</p:column>
 
-								<p:column headerText="Kilometros Recorridos">
-									<h:outputText value="#{reporte.kilometrosRecorridos}" />
+								<p:column headerText="Kilómetros Recorridos">
+									<h:outputText value="#{reporte.kilometrosRecorridos} km" />
 								</p:column>
 
-								<p:column headerText="Calorias Quemadas">
-									<h:outputText value="#{reporte.caloriasQuemadas}" />
+								<p:column headerText="Calorías Quemadas">
+									<h:outputText value="#{reporte.caloriasQuemadas} cal" />
 								</p:column>
 
 								<p:column headerText="Velocidad Promedio">
-									<h:outputText value="#{reporte.velocidadPromedio}" />
+									<h:outputText value="#{reporte.velocidadPromedio} km/h" />
 								</p:column>
 
-								<p:column headerText="Grupal">
+								<p:column headerText="Viajes Grupales">
 									<h:outputText value="#{reporte.viajesGrupales}" />
 								</p:column>
 
-								<p:column headerText="Individual">
+								<p:column headerText="Viajes Individuales">
 									<h:outputText value="#{reporte.viajesIndividuales}" />
 								</p:column>
 
