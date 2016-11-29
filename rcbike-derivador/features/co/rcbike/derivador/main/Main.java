@@ -59,7 +59,7 @@ public class Main {
 
 		
 		MavenRunner mavenRunner = new MavenRunner();
-		new RcbikeWebPomProcessor().parsePom(modulos);
+		RcbikeWebPomProcessor.parsePom(modulos);
 		mavenRunner.inkoveRcbikeParent(modulos,funciones);
 	}
 }

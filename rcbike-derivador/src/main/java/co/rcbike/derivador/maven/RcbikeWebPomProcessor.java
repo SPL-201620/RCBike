@@ -11,9 +11,9 @@ import java.util.regex.Pattern;
 
 public class RcbikeWebPomProcessor {
 
-	public String template = "<!-- if %1$s -->(?s).*<!-- fi %1$s -->";
+	public static String template = "<!-- if %1$s -->(?s).*<!-- fi %1$s -->";
 
-	public void parsePom(Collection<String> modulos) throws IOException {
+	public static void parsePom(Collection<String> modulos) throws IOException {
 		System.out.println("Procesando POM rcbike-web");
 		Path path = Paths.get("../rcbike-web/pom.xml");
 		final String pomContent = readFile(path, StandardCharsets.UTF_8);
@@ -26,7 +26,7 @@ public class RcbikeWebPomProcessor {
 		System.out.println("Generado POM de rcbike-web pom-derivado.xml");
 	}
 
-	String readFile(Path path, Charset encoding) throws IOException {
+	private static String readFile(Path path, Charset encoding) throws IOException {
 		byte[] encoded = Files.readAllBytes(path);
 		return new String(encoded, encoding);
 	}

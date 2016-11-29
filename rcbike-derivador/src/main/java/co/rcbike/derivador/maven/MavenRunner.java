@@ -28,6 +28,7 @@ public class MavenRunner {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		System.out.println(banner);
 	}
 
 	static {
@@ -48,10 +49,9 @@ public class MavenRunner {
 	}
 
 	public void inkoveRcbikeParent(Collection<String> modulos, Properties propiedades) {
-		System.out.println(banner);
 		InvocationRequest request = new DefaultInvocationRequest();
 		request.setPomFile(new File("../rcbike-parent/pom.xml"));
-		request.setGoals(Arrays.asList("clean", "install"));
+		request.setGoals(Arrays.asList("clean", "package"));
 		request.setProfiles(new ArrayList<String>(modulos));
 		// request.setThreads("5");
 		request.setProperties(buildProperties(propiedades));
