@@ -57,6 +57,9 @@ public class Main {
 		funciones.put("facebook-web","true");
 		/*end[FacebookWeb]*/
 
+		/*if[Env_AWS]*/
+		modulos.add("aws");
+		/*end[Env_AWS]*/
 		
 		MavenRunner mavenRunner = new MavenRunner();
 		RcbikeWebPomProcessor.parsePom(modulos);

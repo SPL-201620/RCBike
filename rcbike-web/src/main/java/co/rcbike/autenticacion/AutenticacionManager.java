@@ -33,9 +33,6 @@ public class AutenticacionManager implements Serializable {
     private static final String PARAM_AUTH_CONTENT = "auth-content";
 
     @Getter
-    private final String serverIp = "localhost:8080";
-
-    @Getter
     @Setter
     private String servicioAutenticacion;
 

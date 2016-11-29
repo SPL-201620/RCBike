@@ -31,15 +31,6 @@ public class MavenRunner {
 		System.out.println(banner);
 	}
 
-	static {
-	}
-
-	public static void main(String[] args) throws IOException {
-		MavenRunner mavenRunner = new MavenRunner();
-		mavenRunner.inkoveRcbikeParent(Arrays.asList("base", "alquiler", "configurador", "desplazamientos",
-				"mensajeria", "reportes", "sinc-redes", "ventas"), null);
-	}
-
 	private Properties buildProperties(Properties propiedades) {
 		if (propiedades == null) {
 			propiedades = new Properties();
@@ -53,7 +44,7 @@ public class MavenRunner {
 		request.setPomFile(new File("../rcbike-parent/pom.xml"));
 		request.setGoals(Arrays.asList("clean", "package"));
 		request.setProfiles(new ArrayList<String>(modulos));
-		// request.setThreads("5");
+		request.setThreads("6");
 		request.setProperties(buildProperties(propiedades));
 		Invoker invoker = new DefaultInvoker();
 		try {
