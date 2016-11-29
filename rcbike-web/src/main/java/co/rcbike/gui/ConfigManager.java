@@ -33,7 +33,7 @@ public class ConfigManager implements Serializable {
     }
 
     public String webServerUrl() {
-        return config.getProperty("webserver");
+        return config.getProperty("webserver-url");
     }
 
 }

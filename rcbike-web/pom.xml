@@ -15,7 +15,7 @@
 	</parent>
 
 	<properties>
-		<webserver>http://localhost:8080</webserver>
+		<webserver-url>http://localhost:8080</webserver-url>
 	</properties>
 
 	<build>
@@ -453,7 +453,7 @@
 		<profile>
 			<id>aws</id>
 			<properties>
-				<webserver>http://ec2-54-153-8-11.us-west-1.compute.amazonaws.com:8080</webserver>
+				<webserver-url>http://ec2-54-153-8-11.us-west-1.compute.amazonaws.com:8080</webserver-url>
 			</properties>
 		</profile>
 	</profiles>
