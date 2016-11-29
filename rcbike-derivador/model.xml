@@ -41,12 +41,22 @@
 						
 					</description>
 				</feature>
-				<feature name="Reportes">
+				<feature mandatory="true" name="Desplazamientos">
 					<description>
 						
 					</description>
 				</feature>
-				<feature mandatory="true" name="Desplazamientos">
+				<feature name="AlquilerBicicleta">
+					<description>
+						
+					</description>
+				</feature>
+				<feature name="ConfiguradorBicicleta">
+					<description>
+						
+					</description>
+				</feature>
+				<feature name="Reportes">
 					<description>
 						
 					</description>
@@ -91,16 +101,6 @@
 						
 					</description>
 				</feature>
-				<feature name="ConfiguradorBicicleta">
-					<description>
-						
-					</description>
-				</feature>
-				<feature name="AlquilerBicicleta">
-					<description>
-						
-					</description>
-				</feature>
 			</and>
 		</struct>
 		<constraints>
@@ -113,10 +113,7 @@
 			<rule>
 				<imp>
 					<var>SincronizacionRedes</var>
-					<disj>
-						<var>Desplazamientos</var>
-						<var>VentaBicicleta</var>
-					</disj>
+					<var>Desplazamientos</var>
 				</imp>
 			</rule>
 			<rule>

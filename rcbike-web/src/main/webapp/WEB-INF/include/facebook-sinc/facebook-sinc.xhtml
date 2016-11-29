@@ -24,22 +24,22 @@
 	
 	<h:form id="formShareFacebook" prependId="false">
 		<p:button id="fb-sh-fe" icon="fa fa-facebook-official fa-2x"
-			rendered="#{autenticacionManager.servicioAutenticacion ne 'Facebook'}"
+			rendered="#{autenticacionManager.servicioAutenticacion ne 'Facebook' && funcionManager.facebookWeb()}"
 			styleClass="Fs14 White RaisedButton FloatNoneOnMobile RaisedButton color-facebook" 
 			onclick="shareFacebookWeb(); return false;" />
-		<p:tooltip for="fb-sh-fe" value="Compartir en Facebook" 
-			rendered="#{autenticacionManager.servicioAutenticacion ne 'Facebook'}" position="left"/>
+		<p:tooltip for="fb-sh-fe" value="Compartir en Facebook" position="left"
+			rendered="#{autenticacionManager.servicioAutenticacion ne 'Facebook' && funcionManager.facebookWeb()}"/>
 		
 		<h:inputHidden id="fb-url-rest" value="#{redesManager.url}" required="true"/>
 		<h:inputHidden id="fb-msg-rest" value="#{redesManager.mensaje}" required="true"/>
 		
 		<p:commandButton id="fb-sh-be" icon="fa fa-facebook-official fa-2x" 
-			rendered="#{autenticacionManager.servicioAutenticacion eq 'Facebook'}"
+			rendered="#{autenticacionManager.servicioAutenticacion eq 'Facebook' && funcionManager.facebookRest()}"
 			styleClass="Fs14 White RaisedButton FloatNoneOnMobile RaisedButton color-facebook"
 			onclick="shareFacebookRest()"
 			action="#{redesManager.facebook()}" update="growl"/>
-		<p:tooltip for="fb-sh-be" value="Compartir en Facebook" 
-			rendered="#{autenticacionManager.servicioAutenticacion eq 'Facebook'}" position="left"/>
+		<p:tooltip for="fb-sh-be" value="Compartir en Facebook" position="left"
+			rendered="#{autenticacionManager.servicioAutenticacion eq 'Facebook' && funcionManager.facebookRest()}"/>
 	</h:form>
 	
     <style type="text/css">
