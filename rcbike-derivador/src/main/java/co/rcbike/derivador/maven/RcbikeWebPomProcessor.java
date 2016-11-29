@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 
 public class RcbikeWebPomProcessor {
 
-	public static String template = "<!-- if %1$s -->(?s).*<!-- fi %1$s -->";
+	public static String template = "<!-- if %1$s -->(?s).*?<!-- fi %1$s -->";
 
 	public static void parsePom(Collection<String> modulos) throws IOException {
 		System.out.println("Procesando POM rcbike-web");

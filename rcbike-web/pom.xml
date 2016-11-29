@@ -363,6 +363,33 @@
 							</excludes>
 						</configuration>
 					</plugin>
+					<plugin>
+						<artifactId>maven-war-plugin</artifactId>
+						<configuration>
+							<failOnMissingWebXml>false</failOnMissingWebXml>
+							<packagingExcludes>
+								<!-- if alquiler -->
+									site/alquiler/**,
+								<!-- fi alquiler -->
+								<!-- if configurador -->
+									site/configurador_bici/**,
+								<!-- fi configurador -->
+								<!-- if desplazamientos -->
+									site/desplazamientos/**,
+								<!-- fi desplazamientos -->
+								<!-- if mensajeria -->
+									site/mensajeria/**,
+								<!-- fi mensajeria -->
+								<!-- if reportes -->
+									site/reportes/**,
+								<!-- fi reportes -->
+								<!-- if ventas -->
+									site/ventas/**,
+								<!-- fi ventas -->
+									placeholder/*.txt
+							</packagingExcludes>
+						</configuration>
+					</plugin>
 				</plugins>
 			</build>
 		</profile>
