@@ -11,65 +11,94 @@
     
     <ui:define name="content">
 
-        <!-- Left Column -->
-        <div class="Container70 Responsive100">
-
-            <!-- Section 1 -->
-            <p:outputPanel layout="block" rendered="#{modulosManager.desplazamientos()}" styleClass="Container100">
-                <div class="ContainerIndent">
-                    <div class="Card ShadowEffect HeiAutoOnMobile">
-                        <h2 class="CardTopic">Ultimos Recorridos</h2>
-                        <div class="SeparatorFull"></div>
-                    </div>
-                </div>
-            </p:outputPanel>
-
-            <!-- Section 2 -->
-            <p:outputPanel layout="block" rendered="#{modulosManager.ventas()}" styleClass="Container100">
-                <div class="ContainerIndent">
-                    <div class="Card ShadowEffect HeiAutoOnMobile">
-                        <h2 class="CardTopic">Bicicletas a la venta</h2>
-                        <div class="SeparatorFull"></div>
-
-                    </div>
-                </div>
-            </p:outputPanel>
-
-        </div>
-
-        <!-- Right Column -->
-        <p:outputPanel layout="block" rendered="#{modulosManager.mensajeria()}" styleClass="Container30 Responsive100" >
+                <!-- Right Column -->
+        <div class="Container100 Responsive100">
 
             <!-- Section 1 -->
             <div class="Container100">
                 <div class="ContainerIndent">
                     <div class="Card ShadowEffect HeiAutoOnMobile">
-                        <h2 class="CardTopic">Conversaciones Recientes</h2>
-                        <div class="EmptyBox10"></div>
+						<h2 class="CardTopic">Estado de Modulos</h2>
+						<div class="SeparatorFull"/>
 
-                        <div class="Card ShadowEffect SoftBlueBack White">
-                            <h2 class="CardTopic White FontRobotoRegular BorderBottom Fs18">Container Tracking</h2>
-                            <div class="EmptyBox20"></div>
-                            <div class="Container100 Fs16 FontRobotoRegular">Container Tracking with GPS</div>
-                            <div class="EmptyBox20"></div>
-                            <div class="Container50 Responsive50 Fs14 FontRobotoLight">Magna urna suspendisse adullamcorper ultrices at pharetra eu
-                                augue a class dapibus ad condimentum congue nostra ad a nec. Feugiat donec at
-                                eu sapien senectus velit.
-                            </div>
-                            <div class="EmptyBox10 ShowOnMobile"></div>
-                            <div class="Container50 Responsive50">
-                                <p:button value="Get More Info" styleClass="PinkButton RaisedButton Fright"/>
-                                <div class="EmptyBox10"></div>
-                                <p:button value="Buy Now" styleClass="BlueTextButton RaisedButton Fright Fs16" icon="fa fa-shopping-cart"/>
-                            </div>
+                        <div class="Container33 Responsive50">
+                            <div class="ContainerIndent">
+                                <div class="Card TexAlCenter #{modulosManager.desplazamientos()?'GreenBack':'SoftGrayBack'}">
+                                    <i class="icon-directions_bike Fs50 DispBlock #{modulosManager.desplazamientos()?'White':'BoldGray'}"></i>
+                                    <div class="EmptyBox5"></div>
+                                    <span class="FontRobotoLight Fs18 #{modulosManager.desplazamientos()?'White':''}">Desplazamientos</span>
+                                    <div class="EmptyBox5"></div>
+                                    
+                                </div>
+                            </div> 
                         </div>
+
+                        <div class="Container33 Responsive50">
+                            <div class="ContainerIndent">
+                                <div class="Card TexAlCenter #{modulosManager.mensajeria()?'GreenBack':'SoftGrayBack'}">
+                                	<i class="icon-forum Fs50 DispBlock #{modulosManager.mensajeria()?'White':'BoldGray'}"></i>
+                                    <div class="EmptyBox5"></div>
+                                    <span class="FontRobotoLight Fs18 #{modulosManager.mensajeria()?'White':''}">Mensajeria</span>
+                                    <div class="EmptyBox5"></div>
+                                </div>
+                            </div>
+                        </div>  
+                        <div class="Container33 Responsive50">
+                            <div class="ContainerIndent">
+                                <div class="Card TexAlCenter #{modulosManager.ventas()?'GreenBack':'SoftGrayBack'}">
+                                    <i class="icon-shopping_cart Fs50 DispBlock #{modulosManager.ventas()?'White':'BoldGray'}"></i>
+                                    <div class="EmptyBox5"></div>
+                                    <span class="FontRobotoLight Fs18 #{modulosManager.ventas()?'White':''}">Venta</span>
+                                    <div class="EmptyBox5"></div>
+                                </div>
+                            </div>
+                        </div>  
+                        <div class="Container33 Responsive50">
+                            <div class="ContainerIndent">
+                                <div class="Card TexAlCenter #{modulosManager.configurador()?'GreenBack':'SoftGrayBack'}">
+                                    <i class="icon-build Fs50 DispBlock #{modulosManager.configurador()?'White':'BoldGray'}"></i>
+                                    <div class="EmptyBox5"></div>
+                                    <span class="FontRobotoLight Fs18 #{modulosManager.configurador()?'White':''}">Configurador</span>
+                                    <div class="EmptyBox5"></div>
+                                </div>
+                            </div>
+                        </div>  
+                        <div class="Container33 Responsive50">
+                            <div class="ContainerIndent">
+                                <div class="Card TexAlCenter #{modulosManager.alquiler()?'GreenBack':'SoftGrayBack'}">
+                                    <i class="icon-local_offer Fs50 DispBlock #{modulosManager.alquiler()?'White':'BoldGray'}"></i>
+                                    <div class="EmptyBox5"></div>
+                                    <span class="FontRobotoLight Fs18 #{modulosManager.alquiler()?'White':''}">Alquiler</span>
+                                    <div class="EmptyBox5"></div>
+                                </div>
+                            </div>
+                        </div>  
+                        <div class="Container33 Responsive50">
+                            <div class="ContainerIndent">
+                                <div class="Card TexAlCenter #{modulosManager.reportes()?'GreenBack':'SoftGrayBack'}">
+                                    <i class="icon-message Fs50 DispBlock #{modulosManager.reportes()?'White':'BoldGray'}"></i>
+                                    <div class="EmptyBox5"></div>
+                                    <span class="FontRobotoLight Fs18 #{modulosManager.reportes()?'White':''}">Reportes</span>
+                                    <div class="EmptyBox5"></div>
+                                </div>
+                            </div>
+                        </div>  
+                        <div class="Container33 Responsive50">
+                            <div class="ContainerIndent">
+                                <div class="Card TexAlCenter #{modulosManager.sinc_redes()?'GreenBack':'SoftGrayBack'}">
+                                    <i class="icon-description Fs50 DispBlock #{modulosManager.sinc_redes()?'White':'BoldGray'}"></i>
+                                    <div class="EmptyBox5"></div>
+                                    <span class="FontRobotoLight Fs18 #{modulosManager.sinc_redes()?'White':''}">Compartir en Redes</span>
+                                    <div class="EmptyBox5"></div>
+                                </div>
+                            </div>
+                        </div>  
 
                     </div>
                 </div>
             </div>
 
-        </p:outputPanel>
-
+        </div>
 
     </ui:define>
 

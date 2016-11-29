@@ -70,9 +70,8 @@ public class ModulosManager implements Serializable {
     }
 
     private boolean estadoModulo(String modulo) {
-        // return !fueEmpaquetado(modulo) ? false :
-        // modulosDesplegados.getOrDefault(modulo, false);
-        return !fueEmpaquetado(modulo) ? false : true;
+        return !fueEmpaquetado(modulo) ? false : modulosDesplegados.getOrDefault(modulo, false);
+        // return !fueEmpaquetado(modulo) ? false : true;
     }
 
     public void subirModulo(String modulo) {
