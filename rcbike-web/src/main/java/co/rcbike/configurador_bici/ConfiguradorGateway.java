@@ -27,6 +27,7 @@ public class ConfiguradorGateway extends RcbikeRestGateway {
 
 	public static final GenericType<List<ColorWeb>> TYPE_LIST_COLOR = new GenericType<List<ColorWeb>>() {
 	};
+	public static final Boolean TYPE_BOOLEAN = new Boolean(false);
 
 	@Inject
 	@Snoop(serviceName = "configurador")
@@ -72,5 +73,14 @@ public class ConfiguradorGateway extends RcbikeRestGateway {
 		webTarget().path(OperacionesConfiguracion.EP_CONFIGURACION)
 				.path(OperacionesConfiguracion.EP_CONFIGURACION).path(id + "")
 				.request().delete();
+	}
+
+	public Boolean validacionConfiguracion(String cadenaFinal) {
+		return webTarget()
+				.path(OperacionesConfiguracion.EP_CONFIGURACION)
+				.path(OperacionesConfiguracion.EP_CONFIGURACION)
+				.path(OperacionesConfiguracion.OP_VALIDAR)
+				.queryParam(OperacionesConfiguracion.EP_CONFIGURACION,
+						cadenaFinal).request().get(Boolean.class);
 	}
 }
