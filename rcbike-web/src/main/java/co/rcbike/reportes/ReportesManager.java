@@ -67,13 +67,13 @@ public class ReportesManager implements Serializable {
 
 	public void onDateSelectInicio(SelectEvent event) {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
-		SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
 		fechaInicio = format.format(event.getObject());
 	}
 
 	public void onDateSelectFin(SelectEvent event) {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
-		SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
 		fechaFin = format.format(event.getObject());
 	}
 }
