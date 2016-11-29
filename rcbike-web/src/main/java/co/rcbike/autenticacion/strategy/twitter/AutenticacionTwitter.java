@@ -54,8 +54,8 @@ public class AutenticacionTwitter extends AutenticacionStrategy implements Seria
     public void sendToTwitter() throws TwitterException, IOException {
         twitter = new TwitterFactory().getInstance();
         twitter.setOAuthConsumer(CONSUMER_KEY, CONSUMER_SECRET);
-        requestToken = twitter
-                .getOAuthRequestToken("http://localhost:8080/rcbike-web/site/pb/login.xhtml?serv=twitter");
+        requestToken = twitter.getOAuthRequestToken(Faces.evaluateExpressionGet("#{configManager.webServerUrl()}")
+                + "/rcbike-web/site/pb/login.xhtml?serv=twitter");
         log.info("Redireccionando a Twitter");
         Faces.redirect(requestToken.getAuthenticationURL());
     }

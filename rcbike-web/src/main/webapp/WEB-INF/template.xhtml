@@ -16,7 +16,7 @@
         <h:outputScript name="js/rcbike.min.js" library="modena-layout" />
 		
 		<script>
-			var webSocket = new WebSocket("ws:#{autenticacionManager.serverIp}/#{request.contextPath}/websocket/#{autenticacionManager.emailAutenticado()}");
+			var webSocket = new WebSocket("ws:#{configManager.webServerUrl()}/#{request.contextPath}/websocket/#{autenticacionManager.emailAutenticado()}");
 			var onMessageHandlers = { };
 			webSocket.onmessage = function(event){
 				$.each(onMessageHandlers,function( key, value ) {

@@ -15,6 +15,7 @@
 	</parent>
 
 	<properties>
+		<webserver>http://localhost:8080</webserver>
 	</properties>
 
 	<build>
@@ -98,36 +99,36 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>aspectj-maven-plugin</artifactId>
-				<version>1.8</version>
-				<configuration>
-					<target>1.8</target>
-					<source>1.8</source>
-					<complianceLevel>1.8</complianceLevel>
-					<includes>
-						<include>**/RestNotFoundAspect.java</include>
-						<include>co/rcbike/*/*Gateway.java</include>
-					</includes>
-					<showWeaveInfo>true</showWeaveInfo>
-					<verbose>true</verbose>
-				</configuration>
-				<dependencies>
-					<dependency>
-						<groupId>org.aspectj</groupId>
-						<artifactId>aspectjrt</artifactId>
-						<version>1.8.9</version>
-					</dependency>
-				</dependencies>
-				<executions>
-					<execution>
-						<goals>
-							<goal>compile</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+			<!-- <plugin> -->
+			<!-- <groupId>org.codehaus.mojo</groupId> -->
+			<!-- <artifactId>aspectj-maven-plugin</artifactId> -->
+			<!-- <version>1.8</version> -->
+			<!-- <configuration> -->
+			<!-- <target>1.8</target> -->
+			<!-- <source>1.8</source> -->
+			<!-- <complianceLevel>1.8</complianceLevel> -->
+			<!-- <includes> -->
+			<!-- <include>**/RestNotFoundAspect.java</include> -->
+			<!-- <include>co/rcbike/*/*Gateway.java</include> -->
+			<!-- </includes> -->
+			<!-- <showWeaveInfo>true</showWeaveInfo> -->
+			<!-- <verbose>true</verbose> -->
+			<!-- </configuration> -->
+			<!-- <dependencies> -->
+			<!-- <dependency> -->
+			<!-- <groupId>org.aspectj</groupId> -->
+			<!-- <artifactId>aspectjrt</artifactId> -->
+			<!-- <version>1.8.9</version> -->
+			<!-- </dependency> -->
+			<!-- </dependencies> -->
+			<!-- <executions> -->
+			<!-- <execution> -->
+			<!-- <goals> -->
+			<!-- <goal>compile</goal> -->
+			<!-- </goals> -->
+			<!-- </execution> -->
+			<!-- </executions> -->
+			<!-- </plugin> -->
 		</plugins>
 	</build>
 
@@ -332,6 +333,7 @@
 		<profile>
 			<id>rcbike-derivado</id>
 			<build>
+				pro
 				<plugins>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
@@ -448,6 +450,12 @@
 					<classifier>model</classifier>
 				</dependency>
 			</dependencies>
+		</profile>
+		<profile>
+			<id>aws</id>
+			<properties>
+				<webserver>http://ec2-54-153-8-11.us-west-1.compute.amazonaws.com:8080</webserver>
+			</properties>
 		</profile>
 	</profiles>
 </project>
