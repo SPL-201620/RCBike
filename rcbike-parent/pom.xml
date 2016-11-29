@@ -73,9 +73,9 @@
 		</profile>
 
 		<profile>
-			<id>base</id>
+			<id>rcbike-derivado</id>
 			<modules>
-				<module>../rcbike-web</module>
+				<module>../rcbike-web/pom-derivado.xml</module>
 			</modules>
 		</profile>
 		<profile>

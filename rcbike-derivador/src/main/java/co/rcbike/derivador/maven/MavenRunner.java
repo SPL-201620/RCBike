@@ -51,9 +51,9 @@ public class MavenRunner {
 		System.out.println(banner);
 		InvocationRequest request = new DefaultInvocationRequest();
 		request.setPomFile(new File("../rcbike-parent/pom.xml"));
-		request.setGoals(Arrays.asList("clean", "package"));
+		request.setGoals(Arrays.asList("clean", "install"));
 		request.setProfiles(new ArrayList<String>(modulos));
-
+		// request.setThreads("5");
 		request.setProperties(buildProperties(propiedades));
 		Invoker invoker = new DefaultInvoker();
 		try {

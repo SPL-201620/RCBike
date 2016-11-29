@@ -1,21 +1,20 @@
 package co.rcbike.derivador.main;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
 
 import co.rcbike.derivador.maven.MavenRunner;
+import co.rcbike.derivador.maven.RcbikeWebPomProcessor;
 
 public class Main {
 
-	public static void main(String[] args){
+	public static void main(String[] args) throws IOException {
 		Set<String> modulos = new HashSet<>();
 		Properties funciones = new Properties();
-		modulos.add("base");
-		
-		/*if[AutenticacionLocal]*/
-		modulos.add("autenticacion-local");
-		/*end[AutenticacionLocal]*/
+		modulos.add("rcbike-derivado");
+
 		/*if[AutenticacionFacebook]*/
 		funciones.put("autenticacion-facebook","true");
 		/*end[AutenticacionFacebook]*/
@@ -59,8 +58,8 @@ public class Main {
 		/*end[FacebookWeb]*/
 
 		
-			
 		MavenRunner mavenRunner = new MavenRunner();
+		new RcbikeWebPomProcessor().parsePom(modulos);
 		mavenRunner.inkoveRcbikeParent(modulos,funciones);
 	}
 }
