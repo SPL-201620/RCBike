@@ -23,8 +23,12 @@ public class RedesGateway extends RcbikeRestGateway {
         return service;
     }
 
-    public void compartirFacebook(String contenido) {
-
+    public Response compartirFacebook(String userId, String accessToken, String contenido) {
+        return webTarget().path(OperacionesSincronizacion.EP_SINCRONIZACION)
+                .path(OperacionesSincronizacion.OP_PUBLICAR_EN_FACEBOOK)
+                .queryParam(OperacionesSincronizacion.PARAM_USER_ID, userId)
+                .queryParam(OperacionesSincronizacion.PARAM_ACCESS_TOKEN, accessToken)
+                .queryParam(OperacionesSincronizacion.PARAM_MESSAGE, contenido).request().post(Entity.json(""));
     }
 
     public Response compartirTwitter(CompartirTwitter compartir) {

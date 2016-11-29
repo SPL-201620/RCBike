@@ -37,6 +37,7 @@ public class SincRedesEndpoint {
      * @param message
      *            Mensaje para colocar en el feed
      */
+    @SuppressWarnings("rawtypes")
     @POST
     @Path(OperacionesSincronizacion.OP_PUBLICAR_EN_FACEBOOK)
     public Response publicarEnFacebook(@QueryParam(OperacionesSincronizacion.PARAM_USER_ID) String userId,
@@ -44,9 +45,7 @@ public class SincRedesEndpoint {
             @QueryParam(OperacionesSincronizacion.PARAM_MESSAGE) String message) {
         Map<String, Object> map = service.postOnFacebook(userId, accessToken, message);
         if (map.get("error") != null) {
-            return Response.serverError().entity(
-                    "Se produjo un error al intentar publicar en Facebook. " + ((Map) map.get("error")).get("message"))
-                    .build();
+            return Response.serverError().entity(((Map) map.get("error")).get("message")).build();
         } else {
             return Response.ok(map, MediaType.APPLICATION_JSON).build();
         }

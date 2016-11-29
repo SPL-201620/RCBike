@@ -28,6 +28,7 @@ public class MavenRunner {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		System.out.println(banner);
 	}
 
 	static {
@@ -36,23 +37,24 @@ public class MavenRunner {
 	public static void main(String[] args) throws IOException {
 		MavenRunner mavenRunner = new MavenRunner();
 		mavenRunner.inkoveRcbikeParent(Arrays.asList("base", "alquiler", "configurador", "desplazamientos",
-				"mensajeria", "reportes", "sinc-redes", "ventas"));
+				"mensajeria", "reportes", "sinc-redes", "ventas"), null);
 	}
 
-	private Properties buildProperties() {
-		Properties properties = new Properties();
-		properties.put("rcbike-derivator", "true");
-		return properties;
+	private Properties buildProperties(Properties propiedades) {
+		if (propiedades == null) {
+			propiedades = new Properties();
+		}
+		propiedades.put("rcbike-derivator", "true");
+		return propiedades;
 	}
 
-	public void inkoveRcbikeParent(Collection<String> modulos) {
-		System.out.println(banner);
+	public void inkoveRcbikeParent(Collection<String> modulos, Properties propiedades) {
 		InvocationRequest request = new DefaultInvocationRequest();
 		request.setPomFile(new File("../rcbike-parent/pom.xml"));
 		request.setGoals(Arrays.asList("clean", "package"));
 		request.setProfiles(new ArrayList<String>(modulos));
-
-		request.setProperties(buildProperties());
+		// request.setThreads("5");
+		request.setProperties(buildProperties(propiedades));
 		Invoker invoker = new DefaultInvoker();
 		try {
 			invoker.execute(request);

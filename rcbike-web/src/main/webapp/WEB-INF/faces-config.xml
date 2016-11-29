@@ -132,5 +132,11 @@
 			<to-view-id>/site/pb/desplazamiento.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
-	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>reportes</from-outcome>
+			<to-view-id>/site/reportes/reportes.xhtml</to-view-id>
+			</navigation-case>
+	</navigation-rule>
 </faces-config>

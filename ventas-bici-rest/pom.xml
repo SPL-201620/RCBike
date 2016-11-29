@@ -77,14 +77,6 @@
 
 		<!-- Now we declare any tools needed -->
 
-		<!-- Annotation processor to generate the JPA 2.0 metamodel classes for 
-			typesafe criteria queries -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.hibernate</groupId> -->
-<!-- 			<artifactId>hibernate-jpamodelgen</artifactId> -->
-<!-- 			<scope>provided</scope> -->
-<!-- 		</dependency> -->
-
 		<!-- Annotation processor that raising compilation errors whenever constraint 
 			annotations are incorrectly used. -->
 		<dependency>
@@ -142,6 +134,33 @@
 							<includes>
 								<include>co/rcbike/*/model/*</include>
 							</includes>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.10</version>
+				<executions>
+					<execution>
+						<id>copy-package</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>${project.groupId}</groupId>
+									<artifactId>${project.artifactId}</artifactId>
+									<version>${project.version}</version>
+									<type>${project.packaging}</type>
+									<destFileName>${project.artifactId}.war</destFileName>
+								</artifactItem>
+							</artifactItems>
+							<outputDirectory>../generated</outputDirectory>
+
 						</configuration>
 					</execution>
 				</executions>

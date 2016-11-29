@@ -34,10 +34,14 @@ public class RedesManager implements Serializable {
     private String url;
 
     public void facebook() {
-        log.info("Compartir Facebook");
-        log.info("url" + url);
-        log.info("mensaje" + mensaje);
-        gateway.compartirFacebook(mensaje);
+        String userId = Faces.evaluateExpressionGet("#{autenticacionFacebook.userID}");
+        String accessToken = Faces.evaluateExpressionGet("#{autenticacionFacebook.accessToken}");
+        Response respCompartir = gateway.compartirFacebook(userId, accessToken, mensaje + " " + url);
+        if (Status.fromStatusCode(respCompartir.getStatus()).equals(Status.OK)) {
+            Messages.create("Tu recorrido fue publicado exitosamente en Facebook").add();
+        } else
+            Messages.create("No fue posible entregar el mensaje solicitado a Facebook\n"
+                    + respCompartir.readEntity(String.class)).error().add();
     }
 
     public void twitter() {

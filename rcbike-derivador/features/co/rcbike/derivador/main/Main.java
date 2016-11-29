@@ -1,26 +1,27 @@
 package co.rcbike.derivador.main;
 
+import java.io.IOException;
 import java.util.HashSet;
+import java.util.Properties;
 import java.util.Set;
 
-
 import co.rcbike.derivador.maven.MavenRunner;
+import co.rcbike.derivador.maven.RcbikeWebPomProcessor;
 
 public class Main {
 
-	public static void main(String[] args){
+	public static void main(String[] args) throws IOException {
 		Set<String> modulos = new HashSet<>();
-		modulos.add("base");
-		
-		/*if[AutenticacionLocal]*/
-		modulos.add("autenticacion-local");
-		/*end[AutenticacionLocal]*/
+		Properties funciones = new Properties();
+		modulos.add("rcbike-derivado");
+
 		/*if[AutenticacionFacebook]*/
-		modulos.add("autenticacion-facebook");
+		funciones.put("autenticacion-facebook","true");
 		/*end[AutenticacionFacebook]*/
 		/*if[AutenticacionTwitter]*/
-		modulos.add("autenticacion-twitter");
+		funciones.put("autenticacion-twitter","true");
 		/*end[AutenticacionTwitter]*/
+		
 		/*if[AlquilerBicicleta]*/
 		modulos.add("alquiler");
 		/*end[AlquilerBicicleta]*/
@@ -39,17 +40,26 @@ public class Main {
 		/*if[VentaBicicleta]*/
 		modulos.add("ventas");
 		/*end[VentaBicicleta]*/
-		/*if[CompartirTwitter]*/
+
+		/*if[TwitterRest]*/
 		modulos.add("sinc-redes");
-		modulos.add("sinc-twitter");
-		/*end[CompartirTwitter]*/
-		
-		/*if[CompartirFacebook]*/
+		funciones.put("twitter-rest","true");
+		/*end[TwitterRest]*/
+		/*if[TwitterWeb]*/
+		funciones.put("twitter-web","true");
+		/*end[TwitterWeb]*/
+
+		/*if[FacebookRest]*/
 		modulos.add("sinc-redes");
-		modulos.add("sinc-facebook");
-		/*end[CompartirFacebook]*/
+		funciones.put("facebook-rest","true");
+		/*end[FacebookRest]*/
+		/*if[FacebookWeb]*/
+		funciones.put("facebook-web","true");
+		/*end[FacebookWeb]*/
+
 		
 		MavenRunner mavenRunner = new MavenRunner();
-		mavenRunner.inkoveRcbikeParent(modulos);
+		RcbikeWebPomProcessor.parsePom(modulos);
+		mavenRunner.inkoveRcbikeParent(modulos,funciones);
 	}
 }

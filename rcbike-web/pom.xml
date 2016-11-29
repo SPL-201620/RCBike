@@ -72,37 +72,62 @@
 					<skip>false</skip>
 				</configuration>
 			</plugin>
-
-<!-- 			<plugin> -->
-<!-- 				<groupId>org.codehaus.mojo</groupId> -->
-<!-- 				<artifactId>aspectj-maven-plugin</artifactId> -->
-<!-- 				<version>1.8</version> -->
-<!-- 				<configuration> -->
-<!-- 					<target>1.8</target> -->
-<!-- 					<source>1.8</source> -->
-<!-- 					<complianceLevel>1.8</complianceLevel> -->
-<!-- 					<includes> -->
-<!-- 						<include>**/RestNotFoundAspect.java</include> -->
-<!-- 						<include>co/rcbike/*/*Gateway.java</include> -->
-<!-- 					</includes> -->
-<!-- 					<showWeaveInfo>true</showWeaveInfo> -->
-<!-- 					<verbose>true</verbose> -->
-<!-- 				</configuration> -->
-<!-- 				<dependencies> -->
-<!-- 					<dependency> -->
-<!-- 						<groupId>org.aspectj</groupId> -->
-<!-- 						<artifactId>aspectjrt</artifactId> -->
-<!-- 						<version>1.8.9</version> -->
-<!-- 					</dependency> -->
-<!-- 				</dependencies> -->
-<!-- 				<executions> -->
-<!-- 					<execution> -->
-<!-- 						<goals> -->
-<!-- 							<goal>compile</goal> -->
-<!-- 						</goals> -->
-<!-- 					</execution> -->
-<!-- 				</executions> -->
-<!-- 			</plugin> -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.10</version>
+				<executions>
+					<execution>
+						<id>copy-package</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>${project.groupId}</groupId>
+									<artifactId>${project.artifactId}</artifactId>
+									<version>${project.version}</version>
+									<type>${project.packaging}</type>
+									<destFileName>${project.artifactId}.war</destFileName>
+								</artifactItem>
+							</artifactItems>
+							<outputDirectory>../generated</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>aspectj-maven-plugin</artifactId>
+				<version>1.8</version>
+				<configuration>
+					<target>1.8</target>
+					<source>1.8</source>
+					<complianceLevel>1.8</complianceLevel>
+					<includes>
+						<include>**/RestNotFoundAspect.java</include>
+						<include>co/rcbike/*/*Gateway.java</include>
+					</includes>
+					<showWeaveInfo>true</showWeaveInfo>
+					<verbose>true</verbose>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.aspectj</groupId>
+						<artifactId>aspectjrt</artifactId>
+						<version>1.8.9</version>
+					</dependency>
+				</dependencies>
+				<executions>
+					<execution>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
@@ -305,7 +330,7 @@
 
 	<profiles>
 		<profile>
-			<id>base</id>
+			<id>rcbike-derivado</id>
 			<build>
 				<plugins>
 					<plugin>
@@ -313,20 +338,27 @@
 						<artifactId>maven-compiler-plugin</artifactId>
 						<configuration>
 							<excludes>
-								<!-- alquiler -->
+								<!-- if alquiler -->
 								<exclude>co/rcbike/alquiler/**/*</exclude>
-								<!-- configurador -->
+								<!-- fi alquiler -->
+								<!-- if configurador -->
 								<exclude>co/rcbike/configurador_bici/**/*</exclude>
-								<!-- desplazamientos -->
+								<!-- fi configurador -->
+								<!-- if desplazamientos -->
 								<exclude>co/rcbike/desplazamientos/**/*</exclude>
-								<!-- mensajeria -->
+								<!-- fi desplazamientos -->
+								<!-- if mensajeria -->
 								<exclude>co/rcbike/mensajeria/**/*</exclude>
-								<!-- reportes -->
+								<!-- fi mensajeria -->
+								<!-- if reportes -->
 								<exclude>co/rcbike/reportes/**/*</exclude>
-								<!-- sinc-redes -->
+								<!-- fi reportes -->
+								<!-- if sinc-redes -->
 								<exclude>co/rcbike/sinc_redes/**/*</exclude>
-								<!-- ventas -->
+								<!-- fi sinc-redes -->
+								<!-- if ventas -->
 								<exclude>co/rcbike/ventas/**/*</exclude>
+								<!-- fi ventas -->
 							</excludes>
 						</configuration>
 					</plugin>
@@ -396,6 +428,13 @@
 		<profile>
 			<id>sinc-redes</id>
 			<dependencies>
+				<dependency>
+					<groupId>co.rcbike</groupId>
+					<artifactId>sinc-redes-rest</artifactId>
+					<version>${rcbike-rest.version}</version>
+					<type>jar</type>
+					<classifier>model</classifier>
+				</dependency>
 			</dependencies>
 		</profile>
 		<profile>

@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import co.rcbike.autenticacion.DatosAutenticacion;
 import co.rcbike.autenticacion.DatosAutenticacion.EstadoAutenticacion;
 import co.rcbike.autenticacion.strategy.AutenticacionStrategy;
+import lombok.Getter;
 import lombok.extern.jbosslog.JBossLog;
 /**
  * @see <a href=
@@ -30,7 +31,10 @@ import lombok.extern.jbosslog.JBossLog;
 @JBossLog
 public class AutenticacionFacebook extends AutenticacionStrategy {
 
+    @Getter
     private String userID;
+
+    @Getter
     private String accessToken;
 
     private static final String FB_RS_ATTR_STATUS = "status";
