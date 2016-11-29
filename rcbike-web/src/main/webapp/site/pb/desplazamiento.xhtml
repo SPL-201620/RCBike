@@ -21,12 +21,12 @@
 				<h2 class="CardTopic DispInlBlock">Detalle del Recorrido</h2>
 				
 				<p:outputPanel styleClass="DispInlBlock Fright" 
-				rendered="#{autenticacionManager.autenticado() && funcionManager.twitterSection() }">
+				rendered="#{autenticacionManager.autenticado() and funcionManager.twitterSection() }">
 		    		<ui:include src="/WEB-INF/include/twitter-sinc/twitter-sinc.xhtml"/>
 				</p:outputPanel>
 				
 				<p:outputPanel styleClass="DispInlBlock Fright"
-				rendered="#{autenticacionManager.autenticado() && funcionManager.facebookSection()}">
+				rendered="#{autenticacionManager.autenticado() and funcionManager.facebookSection()}">
 		    		<ui:include src="/WEB-INF/include/facebook-sinc/facebook-sinc.xhtml"/>
 				</p:outputPanel>
                 
