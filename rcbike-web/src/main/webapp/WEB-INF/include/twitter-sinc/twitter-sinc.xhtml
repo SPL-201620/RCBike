@@ -22,22 +22,22 @@
 
     <h:form id="formShareTwitter" prependId="false">
 		<p:button id="tw-sh-fe" icon="fa fa-twitter fa-2x" 
-		rendered="#{autenticacionManager.servicioAutenticacion ne 'Twitter' && funcionManager.twitterWeb()}"
+		rendered="#{autenticacionManager.servicioAutenticacion ne 'Twitter' and funcionManager.twitterWeb()}"
 		    		styleClass="Fs14 White RaisedButton FloatNoneOnMobile RaisedButton color-twitter"
 		           	onclick="shareTwitterWeb(); return false;"/>
 		<p:tooltip for="tw-sh-fe" value="Compartir en Twitter" position="left"
-			rendered="#{autenticacionManager.servicioAutenticacion ne 'Twitter' && funcionManager.twitterWeb()}" />
+			rendered="#{autenticacionManager.servicioAutenticacion ne 'Twitter' and funcionManager.twitterWeb()}" />
 		   
 		<h:inputHidden id="tw-url-rest" value="#{redesManager.url}" required="true"/>
 		<h:inputHidden id="tw-msg-rest" value="#{redesManager.mensaje}" required="true"/>
 		   
 		<p:commandButton id="tw-sh-be" icon="fa fa-twitter fa-2x"
-		   	rendered="#{autenticacionManager.servicioAutenticacion eq 'Twitter' && funcionManager.twitterRest()}"
+		   	rendered="#{autenticacionManager.servicioAutenticacion eq 'Twitter' and funcionManager.twitterRest()}"
 			styleClass="Fs14 White RaisedButton FloatNoneOnMobile RaisedButton color-twitter"
 			onclick="shareTwitterRest()"
 			action="#{redesManager.twitter()}" update="growl" />
 		<p:tooltip for="tw-sh-be" value="Compartir en Twitter" position="left"
-			rendered="#{autenticacionManager.servicioAutenticacion eq 'Twitter' && funcionManager.twitterRest()}"/>
+			rendered="#{autenticacionManager.servicioAutenticacion eq 'Twitter' and funcionManager.twitterRest()}"/>
 	</h:form>
 	
 	<style type="text/css">
